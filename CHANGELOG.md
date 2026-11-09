@@ -3,6 +3,21 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.4.1] — 2026-11-09 · Rendimiento
+
+### Cambiado
+- **El modo Calidad Baja ahora es más agresivo** (`AplicarOpciones`, solo si `Calidad == 0`):
+  - resolución interna al 55 %;
+  - `r.ViewDistanceScale 0.6`;
+  - sin niebla volumétrica ni desenfoque de movimiento;
+  - follaje al 50 %;
+  - sombras a 512;
+  - sin VSM ni Lumen (difusa y reflejos).
+
+  Al pasar a Media o Alta se restauran los valores (distancia, niebla, blur, follaje y sombras).
+- Bosques: distancia de corte de 70–95 m en las plantillas de los 7 `BP_Bosque_*`. Las instancias del mapa conservan su valor guardado de 120 m.
+- Se corrigió el clímax de la Casa (radio de 16 m).
+
 ## [0.4.0] — 2026-11-09 · Demo completa (build de prueba, sin validar por el CTO)
 
 ### Añadido
