@@ -9,6 +9,7 @@ La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
   - entrada sin torniquetes duplicados;
   - modo Calidad Baja más liviano (v0.4.1);
   - calidad Baja por defecto.
+- **Corregido el bloqueo real de la entrada:** las mallas `SM_Ent_Reja` (barrotes de 15 m) y `SM_Ent_Hierro` (arco) tenían una colisión simple en forma de caja que tapaba el hueco central. El rayo de visión pasaba, pero el personaje no. Se quitó su colisión, como en el diseño original (`sin_colision.py`). Los costados siguen cerrados por `ENT_BloqueoI/D`.
 - Nueva variable `DemoCorta` (bool) en el jugador: si está activa, `RevisarFinDemo` usa el final del castillo (Y < -11450); si no, el final es la huida de la Casa.
 - **Estado del proyecto:** `DemoCorta = true` en el CDO. Para volver a generar la demo completa hay que ponerla en `false` y `ProjectVersion=0.4.x`.
 
