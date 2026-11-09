@@ -10,7 +10,10 @@ La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
   - modo Calidad Baja más liviano (v0.4.1);
   - calidad Baja por defecto.
 - **Corregido el bloqueo real de la entrada:** las mallas `SM_Ent_Reja` (barrotes de 15 m) y `SM_Ent_Hierro` (arco) tenían una colisión simple en forma de caja que tapaba el hueco central. El rayo de visión pasaba, pero el personaje no. Se quitó su colisión, como en el diseño original (`sin_colision.py`). Los costados siguen cerrados por `ENT_BloqueoI/D`.
-- **Interruptores de la entrada:** radio de interacción de 2,3 m a 3 m (`UsarInterruptor`). Ojo: por diseño, el 4.º interruptor da un "¡Cortocircuito! Inténtalo otra vez" en el primer intento.
+- **Interruptores de la entrada, corregidos:**
+  - `UsarInterruptor` ahora se llama **primero** al presionar E (`EventGraph`, antes de `Interactuar`). Antes estaba al final de la cadena de más de 200 nodos de `InteractuarZonas`, donde se perdía.
+  - Se quitó el cortocircuito del 4.º interruptor. Los 4 se encienden **en cualquier orden** y con un solo intento cada uno.
+  - El radio pasó de 2,3 m a 3 m.
 - **Cinemática del parque:** ahora se activa **al volver la energía** (4 interruptores, `Energia`) y no al cruzar el portón. Dura 12 s (antes 5). `CAM_CineParque` va enganchada a `CINE_Pivote` (un `BP_Giratorio` invisible en el centro del parque, a 22°/s), así que la cámara **orbita el parque** a 75 m de radio y 31 m de altura mostrando las atracciones iluminadas.
 - Nueva variable `DemoCorta` (bool) en el jugador: si está activa, `RevisarFinDemo` usa el final del castillo (Y < -11450); si no, el final es la huida de la Casa.
 - **Estado del proyecto:** `DemoCorta = true` en el CDO. Para volver a generar la demo completa hay que ponerla en `false` y `ProjectVersion=0.4.x`.
