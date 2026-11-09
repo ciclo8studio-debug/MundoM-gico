@@ -16,8 +16,8 @@ La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 - El final frente al castillo (`RevisarFinDemo`) queda desactivado para v0.4.0 (umbral -99999). La demo corta v0.3.0 ya publicada no cambia.
 - Se abrió la bodega (`BLQ_Bodega` a `Parque/Demo/Sobrantes`), porque la llave de la casa está ahí.
 
-### Problema conocido
-- `FaseCasa` no se guarda: si se carga una partida que ya tiene el fusible, el clímax se repite al cargar.
+### Corregido (después del build 0.4.0, entra en la próxima versión)
+- El clímax de la Casa solo se dispara **dentro de un radio de 16 m de la casa**. Así no se repite al cargar una partida guardada en otro lugar.
 
 ### Añadido (cont.)
 - Mezcla propia: `SC_SFX` y `SC_Ambiente` (`MundoMagico/Audio/Mezcla`). El volumen general ahora aplica a las clases hijas.

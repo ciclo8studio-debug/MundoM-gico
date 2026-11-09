@@ -111,6 +111,8 @@
 
 > **Build v0.4.0** (demo completa: Carrusel, Casa y huida) en `Build/v0.4.0/Windows/MundoMagico.exe`, 0 errores y 0 warnings. Respaldo `MM_20261109_1518.zip`. **Falta la prueba del CTO.**
 
+> Avance adicional: el clímax de la Casa ahora exige estar a menos de 16 m de la casa (corrige que se repitiera al cargar). Borrador de itch.io en [`auditoria/itchio_pagina_demo.md`](auditoria/itchio_pagina_demo.md), sin publicar.
+
 ## 📬 Buzón de Solicitudes Internas (Mailbox)
 > *Registro exclusivo de requerimientos entre agentes pendientes de aprobación por el CTO.*
 
