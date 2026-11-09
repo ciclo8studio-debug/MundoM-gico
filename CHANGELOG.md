@@ -14,6 +14,12 @@ La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
   - `UsarInterruptor` ahora se llama **primero** al presionar E (`EventGraph`, antes de `Interactuar`). Antes estaba al final de la cadena de más de 200 nodos de `InteractuarZonas`, donde se perdía.
   - Se quitó el cortocircuito del 4.º interruptor. Los 4 se encienden **en cualquier orden** y con un solo intento cada uno.
   - El radio pasó de 2,3 m a 3 m.
+  - **Audio de terror priorizado:**
+    - Lluvia del jugador (`SonidoLluvia`, Rain_Heavy de SoulCity): filtro pasa-bajos a 2,8 kHz (quita el siseo de "radio") y volumen en el parque de 0,55 a 0,25.
+    - `SC_Ambiente` al 60 %, `SC_SFX` al 125 %.
+    - `SND_Ambiente_Parque` y `SND_VientoParque` a la mitad.
+    - Pasos (`PasoSuelo`) de 0,5 a 0,8.
+  - **Lluvia visual** (`NS_Lluvia`): 2.600 → 1.400 gotas/s; color más oscuro y transparente (0,30 / 0,36 / 0,45, alfa 0,35).
   - **Salto con ✕ (mando), blindado:** antes de `Jump` ahora llama a `UnCrouch` y deja `Agachada = false`, así que si el personaje quedó agachado, se levanta y salta. Además, ✕ solo confirma en el menú principal si `WidgetMenu` está en pantalla **y visible** (evita un menú "fantasma").
   - **Mando:** el botón de interactuar (`Gamepad_FaceButton_Left`) solo llamaba a `Interactuar`, así que nunca revisaba los interruptores ni llamaba a `RecogerObjeto` / `InteractuarZonas`. Ahora usa la misma cadena que la E.
 - **Cinemática del parque:** ahora se activa **al volver la energía** (4 interruptores, `Energia`) y no al cruzar el portón. Dura 12 s (antes 5). `CAM_CineParque` va enganchada a `CINE_Pivote` (un `BP_Giratorio` invisible en el centro del parque, a 22°/s), así que la cámara **orbita el parque** a 75 m de radio y 31 m de altura mostrando las atracciones iluminadas.
