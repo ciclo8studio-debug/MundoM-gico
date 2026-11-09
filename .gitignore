@@ -1,0 +1,17 @@
+# Lista blanca: solo lo propio del juego (los packs de Fab se re-descargan desde la biblioteca)
+/*
+!/.gitignore
+!/.gitattributes
+!/MUNDO_MÁGICO.uproject
+!/Config/
+/Config/*.bak*
+/Config/*.antes_*
+!/Content/
+/Content/*
+!/Content/MundoMagico/
+!/Content/ThirdPerson/
+!/Content/Fuentes/
+!/Content/Input/
+!/Content/Meshes/
+!/Content/Materials/
+!/Content/Textures/
