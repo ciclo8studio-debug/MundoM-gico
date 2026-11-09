@@ -14,6 +14,7 @@ La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
   - `UsarInterruptor` ahora se llama **primero** al presionar E (`EventGraph`, antes de `Interactuar`). Antes estaba al final de la cadena de más de 200 nodos de `InteractuarZonas`, donde se perdía.
   - Se quitó el cortocircuito del 4.º interruptor. Los 4 se encienden **en cualquier orden** y con un solo intento cada uno.
   - El radio pasó de 2,3 m a 3 m.
+  - **Sombra bajo el letrero (`BP_SustoEnergia`):** ahora aparece **al llegar a la entrada desde el pasillo** (jugador con Y < -4200, después del glitch) como primer susto del parque. Antes requería energía y además cortaba la luz con un segundo cortocircuito. Ya no corta la energía: los interruptores encienden las luces de forma definitiva.
   - **Audio de terror priorizado:**
     - Lluvia del jugador (`SonidoLluvia`, Rain_Heavy de SoulCity): filtro pasa-bajos a 2,8 kHz (quita el siseo de "radio") y volumen en el parque de 0,55 a 0,25.
     - `SC_Ambiente` al 60 %, `SC_SFX` al 125 %.
