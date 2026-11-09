@@ -109,6 +109,8 @@
 
 ---
 
+> **Build v0.4.0** (demo completa: Carrusel, Casa y huida) en `Build/v0.4.0/Windows/MundoMagico.exe`, 0 errores y 0 warnings. Respaldo `MM_20261109_1518.zip`. **Falta la prueba del CTO.**
+
 ## 📬 Buzón de Solicitudes Internas (Mailbox)
 > *Registro exclusivo de requerimientos entre agentes pendientes de aprobación por el CTO.*
 

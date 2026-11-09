@@ -3,7 +3,7 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
-## [Sin publicar] — hacia v0.4.0 (demo completa)
+## [0.4.0] — 2026-11-09 · Demo completa (build de prueba, sin validar por el CTO)
 
 ### Añadido
 - **Evento del Carrusel** (`EventoCarrusel` en el jugador, se llama cada tick después de `RevisarFinDemo`; variable `FaseCarrusel`):
