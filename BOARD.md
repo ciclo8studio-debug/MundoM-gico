@@ -17,6 +17,19 @@ Validado por el CTO:
 
 Último ajuste: los 3 clósets-escondite (`ESC_Armario_*`) quedan fuera de la demo porque el jugador se atascaba dentro. Se movieron a `Parque/Demo/Sobrantes`.
 
+### ✅ Mejoras aprobadas por el CTO en la reunión del 2026-11-09 ([acta](REUNION_2026-11-09.md))
+- **S2 (desde ya, sin refactors grandes antes del 13-11):**
+  - Versionado (Git LFS/Diversion).
+  - Guardado con puntos de control.
+  - Escondites + contener la respiración.
+  - Sonido espacial (reverb por zona y oclusión).
+- **S3:**
+  - 30 fps en notebooks modestos (según el hardware del 17-11).
+  - Música y silencios según la amenaza.
+  - Voces y sonidos de época.
+- **S3–S4:** Payaso acosador con IA nueva.
+- ❌ La identidad chilena de 1998 como eje quedó descartada.
+
 ### Lo que queda (en orden)
 1. **13-11 · Publicar la demo corta** (CTO): subir `Build/v0.3.1/Windows` comprimido a itch.io con el borrador de [`auditoria/itchio_pagina_demo.md`](auditoria/itchio_pagina_demo.md). Faltan las capturas.
 2. **14 al 16-11 · Pulido post-demo**:
