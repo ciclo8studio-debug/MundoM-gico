@@ -5,12 +5,38 @@
 > Comunicación interna solo vía este archivo (sin correos ni notificaciones externas).
 > 🗺️ **Plan de trabajo hasta la demo:** [`PLAN_DE_TRABAJO.md`](PLAN_DE_TRABAJO.md). Demo v0.5.0 el **10-12-2026** (plan acelerado, sprints de 1 semana), decisión de hardware el 17-11-2026.
 
+## 🎯 Estado actual (2026-11-09, noche)
+**Demo corta v0.3.1: lista para publicar.** El CTO jugó 32 minutos seguidos sin cierres.
+Validado por el CTO:
+- Controles (✕ salta, □ interactúa).
+- Entrada al parque.
+- Sombra bajo el letrero al llegar.
+- 4 interruptores en cualquier orden.
+- Luces y cinemática en órbita.
+- Audio de terror priorizado y lluvia sutil.
+
+Último ajuste: los 3 clósets-escondite (`ESC_Armario_*`) quedan fuera de la demo porque el jugador se atascaba dentro. Se movieron a `Parque/Demo/Sobrantes`.
+
+### Lo que queda (en orden)
+1. **13-11 · Publicar la demo corta** (CTO): subir `Build/v0.3.1/Windows` comprimido a itch.io con el borrador de [`auditoria/itchio_pagina_demo.md`](auditoria/itchio_pagina_demo.md). Faltan las capturas.
+2. **14 al 16-11 · Pulido post-demo**:
+   - Arreglar la mecánica de esconderse (`BP_Hiding_Door`: salida del clóset) y devolver los clósets.
+   - 20–30 s de descompresión después del glitch.
+3. **17-11 · Decisión de hardware (Camino A/B)** → Sprint 2:
+   - Separar el guardado (`SG_Opciones`/`SG_Partida`).
+   - Jugador y GameMode a `Core`.
+   - `AC_Linterna`.
+   - Piloto de Behavior Tree.
+   - Slider de SFX.
+4. **Demo completa (v0.4.x)**: validar en el `.exe` el Carrusel, la Casa y la huida (ya implementados). Volver `DemoCorta=false`.
+5. **10-12 · Demo completa v0.5.0** (Sprints 3 a 5 de `PLAN_DE_TRABAJO.md`).
+
 ## 🟢 Estado de los 5 Super-Agentes
-- 🛡️ `@tech-lead`      | Estado: ✅ Sprint 1 completado (1.1, 1.11 · 1.12 postergada a Sprint 2)
-- 🕹️ `@gameplay-engineer` | Estado: ✅ Sprint 1 completado (1.7, 1.8 parcial, 1.14)
-- 🏚️ `@world-builder`     | Estado: 🟡 Sprint 1 · falta la descompresión tras el glitch (requiere playtest)
-- 🎨 `@ux-toolsmith`     | Estado: ✅ Sprint 1 completado (1.5, 1.6)
-- 🧪 `@qa-publisher`     | Estado: 🟡 Sprint 1 · build v0.2.0 OK · esperando la prueba de humo del CTO en el `.exe`
+- 🛡️ `@tech-lead`      | Estado: ✅ Sprint 1 · ⏳ Sprint 2 espera el hardware (17-11)
+- 🕹️ `@gameplay-engineer` | Estado: ✅ controles, interruptores, Carrusel y Casa · ⏳ esconderse + BT
+- 🏚️ `@world-builder`     | Estado: ✅ entrada, sombra, luces, cinemática · ⏳ descompresión post-glitch
+- 🎨 `@ux-toolsmith`     | Estado: ✅ audio de terror, lluvia, fuentes · ⏳ slider de SFX
+- 🧪 `@qa-publisher`     | Estado: ✅ v0.3.1 validada por el CTO · ⏳ publicar en itch.io el 13-11
 
 ---
 
