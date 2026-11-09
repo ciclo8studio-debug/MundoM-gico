@@ -19,7 +19,7 @@ Validado por el CTO:
 
 ### ✅ Mejoras aprobadas por el CTO en la reunión del 2026-11-09 ([acta](REUNION_2026-11-09.md))
 - **S2 (desde ya, sin refactors grandes antes del 13-11):**
-  - Versionado (Git LFS/Diversion).
+  - ✅ **Versionado (hecho 2026-11-09):** el proyecto Unreal (contenido propio, unos 200 MB, 403 assets en LFS) está en la rama `unreal` del repo privado. Para subir cambios: `herramientas/Versionar_Unreal.bat`.
   - Guardado con puntos de control.
   - Escondites + contener la respiración.
   - Sonido espacial (reverb por zona y oclusión).
