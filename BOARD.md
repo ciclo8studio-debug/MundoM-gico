@@ -91,7 +91,8 @@
 | Fin de la demo frente al castillo (`RevisarFinDemo` → pantalla final) | `@gameplay-engineer` | ✅ |
 | Checklist de humo | `@qa-publisher` | ✅ [`auditoria/checklist_humo.md`](auditoria/checklist_humo.md) |
 | Build v0.3.0 (`Build/v0.3.0/Windows/MundoMagico.exe`, 0 errores y 0 warnings; respaldo `MM_20261109_1407.zip`) | `@qa-publisher` | ✅ |
-| **Prueba de humo del CTO (11 o 12 de noviembre)** | CTO | ⏳ |
+| **Build candidata v0.3.1** (demo corta, entrada arreglada y modo Baja liviano): `Build/v0.3.1/Windows/MundoMagico.exe`, 0 errores | `@qa-publisher` | ✅ |
+| **Prueba de humo del CTO sobre v0.3.1 (11 o 12 de noviembre)** | CTO | ⏳ |
 | Correcciones y publicación (13 de noviembre) | todos | ⏳ |
 
 ---

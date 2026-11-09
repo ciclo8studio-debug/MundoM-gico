@@ -3,6 +3,15 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.1] — 2026-11-09 · Demo corta para publicar el 13 de noviembre (candidata)
+
+- Es la demo corta (final frente al castillo) con todo lo corregido después de la v0.3.0:
+  - entrada sin torniquetes duplicados;
+  - modo Calidad Baja más liviano (v0.4.1);
+  - calidad Baja por defecto.
+- Nueva variable `DemoCorta` (bool) en el jugador: si está activa, `RevisarFinDemo` usa el final del castillo (Y < -11450); si no, el final es la huida de la Casa.
+- **Estado del proyecto:** `DemoCorta = true` en el CDO. Para volver a generar la demo completa hay que ponerla en `false` y `ProjectVersion=0.4.x`.
+
 ## [0.4.1] — 2026-11-09 · Rendimiento
 
 ### Cambiado
