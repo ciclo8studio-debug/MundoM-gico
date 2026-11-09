@@ -1,0 +1,49 @@
+# Auditoría: Gameplay Engineer (mecánicas, físicas, IA)
+Proyecto: `C:\Users\pansh\Documents\Unreal Projects\MUNDO_MÁGICO` (UE 5.8). Fecha: 2026-11-09.
+Método: solo lectura de disco (`grep -a` sobre .uasset y Saved/Logs). No se usó unreal-mcp ni PIE. **Aviso:** grep sobre binarios muestra **nombres** (la tabla de nombres no tiene duplicados), así que no da un recuento real de nodos ni la lógica del grafo. Todo lo que dice "probable" hay que confirmarlo abriendo el BP.
+
+## Resumen
+- El gameplay está concentrado en `BP_ThirdPersonCharacter.uasset` (**10,1 MB**, 135 `K2Node_FunctionEntry`). En el mismo BP conviven el jugador, la UI y los menús, el guardado, las cinemáticas, los puzzles, el clima y los logros.
+- La IA del enemigo (`BP_Enemigo`, 1,2 MB) es una **máquina de estados hecha a mano sobre Event Tick**: `Pensar`, `Fase`, `VolverACasa`, `InicioBusqueda`, `Enfriamiento`, `UltimaRabia`, `PersecucionActiva`. Se mueve con `SimpleMoveToLocation`, tiene línea de visión con `LineTraceSingle` y usa `GetDistanceTo`. No hay **Behavior Tree, Blackboard, AIPerception ni PawnSensing**.
+- El sigilo y el ruido son **variables públicas del jugador que el enemigo lee directamente** (`RuidoPos`, `RuidoT`, `RadioRuido`, `LinternaEncendida`, `Agachada`, `Escondido`). No se usa `MakeNoise`/`ReportNoiseEvent`, así que el acoplamiento por cast es fuerte.
+- En los logs recientes no hay *Accessed None*. Los errores de script que aparecen corresponden a los bugs ya corregidos hoy. Las caídas son GPU/D3D11 (`DXGI_ERROR_DEVICE_HUNG`) y no vienen del BP.
+
+## Hallazgos
+| Sev | Hallazgo | Evidencia |
+|---|---|---|
+| 🔴 | El BP del jugador es monolítico (10 MB y ~135 funciones). Hay riesgo de corrupción o conflictos, compila lento y es imposible revisarlo o hacer merge. Mezcla movimiento, linterna, HUD, menú (`MenuArriba/Abajo`, `CfgSel0..6`), guardado (`SaveGameToSlot`, `BP_Partida`), puzzles (`Candado`, `CajaFuerte`, `Reloj`, `Fonografo`), cinemáticas (`CineParque`, `CinePayaso`, `Flashback`), clima (`Trueno`, `ActualizarLluvia`) y logros. | `Content/ThirdPerson/Blueprints/BP_ThirdPersonCharacter.uasset` (10 152 827 B) |
+| 🔴 | La IA corre sobre Tick sin BT ni Perception. La FSM vive en el Ubergraph de `BP_Enemigo` (`ReceiveTick`, `Pensar`, `Fase` como int). Escala mal con varios payasos, no se puede depurar con el BT debugger y en una iGPU/CPU débil cuesta por frame. | `Content/MundoMagico/Blueprints/BP_Enemigo.uasset` (nombres: `ReceiveTick`, `SimpleMoveToLocation`, `LineTraceSingle`, `AutoPossessAI`) |
+| 🟠 | Hay un Behavior Tree que no se usa en el pack Horror_Template (`BT_Ai_Enemy`, `BT_Task_Chase_Player`, `BT_Task_Wonder`, `BT_Task_Attack_Player`). Ningún BP de MundoMagico lo referencia. Sirve como base para migrar. | `Content/Horror_Template/Blueprinnts/Ai_Enemy/Main_Enemy_Ai/...` (grep sin coincidencias en `MundoMagico/Blueprints` ni `ThirdPerson/Blueprints`) |
+| 🟠 | `SetTimer` con tiempo 0 en **MostrarSusto** y **MostrarFinal**, repetido frame a frame (frames 658 a 663). Indica que se re-arma el timer en cada tick. Hoy se corrigió en Vigilar/RevisarFinal. **Hay que verificar** que se cubrieron todos los `SetTimerByFunctionName` que apuntan a MostrarSusto/MostrarFinal. | `Saved/Logs/MUNDO_MÁGICO_2-backup-2026.11.05-00.41.14.log` líneas 3518-3552 |
+| 🟠 | Índice 4 en el array `Payasos`, que tiene longitud 1 (16 veces en una sesión). Corregido a 0, pero el patrón sigue siendo frágil: los índices están hardcodeados en arrays que se llenan con `GetAllActorsOfClass` (4 referencias de nombre en el jugador). Cualquier cambio de nivel lo rompe. | `Saved/Logs/MUNDO_MÁGICO-backup-2026.11.09-04.29.28.log` línea 3611 (16 ocurrencias) |
+| 🟠 | El acoplamiento de ruido/sigilo es directo jugador↔enemigo: el enemigo hace cast a `BP_ThirdPersonCharacter` y lee `RuidoPos` y `RadioRuido`. La botella (`BP_BotellaLanzada`: `ProjectileMovement`, `Bounce`, Tick y Overlap, sin `OnComponentHit`) probablemente genera el ruido a través del jugador o por overlap, no en el impacto. Por eso no se puede añadir otra fuente de ruido (`BP_RuidoAzar`, puertas) sin tocar el BP del jugador. | strings de `BP_Enemigo` y de `BP_BotellaLanzada` |
+| 🟠 | Quedan nodos de depuración y consola en el BP del jugador: `PrintString`, `Hello`, `LogEstado`, `ExecuteConsoleCommand`, `DisableAllScreenMessages`. Los traces del jugador y del enemigo tienen `DrawDebugType` (el valor no se puede verificar con grep). `ExecuteConsoleCommand` en Shipping puede fallar o hacer algo inesperado (probablemente se usa para calidad o ScreenPercentage). | strings de `BP_ThirdPersonCharacter` y `BP_Enemigo` |
+| 🟠 | Hay teletransportes y posiciones por código: `K2_SetActorLocation` en el jugador (Revivir/GlitchLlegar/UsarPuerta son lo probable) y en el enemigo (`VolverACasa`/`Casa`, `bTeleport`), con `MakeVector` literales. Según la memoria del proyecto, las coordenadas del parque ya se movieron una vez al reestructurar el terreno. Si los destinos están en vectores literales y no en actores marcador, se rompen con cada cambio de layout. | nombres `K2_SetActorLocation`, `MakeVector`, `Casa`, `VolverACasa`; existe `BP_Marcador` pero hay que confirmar que se usa |
+| 🟢 | La linterna y la batería están razonablemente identificadas (`AlternarLinterna`, `ActualizarBateria`, `UsarPila`, `HBateria`, `TxtBateria`, sonidos `FlashLight_System`) y son buenas candidatas a extraerse primero. La interacción usa `BPI_Interaction` (interfaz del Horror_Template) y conviven `InteractuarZonas`/`ActualizarZona`, que es una vía paralela. | refs `/Game/Horror_Template/.../BPI_Interaction` |
+| 🟢 | `BP_SustoPasillo` está bien acotado a un susto guionizado (`MoveComponentTo`, `Delay`, `GetAllActorsOfClassWithTag`, `StartCameraFade`). No necesita IA. | `BP_SustoPasillo.uasset` |
+| 🟢 | En los logs no hay *Accessed None* ni *Runaway loop*. Las caídas de PIE son D3D11 `DEVICE_HUNG`/`REMOVED` (iGPU), no son de gameplay. | `MUNDO_MÁGICO-backup-2026.11.09-04.41.33.log` líneas 3105/3125; `...04.58.26.log` línea 3434; `...12.20.23.log` línea 3724 |
+| 🟢 | La navegación no se configura en `Config/DefaultEngine.ini` (no aparece RuntimeGeneration). El NavMesh dinámico debe estar puesto en el actor `RecastNavMesh` del mapa `L_Pabellon4` (GameDefaultMap). | `Config/DefaultEngine.ini` línea 74 |
+
+## Deuda técnica
+1. **BP monolítico**: hay que extraer componentes (ActorComponent BP): `AC_Linterna`, `AC_Sigilo` (ruido, aliento, latido), `AC_Interaccion`, `AC_Salud` y `AC_Inventario`. La UI y los menús deben ir a PlayerController/HUD, el guardado a GameInstance o subsistema, y los puzzles a sus propios actores.
+2. **IA sin BT**: la FSM está en Tick, sin AIController propio y sin Blackboard. Los estados están codificados en `Fase` (int) en vez de un Enum.
+3. **Sistema de ruido propietario**: se basa en variables compartidas, cuando debería usar `PawnNoiseEmitter` + `AIPerception (Hearing/Sight)`.
+4. **Índices y coordenadas hardcodeados** (`Payasos[n]`, `MakeVector` literales, `GetAllActorsOfClass` + índice).
+5. **Debug sin aislar** (PrintString, ExecuteConsoleCommand) y vías de interacción duplicadas (interfaz + zonas).
+6. **Packs sin integrar** que se solapan con lo existente: DynamicFalling, RoninGirl (sigilo), RadialWheel y SciFi_Beast06. Integrarlos antes de refactorizar duplicaría deuda.
+
+## Recomendaciones Sprint 1 (priorizadas; sin PIE en este PC)
+1. **Revisar en el editor, sin jugar, los SetTimer** de MostrarSusto/MostrarFinal y de todo `SetTimerByFunctionName` (Branch tiempo>0, y no re-armar en Tick). Pasar **Compile + Find in Blueprints "Payasos"** para encontrar otros índices literales. Riesgo bajo.
+2. **Sustituir índices fijos** por `ForEach`/`IsValidIndex`, o por referencias con tag o instancia editable. Se valida con *Compile* sin PIE.
+3. **Inventario de coordenadas**: buscar `MakeVector` y `SetActorLocation` en el jugador y el enemigo, y llevar los destinos a actores `BP_Marcador` en el nivel. Documentarlo en el BOARD.
+4. **Desactivar debug para Shipping**: poner los PrintString detrás de un flag `bDebug` y dejar los `DrawDebugType` en None. Revisar qué hace `ExecuteConsoleCommand`.
+5. **Diseñar (no implementar todavía) la migración de IA**: AIController `AIC_Payaso`, Blackboard (`Objetivo`, `UltimoRuido`, `Estado`), BT con Patrulla → Investigar ruido → Persecución → Volver a casa, partiendo de `BT_Ai_Enemy`. La implementación y la prueba deben ir a un PC con GPU dedicada o, como mínimo, a la build *Liviano* con un nivel de prueba vacío.
+6. **Primer corte del monolito sin cambiar comportamiento**: extraer `AC_Linterna` (batería, parpadeo, pila), que es lo más aislado. Hacerlo en una rama y con backup del .uasset, porque no se puede probar jugando.
+7. Las pruebas reales quedan aplazadas: preparar un **checklist de humo** (linterna, botella → enemigo investiga, agacharse, golpe/revivir, guardar/cargar) para ejecutarlo cuando haya hardware o en modo Liviano a baja resolución.
+
+## Solicitudes a otros agentes
+- **Tech Art / Rendering**: confirmar si las caídas `DXGI_ERROR_DEVICE_HUNG` de PIE se pueden mitigar (por ejemplo, un nivel de test sin Lumen/VSM o `r.ScreenPercentage` bajo) para recuperar algo de PIE para gameplay.
+- **Level Design**: listar los puntos de teletransporte, "Casa" del enemigo y zonas (`ActualizarZona`), y colocarlos como actores marcador. Validar que el `RecastNavMesh` de `L_Pabellon4` cubre el terreno orgánico nuevo.
+- **UI/UX**: asumir la extracción de menú, HUD, galería y config (`CfgSel*`, `Menu*`, `Galeria*`) del BP del jugador a un HUD o PlayerController.
+- **Audio**: definir los eventos de ruido (pasos, botella, puertas, RuidoAzar) con su radio y su volumen, para mapearlos a `ReportNoiseEvent` y Hearing Sense.
+- **Producción / QA**: aprobar la estrategia de rama + backup del .uasset antes de cualquier refactor, y mantener el checklist de humo para cuando haya hardware de prueba.

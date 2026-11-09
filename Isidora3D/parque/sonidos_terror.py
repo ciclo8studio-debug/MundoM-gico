@@ -216,7 +216,7 @@ def ambiente():
     f = int(3 * SR)
     r = np.linspace(0, 1, f)
     y[:f] = y[:f] * r + y[n - f:] * (1 - r)  # empalme para loop
-    guardar("Ambiente_T_Hospital", y[:n - f])
+    guardar("AMB_T_Hospital", y[:n - f])
 
 
 import os

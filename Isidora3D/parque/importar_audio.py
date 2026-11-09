@@ -15,7 +15,7 @@ for f in sorted(glob.glob(D + "*.wav")):
     t.save = True
     tasks.append(t)
 tools.import_asset_tasks(tasks)
-a = unreal.load_asset(F + "/Ambiente_T_Hospital")
+a = unreal.load_asset(F + "/AMB_T_Hospital")
 if a:
     a.set_editor_property('looping', True)
     unreal.EditorAssetLibrary.save_loaded_asset(a, False)
