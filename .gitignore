@@ -1,0 +1,20 @@
+# Solo se versiona el código y la documentación; modelos, audio, builds y respaldos quedan fuera.
+*
+!*/
+!.gitignore
+!README.md
+!.mcp.json
+!*.py
+!*.ps1
+!*.bat
+!*.md
+!Mundo Mágico_ Turno Nocturno.html
+!Isidora3D/parque/*.json
+!import_fuentes.json
+Build/
+Respaldo_*/
+VIDEO GAME MUNDO/
+Fuentes_descarga/
+MUSICA_PARA_UNREAL/
+SFX*/
+Perfil_A_pendiente_mejora_RAM/*.umap
