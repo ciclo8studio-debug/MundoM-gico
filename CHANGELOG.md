@@ -3,6 +3,11 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.7] — 2026-11-09 · Sin estática a ratos (build de prueba)
+
+### Quitado
+- **`SFX_T_Glitch`** (estática de cinta dañada, 1,5 s, que sonaba a ratos en la portada y con el glitch): el volumen del asset pasa a 0. Por eso el susto del glitch queda sin sonido hasta reemplazarlo.
+
 ## [0.3.6] — 2026-11-09 · Sin estática de TV (build de prueba)
 
 ### Quitado
