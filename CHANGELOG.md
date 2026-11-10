@@ -3,6 +3,20 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.17] — 2026-11-10 · Materiales con suciedad (build de prueba)
+
+### Cambiado
+- **`M_Triplanar`**, base de 17 materiales del parque: se le agregó una capa de suciedad.
+  - Usa `WorldAlignedTexture` con `T_Dirt_World_Align_01_A_D` (Horror_Hospital) en dos escalas, 300 y 1700, para que no se note la repetición.
+  - Se mezcla con el color base mediante el parámetro `Suciedad` (0,65).
+  - La rugosidad sube hacia 0,92, para quitar el brillo plástico.
+  - Parámetro nuevo: `EscalaSuciedad`.
+- **5 materiales que eran color plano** (`BasicShapeMaterial`) pasan a `M_Triplanar` con texturas reales:
+  - `MI_Concreto` → `T_Soul_Concrete_Generic01`
+  - `MI_Escombro` → `T_Cave_Floor`
+  - `MI_Azulejo` y `MI_Marco_Azul` → `T_PaintPeelOff`
+  - `MI_Oscuro` → `T_Slums_Wall`
+
 ## [0.3.16] — 2026-11-10 · Volumen general funcional (build de prueba)
 
 ### Corregido
