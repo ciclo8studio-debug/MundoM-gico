@@ -3,6 +3,13 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.28] — 2026-11-10 · Guardado al entrar a cada zona (build de prueba)
+
+### Agregado
+- **Punto de control por zona.** Al entrar a una zona nueva (las mismas que muestran su nombre en pantalla: Pabellón 4, Pasillo de Urgencias, Parque, Bodega, Teatro, Autos Chocones y Casa del Parque), `ActualizarZona` guarda tu posición en `PosControl` y llama a `Guardar`.
+- Si mueres, `Revivir` te devuelve a la entrada de la última zona. **Continuar** en el menú también parte desde ahí.
+- El guardado automático cada 30 s y al pausar sigue igual.
+
 ## [0.3.27] — 2026-11-10 · Silencio antes del susto (build de prueba)
 
 ### Agregado
