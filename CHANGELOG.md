@@ -3,6 +3,19 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.3] — 2026-11-09 · Look de película (post-proceso + luces, build de prueba)
+
+### Cambiado
+- **Post-proceso (`PostProcessVolume_0`):**
+  - Saturación 0,72.
+  - Sombras frías y desaturadas, y altas luces ámbar.
+  - Contraste 1,14; FilmToe 0,62 (negros más profundos).
+  - Grano 0,26, viñeta 0,62 y aberración de color 0,35.
+  - Bloom 0,6, nitidez 0,35 y AO 0,7.
+  - Exposición fija sin cambios.
+- **Luces:** 45 luces blancas pasan a temperatura de ampolleta. Las `LuzParque` quedan en 2600 K, los focos del teatro en 3200 K y el resto en 2900 K. No se tocaron las luces que colorea `BP_Interruptor` ni los rellenos altos.
+- **SkyLight:** 0,22 → 0,16, para tener negros reales.
+
 ## [0.3.2] — 2026-11-09 · Sprint 2: escondites y respiración (build de prueba)
 
 ### Corregido
