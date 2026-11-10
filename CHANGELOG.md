@@ -3,6 +3,19 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.21] — 2026-11-10 · Niebla en la avenida y faroles que mueren (build de prueba)
+
+### Agregado
+- **`BP_FarolMuere`** (Blueprint nuevo)
+  - Es una luz cálida de 7 cd, 3100 K y sin sombras.
+  - Cuando el jugador se acerca a menos de 7 m, parpadea, se apaga y queda a oscuras unos 9 s. Después vuelve con un parpadeo y se rearma 8 s más tarde.
+  - Revisa la distancia cada 0,2 s.
+- **8 faroles que se apagan al pasar** (`FAR_Muere*`) y **4 faroles con parpadeo verdoso** (`FAR_Parpadeo*`, `BP_FlickeringLight`), puestos en la cabeza de 12 de los 20 faroles que antes no tenían luz (carpeta `Parque/Faroles`). Los otros 8 siguen apagados.
+- **7 bancos de niebla baja en la avenida y sus costados** (`NIE_Avenida*`, `BP_FogArea`). Usan el mismo color frío que `NIE_Jardin`, con densidad 0,45.
+
+### Notas técnicas
+- La lógica se escribió con `write_graph_dsl`, que solo funciona con el editor en inglés. Para usarla hay que abrir Unreal con `-culture=en`.
+
 ## [0.3.20] — 2026-11-10 · Portada estilo afiche de cine (build de prueba)
 
 ### Cambiado
