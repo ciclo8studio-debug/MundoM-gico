@@ -3,6 +3,20 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.30] — 2026-11-10 · Audio espacial (build de prueba)
+
+### Agregado
+- **`ATT_Puntual`** (SoundAttenuation), creado con `herramientas/audio_espacial.py`.
+  - Esfera de 2,5 m más caída natural de 35 m.
+  - Filtro de agudos por distancia (a 35 m solo pasan hasta 2,5 kHz), para que lo lejano suene apagado.
+  - Dentro de 1,2 m deja de ser espacial, así un sonido pegado al jugador no salta de oído.
+- **Asignado a 34 sonidos que salen de un lugar concreto**:
+  - metales que crujen y lámparas que se sacuden;
+  - chispas y vapor;
+  - golpes, chillido y carrera de la criatura, vidrio y pedestal;
+  - puertas, llave y cajas de madera.
+- No se tocan los ambientes generales (viento, lluvia, música) ni los pasos del jugador, que siguen sonando en todas partes. Los sonidos 2D ignoran la atenuación.
+
 ## [0.3.29] — 2026-11-10 · Vibración del control (build de prueba)
 
 ### Agregado
