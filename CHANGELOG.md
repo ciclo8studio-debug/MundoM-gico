@@ -3,6 +3,16 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.31] — 2026-11-10 · Luz de luna (build de prueba)
+
+### Corregido
+- **La luna no iluminaba.** `DirectionalLight_0` tenía `LightColor` en (0,0,0), así que aportaba cero luz y lejos de los faroles todo quedaba negro. Probablemente quedó así en una pasada de colores anterior.
+- Ahora tiene el azul frío original de la especificación del parque (0x5577BB), con intensidad 0,5 lux y sin temperatura. Las sombras siguen activas, así que no entra al hospital.
+
+### Notas
+- Falta verificarla jugando: la captura automática no pudo grabar la ventana del juego.
+- Si queda muy clara o muy oscura, se ajusta con un solo número (`Intensity`).
+
 ## [0.3.30] — 2026-11-10 · Audio espacial (build de prueba)
 
 ### Agregado
