@@ -3,6 +3,24 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.15] — 2026-11-10 · Encontrado el ruido de "TV sin señal" (build de prueba)
+
+### Corregido
+- **Causa del ruido:** los sonidos de lluvia `Rain_Heavy_Ext01` (SoulCity, que usa `Rain_Heavy_Ext_Cue` en el personaje) y `SFX_Lluvia`. Se encontró por descarte:
+  - 0.3.13: todo mudo menos pasos y truenos → sin ruido.
+  - 0.3.14: mudos solo 17 ruidos blancos → sin ruido.
+  - 0.3.15: mudas solo las 2 lluvias → sin ruido.
+- Las dos lluvias quedan con volumen de asset 0. La lluvia se sigue viendo (`NS_Lluvia`) y los truenos se mantienen.
+- Los demás sonidos volvieron a su volumen original (respaldo en `herramientas/volumenes_originales.json`).
+
+### Cambiado (0.3.12)
+- `t.MaxFPS=30` en `DefaultEngine.ini`: es la mejora aprobada "30 fps iGPU".
+- Se devolvieron las respiraciones, `SFX_VHS`, `SFX_T_Glitch`, `MUS_Persecucion` y la lluvia exterior a 0,25, porque no eran la causa.
+
+### Pendiente
+- El deslizador de Volumen general no afecta a los sonidos sin Sound Class (pasos, truenos, lluvia y SoulCity). Hay que asignarles `SC_SFX` o `SC_Ambiente`.
+- Si se quiere volver a escuchar lluvia, buscar una lluvia más suave y limpia.
+
 ## [0.3.11] — 2026-11-10 · Música aislada (build de diagnóstico)
 
 ### Cambiado
