@@ -3,6 +3,14 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.26] — 2026-11-10 · Flashbacks sobre negro (build de prueba)
+
+### Cambiado
+- **Flashbacks de páginas** (las páginas 1, 5, 8, 12, 14 y 17 muestran burbujas de diálogo).
+  - Antes aparecían sobre el juego en movimiento, con el fondo y la lluvia. Ahora la pantalla queda en negro durante todo el flashback y el juego vuelve cuando termina.
+  - `WBP_HUD`: imagen nueva `FBNegro`, negra y a pantalla completa, con ZOrder 5. Las burbujas `FBBurbuja` y `FBOnoma` pasan a ZOrder 10, para quedar encima.
+  - `BP_ThirdPersonCharacter`: `AntesDePagina` sube la opacidad de `FBNegro` a 1 y `SiguienteLineaFB` la baja a 0 al terminar.
+
 ## [0.3.25] — 2026-11-10 · Rocas que brillaban en la noche (build de prueba)
 
 ### Corregido
