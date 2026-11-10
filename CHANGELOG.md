@@ -3,6 +3,18 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.25] — 2026-11-10 · Rocas que brillaban en la noche (build de prueba)
+
+### Corregido
+- **`M_RocksStylized`** (pack FreePack-RocksStylized, usado por las 34 rocas del parque).
+  - Antes era un material sin iluminación (Unlit) con la textura en Emissive, así que las rocas brillaban blancas en plena noche. Se vio en la grabación del teaser.
+  - Ahora es un material iluminado normal (DefaultLit): la textura × 0,55 va a BaseColor y la rugosidad es 0,92.
+  - Ese pack no está en la lista de `Versionar_Unreal.ps1`, así que este cambio vive solo en el proyecto local.
+
+### Notas
+- No se pudo verificar con captura, porque Windows negó el acceso a la duplicación de escritorio en ese momento. Hay que confirmarlo jugando.
+- La iluminación general del juego empaquetado (DX11) se ve muy oscura lejos de las luces. Se dejó así a propósito; queda pendiente de decidir.
+
 ## [0.3.24] — 2026-11-10 · Modo teaser y primer corte del teaser
 
 ### Agregado
