@@ -3,6 +3,21 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.24] — 2026-11-10 · Modo teaser y primer corte del teaser
+
+### Agregado
+- **`BP_TeaserDirector`** (`TEASER_Director` en el mapa)
+  - Solo se activa al abrir el juego con `-teaser`. Entonces quita los widgets, despausa, toma la cámara (CineCamera de 24 mm, sin desenfoque) y muestra la silueta y las apariciones de Isidora.
+  - Recorre 7 tomas definidas en los arreglos `IniPos`, `FinPos`, `Mira` y `Dur`, con un movimiento suave. Al terminar, cierra el juego.
+- **`herramientas/montar_teaser.ps1`**: arma el teaser con FFmpeg a partir de la grabación.
+  - Elige los mejores tramos y les aplica etalonaje, franjas de cine, fundidos y textos en Special Elite.
+  - Agrega la tarjeta final "MUNDO MÁGICO / TURNO NOCTURNO / PRÓXIMAMENTE", la música de terror y el latido acelerado sobre la silueta.
+- **Primer corte**: `Teaser/Teaser_MundoMagico.mp4`, de 25 s y 1280×720. No se versiona.
+
+### Cómo grabar
+- Ejecuta `MundoMagico.exe -teaser -windowed -ResX=1280 -ResY=720 -WinX=60 -WinY=60 -nosound`.
+- Graba con FFmpeg `ddagrab` en la zona de la ventana. `gdigrab` deja la imagen negra porque no captura DirectX.
+
 ## [0.3.23] — 2026-11-10 · Isidora fantasma (build de prueba)
 
 ### Agregado
