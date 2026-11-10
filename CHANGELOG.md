@@ -3,6 +3,17 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.19] — 2026-11-10 · Manchas en muros del parque y telas reales (build de prueba)
+
+### Agregado
+- **32 decals en paredes del parque** (`DEC_Muro_Parque*`, carpeta `Parque/Decals`).
+  - Hay grafitis, óxido chorreado, filtraciones, grunge y concreto dañado.
+  - Se colocaron con trazados laterales desde la avenida (y −4.700 a −12.700), con alturas, tamaños y giros variados.
+
+### Cambiado
+- **`MI_Bata` y `MI_Colchon`** pasaron de `BasicShapeMaterial` a `M_Triplanar`, con tela de Horror_Hospital (funda y colcha sucias). Se conservó el color original.
+- `MI_Charco` (agua brillante) y `MI_Hoja` (hoja verde) se dejaron planos a propósito.
+
 ## [0.3.18] — 2026-11-10 · Decals en el parque y silueta con cuerpo real (build de prueba)
 
 ### Agregado
