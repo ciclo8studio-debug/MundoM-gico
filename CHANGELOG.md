@@ -3,6 +3,19 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.20] — 2026-11-10 · Portada estilo afiche de cine (build de prueba)
+
+### Cambiado
+- **Portada del menú** (`T_PortadaHTML`, con el mismo asset y otra imagen).
+  - **Fondo:** el arte de la novela gráfica (`portadamuestra.jpg`), desaturado, oscurecido y con tinte frío.
+  - **Encuadre:** degradado negro a la izquierda, viñeta y franjas negras de cine arriba y abajo.
+  - **Título:** "MUNDO MÁGICO" en Special Elite, con una línea roja, "TURNO NOCTURNO" espaciado y la frase "El parque cerró hace años. Alguien sigue de turno."
+  - **Créditos:** un bloque al pie, al estilo de un afiche.
+  - **Herramientas:** se genera con `herramientas/componer_portada_cine.py` (Pillow) y se importa sin abrir Unreal con `importar_portada_cine.py`. La imagen anterior sigue en `Fuentes/UI/T_PortadaHTML.png`.
+- **`WBP_Menu`**
+  - Los 3 botones pasan del recuadro central a la izquierda, bajo el título, alineados a la izquierda.
+  - La lluvia del menú baja a 0,12 de opacidad.
+
 ## [0.3.19] — 2026-11-10 · Manchas en muros del parque y telas reales (build de prueba)
 
 ### Agregado
