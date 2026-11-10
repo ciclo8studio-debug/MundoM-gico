@@ -3,6 +3,19 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.2] — 2026-11-09 · Sprint 2: escondites y respiración (build de prueba)
+
+### Corregido
+- **Escondites (`BP_Hiding_Door`):** al entrar o salir, el jugador se teletransportaba con el centro de la cápsula a la altura de los pies del marcador (z = 4 cm), y quedaba medio enterrado y atascado. Ahora se suma +100 cm en Z y `bTeleport = true`. Los 3 clósets (`ESC_Armario_*`) volvieron a `Hospital/Escondites`.
+
+### Añadido
+- **Contener la respiración** (función `Respiracion`, se llama cada tick después de `EventoCasa`; variable `Jadeo`):
+  - Escondida + mantener **Correr (L3 / Shift)**: gasta aliento a 25/s.
+  - Si el aliento llega a 0: jadeo con `SFX_Respiracion`, mensaje y **ruido de 15 m durante 3 s** (`RuidoPos`/`RuidoT`/`RadioRuido`), al que los enemigos acuden.
+  - Escondida respirando normal con un `BP_Enemigo` a menos de 7 m: ruido suave de 7 m (te escucha).
+  - El mensaje al esconderse explica el control.
+- **Versionado del proyecto Unreal:** rama `unreal` con Git LFS (`herramientas/Versionar_Unreal.bat`).
+
 ## [0.3.1] — 2026-11-09 · Demo corta para publicar el 13 de noviembre (candidata)
 
 - Es la demo corta (final frente al castillo) con todo lo corregido después de la v0.3.0:
