@@ -3,6 +3,16 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.16] — 2026-11-10 · Volumen general funcional (build de prueba)
+
+### Corregido
+- Ningún sonido queda sin Sound Class: 267 assets (SoundWave y SoundCue) recibieron una.
+  - Loops, viento, lluvia, truenos y metal → `SC_Ambiente`.
+  - El resto → `SC_SFX`.
+- `DefaultEngine.ini`: `[/Script/Engine.AudioSettings] DefaultSoundClassName=SC_SFX`, por si aparece un sonido nuevo sin clase.
+- Ahora el deslizador de Volumen general (override de Master con hijos) controla todo el audio.
+- Nota: los pasos pasan a sonar con `SC_SFX` (1,25) y los truenos con `SC_Ambiente` (0,6).
+
 ## [0.3.15] — 2026-11-10 · Encontrado el ruido de "TV sin señal" (build de prueba)
 
 ### Corregido
