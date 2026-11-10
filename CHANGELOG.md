@@ -3,6 +3,12 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.10] — 2026-11-10 · Música de terror nueva (build de prueba)
+
+### Cambiado
+- **`MUS_Menu`:** ahora usa `Musica_Terror_Menu.wav` (92 s en loop, volumen 0,6, sin ruido), generada con `herramientas/componer_musica_terror.py`. Tiene un dron grave disonante, un sub-grave, un acorde frío que respira, una cajita musical de feria desafinada con eco y un latido lejano. El CTO identificó la música anterior como el ruido de "TV sin señal" (al bajarla a 0, desapareció).
+- **`AmbientSound_2`** (la música en el parque): volumen de 0,55 a 0,3.
+
 ## [0.3.9] — 2026-11-09 · Cortes de audio (build de prueba)
 
 ### Corregido
