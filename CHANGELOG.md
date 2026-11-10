@@ -3,6 +3,21 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.18] — 2026-11-10 · Decals en el parque y silueta con cuerpo real (build de prueba)
+
+### Agregado
+- **47 decals en el suelo del parque** (carpeta `Parque/Decals`, `DEC_Parque*`).
+  - Usan suciedad, grietas, daño de concreto, filtraciones, hundimientos y grunge de Horror_Hospital.
+  - Están repartidos en una grilla irregular, desde la entrada hasta y −12.700.
+  - Se colocaron con trazado al suelo, saltándose los techos y las atracciones.
+- **`MI_Silueta`**: material negro propio para la silueta, copiado de `MI_Oscuro`.
+
+### Cambiado
+- **`BP_SustoEnergia`** (la silueta del sombrero en la entrada) tiene un cuerpo real.
+  - Nuevo componente `Cuerpo`: SKM_Manny en negro, escala 2,75, con respiración lenta (MM_Idle a 0,6).
+  - Las esferas del torso, los brazos, las piernas y la cabeza quedan ocultas en el juego. El sombrero, el resplandor y la luz roja siguen igual.
+- **`ENT_SustoEnergia`** se volvió a colocar en la misma posición, para que tome el componente nuevo.
+
 ## [0.3.17] — 2026-11-10 · Materiales con suciedad (build de prueba)
 
 ### Cambiado
