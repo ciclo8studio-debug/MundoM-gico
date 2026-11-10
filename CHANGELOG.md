@@ -3,6 +3,17 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.23] — 2026-11-10 · Isidora fantasma (build de prueba)
+
+### Agregado
+- **`M_Isi_Fantasma`**: material translúcido sin iluminación, de un blanco frío que brilla más en los bordes del cuerpo (Fresnel), con opacidad de 0,12 a 0,65.
+- **`BP_IsidoraAparicion`**
+  - Usa SKM_Isidora3 con las 11 ranuras de material en `M_Isi_Fantasma`, sin sombra ni colisión, en reposo lento (MM_Idle a 0,35).
+  - Empieza invisible.
+  - Aparece cuando el jugador está a entre 11 y 23 m, y se gira para mirarlo de frente.
+  - Si el jugador se acerca a menos de 9,5 m, desaparece con una respiración y no vuelve.
+- **3 apariciones** (`Parque/Vivo/Isidora`): `APA_IsidoraTeatro` (−5000, −11000), `APA_IsidoraBodega` (−6500, −5900) y `APA_IsidoraNoria` (2500, −9800).
+
 ## [0.3.22] — 2026-11-10 · Latido del miedo (build de prueba)
 
 ### Agregado
