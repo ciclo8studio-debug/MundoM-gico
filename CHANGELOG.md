@@ -3,6 +3,11 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.9] — 2026-11-09 · Cortes de audio (build de prueba)
+
+### Corregido
+- **Cortes de audio que sonaban a estática** en la portada y el parque. En `DefaultEngine.ini` se cambió `AudioNumBuffersToEnqueue` de 1 a 4 y `AudioCallbackBufferFrameSize` de 1024 a 2048. También quedan `AudioMaxChannels=32` y `AudioNumSourceWorkers=2`, para que el CPU tenga margen.
+
 ## [0.3.8] — 2026-11-09 · Respiraciones silenciadas (build de prueba)
 
 ### Quitado
