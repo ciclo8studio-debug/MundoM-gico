@@ -3,6 +3,20 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.29] — 2026-11-10 · Vibración del control (build de prueba)
+
+### Agregado
+- **Efectos de vibración** en `/Game/MundoMagico/FX`, creados con `herramientas/crear_vibraciones.py`. Las curvas se pusieron por MCP.
+  - `FFE_Golpe`: 0,35 s, fuerte, con todos los motores.
+  - `FFE_Susto`: 0,8 s, sube de golpe y se va apagando, con todos los motores.
+  - `FFE_Trueno`: 1,6 s, retumbo grave, solo con los motores grandes.
+- **Dónde vibra** (`ClientPlayForceFeedback` sobre el PlayerController):
+  - Al recibir un golpe (`RecibirGolpe`).
+  - En cada trueno (`Trueno`).
+  - En `MostrarSusto`.
+  - Cuando aparece la silueta del sombrero (`BP_SustoEnergia`).
+  - Cuando aparece la criatura del pasillo (`BP_SustoPasillo`).
+
 ## [0.3.28] — 2026-11-10 · Guardado al entrar a cada zona (build de prueba)
 
 ### Agregado
