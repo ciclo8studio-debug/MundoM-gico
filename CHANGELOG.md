@@ -3,6 +3,11 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.6] — 2026-11-09 · Sin estática de TV (build de prueba)
+
+### Quitado
+- **`SFX_VHS`** (estática VHS de 1,5 s que se repetía en la portada y en el juego): el volumen del asset pasa a 0. Lo confirmó el CTO; era el ruido de "TV sin señal".
+
 ## [0.3.5] — 2026-11-09 · Thriller y sin ruido de estática (build de prueba)
 
 ### Cambiado
