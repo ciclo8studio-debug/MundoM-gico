@@ -3,6 +3,11 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.8] — 2026-11-09 · Respiraciones silenciadas (build de prueba)
+
+### Quitado
+- **`SFX_Respiracion` y `SFX_T_Respiracion`:** volumen del asset en 0. Según el CTO, sonaban a estática de TV. La mecánica de contener la respiración sigue activa, pero sin sonido; está pendiente reemplazarla por una respiración grabada.
+
 ## [0.3.7] — 2026-11-09 · Sin estática a ratos (build de prueba)
 
 ### Quitado
