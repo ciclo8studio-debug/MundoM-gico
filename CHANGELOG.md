@@ -3,6 +3,13 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.11] — 2026-11-10 · Música aislada (build de diagnóstico)
+
+### Cambiado
+- `MUS_Menu` y `MUS_Persecucion` con volumen de asset 0. Así queda igual que con el deslizador de Música en 0, que es cuando desaparece la estática.
+- Nueva `MUS_Ambiente_Terror` (copia de la pista compuesta, volumen 0,5, loop), que suena como **una sola instancia 2D** en `AmbientSound_2` (sin espacialización, volumen 0,4).
+- Diagnóstico: si la estática vuelve, el problema está en la pista; si no vuelve, estaba en cómo se disparaban las músicas viejas.
+
 ## [0.3.10] — 2026-11-10 · Música de terror nueva (build de prueba)
 
 ### Cambiado
