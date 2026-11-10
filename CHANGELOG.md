@@ -3,6 +3,16 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.22] — 2026-11-10 · Latido del miedo (build de prueba)
+
+### Agregado
+- **`SFX_Latido`**: latido grave (lub-dub) de 1 s, sin ruido y en loop exacto, con clase SC_SFX. Se compone con `herramientas/componer_latido.py` y se importa con `importar_latido.py`.
+- **`BP_LatidoMiedo`** (`SND_LatidoMiedo`, en `Parque/Vivo`)
+  - Cada 0,15 s mide la distancia a la amenaza más cercana: payaso, oso Willy o león.
+  - A más de 25 m está en silencio. A menos de 3 m suena al máximo.
+  - El volumen sube en curva (t²) y el ritmo se acelera de unos 51 a 105 latidos por minuto (pitch de 0,85 a 1,75).
+  - No es espacial: se siente dentro de la cabeza.
+
 ## [0.3.21] — 2026-11-10 · Niebla en la avenida y faroles que mueren (build de prueba)
 
 ### Agregado
