@@ -43,3 +43,8 @@ Largometraje de ficción, drama con suspenso y terror. Toma el parque infantil M
 
 ## ⚠️ Derechos
 El juego se basa en la película y usa el nombre y los personajes del parque (Oso Willy, Leoncio, Quincy). Antes de publicar con esos nombres hay que tener **por escrito la autorización de IMAGINARIO colectivo** (y de quien tenga los derechos de la marca y los personajes del parque) para la adaptación a videojuego.
+
+## Nota del CTO (2026-11-09): base de la historia del juego
+- El juego parte de **Isidora ya muerta**, en un **mundo de caos y sombras**.
+- El inicio de la historia sale de **la novela**: las páginas que se recolectan y que forman "la novela" en el juego.
+- La historia completa **aún no está definida**. Prioridad actual: **calidad visual profesional** (texturas, materiales, look), porque hoy "se ve como videojuego de cabro chico".
