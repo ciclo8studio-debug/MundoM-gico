@@ -3,6 +3,15 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.27] — 2026-11-10 · Silencio antes del susto (build de prueba)
+
+### Agregado
+- **`SM_Silencio`** (SoundMix): baja SC_Ambiente y Music a 0,03. Entra en 0,35 s y sale en 2,5 s. Los efectos (SC_SFX) no se tocan. Se crea con `herramientas/crear_mezcla_silencio.py`.
+
+### Cambiado
+- **`BP_SustoEnergia`** (silueta del sombrero): al dispararse, el ambiente y la música se apagan. La espera antes de mostrar la silueta sube de 1,2 a 1,8 s, para que se note el vacío. El sonido vuelve poco a poco cuando la silueta desaparece.
+- **`BP_SustoPasillo`**: el silencio entra con el mensaje "Las luces empiezan a apagarse" y dura todo el susto. El ambiente vuelve con el último sonido.
+
 ## [0.3.26] — 2026-11-10 · Flashbacks sobre negro (build de prueba)
 
 ### Cambiado
