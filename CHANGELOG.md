@@ -3,6 +3,18 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.5] — 2026-11-09 · Thriller y sin ruido de estática (build de prueba)
+
+### Cambiado
+- **Color estilo thriller** (antes era un look de película "bonito"):
+  - Saturación 0,55; sombras verde-azuladas y altas luces amarillo pálido.
+  - Tinte verdoso, FilmToe 0,68, viñeta 0,75 y bloom 0,22.
+- **Luces:** hospital en fluorescente frío (4300 K) y parque en sodio pálido (3100 K).
+
+### Quitado
+- **Estática del hospital:** los 3 `AmbientSound` con `AMB_T_Hospital` (ruido generado) quedan apagados (`bAutoActivate` false, volumen 0).
+- **Siseo de lluvia en el parque:** en `ActualizarLluvia`, el volumen exterior pasa de 0,25 a 0. La lluvia se sigue viendo y los truenos se mantienen.
+
 ## [0.3.3] — 2026-11-09 · Look de película (post-proceso + luces, build de prueba)
 
 ### Cambiado
