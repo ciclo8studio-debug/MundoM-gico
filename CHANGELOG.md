@@ -45,6 +45,7 @@ La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 - **Latido del miedo** (`BP_LatidoMiedo`):
   - Ahora también se acelera cuando **el payaso acosador está en pantalla**; antes solo reaccionaba al enemigo de la persecución.
   - Volumen máximo de 1,0 (antes 0,85) y alcance de 28 m (antes 25 m).
+- **Descompresión tras el glitch:** el payaso acosador no aparece hasta **60 s después de llegar al parque**. Antes podía aparecer apenas llegabas, porque contaba desde el inicio de la partida.
 
 ## [0.3.39] — 2026-11-11 · Reverb por zona
 
