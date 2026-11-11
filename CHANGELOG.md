@@ -3,6 +3,27 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.34] — 2026-11-11 · Teaser "El último turno" (del atardecer a la noche)
+
+### Agregado
+- **`BP_TeaserDirector`**: en modo `-teaser` ahora hace un ciclo de atardecer a noche en los primeros 18 s.
+  - Luz direccional: el sol baja de −35° a +5° y pasa de naranja a rojo, mientras su intensidad cae de 8 a 0. Después vuelve la luna (0,5 lux, azul).
+  - Luz de cielo: baja de 1,6 a 0,16.
+  - Recién de noche aparecen las estrellas (tag `Estrellas`) y la cúpula del cielo (tag `CieloDomo`).
+  - La silueta del sombrero aparece solo cuando ya es de noche.
+  - Las 7 tomas parten a través de la reja, mirando hacia el atardecer.
+- **Banda sonora compuesta por script** (`herramientas/componer_teaser_vals.py` y la versión corta `_corto.py`):
+  - un vals de feria (cajita y organillo) que se desafina, se ralentiza y se apaga como cinta estirada;
+  - un dron grave y un latido que se acelera;
+  - un segundo de silencio total y un golpe con chirrido metálico;
+  - notas finales de cajita desafinada sobre el título.
+- **`herramientas/montar_teaser_final.ps1`**: arma el corte final de 39 s con dos textos, "EL PARQUE CERRÓ HACE AÑOS." y "PERO NADIE LE AVISÓ A ELLA.".
+- **Video**: `Teaser/Teaser_ElUltimoTurno.mp4`, más una copia liviana `_movil.mp4`. No se versionan.
+
+### Pendiente
+- El cielo sigue negro durante el atardecer: solo el suelo y los árboles toman la luz dorada.
+- En la grabación el juego se cerró una toma antes, así que la toma de la silueta se tomó del primer teaser.
+
 ## [0.3.31] — 2026-11-10 · Luz de luna (build de prueba)
 
 ### Corregido
