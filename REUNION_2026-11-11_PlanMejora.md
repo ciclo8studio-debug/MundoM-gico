@@ -72,7 +72,7 @@
 
 ## 6. Decisiones del CTO
 
-1. **Fecha de publicación:**
+1. ✅ **Fecha de publicación. El CTO decidió la opción (a) el 11-11:** el 13-11 restringido y el 16-11 público.
    - **(a)** 13-11 en modo restringido y 16-11 público. La recomiendan @qa-publisher y @gameplay-engineer.
    - **(b)** 13-11 público con la v0.3.40, si la checklist sale limpia. Esta es la postura de @tech-lead.
 2. **Prioridad después del kit:** el hospital con `Horror_Hospital` (@world-builder) o el Director de miedo (@gameplay-engineer).

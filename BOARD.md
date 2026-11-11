@@ -6,7 +6,7 @@
 > 🗺️ **Plan de trabajo hasta la demo:** [`PLAN_DE_TRABAJO.md`](PLAN_DE_TRABAJO.md). Demo v0.5.0 el **10-12-2026** (plan acelerado, sprints de 1 semana), decisión de hardware el 17-11-2026.
 
 ## 🎯 Estado actual (2026-11-11)
-- 🧭 **Reunión del plan de mejora (11-11, noche):** ver el [acta](REUNION_2026-11-11_PlanMejora.md). Se congelan las features hasta validar la v0.3.40. Viene un kit de afinación para el CTO (`DA_Tuning`, saltos de prueba y guía), el hospital con `Horror_Hospital` y un Director de miedo. Hay **4 decisiones pendientes del CTO**.
+- 🧭 **Reunión del plan de mejora (11-11, noche):** ver el [acta](REUNION_2026-11-11_PlanMejora.md). Se congelan las features hasta validar la v0.3.40. Viene un kit de afinación para el CTO (`DA_Tuning`, saltos de prueba y guía), el hospital con `Horror_Hospital` y un Director de miedo. ✅ **itch.io:** el 13-11 se abre restringido para testers y el 16-11 se publica (decisión del CTO). Quedan 3 decisiones pendientes.
 - 🆕 **11-11 noche · build v0.3.40 lista** (`Build0.3.40`, 0 errores en el cook):
   - **Qué trae:** hospital AAA (balizas rojas, alarma, cuerpos y papeles de `SM_Notes`), sustos en el teatro y la noria, payaso acosador a distancia, Isidora y latido más notorios, y descompresión tras el glitch.
   - **Mañana (12-11):** el CTO la prueba con [`auditoria/checklist_v0.3.40.md`](auditoria/checklist_v0.3.40.md) y decide qué se publica: **v0.3.40**, o la v0.3.35 si algo falla.
@@ -19,7 +19,7 @@
 - **Decisiones pendientes del CTO:** las 5 del acta (qué se publica, playtest, ritmo de builds, prioridad del sprint y autorización de IMAGINARIO).
 - ✅ **IMAGINARIO:** el CTO confirmó el 11-11 que ya está la autorización para usar el material. Se puede usar el arte de la novela en la portada y el teaser.
 - 🧪 **Playtest de v0.3.34** en curso con [`auditoria/checklist_v0.3.34.md`](auditoria/checklist_v0.3.34.md).
-- ℹ️ El 13-11 se publica en **itch.io**, no en Steam: Steam requiere la cuenta Steamworks, la página de tienda y una revisión de 1 a 2 semanas.
+- ℹ️ El 13-11 se abre en **itch.io** solo para testers y el 16-11 pasa a ser público. No es Steam: Steam requiere la cuenta Steamworks, la página de tienda y una revisión de 1 a 2 semanas.
 
 ## 🗂️ Estado anterior (2026-11-09, noche)
 **Demo corta v0.3.1: lista para publicar.** El CTO jugó 32 minutos seguidos sin cierres.
