@@ -3,6 +3,18 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.40] — 2026-11-11 · Hospital AAA, parte 1 (sin build: entra en la build del 12-11)
+
+### Agregado
+- **Balizas de emergencia giratorias** (`LampsPack`, `BP_Lamp_Flat_Crazy`), colgadas del techo y teñidas de rojo (luz roja de 750 de radio, sin sombras para cuidar el rendimiento, con dispersión volumétrica). Materiales nuevos: `MI_Baliza_Vidrio_Rojo` y `MI_Baliza_Brillo_Rojo` en `/Game/MundoMagico/Luces`.
+  - Hay una en el pasillo de salida de la sala, encendida desde el inicio.
+  - Hay tres en el Pasillo de Urgencias, **apagadas hasta el susto**: aparecen con la etiqueta `SangrePasillo` en el destello blanco, como una alarma que se dispara después de que pasa la criatura.
+- **Utilería macabra** (`TA_CorpsesPackSample`): hay un cuerpo en la sala, otro en el pasillo de salida y otro en el Pasillo de Urgencias. El de Urgencias aparece solo después del susto.
+- **Papeles físicos** (`SM_Notes`):
+  - Hay notas con sangre en las paredes de la sala y de los dos pasillos; la de Urgencias aparece después del susto.
+  - Hay seis papeles arrugados en el suelo.
+- La utilería nueva no tiene colisión, así que no estorba al caminar ni cambia el sonido de los pasos. Todo está en la carpeta `Hospital/AAA` del Outliner.
+
 ## [0.3.39] — 2026-11-11 · Reverb por zona
 
 ### Agregado
