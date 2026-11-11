@@ -16,6 +16,13 @@ La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 - **Alarma de emergencia** (`SFX_Alarma`, compuesta con `herramientas/componer_alarma.py` e importada con `importar_alarma.py`): es una sirena lenta de dos tonos que suena por un parlante roto. Al final se corta la corriente, el tono cae y se apaga. Suena en `BP_SustoPasillo` justo cuando se encienden las balizas, después del destello.
 - **Las 62 páginas recogibles cambian a papeles de terror** (`SM_Notes`): ahora usan papel envejecido, viejo, quemado, con esquina rota y con sangre, en lugar del papel limpio de oficina. Cada una tiene un giro distinto en el suelo.
 
+- **Sustos reales en el teatro y la noria** (`BP_SustoTeatro`, `BP_SustoNoria`, en la carpeta `Parque/Sustos`). Cada uno se activa una sola vez, cuando el jugador entra a la zona:
+  1. Baja el sonido y se escucha una respiración.
+  2. Se enciende un foco que deja ver a la criatura: de pie en el escenario, o arriba de la noria, en la cabina más alta.
+  3. El foco se apaga y la criatura desaparece.
+  4. A los 1,1 s aparece **frente al jugador** con el ataque, el chillido y la vibración del control. Después hay un corte a negro.
+  5. Sale un mensaje en pantalla.
+
 - La utilería nueva no tiene colisión, así que no estorba al caminar ni cambia el sonido de los pasos. Todo está en la carpeta `Hospital/AAA` del Outliner.
 
 ## [0.3.39] — 2026-11-11 · Reverb por zona
