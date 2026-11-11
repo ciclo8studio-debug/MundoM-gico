@@ -13,6 +13,9 @@ La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 - **Papeles físicos** (`SM_Notes`):
   - Hay notas con sangre en las paredes de la sala y de los dos pasillos; la de Urgencias aparece después del susto.
   - Hay seis papeles arrugados en el suelo.
+- **Alarma de emergencia** (`SFX_Alarma`, compuesta con `herramientas/componer_alarma.py` e importada con `importar_alarma.py`): es una sirena lenta de dos tonos que suena por un parlante roto. Al final se corta la corriente, el tono cae y se apaga. Suena en `BP_SustoPasillo` justo cuando se encienden las balizas, después del destello.
+- **Las 62 páginas recogibles cambian a papeles de terror** (`SM_Notes`): ahora usan papel envejecido, viejo, quemado, con esquina rota y con sangre, en lugar del papel limpio de oficina. Cada una tiene un giro distinto en el suelo.
+
 - La utilería nueva no tiene colisión, así que no estorba al caminar ni cambia el sonido de los pasos. Todo está en la carpeta `Hospital/AAA` del Outliner.
 
 ## [0.3.39] — 2026-11-11 · Reverb por zona
