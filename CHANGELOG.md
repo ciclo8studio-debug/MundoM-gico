@@ -3,6 +3,22 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.41] — 2026-11-11 · Kit de afinación del CTO (fase 1 del plan de mejora rápida, sin build)
+
+### Agregado
+- **`DA_Tuning`** (`/Game/MundoMagico/Datos`, clase `BP_AfinacionDatos`): 18 valores e interruptores que el CTO cambia con doble clic, sin tocar Blueprints.
+  - Payaso acosador: espera, frecuencia, veces, distancias, mirada y duración.
+  - Isidora: distancias.
+  - Latido: alcance y volumen.
+  - Interruptores de los sustos del teatro y la noria.
+  - Los leen en `BeginPlay` `BP_PayasoAcecho`, `BP_IsidoraAparicion`, `BP_LatidoMiedo`, `BP_SustoTeatro` y `BP_SustoNoria`. El cook incluye siempre `/Game/MundoMagico/Datos` (`DirectoriesToAlwaysCook`).
+- **Saltos de prueba `-ir=<zona>`** (`BP_KitPrueba`, actor `DEV_KitPrueba` en `Juego/Dev`):
+  - Al abrir el `.exe` con `-ir=teatro`, el juego arranca solo y te deja en la zona.
+  - Zonas: hospital, pasillo, parque, teatro, noria, bodega y autos. Usan los `RSP_*` con la etiqueta `Ir_<zona>`.
+- **Panel `-dev`:** un texto arriba a la izquierda (`DevTexto` en `WBP_HUD`) con fps, posición X/Y y batería. Se actualiza cada 0,5 s.
+- **`Probar.bat`** en la raíz del repo: un menú del 1 al 8 que abre la build más reciente en la zona elegida, con el panel encendido.
+- **`GUIA_TUNING.md`**: qué valor hace qué, su rango seguro, cómo probar y qué se ajusta a mano en el editor.
+
 ## [0.3.40] — 2026-11-11 · Hospital AAA, parte 1 (sin build: entra en la build del 12-11)
 
 ### Agregado
