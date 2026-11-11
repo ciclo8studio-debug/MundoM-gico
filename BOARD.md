@@ -11,6 +11,9 @@
 - **Para el 13-11:** se recomienda publicar **v0.3.1** y corregir el borrador de itch.io, que promete contenido de la v0.4.
 - **Escondites:** desde la v0.3.2 los clósets volvieron a `Hospital/Escondites` (`BP_Hiding_Door` arreglado) y están **activos**. Nadie los ha probado.
 - **Decisiones pendientes del CTO:** las 5 del acta (qué se publica, playtest, ritmo de builds, prioridad del sprint y autorización de IMAGINARIO).
+- ✅ **IMAGINARIO:** el CTO confirmó el 11-11 que ya está la autorización para usar el material. Se puede usar el arte de la novela en la portada y el teaser.
+- 🧪 **Playtest de v0.3.34** en curso con [`auditoria/checklist_v0.3.34.md`](auditoria/checklist_v0.3.34.md).
+- ℹ️ El 13-11 se publica en **itch.io**, no en Steam: Steam requiere la cuenta Steamworks, la página de tienda y una revisión de 1 a 2 semanas.
 
 ## 🗂️ Estado anterior (2026-11-09, noche)
 **Demo corta v0.3.1: lista para publicar.** El CTO jugó 32 minutos seguidos sin cierres.
