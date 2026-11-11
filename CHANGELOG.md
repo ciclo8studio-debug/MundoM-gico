@@ -23,6 +23,18 @@ La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
   4. A los 1,1 s aparece **frente al jugador** con el ataque, el chillido y la vibración del control. Después hay un corte a negro.
   5. Sale un mensaje en pantalla.
 
+- **Payaso acosador** (`BP_PayasoAcecho`, actor `ENE_PayasoAcecho` en `Parque/Sustos`): aparece a lo lejos en el parque, fuera de la persecución.
+  - **Cuándo aparece:**
+    - La primera vez, a los 45 s de juego como mínimo. Después, cada 40–80 s.
+    - Como máximo 6 veces por partida, y solo en el parque (y < −4700).
+    - Nunca durante la persecución ni después del final.
+  - **Dónde aparece:** a 22–32 m, dentro de ±30° de donde mira la cámara, y solo si la línea de visión está despejada. Se para sobre el suelo real, te mira y queda quieto (`anim_idle_1`).
+  - **Cuándo desaparece:**
+    - Si te acercas a menos de 15 m.
+    - Si lo miras fijo durante 1 s.
+    - Si pasan 9 s.
+  - Al desaparecer, suena una **respiración detrás del jugador**.
+
 - La utilería nueva no tiene colisión, así que no estorba al caminar ni cambia el sonido de los pasos. Todo está en la carpeta `Hospital/AAA` del Outliner.
 
 ## [0.3.39] — 2026-11-11 · Reverb por zona
