@@ -6,6 +6,11 @@
 > 🗺️ **Plan de trabajo hasta la demo:** [`PLAN_DE_TRABAJO.md`](PLAN_DE_TRABAJO.md). Demo v0.5.0 el **10-12-2026** (plan acelerado, sprints de 1 semana), decisión de hardware el 17-11-2026.
 
 ## 🎯 Estado actual (2026-11-11)
+- 🆕 **11-11 noche · build v0.3.40 lista** (`Build0.3.40`, 0 errores en el cook):
+  - **Qué trae:** hospital AAA (balizas rojas, alarma, cuerpos y papeles de `SM_Notes`), sustos en el teatro y la noria, payaso acosador a distancia, Isidora y latido más notorios, y descompresión tras el glitch.
+  - **Mañana (12-11):** el CTO la prueba con [`auditoria/checklist_v0.3.40.md`](auditoria/checklist_v0.3.40.md) y decide qué se publica: **v0.3.40**, o la v0.3.35 si algo falla.
+  - **Excepción a la regla de builds:** el CTO pidió esta segunda build del día.
+  - **Pendiente:** el slider de SFX, que toca el menú y el guardado, se hace después de validar la build.
 - Hubo **reunión de avance** con los 5 super-agentes: ver el [acta](REUNION_2026-11-11.md).
 - Del 10 al 11-11 entraron 33 builds de prueba (v0.3.2 a v0.3.34) con mejoras visuales, de audio y de mecánicas. Están en el CHANGELOG, pero **casi nada se ha probado en el `.exe`**.
 - **Para el 13-11:** se recomienda publicar **v0.3.1** y corregir el borrador de itch.io, que promete contenido de la v0.4.

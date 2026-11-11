@@ -3,9 +3,9 @@
 Son unos 30–45 min y la hace el CTO, porque es su cuenta. Claude no inicia sesión ni sube nada por ti.
 
 ## 12-11 · Validar la versión
-1. Juega `Build\v0.3.35\Windows\MundoMagico.exe` de punta a punta con **Iniciar juego**, siguiendo `auditoria/checklist_v0.3.34.md`.
+1. Juega `Build\v0.3.40\Windows\MundoMagico.exe` de punta a punta con **Iniciar juego**, siguiendo `auditoria/checklist_v0.3.40.md`.
 2. Toma las 5 capturas mientras juegas (**Win + Alt + Impr Pant**). La lista está en `itchio_pagina_demo.md`.
-3. Si no hay cierres ni bloqueos, se publica la **v0.3.35**. Si algo grave falla, se publica la **v0.3.1**.
+3. Si no hay cierres ni bloqueos, se publica la **v0.3.40**. Si algo grave falla, se publica la **v0.3.35**, y si esa también falla, la **v0.3.1**.
 
 ## 13-11 · Crear la página
 1. Entra a itch.io → **Dashboard** → **Create new project**.
@@ -23,12 +23,12 @@ Son unos 30–45 min y la hace el CTO, porque es su cuenta. Claude no inicia ses
 3. **Visibility:** déjalo en **Draft** mientras subes el archivo.
 
 ## Subir el juego
-- El ZIP ya está en `Publicar\MundoMagico_Demo_v0.3.35_Win64.zip` (y el de `v0.3.1`).
+- Los ZIP ya están en `Publicar\`: `MundoMagico_Demo_v0.3.40_Win64.zip`, `v0.3.35` y `v0.3.1`.
 - **Si pesa menos de 1 GB:** en *Uploads* → **Upload files**, elige el ZIP y marca **Windows**.
 - **Si pesa más de 1 GB** (lo más probable, porque el juego ocupa 3,3 GB): itch.io no lo acepta desde el navegador, así que hay que subirlo con su programa oficial, **butler**:
   1. Descárgalo desde https://itch.io/docs/butler/installing.html.
   2. `butler login`. Se abre el navegador e inicias sesión tú.
-  3. `butler push "Publicar\MundoMagico_Demo_v0.3.35_Win64.zip" TU_USUARIO/mundo-magico-turno-nocturno:windows-demo --userversion 0.3.35`
+  3. `butler push "Publicar\MundoMagico_Demo_v0.3.40_Win64.zip" TU_USUARIO/mundo-magico-turno-nocturno:windows-demo --userversion 0.3.40`
   4. Vuelve a la página: el archivo aparece en *Uploads*, marcado como Windows.
 
 ## Publicar
