@@ -5,7 +5,14 @@
 > Comunicación interna solo vía este archivo (sin correos ni notificaciones externas).
 > 🗺️ **Plan de trabajo hasta la demo:** [`PLAN_DE_TRABAJO.md`](PLAN_DE_TRABAJO.md). Demo v0.5.0 el **10-12-2026** (plan acelerado, sprints de 1 semana), decisión de hardware el 17-11-2026.
 
-## 🎯 Estado actual (2026-11-09, noche)
+## 🎯 Estado actual (2026-11-11)
+- Hubo **reunión de avance** con los 5 super-agentes: ver el [acta](REUNION_2026-11-11.md).
+- Del 10 al 11-11 entraron 33 builds de prueba (v0.3.2 a v0.3.34) con mejoras visuales, de audio y de mecánicas. Están en el CHANGELOG, pero **casi nada se ha probado en el `.exe`**.
+- **Para el 13-11:** se recomienda publicar **v0.3.1** y corregir el borrador de itch.io, que promete contenido de la v0.4.
+- **Escondites:** desde la v0.3.2 los clósets volvieron a `Hospital/Escondites` (`BP_Hiding_Door` arreglado) y están **activos**. Nadie los ha probado.
+- **Decisiones pendientes del CTO:** las 5 del acta (qué se publica, playtest, ritmo de builds, prioridad del sprint y autorización de IMAGINARIO).
+
+## 🗂️ Estado anterior (2026-11-09, noche)
 **Demo corta v0.3.1: lista para publicar.** El CTO jugó 32 minutos seguidos sin cierres.
 Validado por el CTO:
 - Controles (✕ salta, □ interactúa).
