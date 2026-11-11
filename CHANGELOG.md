@@ -3,6 +3,21 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.38] — 2026-11-11 · Puertas con pantalla de carga (build del día, junto con la 0.3.37)
+
+### Corregido
+- **El sonido de "abrir puerta" sonaba al recoger cosas.** `UsarPuerta` toma el interactuable más cercano a menos de 2,3 m, y cualquiera que no fuera clóset, llave o puerta con llave (por ejemplo los 85 `BP_Recogible`) reproducía `SW_Open_Door`. Ahora solo suena si el objeto es una puerta real (`CastToBP_Creepy_Door`).
+
+### Agregado
+- **Pantalla de carga al estilo PlayStation** (`WBP_HUD`):
+  - `CargaFondo`: negro a pantalla completa (ZOrder 30).
+  - `CargaTitulo`: el nombre del lugar en Special Elite 46.
+  - `CargaSub`: "CARGANDO" abajo a la derecha.
+- **`MostrarCarga(Texto)` y `OcultarCarga`** (BP del jugador): muestran la pantalla 2,4 s con los controles bloqueados. Se usan:
+  - al abrir la puerta de la sala al pasillo (`BP_Creepy_Door`): "PASILLO DE URGENCIAS";
+  - al llegar al parque después del glitch (`GlitchLlegar`): "MUNDO MÁGICO".
+- La silueta del sombrero ahora espera 3,2 s (antes 1,8), para aparecer después de la pantalla de carga del parque y no detrás de ella.
+
 ## [0.3.37] — 2026-11-11 · Pasos según el suelo real
 
 ### Agregado
