@@ -3,6 +3,19 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.39] — 2026-11-11 · Reverb por zona
+
+### Agregado
+- **Efectos de reverb** (`/Game/MundoMagico/Audio/Mezcla`), creados con `herramientas/crear_reverbs.py`:
+  - `RV_Sala`: cuarto chico, seco, con decay de 0,75 s.
+  - `RV_Pasillo`: pasillo largo de baldosa, con decay de 2,6 s y reflexiones marcadas.
+  - `RV_Exterior`: parque abierto, con cola leve.
+- **`AplicarReverb`** (BP del jugador): se llama al cambiar de zona, en `ActualizarZona` después de `Guardar`. Aplica el reverb que corresponde con un fundido de 1,5 s:
+  - Pasillo de Urgencias: `RV_Pasillo`.
+  - Pabellón 4, Teatro, Casa y Bodega: `RV_Sala`.
+  - Parque: `RV_Exterior`.
+- El reverb afecta los pasos, la criatura, las puertas y todo el sonido del juego, así que cada lugar suena distinto.
+
 ## [0.3.38] — 2026-11-11 · Puertas con pantalla de carga (build del día, junto con la 0.3.37)
 
 ### Corregido
