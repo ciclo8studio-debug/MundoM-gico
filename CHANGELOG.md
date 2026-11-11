@@ -3,6 +3,31 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.35] — 2026-11-11 · Correcciones de la prueba del CTO (build única del día)
+
+Responde a lo que el CTO vio jugando la v0.3.34 con `auditoria/checklist_v0.3.34.md`.
+
+### Cambiado
+- **Visibilidad**: era el problema principal, porque no dejaba ver casi nada de lo nuevo.
+  - Exposición: `autoExposureMin/MaxBrightness` baja de 1,1 a 0,4 (la imagen se ve más clara).
+  - Luna: de 0,5 a 1,2 lux.
+  - SkyLight: de 0,16 a 0,3.
+- **Faroles con halo**:
+  - 49 luces del parque con `VolumetricScatteringIntensity` 3: el haz se ve en la niebla.
+  - `BP_FarolMuere`: de 7 a 18 cd, radio 10 m y dispersión volumétrica 5, para que se note cuando se apagan.
+  - Faroles con parpadeo: `LightBrightness` de 1000 a 2500.
+- **Rocas**: seguían claras porque la textura del pack es casi blanca. BaseColor ×0,22 (antes 0,55).
+- **Linterna**: gasta 0,22 % por segundo en vez de 0,4. Dura unos 7,5 min en vez de 4.
+- **Reaparecer**: nueva función `PuntoRespawn`. `Revivir` te lleva al punto fijo **más cercano** de los 10 `TargetPoint` con tag `Respawn` (carpeta `Juego/Respawn`): sala, pasillo, entrada, avenida, avenida al fondo, noria, teatro, bodega, casa y autos chocones. Antes el punto de control se actualizaba también al cambiar de objetivo, y te dejaba en lugares raros.
+- **Silueta del sombrero más terrorífica**:
+  - más alta y delgada (cuerpo con escala 2,3 × 3,2);
+  - sombrero y ala más arriba;
+  - **dos ojos rojos encendidos** (`OjoI`/`OjoD` con `MI_LedRojo`).
+  - `ENT_SustoEnergia` se volvió a colocar para que tome los cambios.
+
+### Por revisar
+- El glitch de salida del hospital no se activó en la prueba. Es probable que la partida viniera de **Continuar**, porque `SalidaHecha` se guarda. Hay que probar con **Iniciar juego**.
+
 ## [0.3.34] — 2026-11-11 · Teaser "El último turno" (del atardecer a la noche)
 
 ### Agregado
