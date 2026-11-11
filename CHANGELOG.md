@@ -3,6 +3,26 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.37] — 2026-11-11 · Pasos según el suelo real
+
+### Agregado
+- **Packs de Fab** agregados por el CTO: **Essential Footsteps** (botas en 10 superficies), **AutoFootsteps** (agua y madera) y **HeartBeats** (latidos de terror, médicos y de acción, para usar después).
+- **`PasoSuelo2` y `TocarPaso`** (BP del jugador): cada paso mira **la malla que pisa Isidora** (`GetMovementBaseActor` → `StaticMesh`) y elige el sonido de bota, caminando o corriendo:
+
+  | Pisa… | Suena |
+  |---|---|
+  | charco | barro mojado |
+  | rejas, hierro, metal, o la zona de autos chocones | metal |
+  | madera o escenario, o la zona del teatro o la casa | madera |
+  | el camino del parque | grava |
+  | terreno o pasto, o la zona de la bodega | tierra |
+  | cualquier otra cosa (hospital) | concreto |
+
+- `Paso` ahora llama a `PasoSuelo2`. El `PasoSuelo` antiguo, que elegía solo según la zona, queda sin uso.
+
+### Nota
+- Los packs de Fab no entran en `Versionar_Unreal.ps1`, así que viven solo en este PC. Para reconstruir en otro equipo hay que agregarlos desde Fab.
+
 ## [0.3.36] — 2026-11-11 · Slice AAA, Fase 1: linterna y cámara (build del día)
 
 ### Agregado
