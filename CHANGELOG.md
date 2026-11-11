@@ -3,6 +3,17 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.36] — 2026-11-11 · Slice AAA, Fase 1: linterna y cámara (build del día)
+
+### Agregado
+- **`IES_Linterna`** (`/Game/MundoMagico/Luces`): perfil de luz IES generado por script (`herramientas/crear_ies_linterna.py`), con centro caliente, anillo del reflector y caída suave. Se importa con `importar_ies.py`, que también lo asigna a la linterna.
+- **`ParpadeoLinterna`** (BP del jugador): con la batería bajo 20 %, la linterna baja de intensidad y parpadea. Mientras menos batería, más seguido. Se llama desde `ActualizarBateria`.
+- **Recursos de Fab**: revisión de los 114 de la biblioteca, con un plan de uso por lotes en `auditoria/fab_recursos_slice.md`.
+
+### Cambiado
+- **Linterna**: 4700 K, cálida como una incandescente de 1998 (antes 6300 K). Conos interior y exterior de 12° y 30° (antes 9° y 34°). Dispersión volumétrica de 3,5 (antes 2), para que el haz se vea en la niebla.
+- **Cámara al hombro**, estilo RE2 remake: brazo de 190 cm (antes 270) y desplazamiento lateral de 60 y vertical de 55 (antes 50 y 65). Cambia en el arranque, en `CambiarCamara` y en `CamaraDinamica`, que mantiene el balanceo al caminar.
+
 ## [0.3.35] — 2026-11-11 · Correcciones de la prueba del CTO (build única del día)
 
 Responde a lo que el CTO vio jugando la v0.3.34 con `auditoria/checklist_v0.3.34.md`.
