@@ -37,6 +37,15 @@ La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
 - La utilería nueva no tiene colisión, así que no estorba al caminar ni cambia el sonido de los pasos. Todo está en la carpeta `Hospital/AAA` del Outliner.
 
+### Cambiado (playtest del CTO: "no noté el latido ni a Isidora")
+- **Isidora** (`BP_IsidoraAparicion`, en el teatro, la bodega y la noria):
+  - Ahora aparece entre **10 y 35 m**; antes, entre 11 y 23 m.
+  - Al aparecer, suena un **glitch de radio** desde donde está y el control da una vibración suave.
+  - Desaparece cuando te acercas a menos de 9 m, con una respiración.
+- **Latido del miedo** (`BP_LatidoMiedo`):
+  - Ahora también se acelera cuando **el payaso acosador está en pantalla**; antes solo reaccionaba al enemigo de la persecución.
+  - Volumen máximo de 1,0 (antes 0,85) y alcance de 28 m (antes 25 m).
+
 ## [0.3.39] — 2026-11-11 · Reverb por zona
 
 ### Agregado
