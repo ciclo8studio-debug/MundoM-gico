@@ -6,6 +6,7 @@
 > 🗺️ **Plan de trabajo hasta la demo:** [`PLAN_DE_TRABAJO.md`](PLAN_DE_TRABAJO.md). Demo v0.5.0 el **10-12-2026** (plan acelerado, sprints de 1 semana), decisión de hardware el 17-11-2026.
 
 ## 🎯 Estado actual (2026-11-11)
+- 🛡️ **Reunión CTO + @tech-lead** ([acta](REUNION_2026-11-11_TechLead.md)): @tech-lead queda autorizado a proponer mejoras AAA. ✅ **Manda `MUNDO_MÁGICO` con itch.io.** `MundoMagico2` queda en pausa. Propuesta pendiente de aprobación: separar el hospital y el parque en 2 mapas, con la transición glitch → TV.
 - ✅ **El CTO descartó la refundación.** Se sigue el [plan de mejora rápida](PLAN_MEJORA_RAPIDA.md), que combina lo mejor de las dos reuniones. Fase 1, el kit del CTO, en curso.
 - 🔁 *(Archivada)* **Refundación propuesta (11-11, noche):** ver el [acta](REUNION_2026-11-11_Refundacion.md). Los 5 agentes votan la opción **A**: mapa nuevo y núcleo nuevo en `/Game/MM`, dentro del mismo proyecto. La v0.3.40 queda congelada como respaldo. Hay 5 decisiones pendientes del CTO.
 - 🧭 **Reunión del plan de mejora (11-11, noche):** ver el [acta](REUNION_2026-11-11_PlanMejora.md). Se congelan las features hasta validar la v0.3.40. Viene un kit de afinación para el CTO (`DA_Tuning`, saltos de prueba y guía), el hospital con `Horror_Hospital` y un Director de miedo. ✅ **itch.io:** el 13-11 se abre restringido para testers y el 16-11 se publica (decisión del CTO). ✅ Después del kit va primero el **hospital con `Horror_Hospital`**. Quedan 2 decisiones: el Perfil A parcial y borrar builds viejas.
