@@ -3,7 +3,7 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
-## [0.3.42] — 2026-11-12 · Hospital y parque en dos mapas (etapa E1 de la arquitectura en 3 niveles, sin build)
+## [0.3.42] — 2026-11-12 · Hospital y parque en dos mapas (etapa E1 de la arquitectura en 3 niveles). La build del 12-11 no trae la transición TV/VHS
 
 ### Cambiado
 - **El mapa único `L_Pabellon4` se separó en `L_Hospital` y `L_Parque`.** `L_Pabellon4` queda congelado como respaldo.
@@ -22,8 +22,12 @@ La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
   - `Abrir_MundoMagico*.ps1` abre `L_Hospital`.
   - `Probar.bat` abre el mapa que corresponde a cada zona.
 
-### Pendiente en la etapa E1
-- La transición visual **TV → negro → VHS**. Por ahora se usa la pantalla de carga que ya existía.
+### Agregado (12-11, después de la build)
+- **Transición TV → VHS entre los dos mapas** (`WBP_Transicion`, a cargo de `BP_GestorNivel`):
+  - **Salida del hospital, 1,6 s:** la imagen se encoge a una línea blanca y luego a un punto que se apaga, con un "tuk" del tubo y un pitido agudo que se va (`SFX_TV_Apagar`). Después viene el negro y se abre `L_Parque`.
+  - **Llegada al parque, 2,4 s:** en negro aparece "▶ PLAY 03:17" parpadeando y un grano VHS que tiembla, con el clac del mecanismo, el motor y el soplido de la cinta (`SFX_VHS_Play`, sin estática de TV). Después el parque aparece con un fundido.
+  - Los sonidos se componen con `herramientas/componer_transicion_tv.py` y se importan con `importar_transicion_tv.py`.
+- **`DEV_PisoGlitch`:** un piso invisible en el punto de llegada del glitch dentro de `L_Hospital`, para que el jugador no caiga mientras la TV se apaga.
 
 ## [0.3.41] — 2026-11-11 · Kit de afinación del CTO (fase 1 del plan de mejora rápida, sin build)
 
