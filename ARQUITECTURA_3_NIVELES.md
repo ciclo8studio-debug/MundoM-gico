@@ -265,6 +265,6 @@ Una build al día y 1–2 features por build. Cada una con su interruptor en `DA
 | Se repiten los sustos | Todo pasa por el `BP_DirectorMiedo`. |
 
 ## 9. Decisiones del CTO
-1. ¿Se aprueban los **3 niveles** (hospital → casona → parque) como ampliación de los 2 mapas ya aprobados?
+1. ✅ **3 niveles (Hospital → Casona → Parque): aprobados por el CTO el 11-11.**
 2. **Demo pública del 10-12:** ¿solo el Nivel 1 completo (recomendado) o los 3 niveles más cortos?
 3. ¿La **cámara 1ª persona** queda como opción del menú o como modo principal?
