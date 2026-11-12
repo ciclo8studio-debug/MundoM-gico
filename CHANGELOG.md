@@ -3,6 +3,14 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.43] — 2026-11-12 · Cámara en 1ª persona como modo principal (etapa E2, sin build)
+
+### Cambiado
+- **El juego arranca en 1ª persona** (decisión del CTO). La 3ª persona sigue como opción con el botón de cambiar vista que ya existía (`CambiarCamara`).
+  - `BP_GestorNivel.AplicarCamara` se ejecuta 0,4 s después de cargar cada mapa. Si `DA_Tuning.Camara_PrimeraPorDefecto` está activo, cambia a 1ª persona y quita el retraso de cámara para que no se sienta flotante.
+  - **Altura de los ojos:** en 1ª persona la cámara sube de 25 cm sobre el centro de la cápsula (la altura del pecho) a 57 cm, con 10 cm hacia adelante (`SocketOffset` = 10, 0, 32).
+  - **Nuevo valor en `DA_Tuning`:** `Camara_PrimeraPorDefecto` (activo). Si lo desmarcas, el juego vuelve a arrancar en 3ª persona.
+
 ## [0.3.42] — 2026-11-12 · Hospital y parque en dos mapas (etapa E1 de la arquitectura en 3 niveles). La build del 12-11 no trae la transición TV/VHS
 
 ### Cambiado

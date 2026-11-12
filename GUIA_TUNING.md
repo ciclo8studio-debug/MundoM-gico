@@ -23,6 +23,7 @@
 | Latido_VolMax | Volumen máximo del latido | 1,0 | 0,3–1,5 |
 | **SustoTeatro_Activo** | Enciende o apaga el susto del teatro | ✅ | — |
 | **SustoNoria_Activo** | Enciende o apaga el susto de la noria | ✅ | — |
+| **Camara_PrimeraPorDefecto** | El juego arranca en 1ª persona (desmárcalo para volver a la 3ª) | ✅ | — |
 
 > **Si algo falla en un playtest,** apágalo desmarcando su casilla y haz la build. No hace falta tocar ningún Blueprint.
 
