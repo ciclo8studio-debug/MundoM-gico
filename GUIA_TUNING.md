@@ -68,3 +68,9 @@ Se cambia en el panel **Details** de cada actor del mapa:
 ## 4. Lo que todavía pide a Claude
 - La batería de la linterna, por ahora 0,22 % por segundo, sigue dentro del Blueprint del jugador. Pasa a `DA_Tuning` en la próxima fase.
 - Cualquier lógica nueva: sustos, IA o mecánicas.
+
+## 5. Puertas con llave (arrástralas tú)
+1. En el Content Browser, ve a `MundoMagico/Mundo/`.
+2. Arrastra **`BP_DoorLocked`** a una puerta del mapa y **`BP_LlaveFlag`** a donde quieras esconder la llave.
+3. Para cada una, en el panel **Details → Actor → Tags**, agrega **el mismo nombre** como primera etiqueta (por ejemplo `LlaveMorgue`).
+4. Guarda y haz la build. La llave con ese nombre abre la puerta con ese nombre.

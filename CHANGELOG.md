@@ -3,6 +3,24 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.46] — 2026-11-12 · Llaves con nombre, puertas cerradas y GameInstance (etapa E2, sin build)
+
+### Agregado
+- **`BP_GI_MundoMagico`** (`/Game/MundoMagico/Core`): ahora es el **GameInstance del proyecto** (`GameInstanceClass` en `DefaultEngine.ini`).
+  - Guarda los **flags** (llaves y eventos) y se conservan aunque cambies de mapa (hospital → parque).
+  - Tiene `AgregarFlag(Flag)`. Las puertas leen `Flags` directamente.
+- **`BP_DoorLocked`** (`/Game/MundoMagico/Mundo`): una puerta del Horror Template con ícono y animación de abrir.
+  - **Se abre solo si existe el flag que lleva como primera etiqueta** (por ejemplo `LlaveMorgue`).
+  - Si no está, suena el picaporte y aparece "Está cerrada. Algo tiene que abrirla."
+- **`BP_LlaveFlag`**: una llave que se recoge con □/E.
+  - **Agrega su primera etiqueta como flag** y muestra "Encontraste: <nombre>".
+  - Una llave con la etiqueta `LlaveMorgue` abre la puerta con la misma etiqueta.
+- Las dos usan la interfaz de interacción que ya existía (`BPI_Interaction`), así que funcionan con el mismo botón sin tocar `UsarPuerta`.
+
+### Pendiente
+- **Los flags todavía no se guardan en la partida:** se pierden al salir del juego y volver con Continuar. Entra con `SG_Partida`.
+- **Las puertas con código numérico** van con el puzle del negatoscopio (E4).
+
 ## [0.3.45] — 2026-11-12 · Ruido según el suelo (etapa E2, sin build)
 
 ### Agregado
