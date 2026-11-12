@@ -2,7 +2,7 @@
 
 El CTO **descartó la refundación**: se sigue con el juego actual y se le suma lo mejor de las dos reuniones del 11-11 ([plan de mejora](REUNION_2026-11-11_PlanMejora.md) y [refundación](REUNION_2026-11-11_Refundacion.md)).
 
-**itch.io:** se abre en modo restringido el 13-11 y se publica el 16-11, como ya decidió el CTO.
+**itch.io (actualizado el 12-11):** se cancelan el restringido del 13-11 y el público del 16-11. Habrá testers privados alrededor del 26-11 y la publicación es el **10-12** con el Nivel 1 completo. El plan de trabajo vigente está en [`ARQUITECTURA_3_NIVELES.md`](ARQUITECTURA_3_NIVELES.md).
 
 ## Fases
 

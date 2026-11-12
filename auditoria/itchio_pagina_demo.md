@@ -1,4 +1,6 @@
-# Página de itch.io — Demo corta (restringida el 13-11 · pública el 16-11-2026)
+# Página de itch.io — Demo (pública el 10-12-2026; testers privados alrededor del 26-11)
+
+> **12-11:** el CTO aplazó la publicación. Esta página se actualiza antes del 10-12 para la v0.5.0, con el Nivel 1 completo y la cámara en 1ª persona.
 
 **Responsable:** `@qa-publisher` · **Estado:** listo para copiar y pegar. El CTO publica.
 **Versión a subir:** **v0.3.40** si el CTO la valida el 12-11 con `checklist_v0.3.40.md` y `checklist_humo.md`. Si no, **v0.3.35** como respaldo.

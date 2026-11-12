@@ -236,6 +236,9 @@ BeginPlay del mapa nuevo ─► WBP_Transicion.Entrada(Estilo)
 
 ## 7. Hoja de ruta
 
+> **Actualización del 12-11 (CTO):** no se publica el 13 ni el 16-11. Habrá testers privados alrededor del **26-11**, al cierre de E4, y la publicación en itch.io es el **10-12**.
+
+
 Una build al día y 1–2 features por build. Cada una con su interruptor en `DA_Tuning` y su línea en la checklist.
 
 | Etapa | Días | Contenido | Build |
