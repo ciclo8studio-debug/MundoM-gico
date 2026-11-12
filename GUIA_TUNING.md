@@ -26,6 +26,10 @@
 | **Director_Activo** | Enciende o apaga el Director de miedo. Si está apagado, cada susto va por su cuenta | ✅ | — |
 | Director_Enfriamiento | Segundos mínimos entre un susto y el siguiente | 40 | 20–120 |
 | Director_Decae | Cuánto baja la tensión por segundo | 1,5 | 0,5–5 |
+| **Ruido_Activo** | Los pasos hacen ruido que oye la IA | ✅ | — |
+| Ruido_Metal / Madera / Charco / Baldosa / Grava / Tierra / Alfombra | Cuánto ruido hace cada suelo | 1,8 / 1,6 / 1,4 / 1,0 / 0,9 / 0,6 / 0,3 | 0,1–3 |
+| Ruido_Caminar / Correr / Agachado | Cuánto ruido hace cada forma de moverse | 1,0 / 2,5 / 0,3 | 0,1–4 |
+| Ruido_RadioBase | Distancia en cm a la que se oye un paso normal (×ruido) | 1500 | 500–3000 |
 | **Camara_PrimeraPorDefecto** | El juego arranca en 1ª persona (desmárcalo para volver a la 3ª) | ✅ | — |
 
 > **Si algo falla en un playtest,** apágalo desmarcando su casilla y haz la build. No hace falta tocar ningún Blueprint.
@@ -45,7 +49,7 @@ Haz doble clic en **`Probar.bat`**, en la carpeta del proyecto. Abre la build m�
 | 8 | Juego normal | Partida completa |
 
 - El juego arranca solo y en 2 segundos te deja en la zona elegida, con el mensaje "PRUEBA: zona".
-- Arriba a la izquierda aparece el **panel de prueba**, con **fps, posición X/Y y batería**. Anota los fps de cada zona.
+- Arriba a la izquierda aparece el **panel de prueba**, con **fps, posición X/Y, batería, ruido del paso (×10) y tensión del Director**. Anota los fps de cada zona.
 - Sin `Probar.bat` (doble clic en `MundoMagico.exe`), el juego es el normal y no muestra el panel.
 
 > **Ojo:** al saltar se carga la partida guardada, si existe. Para una prueba "en limpio", borra la partida en el menú con **Retroceso** antes de usar `Probar.bat`.

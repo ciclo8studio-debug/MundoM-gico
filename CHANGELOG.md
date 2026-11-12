@@ -3,6 +3,33 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.45] — 2026-11-12 · Ruido según el suelo (etapa E2, sin build)
+
+### Agregado
+- **`AC_Ruido`** (componente en `/Game/MundoMagico/Componentes`, agregado al jugador). En cada paso calcula **qué tan fuerte suena** según el suelo y cómo te mueves:
+  - **Superficie:**
+
+    | Superficie | Multiplicador |
+    |---|---|
+    | Metal, reja, hierro y la zona de los autos | 1,8 |
+    | Madera, escenario y las zonas del teatro y la casa | 1,6 |
+    | Charco | 1,4 |
+    | Baldosa | 1,0 |
+    | Grava (camino) | 0,9 |
+    | Tierra, pasto y la zona de la bodega | 0,6 |
+    | Alfombra | 0,3 |
+
+  - **Forma de moverte:** caminar ×1,0, correr ×2,5 y agachado ×0,3.
+  - **Ruido = movimiento × superficie.** El radio en que se oye es `Ruido_RadioBase` × ruido (1500 cm caminando sobre baldosa).
+  - El componente emite un **evento de ruido de IA** (`ReportNoiseEvent`, etiqueta "Paso"). Lo va a escuchar la Sombra con linterna en la etapa E3.
+  - Los pasos fuertes (ruido de 1,2 o más, como correr o pisar metal o madera) **también alertan al enemigo actual**: actualizan `RuidoPos` y `RuidoT`.
+- **Nuevos valores en `DA_Tuning`:**
+  - `Ruido_Activo`;
+  - un multiplicador por superficie (`Ruido_Metal`, `Ruido_Madera`, `Ruido_Charco`, `Ruido_Baldosa`, `Ruido_Grava`, `Ruido_Tierra`, `Ruido_Alfombra`);
+  - `Ruido_Caminar`, `Ruido_Correr` y `Ruido_Agachado`;
+  - `Ruido_RadioBase`.
+- **El panel `-dev` muestra además** el **ruido** del último paso (×10) y la **tensión** del Director.
+
 ## [0.3.44] — 2026-11-12 · Director de miedo (etapa E2, sin build)
 
 ### Agregado
