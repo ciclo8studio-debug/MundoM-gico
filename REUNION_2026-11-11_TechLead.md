@@ -69,5 +69,5 @@ Si la v0.3.42 falla, el 16-11 se publica la v0.3.41.
 
 ## 5. Decisiones del CTO
 1. ✅ **Qué línea manda. Lo decidió el CTO el 11-11: `MUNDO_MÁGICO`, con itch.io el 13-11 restringido y el 16-11 público.** `MundoMagico2` queda en pausa y no se borra. La pregunta original fue: `MUNDO_MÁGICO`, con itch.io el 13 y el 16-11, o `MundoMagico2`, que empieza de cero sin fechas.
-2. ¿Apruebas los **dos mapas con transición TV**?
+2. ✅ **Dos mapas con transición TV: aprobado por el CTO el 11-11.** Se hacen el 13-11 en la build v0.3.42.
 3. ¿El 16-11 se publica con la separación (v0.3.42) y el hospital AAA llega como actualización el 18-11? ¿O se atrasa la publicación al 18-11 para que salga todo junto?
