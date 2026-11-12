@@ -267,4 +267,4 @@ Una build al día y 1–2 features por build. Cada una con su interruptor en `DA
 ## 9. Decisiones del CTO
 1. ✅ **3 niveles (Hospital → Casona → Parque): aprobados por el CTO el 11-11.**
 2. ✅ **Demo pública del 10-12: el Nivel 1 (Hospital) completo, más un adelanto de la Casona. Lo decidió el CTO el 11-11.** La Casona y el Parque completos quedan para el juego completo (Steam).
-3. ¿La **cámara 1ª persona** queda como opción del menú o como modo principal?
+3. ✅ **La 1ª persona es el MODO PRINCIPAL; la 3ª queda como opción del menú. Lo decidió el CTO el 11-11.** Entra en E2 con un interruptor en `DA_Tuning` (`Camara_PrimeraPorDefecto`). Las builds de itch.io del 13 y el 16-11 (v0.3.41 y v0.3.42) siguen en 3ª persona, igual que su página. La página de itch.io se actualiza a "primera persona" cuando salga la build con la cámara nueva.
