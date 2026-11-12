@@ -3,6 +3,28 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.42] — 2026-11-12 · Hospital y parque en dos mapas (etapa E1 de la arquitectura en 3 niveles, sin build)
+
+### Cambiado
+- **El mapa único `L_Pabellon4` se separó en `L_Hospital` y `L_Parque`.** `L_Pabellon4` queda congelado como respaldo.
+  - **`L_Hospital`:** sala, pasillo de urgencias y patio de salida. Tiene 432 actores; se le quitaron 1 404 del parque, junto con el terreno, el bosque y las rejas.
+  - **`L_Parque`:** entrada, avenida y atracciones. Tiene 1 427 actores; se le quitaron 409 del hospital. El `PlayerStart` quedó en la reja de entrada (0, −4300).
+  - Las coordenadas no cambian, así que todas las funciones del jugador siguen funcionando igual.
+- **Al parque solo se llega con el glitch** (`BP_GestorNivel`, actor `DEV_GestorNivel` en los dos mapas):
+  - En el hospital, cuando el glitch de salida te lleva al otro lado, se guarda la partida, se crea el aviso `Transicion` y se abre `L_Parque`.
+  - En el parque, se lee ese aviso, la partida arranca sola con la pantalla "MUNDO MÁGICO" y te deja en la reja de entrada.
+  - Si abres el parque sin venir del glitch (y sin `-ir=`), te devuelve al hospital, que es donde está el menú.
+  - **Continuar** con una partida que ya salió del hospital te lleva directo al parque.
+- **"Volver al menú"** abre `L_Hospital`.
+- **Configuración y herramientas:**
+  - `GameDefaultMap` y `EditorStartupMap` ahora son `L_Hospital`.
+  - La build cocina los dos mapas.
+  - `Abrir_MundoMagico*.ps1` abre `L_Hospital`.
+  - `Probar.bat` abre el mapa que corresponde a cada zona.
+
+### Pendiente en la etapa E1
+- La transición visual **TV → negro → VHS**. Por ahora se usa la pantalla de carga que ya existía.
+
 ## [0.3.41] — 2026-11-11 · Kit de afinación del CTO (fase 1 del plan de mejora rápida, sin build)
 
 ### Agregado

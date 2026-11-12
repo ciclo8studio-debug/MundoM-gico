@@ -45,5 +45,8 @@ if "%OP%"=="8" (
 )
 if not defined ZONA goto menu
 echo Abriendo %VER% en: %ZONA% ...
-start "" "%EXE%" -ir=%ZONA% -dev
+set "MAPA=L_Parque"
+if "%ZONA%"=="hospital" set "MAPA=L_Hospital"
+if "%ZONA%"=="pasillo" set "MAPA=L_Hospital"
+start "" "%EXE%" %MAPA% -ir=%ZONA% -dev
 goto menu
