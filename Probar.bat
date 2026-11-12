@@ -27,6 +27,7 @@ echo   5. Noria
 echo   6. Bodega
 echo   7. Autos chocadores
 echo   8. Juego normal (sin saltar)
+echo   9. Entrada del parque con PERFIL A en vivo (comparar con la 3)
 echo   0. Salir
 echo ----------------------------------------------
 set /p OP="Elige una opcion: "
@@ -41,6 +42,12 @@ if "%OP%"=="7" set "ZONA=autos"
 if "%OP%"=="0" exit /b 0
 if "%OP%"=="8" (
   start "" "%EXE%" -dev
+  goto menu
+)
+if "%OP%"=="9" (
+  rem Perfil A en vivo: apaga GI dinamica, reflejos Lumen, sombras virtuales y MegaLights solo en esta sesion.
+  rem No cambia el proyecto ni recompila shaders. Compara los fps del panel con la opcion 3.
+  start "" "%EXE%" L_Parque -ir=parque -dev -dpcvars=r.DynamicGlobalIlluminationMethod=0,r.ReflectionMethod=2,r.Shadow.Virtual.Enable=0,r.MegaLights.Enable=0,r.Lumen.DiffuseIndirect.Allow=0,r.Lumen.Reflections.Allow=0
   goto menu
 )
 if not defined ZONA goto menu
