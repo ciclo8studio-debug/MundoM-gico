@@ -266,5 +266,5 @@ Una build al día y 1–2 features por build. Cada una con su interruptor en `DA
 
 ## 9. Decisiones del CTO
 1. ✅ **3 niveles (Hospital → Casona → Parque): aprobados por el CTO el 11-11.**
-2. **Demo pública del 10-12:** ¿solo el Nivel 1 completo (recomendado) o los 3 niveles más cortos?
+2. ✅ **Demo pública del 10-12: el Nivel 1 (Hospital) completo, más un adelanto de la Casona. Lo decidió el CTO el 11-11.** La Casona y el Parque completos quedan para el juego completo (Steam).
 3. ¿La **cámara 1ª persona** queda como opción del menú o como modo principal?
