@@ -23,6 +23,9 @@
 | Latido_VolMax | Volumen máximo del latido | 1,0 | 0,3–1,5 |
 | **SustoTeatro_Activo** | Enciende o apaga el susto del teatro | ✅ | — |
 | **SustoNoria_Activo** | Enciende o apaga el susto de la noria | ✅ | — |
+| **Director_Activo** | Enciende o apaga el Director de miedo. Si está apagado, cada susto va por su cuenta | ✅ | — |
+| Director_Enfriamiento | Segundos mínimos entre un susto y el siguiente | 40 | 20–120 |
+| Director_Decae | Cuánto baja la tensión por segundo | 1,5 | 0,5–5 |
 | **Camara_PrimeraPorDefecto** | El juego arranca en 1ª persona (desmárcalo para volver a la 3ª) | ✅ | — |
 
 > **Si algo falla en un playtest,** apágalo desmarcando su casilla y haz la build. No hace falta tocar ningún Blueprint.

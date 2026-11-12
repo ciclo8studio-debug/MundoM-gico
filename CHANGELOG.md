@@ -3,6 +3,20 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.44] — 2026-11-12 · Director de miedo (etapa E2, sin build)
+
+### Agregado
+- **`BP_DirectorMiedo`** (actor `DEV_DirectorMiedo` en los dos mapas): un solo reloj para todos los sustos.
+  - Lleva una **tensión** de 0 a 100 que baja con el tiempo, a `Director_Decae` puntos por segundo.
+  - Fija un **enfriamiento global** de `Director_Enfriamiento` segundos (40 por defecto) entre sustos.
+  - **No repite el mismo tipo** dos veces seguidas, salvo que haya pasado el doble del enfriamiento. Los tipos son: 0 audio, 1 visual, 2 físico, 3 enemigo y 4 guion.
+  - `PedirTurno(Tipo, Intensidad)` lo usan los sustos que pueden esperar. `Registrar(Tipo, Intensidad)` lo usan los sustos guionados, que siempre ocurren pero cuentan para el ritmo.
+- **Qué sustos usa cada uno:**
+  - **El payaso acosador** pide turno antes de aparecer, como tipo enemigo con intensidad 25. Si el Director lo niega, reintenta a los 8 s.
+  - **Isidora** pide turno antes de aparecer, como tipo visual con intensidad 15.
+  - **El teatro y la noria** registran su susto como tipo guion con intensidad 40. Así, después de uno de ellos, el payaso o Isidora esperan su turno.
+- **Nuevos valores en `DA_Tuning`:** `Director_Activo`, `Director_Enfriamiento` (40 s) y `Director_Decae` (1,5 por segundo).
+
 ## [0.3.43] — 2026-11-12 · Cámara en 1ª persona como modo principal (etapa E2, sin build)
 
 ### Cambiado
