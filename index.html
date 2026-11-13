@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mundo Mágico</title>
+<meta name="description" content="Novela gráfica de terror. Con luz estás a salvo.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Creepster&family=Special+Elite&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--ph:repeating-linear-gradient(135deg,#140506 0 14px,#0b0303 14px 28px);--bg:#070707;--bg2:#0c0c0c;--red:#C8102E;--red-t:#FF6B6B;--bone:#F7F1E8;--txt:#BDB8AE;--line:#2a2a2a}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--txt);font:400 17px/1.6 Inter,sans-serif;text-align:center;overflow-x:hidden}
+a{color:#E8E4DC;text-decoration:none}
+a:hover{color:var(--red-t)}
+:focus-visible{outline:2px solid var(--red-t);outline-offset:3px}
+img{max-width:100%;display:block}
+
+h1,h2,h3,.row-title{font-family:Creepster,cursive;font-weight:400;letter-spacing:3px;color:var(--bone);margin:0}
+h2{font-size:clamp(40px,7vw,72px);margin-bottom:12px}
+h3{font-size:30px}
+.label{font-family:'Special Elite',monospace;color:var(--red-t);letter-spacing:4px;font-size:13px;margin:0 0 16px}
+.sub{max-width:560px;margin:0 auto 48px}
+
+/* Menú fijo */
+.nav{position:sticky;top:0;z-index:10;display:flex;flex-wrap:wrap;gap:6px 22px;justify-content:center;padding:14px 16px;
+  font:13px 'Special Elite',monospace;letter-spacing:3px;text-transform:uppercase;
+  background:rgba(7,7,7,.8);backdrop-filter:blur(8px);border-bottom:1px solid #2a0a0d}
+
+/* Portada */
+.hero{padding:110px 20px 130px;background:radial-gradient(circle at 50% 40%,#7a0b14 0%,#2a0308 24%,var(--bg) 60%)}
+.hero h1{font-size:clamp(56px,13vw,150px);line-height:1}
+.lead{margin:24px auto 36px;max-width:520px;font-size:clamp(16px,2.4vw,20px);color:#E8E4DC}
+.hero-img{width:min(100%,900px);height:clamp(220px,40vw,440px);object-fit:cover;margin:56px auto 0;
+  border:1px solid #4a0a10;box-shadow:0 0 80px #C8102E55;background:var(--ph)}
+
+/* Botones */
+.btn{display:inline-block;background:var(--red);color:#fff;padding:16px 40px;font:14px 'Special Elite',monospace;letter-spacing:4px;text-transform:uppercase}
+.btn:hover{background:#e0152f;color:#fff}
+.btn.small{padding:10px 26px;font-size:12px;margin-top:12px}
+.btn.outline{background:none;border:1px solid var(--red)}
+
+/* Franja en movimiento */
+.marquee{overflow:hidden;padding:18px 0;background:var(--red);color:#070707;font:26px Creepster,cursive;letter-spacing:4px}
+.marquee-track{display:flex;gap:56px;white-space:nowrap;width:max-content;animation:mq 28s linear infinite}
+@keyframes mq{to{transform:translateX(-50%)}}
+
+/* Secciones */
+.sec{padding:96px 20px}
+.sec--alt{background:var(--bg2)}
+.narrow{max-width:760px;margin:0 auto}
+.sec--alt.narrow{max-width:none}
+.sec--alt.narrow>*{max-width:760px;margin-left:auto;margin-right:auto}
+
+/* Libros */
+.books{display:flex;flex-wrap:wrap;gap:32px;justify-content:center;max-width:1040px;margin:0 auto}
+.book{flex:1 1 280px;max-width:440px;padding:24px;background:#0d0d0d;border:1px solid var(--line)}
+.book--new{border-color:var(--red)}
+.book img{aspect-ratio:3/4;width:100%;object-fit:cover;margin-bottom:18px;background:var(--ph)}
+
+/* Galería deslizable */
+.row-title{font-size:30px;color:var(--red-t);margin:36px 0 14px}
+.slider{display:flex;gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;padding:0 24px 16px}
+.slider figure{flex:0 0 min(82vw,420px);margin:0;scroll-snap-align:center;position:relative}
+.slider img{width:100%;aspect-ratio:16/10;object-fit:cover;border:1px solid #4a0a10;background:var(--ph)}
+.slider figcaption{position:absolute;left:0;right:0;bottom:0;padding:28px 14px 12px;text-align:left;
+  font:13px 'Special Elite',monospace;letter-spacing:2px;color:var(--bone);background:linear-gradient(transparent,#000c)}
+
+/* Video */
+.video{max-width:960px;margin:40px auto 0;aspect-ratio:16/9;border:1px solid #3a0509;background:#030303}
+.video iframe{width:100%;height:100%;border:0}
+
+/* Novedades */
+.news{list-style:none;margin:32px 0 0;padding:0;text-align:left}
+.news li{padding:20px 0;border-top:1px solid var(--line)}
+.news li:last-child{border-bottom:1px solid var(--line)}
+.news time{font:13px 'Special Elite',monospace;color:var(--red-t)}
+.news p{margin:4px 0 0;color:#E8E4DC}
+.foot{padding:40px 20px;font-size:13px}
+
+/* Parpadeo de luz en el título */
+.flicker{animation:fl 5s infinite}
+@keyframes fl{0%,18%,22%,60%,64%,100%{opacity:1;text-shadow:0 0 28px var(--red)}20%,62%{opacity:.35;text-shadow:none}21%{opacity:1}}
+
+/* Efectos al hacer scroll (solo navegadores que los soportan) */
+@supports (animation-timeline:view()){
+  .reveal{animation:rv linear both;animation-timeline:view();animation-range:entry 0% cover 28%}
+  @keyframes rv{from{opacity:0;transform:translateY(60px) scale(.96)}to{opacity:1;transform:none}}
+  .parallax{animation:px linear both;animation-timeline:scroll();animation-range:0 90vh}
+  @keyframes px{to{transform:translateY(140px) scale(1.08);opacity:.25}}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;scroll-behavior:auto}
+}
+
+/* Si falta una imagen, se ve el recuadro de rayas rojas en vez de un ícono roto */
+img.falta{color:transparent;font-size:0}
+
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="#novela">Novela</a><a href="#mundo">El mundo</a><a href="#reel">Reel</a>
+  <a href="#juego">Juego</a><a href="#pelicula">Película</a><a href="#novedades">Novedades</a>
+</nav>
+
+<header class="hero">
+  <div class="hero-txt parallax">
+    <p class="label">Terror para adultos · Novela gráfica</p>
+    <h1 class="flicker">Mundo Mágico</h1>
+    <p class="lead">Mientras la luz esté encendida, todo está bien.</p>
+    <a class="btn" href="#novela">Entrar al parque</a>
+  </div>
+  <!-- Cambia hero.jpg por tu imagen principal -->
+  <img class="hero-img" src="imagenes/hero.jpg" alt="">
+</header>
+
+<div class="marquee" aria-hidden="true"><div class="marquee-track">
+  <span>Con luz estás a salvo ✦ Sin luz, te cazan ✦ Isidora ✦ El parque no duerme ✦</span>
+  <span>Con luz estás a salvo ✦ Sin luz, te cazan ✦ Isidora ✦ El parque no duerme ✦</span>
+</div></div>
+
+<section id="novela" class="sec">
+  <h2 class="reveal">La novela</h2>
+  <p class="reveal sub">Dos libros. Un parque. Una niña llamada Isidora.</p>
+  <div class="books">
+    <article class="book reveal">
+      <img src="imagenes/portada-tomo1.jpg" alt="">
+      <h3>Mundo Mágico</h3>
+      <p>La novela gráfica original.</p>
+      <a class="btn small" href="#">Leer</a>
+    </article>
+    <article class="book book--new reveal">
+      <img src="imagenes/portada-precuela.jpg" alt="">
+      <h3>[Título de la precuela]</h3>
+      <p>Digital · próximamente</p>
+      <a class="btn small" href="#">Avisarme</a>
+    </article>
+  </div>
+</section>
+
+<section id="mundo" class="sec sec--alt">
+  <h2 class="reveal">El mundo</h2>
+  <p class="label">Arte del videojuego · desliza</p>
+
+  <h3 class="row-title">El parque</h3>
+  <div class="slider">
+    <figure><img loading="lazy" src="imagenes/parque-entrada.jpg" alt=""><figcaption>La entrada</figcaption></figure>
+    <figure><img loading="lazy" src="imagenes/parque-lluvia.jpg" alt=""><figcaption>Bajo la lluvia</figcaption></figure>
+    <figure><img loading="lazy" src="imagenes/parque-autos.jpg" alt=""><figcaption>Autos chocadores</figcaption></figure>
+  </div>
+
+  <h3 class="row-title">El teatro</h3>
+  <div class="slider">
+    <figure><img loading="lazy" src="imagenes/teatro-anciano.jpg" alt=""><figcaption>El anciano</figcaption></figure>
+    <figure><img loading="lazy" src="imagenes/teatro-luz.jpg" alt=""><figcaption>Luz cenital</figcaption></figure>
+    <figure><img loading="lazy" src="imagenes/teatro-isidora.jpg" alt=""><figcaption>Isidora</figcaption></figure>
+  </div>
+
+  <h3 class="row-title">El hospital</h3>
+  <div class="slider">
+    <figure><img loading="lazy" src="imagenes/hospital-urgencias.jpg" alt=""><figcaption>Urgencias</figcaption></figure>
+    <figure><img loading="lazy" src="imagenes/hospital-luna.jpg" alt=""><figcaption>Bajo la luna</figcaption></figure>
+    <figure><img loading="lazy" src="imagenes/hospital-superviviente.jpg" alt=""><figcaption>El superviviente</figcaption></figure>
+  </div>
+
+  <h3 class="row-title">La exploradora</h3>
+  <div class="slider">
+    <figure><img loading="lazy" src="imagenes/exploradora-luna.jpg" alt=""><figcaption>Luna llena</figcaption></figure>
+    <figure><img loading="lazy" src="imagenes/exploradora-linterna.jpg" alt=""><figcaption>La linterna</figcaption></figure>
+    <figure><img loading="lazy" src="imagenes/exploradora-jardin.jpg" alt=""><figcaption>El jardín gigante</figcaption></figure>
+  </div>
+</section>
+
+<section id="reel" class="sec">
+  <h2 class="reveal">Reel</h2>
+  <div class="video reveal">
+    <!-- Reemplaza VIDEO_ID por el ID de tu video de YouTube -->
+    <iframe src="https://www.youtube.com/embed/VIDEO_ID" title="Reel de Mundo Mágico" allowfullscreen loading="lazy"></iframe>
+  </div>
+</section>
+
+<section id="juego" class="sec sec--alt narrow">
+  <h2 class="reveal">El juego</h2>
+  <p class="reveal">Demo jugable. La luz es tu única regla. [Descripción del juego]</p>
+  <a class="btn outline" href="#">Jugar la demo</a>
+</section>
+
+<section id="pelicula" class="sec narrow">
+  <h2 class="reveal">La película</h2>
+  <p class="reveal">Un corto animado que cuenta lo que pasó antes. [Fecha]</p>
+</section>
+
+<section id="novedades" class="sec narrow">
+  <h2 class="reveal">Novedades</h2>
+  <ul class="news">
+    <li class="reveal"><time>[Fecha]</time><p>[Novedad 1]</p></li>
+    <li class="reveal"><time>[Fecha]</time><p>[Novedad 2]</p></li>
+    <li class="reveal"><time>[Fecha]</time><p>[Novedad 3]</p></li>
+  </ul>
+</section>
+
+<footer class="foot">© Mundo Mágico · [Redes sociales]</footer>
+<script>
+// Si una imagen no existe todavía, muestra el recuadro de rayas en vez de un ícono roto
+document.querySelectorAll('img').forEach(function(i){
+  function f(){i.removeAttribute('src');i.classList.add('falta')}
+  i.addEventListener('error',f);
+  if(i.complete&&i.naturalWidth===0)f();
+});
+</script>
+</body>
+</html>
