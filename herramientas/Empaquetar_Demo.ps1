@@ -11,7 +11,7 @@ New-Item -ItemType Directory -Force $dst | Out-Null
 $zip = Join-Path $dst "MundoMagico_Demo_v$($Version)_Win64.zip"
 if (Test-Path $zip) { Remove-Item $zip }
 Push-Location $src
-tar -a -c -f $zip *
+tar -a -c -f $zip --exclude=*.pdb *   # el .pdb (simbolos de depuracion, ~175 MB) no va en la demo
 Pop-Location
 $mb = [math]::Round((Get-Item $zip).Length / 1MB)
 Write-Host "ZIP OK: $zip ($mb MB)"

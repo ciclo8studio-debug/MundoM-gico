@@ -3,6 +3,15 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.56] — 2026-11-16 · Build más liviana (sin build)
+
+Medición de la v0.3.54: el paquete pesa 3,0 GB y 2,4 GB son texturas, la mayoría en 4K.
+
+### Cambiado
+- **`Config/DefaultDeviceProfiles.ini` nuevo.** Limita las texturas de la build de Windows: color hasta 2048 y normales, especular y efectos hasta 1024. No recompila shaders. Para volver al original basta borrar el archivo.
+- **Plugin `NNEDenoiser` desactivado** en el `.uproject` (unos 95 MB de modelos para ray tracing que el juego no usa).
+- **`Empaquetar_Demo.ps1` excluye el `.pdb`** (símbolos de depuración, unos 175 MB) del ZIP.
+
 ## [0.3.55] — 2026-11-16 · Linterna realista en 1ª persona (sin build)
 
 ### Cambiado
