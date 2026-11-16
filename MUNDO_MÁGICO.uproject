@@ -26,6 +26,10 @@
 		{
 			"Name": "MetaHumanCharacter",
 			"Enabled": false
+		},
+		{
+			"Name": "NNEDenoiser",
+			"Enabled": false
 		}
 	]
 }
