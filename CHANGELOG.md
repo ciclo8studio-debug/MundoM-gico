@@ -3,6 +3,11 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.54] — 2026-11-16 · Calidad Baja más liviana (sin build)
+
+### Cambiado
+- **`CalidadExtra` en el jugador**, llamada desde `AplicarOpciones`. Solo en calidad Baja: la linterna deja de proyectar sombras, suavizado TAA en vez de TSR, tope de 30 fps, sin sombras de contacto, sin oclusión por campos de distancia y sin MegaLights. En Media o superior se restaura todo.
+
 ## [0.3.53] — 2026-11-16 · Arreglos del primer playtest (sin build)
 
 ### Corregido
