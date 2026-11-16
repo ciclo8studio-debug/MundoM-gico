@@ -15,7 +15,10 @@
 | Payaso_DistMin / DistMax | A qué distancia aparece, en cm (2200 cm = 22 m) | 2200 / 3200 | 1200–5000 |
 | Payaso_DistHuye | Si te acercas a menos de esta distancia, desaparece | 1500 | 600–2500 |
 | Payaso_MiradaSeg | Segundos mirándolo fijo antes de que desaparezca | 1,0 | 0,3–3 |
-| Payaso_DuracionSeg | Segundos máximos que se queda a la vista | 9 | 3–20 |
+| Payaso_DuracionSeg | Segundos máximos que se queda a la vista | 20 | 5–40 |
+| **Payaso_Avanza** | El payaso se acerca cuando no lo miras (estilo luz roja, luz verde) | ✅ | — |
+| Payaso_PasoCm | Cuánto avanza por paso, cada 0,25 s (cm) | 110 | 40–250 |
+| Payaso_DistGolpe | Distancia a la que te golpea (cm) | 230 | 150–400 |
 | **Isidora_Activa** | Enciende o apaga las apariciones de Isidora | ✅ | — |
 | Isidora_DistMin / DistMax | Distancia a la que aparece, en cm | 1000 / 3500 | 600–5000 |
 | Isidora_DistDesaparece | Si te acercas a menos de esta distancia, se esfuma | 900 | 300–1500 |

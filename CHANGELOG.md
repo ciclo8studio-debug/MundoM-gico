@@ -3,6 +3,16 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.49] — 2026-11-15 · El payaso como amenaza real (etapa E3, sin build)
+
+### Cambiado
+- **`BP_PayasoAcecho` ya no solo mira: se acerca.** Mientras está a la vista:
+  - **Si no lo miras** (producto punto < 0,5), da un paso hacia ti cada 0,25 s, de `Payaso_PasoCm` (110 cm) por paso. Se queda pegado al suelo y se oye un paso suave.
+  - **Si lo miras, se congela.** Si lo miras fijo durante `Payaso_MiradaSeg`, desaparece y se oye una respiración detrás de ti.
+  - **Si llega a menos de `Payaso_DistGolpe` (2,3 m), te golpea:** chillido, vibración y 1 de daño. Después desaparece hasta su próxima aparición.
+  - Con el avance activo ya no huye cuando te acercas (`Payaso_DistHuye` solo cuenta si `Payaso_Avanza` está apagado). Se va al cumplir `Payaso_DuracionSeg`, que **sube de 9 a 20 s**.
+- **Nuevos valores en `DA_Tuning`:** `Payaso_Avanza` (activo), `Payaso_PasoCm` (110) y `Payaso_DistGolpe` (230).
+
 ## [0.3.48] — 2026-11-15 · Las llaves y los flags se guardan en la partida (cierre de la etapa E2, sin build)
 
 ### Agregado
