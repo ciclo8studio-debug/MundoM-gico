@@ -3,6 +3,13 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.50] — 2026-11-15 · El latido siente a la Sombra (etapa E3, sin build)
+
+### Cambiado
+- **`BP_LatidoMiedo` ahora reacciona a `BP_AI_Sombra`.** Además de `BP_Enemigo`, busca todas las Sombras y se queda con la distancia más corta: el corazón se acelera cuando la Sombra se acerca, igual que con los otros enemigos.
+  - Usa los mismos valores de `DA_Tuning`: `Latido_Alcance` y `Latido_VolMax` (con `Latido_VolMax` en 0 se apaga).
+  - No se tocaron los nodos de audio (`AdjustVolume`, `SetPitchMultiplier`).
+
 ## [0.3.49] — 2026-11-15 · El payaso como amenaza real (etapa E3, sin build)
 
 ### Cambiado
