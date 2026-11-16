@@ -30,6 +30,13 @@
 | Ruido_Metal / Madera / Charco / Baldosa / Grava / Tierra / Alfombra | Cuánto ruido hace cada suelo | 1,8 / 1,6 / 1,4 / 1,0 / 0,9 / 0,6 / 0,3 | 0,1–3 |
 | Ruido_Caminar / Correr / Agachado | Cuánto ruido hace cada forma de moverse | 1,0 / 2,5 / 0,3 | 0,1–4 |
 | Ruido_RadioBase | Distancia en cm a la que se oye un paso normal (×ruido) | 1500 | 500–3000 |
+| **Sombra_Activa** | Enciende o apaga la Sombra con linterna | ✅ | — |
+| Sombra_VistaDist / VistaAngulo | Hasta dónde ve (cm) y qué tan ancho es su cono (°) | 2200 / 22 | 1000–4000 / 10–45 |
+| Sombra_OidoDist | Distancia a la que oye un paso fuerte (cm) | 1800 | 600–3000 |
+| Sombra_PierdeSeg | Segundos sin verte antes de dejar de perseguir | 4 | 2–10 |
+| Sombra_VelPatrulla / Alerta / Persecucion | Velocidades (cm/s); tú corres a unos 500 | 140 / 240 / 420 | 80–600 |
+| Sombra_DistAtaque | Distancia a la que golpea (cm) | 150 | 100–250 |
+| Sombra_RadioPatrulla | Cuánto se aleja al patrullar (cm) | 1200 | 400–3000 |
 | **Camara_PrimeraPorDefecto** | El juego arranca en 1ª persona (desmárcalo para volver a la 3ª) | ✅ | — |
 
 > **Si algo falla en un playtest,** apágalo desmarcando su casilla y haz la build. No hace falta tocar ningún Blueprint.

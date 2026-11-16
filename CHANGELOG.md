@@ -3,6 +3,22 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.47] — 2026-11-15 · La Sombra con linterna (etapa E3)
+
+### Agregado
+- **`BP_AI_Sombra`** (`/Game/MundoMagico/IA`): un enemigo nuevo hecho con el modelo y las animaciones de la IA del Horror Template, con lógica propia sin Behavior Tree y todos sus valores en `DA_Tuning`.
+  - **Linterna en la mano** (`Haz`): un foco cálido de 22°, con polvo en el haz y sin sombras, para cuidar la iGPU. **El haz es su cono de visión.**
+  - **Vista:** te ve si estás dentro del cono (22°) y a menos de 22 m, sin nada en medio. A menos de 2,5 m te ve igual, aunque estés detrás. **Escondido no te ve.**
+  - **Oído:** escucha los pasos fuertes de `AC_Ruido` (correr, metal, madera) a menos de 18 m y **va a investigar** ese punto.
+  - **Estados:**
+    1. **Patrulla:** camina a puntos al azar a menos de 12 m de su posición inicial.
+    2. **Investigar:** va al último ruido o al último lugar donde te vio, y a los 6 s vuelve a patrullar.
+    3. **Persecución:** corre hacia ti. Si te pierde de vista más de 4 s, vuelve a investigar.
+  - **Ataque:** a menos de 1,5 m golpea, con un intervalo de 1,5 s entre golpes, usando el mismo daño que el enemigo actual.
+  - **Al verte por primera vez** suena un chillido y se registra en el Director de miedo como tipo enemigo con intensidad 30.
+- **Primera Sombra en el mapa:** `ENE_Sombra_Pasillo`, en el tramo final del Pasillo de Urgencias (0, −3200), después del susto. Está en la carpeta `Hospital/IA`.
+- **Nuevos valores en `DA_Tuning`:** `Sombra_Activa`, `Sombra_VistaDist`, `Sombra_VistaAngulo`, `Sombra_OidoDist`, `Sombra_PierdeSeg`, `Sombra_VelPatrulla` (140), `Sombra_VelAlerta` (240), `Sombra_VelPersecucion` (420), `Sombra_DistAtaque` y `Sombra_RadioPatrulla`.
+
 ## [0.3.46] — 2026-11-12 · Llaves con nombre, puertas cerradas y GameInstance (etapa E2, sin build)
 
 ### Agregado
