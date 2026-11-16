@@ -81,3 +81,4 @@ Se cambia en el panel **Details** de cada actor del mapa:
 2. Arrastra **`BP_DoorLocked`** a una puerta del mapa y **`BP_LlaveFlag`** a donde quieras esconder la llave.
 3. Para cada una, en el panel **Details → Actor → Tags**, agrega **el mismo nombre** como primera etiqueta (por ejemplo `LlaveMorgue`).
 4. Guarda y haz la build. La llave con ese nombre abre la puerta con ese nombre.
+5. Las llaves recogidas **se guardan con la partida**: si sales y vuelves con Continuar, siguen ahí. Con **Iniciar juego** se borran.

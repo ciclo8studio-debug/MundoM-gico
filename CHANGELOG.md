@@ -3,6 +3,19 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.48] — 2026-11-15 · Las llaves y los flags se guardan en la partida (cierre de la etapa E2, sin build)
+
+### Agregado
+- **Los flags del GameInstance (llaves y eventos) ahora se guardan con la partida**, así que sobreviven a cerrar el juego y volver con **Continuar**.
+  - **`BP_GI_MundoMagico`** tiene 3 funciones nuevas:
+    - `GuardarFlags`: guarda los flags en el slot `Flags`, usando el SaveGame `BP_Partida`, que ahora tiene el arreglo `Flags`.
+    - `CargarFlags`: los recupera.
+    - `LimpiarFlags`: vacía los flags y borra ese slot.
+  - **El jugador:**
+    - `Guardar` llama a `GuardarFlags` justo después de guardar la partida.
+    - `Cargar` llama a `CargarFlags` apenas lee la partida.
+    - **Iniciar juego** (`MenuConfirmar`, opción 0) llama a `LimpiarFlags`, para que no queden llaves de una partida anterior.
+
 ## [0.3.47] — 2026-11-15 · La Sombra con linterna (etapa E3)
 
 ### Agregado
