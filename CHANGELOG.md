@@ -3,6 +3,14 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.52] — 2026-11-16 · Volumen general en el menú (etapa E2, sin build)
+
+### Añadido
+- **Fila "General" en Configuración y en la pausa.** Baja o sube todo junto (efectos, ambiente y música). Queda entre "Dificultad" y "Volver al menú principal", que pasa a ser la fila 8.
+  - Se guarda con las demás opciones (slot "Opciones"). Las partidas con opciones antiguas cargan con General al 100 %.
+  - Funciona con teclado, mando y mouse (clic y hover), igual que las otras filas.
+- Funciones nuevas en el jugador: `LineaGeneral`, `AjustarGeneral`, `CargarGeneral`, `RefrescarFila7` y `CfgSel7`. En `WBP_Menu`: `CfgBtn7` y `CfgRow7`.
+
 ## [0.3.51] — 2026-11-15 · Efectos y música por separado (etapa E2, sin build)
 
 ### Cambiado
