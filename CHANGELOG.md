@@ -3,6 +3,13 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.51] — 2026-11-15 · Efectos y música por separado (etapa E2, sin build)
+
+### Cambiado
+- **La opción "Efectos" del menú ya no baja la música.** Antes movía el volumen general (clase `Master` con sus hijas), así que "Efectos 0 %" también silenciaba la música. Ahora controla solo los efectos y el ambiente (`Master` sin hijas, `SC_SFX` y `SC_Ambiente`); "Música" sigue controlando la música. No cambian las filas del menú ni el guardado de opciones.
+- **Nuevo valor `Audio_MezclaAmbiente` en `DA_Tuning` (1,0):** multiplica el volumen del ambiente (lluvia, zumbidos) respecto a los efectos.
+- **Nuevo interruptor `Latido_Sombra` en `DA_Tuning` (activo):** apaga o enciende la reacción del latido a la Sombra.
+
 ## [0.3.50] — 2026-11-15 · El latido siente a la Sombra (etapa E3, sin build)
 
 ### Cambiado

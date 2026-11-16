@@ -24,6 +24,8 @@
 | Isidora_DistDesaparece | Si te acercas a menos de esta distancia, se esfuma | 900 | 300–1500 |
 | Latido_Alcance | Desde qué distancia de un enemigo empieza a sonar el latido, en cm | 2500 | 1000–5000 |
 | Latido_VolMax | Volumen máximo del latido | 1,0 | 0,3–1,5 |
+| Latido_Sombra | El latido también reacciona a la Sombra | activo | activo / apagado |
+| Audio_MezclaAmbiente | Nivel del ambiente (lluvia, zumbidos) respecto a los efectos | 1,0 | 0,3–1,5 |
 | **SustoTeatro_Activo** | Enciende o apaga el susto del teatro | ✅ | — |
 | **SustoNoria_Activo** | Enciende o apaga el susto de la noria | ✅ | — |
 | **Director_Activo** | Enciende o apaga el Director de miedo. Si está apagado, cada susto va por su cuenta | ✅ | — |
