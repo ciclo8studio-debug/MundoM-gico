@@ -3,6 +3,12 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.53] — 2026-11-16 · Arreglos del primer playtest (sin build)
+
+### Corregido
+- **La tecla E abría el candado en el hospital.** `ActualizarCandado` medía la distancia a un candado que en `L_Hospital` no existe y la daba por 0 ("cerca"). Ahora exige que el objeto exista. Mismo arreglo en `ActualizarCerca` para fonógrafo, reloj y caja fuerte.
+- **Isidora partía con la linterna en la mano.** `LinternaMano` nunca se ocultaba. Ahora parte oculta y `RefrescarLinternaMano` la muestra solo cuando `TieneLinterna` es verdadero.
+
 ## [0.3.52] — 2026-11-16 · Volumen general en el menú (etapa E2, sin build)
 
 ### Añadido
