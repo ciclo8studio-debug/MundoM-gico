@@ -3,6 +3,12 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.55] — 2026-11-16 · Linterna realista en 1ª persona (sin build)
+
+### Cambiado
+- **`ColocarLinterna` en el jugador**, llamada al final de `CambiarCamara`. En 1ª persona el foco y el modelo de la linterna cuelgan de la cámara (abajo a la derecha), así el haz sigue la mirada y nace en la linterna. El modelo pasa a ser `SM_Flashlight_V2`, el mismo que se recoge del mostrador. En 3ª persona vuelve a la mano y al cuerpo como antes.
+- **Sombras de la linterna siempre activas**, también en calidad Baja (se quita el apagado de v0.3.54). Sombras de contacto en el foco (`ContactShadowLength` 0,04) y `SourceRadius` 1,2. En Baja la resolución de sombras sube de 512 a 1024.
+
 ## [0.3.54] — 2026-11-16 · Calidad Baja más liviana (sin build)
 
 ### Cambiado
