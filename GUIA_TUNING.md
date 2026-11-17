@@ -87,3 +87,9 @@ Se cambia en el panel **Details** de cada actor del mapa:
 3. Para cada una, en el panel **Details → Actor → Tags**, agrega **el mismo nombre** como primera etiqueta (por ejemplo `LlaveMorgue`).
 4. Guarda y haz la build. La llave con ese nombre abre la puerta con ese nombre.
 5. Las llaves recogidas **se guardan con la partida**: si sales y vuelves con Continuar, siguen ahí. Con **Iniciar juego** se borran.
+
+## 6. Escondites (arrástralos tú)
+1. En el Content Browser, ve a `MundoMagico/Mundo/` y arrastra **`BP_HideSpot`** al mapa, contra una pared y con el frente despejado.
+2. Apóyalo con **End**. El jugador entra y sale con **E**. Adentro, la Sombra no lo ve. Si mantiene Shift, contiene la respiración.
+3. Pon 2–3 en el pasillo de la Sombra (cerca de `ENE_Sombra_Pasillo`).
+4. Guarda y haz la build.

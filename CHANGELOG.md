@@ -3,6 +3,22 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.57] — 2026-11-17 · Escondites que no atascan (etapa E2, sin build)
+
+### Añadido
+- **`/Game/MundoMagico/Mundo/BP_HideSpot`**: escondite nuevo, duplicado de `BP_Hiding_Door` del Horror Template. Se entra y se sale con **E**.
+  - Al entrar:
+    1. Guarda dónde estabas (`PosFuera`).
+    2. Apaga la colisión del **jugador** (no la del mueble, para que el rayo de E lo siga tocando).
+    3. Te lleva al marcador de adentro y congela el movimiento.
+    4. Te pone la etiqueta `Escondido`.
+  - Al salir te devuelve al mismo punto donde estabas, que ya se sabe libre. Así se corrige el atasco de los clósets viejos.
+  - Con la etiqueta `Escondido`, **la Sombra no te ve**, y sigue funcionando contener la respiración (Shift).
+- **`BP_ThirdPersonCharacter.PonerEscondido(Si)`**: agrega o quita la etiqueta `Escondido`.
+
+### Pendiente
+- Colocar 2–3 escondites en `L_Hospital`, cerca del pasillo de la Sombra (ver `GUIA_TUNING.md`, sección 6) y probarlos en la próxima build.
+
 ## [0.3.56] — 2026-11-16 · Build más liviana (sin build)
 
 Medición de la v0.3.54: el paquete pesa 3,0 GB y 2,4 GB son texturas, la mayoría en 4K.
