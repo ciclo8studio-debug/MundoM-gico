@@ -3,6 +3,26 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.63] — 2026-11-18 · Demo sin parque + las 15 páginas de la Novela (sin build)
+
+### Corregido
+- **El juego se cerraba al cargar el parque**: el iGPU se queda sin recursos (playtest de la v0.3.62). Ya estaba decidido que el parque no entra en la demo pública.
+  - Interruptor nuevo **`Demo_SinParque`** en `DA_Tuning` (activo).
+  - Con el interruptor activo, `WBP_Transicion.IniciarTV` fija `Destino = L_Hospital` y `Paso` abre ese nivel: después del glitch y la TV, la demo **vuelve al menú** en vez de cargar `L_Parque`.
+  - Para pruebas internas del parque, desmárcalo o usa el submenú P de `Probar.bat`.
+
+### Añadido
+- **Las 15 páginas de la Novela con texto** (B1, adelantado; textos de @world-builder, writer y narrative-director). Canon aprobado: leucemia en recaída + miocardiopatía, Isidora muere a las 03:33 del 13/03/1998.
+  - **`BP_NovelaDatos`** (PrimaryDataAsset con `Titulos[]` y `Textos[]`) + **`DA_NovelaData`** con las 15 entradas: ficha de ingreso, hoja de enfermería, orden de la dirección, registro de Urgencias, inventario, ECG, portería 23:41, mantención, solicitud de radiografía, archivo, lavandería, hoja de Alfredo, radiografía 03:33, libro de la morgue y certificado sin firmar.
+  - **`WBP_Pagina`**: una hoja de papel nueva (`PapelMarco`) con letra Special Elite, título, texto y "PÁGINA n / 15". La función nueva `Llenar(Indice)` lee `DA_NovelaData`.
+  - **`MostrarPagina`**: con el modo Novela activo y página ≤ 15, muestra el texto en vez de la imagen. La página queda **7 s** en pantalla (antes 4,5).
+  - Interruptor nuevo **`Novela_Texto`** en `DA_Tuning` (activo). Apagado, vuelven las imágenes `T_Pag_*`.
+- **Contador del HUD**: "PÁGINAS x/**15**" en la demo (antes /62). Vuelve a /62 si se apaga `Novela_Texto`.
+
+### Pendiente
+- Las páginas aparecen en el **orden en que se recogen** (la 1.ª recogida muestra la página 1). Cuando se construya el sótano (Sprint B), cada `REC_Pagina` tendrá su número fijo.
+- Si usas **Continuar** con una partida guardada en la salida, la demo puede terminar de inmediato. Se resuelve con la pantalla final (A8).
+
 ## [0.3.62] — 2026-11-18 · Sprint A: A6 (sombras según la calidad) + A2 (avisos según el mando) + herramientas
 
 ### Cambiado
