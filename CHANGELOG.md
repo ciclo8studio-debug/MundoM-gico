@@ -3,6 +3,21 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.60] — 2026-11-18 · Linterna como la del juego HTML, sin linterna flotante, sonidos de puertas y páginas
+
+### Cambiado
+- **Haz de la linterna con los parámetros del juego HTML** (`SpotLight(0xffeedd, 55 m, 0.4 rad, penumbra 0.5)`):
+  - Color cálido (255, 238, 221).
+  - Cono exterior de 23° (antes 30°) e interior de 11,5°, lo que da el mismo borde suave.
+  - Alcance de 55 m (antes 30 m).
+- **Perfil IES nuevo, `IES_Linterna`** (`herramientas/componer_linterna_y_pagina.py`). Imita la máscara de la linterna HTML: centro caliente, un anillo del reflector a unos 9°, caída suave hasta 23° y un halo tenue hasta 30°. Así el círculo deja de ser plano y "falso".
+- **L2 (enfocar):** el haz se cierra a 14° (antes 18°). Al soltar vuelve a 23° (antes saltaba a 34° y pisaba el ajuste).
+- **Hojas de la Novela con sonido propio:** `SFX_Pagina` (roce de papel y una nota grave) reemplaza a `SW_Note_Pickup`.
+
+### Corregido
+- **Linterna flotante en 1ª persona.** El modelo `SM_Flashlight_V2` colgado de la cámara se veía suelto, sin mano. `ColocarLinterna` ahora marca `OwnerNoSee = true` en 1ª persona (antes el valor iba en falso) y lo devuelve a falso en 3ª.
+- **Sonido de puerta al apretar Cuadrado o E.** Interactuar cerca de una puerta cerrada hacía sonar el forcejeo (`SW_TryOpen_Door`), y también el sonido propio de `BP_Locked_Door`. Se quitaron los dos. Las puertas solo suenan cuando se abren o se cierran (también la de llave). El mensaje "Está cerrada con llave" se mantiene.
+
 ## [0.3.59] — 2026-11-17 · Portada: luz sin borde y más clara
 
 ### Corregido
