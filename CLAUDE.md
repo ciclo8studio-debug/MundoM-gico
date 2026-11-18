@@ -56,3 +56,7 @@ Este repositorio (scripts, documentos, builds) usa una instalación **selectiva*
 - Unreal 5.8: `docs/engine-reference/unreal/VERSION.md`
 - Agentes primarios: `unreal-specialist`, `ue-blueprint-specialist` y `ue-umg-specialist`. Dirección: `creative-director`, `technical-director` y `producer`.
 - Los comandos web (`/prototype`, el "grow" en Vite y TypeScript) no aplican a este proyecto Unreal.
+
+## Eficiencia
+- Todos los agentes leen primero `CONTEXTO_ESTUDIO.md`; reglas y plantilla de instrucciones en `PROTOCOLO_EFICIENCIA.md`.
+- Reunión corta = 1 agente; reunión completa = 5 (solo en hitos). Una sesión de editor por build.

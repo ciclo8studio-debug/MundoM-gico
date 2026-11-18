@@ -11,3 +11,8 @@
 - Contenido de `L_Parque`: 1 PPV (sin blendables), VolumetricCloud, SkyAtmosphere, ExponentialHeightFog, SkyLight (RealTimeCapture), 1 DirectionalLight, 48 PointLight, 2 SpotLight, 79 DecalActor, 6 Emitter (Cascade), unos 1.427 actores y BP_Bosque (ISM de árboles).
 - `-ir=` carga la partida guardada (`Partida.sav`) si existe.
 - **En curso:** build **Development v0.3.68_dev**, que escribe `Saved\Logs`, para ver el motivo exacto del `DXGI_ERROR_DEVICE_*` y qué pase estaba dibujando la GPU.
+
+## Hallazgo 18-11 12:10 (build Development v0.3.68_dev)
+- Con `Partida.sav` y `Flags.sav` **movidos a respaldo**, `L_Parque -ir=parque` **no se cayó** en más de 5 min (1,3 GB, respondiendo, sin reportes de cierre nuevos). Todos los cierres anteriores ocurrieron con `Partida.sav` presente (que se reescribe al entrar).
+- Perfil GPU del cuadro 1: TSR RejectShading 295 ms y EndDrawingViewport 90 ms, que es solo la primera carga. `CalidadExtra` fuerza `r.AntiAliasingMethod 4`, así que `-dpcvars=...=2` no aplica.
+- **H2 (partida guardada + `-ir` dentro de `L_Parque`) pasa a hipótesis principal.** Falta probar la ruta normal (el glitch guarda y el parque carga ese guardado).
