@@ -3,6 +3,20 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.75] — 2026-11-18 · Acto 3: la persecución final (sin build)
+
+Tras elegir "sala" en la cabina, el juego vuelve al hospital y el payaso te persigue hasta el expediente.
+
+### Añadido
+- **`BP_PayasoPersecucion`** (copia de la sombra): persigue al jugador a `Payaso_VelFinal` (520 cm/s ≈ 5,2 m/s); la linterna no lo detiene. Al tocarte hace 1 de daño cada 1,5 s. Se destruye cuando termina el juego. Sin Event Tick (temporizador de 0,2 s).
+- **`EleccionSala`**: marca `PersecucionFinal` en los flags, guarda, y lanza la transición TV hacia `L_Hospital`.
+- **`WBP_Transicion.IniciarTV`**: el destino es `L_Hospital` si `Demo_SinParque` o existe `PersecucionFinal`.
+- **`BP_GestorNivel`**: en `L_Hospital` con `PersecucionFinal`: carga la partida, teletransporta a (0,-3300,120), aparece el payaso en (0,-4300,100) y el mensaje "¡CORRE!". El expediente y los 3 finales ya existían.
+- `DA_Tuning`: `Acto3_Persecucion` (true), `Payaso_VelFinal` (520).
+
+### Pendiente de probar
+- Que la rampa de la sala 4 y el navmesh dejen llegar al payaso; que el flag no afecte una partida nueva (revisar `LimpiarFlags`).
+
 ## [0.3.74] — 2026-11-18 · A4: pistas según tu progreso (sin build)
 
 Plan de la reunión "Replicar el HTML": el HTML tiene una pista bajo demanda y una automática si te atascas.

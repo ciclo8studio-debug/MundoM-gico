@@ -60,6 +60,8 @@
 | Interaccion_MiradaCm | Se recoge el objeto más cercano a un punto delante de tu mirada, a esta distancia en cm (0 = casi como antes) | 150 | 0–250 |
 | **Pistas_Activas** | Tecla Y y pista automática según tu progreso | ✅ | — |
 | Pista_AutoSeg | Segundos sin progreso para que salga la pista sola | 180 | 60–600 |
+| Acto3_Persecucion | Tras la sala vuelves al hospital con el payaso | true | on/off |
+| Payaso_VelFinal | Velocidad del payaso final (cm/s) | 520 | 300–700 |
 | **Camara_PrimeraPorDefecto** | El juego arranca en 1ª persona (desmárcalo para volver a la 3ª) | ✅ | — |
 
 > **Si algo falla en un playtest,** apágalo desmarcando su casilla y haz la build. No hace falta tocar ningún Blueprint.
