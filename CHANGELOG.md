@@ -3,6 +3,17 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.59] — 2026-11-17 · Portada: luz sin borde y más clara
+
+### Corregido
+- **Al mover la luz de la portada se veía su borde rectangular** (playtest de la v0.3.58). `LuzMouse` medía lo mismo que la pantalla y al desplazarse dejaba franjas sin oscurecer.
+  - Ahora ocupa toda la pantalla (Fill) con `RenderScale` 2,2 × 3,91: el círculo cubre la pantalla entera aunque el mouse esté en una esquina.
+
+### Cambiado
+- **Más luz en la portada:**
+  - Centro cálido al 28 % (antes 20 %) y más ancho.
+  - Bordes oscuros al 45 % (antes 60 %), con transición suave.
+
 ## [0.3.58] — 2026-11-17 · Arreglo del cierre al llegar al parque + portada web (sin build)
 
 ### Corregido
