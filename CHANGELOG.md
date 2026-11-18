@@ -3,6 +3,23 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.64] — 2026-11-18 · Sprint A3: la linterna te delata y ahuyenta a la Sombra (sin build)
+
+Pilar 1 de la reingeniería, "la luz te salva y te delata" (@gameplay-engineer, ai-programmer y systems-designer). Se agregó como un sentido aparte de la Sombra para no reescribir su IA.
+
+### Añadido
+- **`BP_AI_Sombra.RevisarLinterna`**: corre en un timer de 0,2 s que arranca en BeginPlay. No usa Tick.
+  - **Te delata:** con la linterna **encendida** la Sombra te ve a `Sombra_VistaDist` (22 m). **Apagada**, solo a `Sombra_VistaApagada` (**7 m**). Ver de cerca (2,5 m) sigue igual.
+  - **La ahuyenta:** si le apuntas la linterna (cono de unos 16°, a menos de 18 m) durante **`Sombra_RepeleSeg` = 2,5 s**, la Sombra chilla, **huye 15 m** a velocidad de persecución y deja de cazarte durante **`Sombra_HuidaSeg` = 5 s**. El tiempo apuntado baja si dejas de apuntarle.
+  - `Pensar` respeta la huida: se salta su turno mientras `HuyeHasta` sea mayor que el tiempo de juego.
+- **Batería en `DA_Tuning`:** `Bateria_GastoSeg` = **0,35 %/s** (antes 0,22, fijo en el BP). La lee `CalidadExtra` y la usa `ActualizarBateria`. La linterna ahora es un recurso que se gasta y hay que administrar.
+- Interruptores y valores nuevos en `DA_Tuning`: **`Sombra_RepeleLinterna`** (activo), `Sombra_RepeleSeg`, `Sombra_VistaApagada`, `Sombra_HuidaSeg` y `Bateria_GastoSeg`.
+
+### Para probar en la próxima build
+- Con la linterna apagada, que puedas acercarte más a la Sombra sin que te vea.
+- Que al apuntarle unos 2–3 s se escuche el chillido, retroceda y no te persiga durante unos 5 s.
+- Que la batería dure lo razonable (100 % ≈ 4,8 min encendida).
+
 ## [0.3.63] — 2026-11-18 · Demo sin parque + las 15 páginas de la Novela (sin build)
 
 ### Corregido

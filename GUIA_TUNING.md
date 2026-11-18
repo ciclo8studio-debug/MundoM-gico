@@ -48,6 +48,10 @@
 | **UI_AvisosPorDispositivo** | Los avisos muestran [□] con mando y [E] con teclado | ✅ | — |
 | **Demo_SinParque** | Después del glitch y la TV la demo vuelve al menú (no carga el parque, que cierra el juego en la iGPU) | ✅ | — |
 | **Novela_Texto** | Las páginas 1–15 se muestran como texto en papel (DA_NovelaData) en vez de imágenes | ✅ | — |
+| **Sombra_RepeleLinterna** | Apuntar la linterna a la Sombra la ahuyenta | ✅ | — |
+| Sombra_RepeleSeg / HuidaSeg | Segundos apuntando para ahuyentarla / segundos que huye | 2,5 / 5 | 1–5 / 2–10 |
+| Sombra_VistaApagada | Hasta dónde te ve si tu linterna está apagada (cm) | 700 | 300–1500 |
+| Bateria_GastoSeg | Gasto de batería por segundo con la linterna encendida (%) | 0,35 | 0,1–1 |
 | **Camara_PrimeraPorDefecto** | El juego arranca en 1ª persona (desmárcalo para volver a la 3ª) | ✅ | — |
 
 > **Si algo falla en un playtest,** apágalo desmarcando su casilla y haz la build. No hace falta tocar ningún Blueprint.
