@@ -1,4 +1,4 @@
-# Plan consolidado del estudio: evaluación del 18-11-2026
+# Ciclo Studio Game — plan consolidado: evaluación del 18-11-2026
 
 Orquestado por los 5 super-agentes, cada uno con su equipo de agentes de Claude Code Game Studios (ver `ESTUDIO_AGENTES.md`). Informes completos en `auditoria/estudio_2026-11-18/`.
 

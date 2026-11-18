@@ -1,4 +1,4 @@
-# Mundo Mágico: Turno Nocturno — estudio de juego con Claude Code
+# Ciclo Studio Game — Mundo Mágico: Turno Nocturno
 
 Juego de terror y supervivencia en **Unreal Engine 5.8** (solo Blueprints). Es una arquitectura de 3 niveles: Hospital → Casona → Parque.
 - Demo pública en itch.io el **10-12-2026**: Nivel 1 completo y un adelanto de la Casona. Testers privados hacia el 26-11.

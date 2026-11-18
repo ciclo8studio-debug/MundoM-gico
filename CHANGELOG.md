@@ -3,6 +3,19 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.61] — 2026-11-18 · Sprint A de Ciclo Studio Game: A1 (look del HTML en el hospital) + A10
+
+### Añadido
+- **A1 · Look del juego HTML en `L_Hospital`** (propuesta de @world-builder, technical-artist y art-director):
+  - `PPV_PostHTML`: PostProcessVolume sin límites, con prioridad 1 y etiqueta `PostHTML`.
+  - LUT **`T_LUT_HospitalHTML`**, generada con `herramientas/componer_lut_hospital.py`. Replica el post del HTML (desaturación 22 %, curva S 35 %) con tinte verdoso de hospital y sombras verde-azuladas.
+  - Viñeta 0,65, grano 0,3 y aberración cromática 1,2.
+  - **Niebla del hospital** con el color del HTML (#070b14) y **sin niebla volumétrica**, más liviana para la iGPU.
+- **Interruptor nuevo `PostHTML_Activo` en `DA_Tuning`** (activo). Si lo apagas, `BP_PostHTML` (`DEV_PostHTML` en el mapa) desactiva `PPV_PostHTML` al empezar y vuelve el look anterior.
+
+### Corregido
+- **A10 · El menú ya no usa el Tick para la luz de la portada** (hallazgo de @tech-lead). `MoverLuz` se llama con un timer de 0,033 s creado en el Construct de `WBP_Menu`.
+
 ## [0.3.60] — 2026-11-18 · Linterna como la del juego HTML, sin linterna flotante, sonidos de puertas y páginas
 
 ### Cambiado

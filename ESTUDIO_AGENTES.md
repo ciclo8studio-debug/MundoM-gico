@@ -1,4 +1,4 @@
-# Organigrama del estudio: 5 super-agentes y 31 agentes de Claude Code Game Studios
+# Ciclo Studio Game — organigrama del estudio: 5 super-agentes y 31 agentes de Claude Code Game Studios
 
 **Cadena:** CTO → **@tech-lead** (primero de la cadena, autorizado a proponer mejoras AAA) → los otros 4 super-agentes → sus equipos.
 

@@ -42,6 +42,8 @@
 | Sombra_VelPatrulla / Alerta / Persecucion | Velocidades (cm/s); tú corres a unos 500 | 140 / 240 / 420 | 80–600 |
 | Sombra_DistAtaque | Distancia a la que golpea (cm) | 150 | 100–250 |
 | Sombra_RadioPatrulla | Cuánto se aleja al patrullar (cm) | 1200 | 400–3000 |
+| **PostHTML_Activo** | Look del juego HTML en el hospital (LUT verdosa, viñeta, grano, aberración) | ✅ | — |
+| **Linterna_SombrasParque** | La linterna proyecta sombras también en el parque (solo con GPU dedicada) | ❌ | — |
 | **Camara_PrimeraPorDefecto** | El juego arranca en 1ª persona (desmárcalo para volver a la 3ª) | ✅ | — |
 
 > **Si algo falla en un playtest,** apágalo desmarcando su casilla y haz la build. No hace falta tocar ningún Blueprint.
