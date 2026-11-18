@@ -3,6 +3,23 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.73] — 2026-11-18 · El parque siempre arranca + se recoge lo que miras
+
+Playtest del CTO (v0.3.72): *"llego al parque y el juego llega a la pantalla de inicio"*; y pendiente de antes: *"si hay varios objetos juntos a la linterna no pude interactuar bien"*.
+
+### Corregido
+- **El parque ya no puede devolverte al hospital ni dejarte en el menú.** `BP_GestorNivel` dependía de una marca "Transicion" en disco: si faltaba, mandaba a `L_Hospital` o dejaba la pantalla de inicio sin llamar a `Comenzar`. Ahora, en `L_Parque`, **siempre** se hace la transición VHS, se llama a `Comenzar` y se coloca al jugador en la entrada. La marca solo se borra si existe. El rebote a `L_Hospital` se eliminó (nunca debía ocurrir en el juego real). Con v0.3.72 la marca ya se guardaba con `BP_Partida`; esto cubre el caso de que algo la pierda.
+
+### Añadido
+- **Recoger el objeto que miras** (`Interaccion_MiradaCm` en `DA_Tuning`, 150; 0 = casi como antes):
+  - `RecogerObjeto` busca el objeto más cercano a **un punto 1,5 m delante de la cámara** (cámara + dirección de mira × `MiradaCm`) y no al más cercano a tus pies. Con varios objetos juntos se toma el que estás mirando.
+  - El radio de recogida pasa de 250 a **200 cm** medido desde ese punto.
+  - Variable nueva `MiradaCm` en el jugador, cargada desde `CalidadExtra`.
+
+### Para probar
+- Ruta normal hasta el parque: debe cargar con la transición VHS y quedar en la entrada, sin menú.
+- Con varios objetos juntos (por ejemplo, el mostrador de la recepción), mira uno y presiona E o □: debe tomar ese.
+
 ## [0.3.72] — 2026-11-18 · Al cruzar el glitch ya no vuelve al menú: la marca de transición se guarda
 
 Playtest del CTO (v0.3.71, build normal): *"va fluido en el hospital, pero al salir al parque llego a la pantalla de iniciar juego"*.
