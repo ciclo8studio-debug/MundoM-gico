@@ -16,3 +16,9 @@
 - Con `Partida.sav` y `Flags.sav` **movidos a respaldo**, `L_Parque -ir=parque` **no se cayó** en más de 5 min (1,3 GB, respondiendo, sin reportes de cierre nuevos). Todos los cierres anteriores ocurrieron con `Partida.sav` presente (que se reescribe al entrar).
 - Perfil GPU del cuadro 1: TSR RejectShading 295 ms y EndDrawingViewport 90 ms, que es solo la primera carga. `CalidadExtra` fuerza `r.AntiAliasingMethod 4`, así que `-dpcvars=...=2` no aplica.
 - **H2 (partida guardada + `-ir` dentro de `L_Parque`) pasa a hipótesis principal.** Falta probar la ruta normal (el glitch guarda y el parque carga ese guardado).
+
+## Hallazgo 18-11 14:00 (v0.3.69_dev, `L_Parque -ir=autos -dev`, D11)
+- **Sin cierre.** El parque carga y corre. Cierre resuelto (partida de otro mapa, H2).
+- `stat unit`: Frame 347 ms, Game 13 ms, Draw 334 ms, RHIT 327 ms, **GPU 348 ms**, Mem 2,43 GB, VRAM 1,68/3,49 GB, RenderRes 80 % (1229x692), **Draws 120, Prims 471K**. Está limitado por la GPU en pases de pantalla completa.
+- Log: `CalidadExtra` ejecutó la rama "no Baja" (`r.AntiAliasingMethod 4` = TSR, `t.MaxFPS 0`, `r.DistanceFieldAO 1`) y `r.ScreenPercentage 80`; no cambió después. El perfil GPU del primer cuadro mostró TSR RejectShading 295 ms (puede ser atribución imprecisa de la iGPU Intel).
+- **Siguiente:** probar calidad Baja (TAA, DFAO off, MaxFPS 30). Si llega a ≥25 FPS, forzar ese perfil en `L_Parque` desde `CalidadExtra` con interruptor `Parque_PerfilBajo`.
