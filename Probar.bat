@@ -70,20 +70,30 @@ goto menu
 
 :parque
 cls
-echo   PARQUE (solo pruebas internas)
+echo   PARQUE (pruebas internas)
 echo   1. Entrada   2. Teatro   3. Noria   4. Bodega   5. Autos chocadores
-echo   9. Entrada con PERFIL A en vivo     0. Volver
+echo   --- DIAGNOSTICO DEL CIERRE (anota si se cae y los fps, 3 min cada una) ---
+echo   D1. Parque directo (sin pasar por el hospital)
+echo   D2. Parque directo + Perfil A en vivo
+echo   D3. D2 + resolucion 50%%, sin niebla volumetrica, distancia de vista 0.5
+echo   D4. D2 + pool de texturas 256 MB
+echo   D5. Ruta normal: pasillo del hospital con Perfil A (camina hasta el glitch)
+echo   D6. D2 + sombras 256, sin anisotropico, luces a 30%% de distancia
+echo   0. Volver
 set /p PQ="Elige: "
 set "ZONA="
+set "PA=r.DynamicGlobalIlluminationMethod=0,r.ReflectionMethod=2,r.Shadow.Virtual.Enable=0,r.MegaLights.Enable=0,r.Lumen.DiffuseIndirect.Allow=0,r.Lumen.Reflections.Allow=0"
 if "%PQ%"=="1" set "ZONA=parque"
 if "%PQ%"=="2" set "ZONA=teatro"
 if "%PQ%"=="3" set "ZONA=noria"
 if "%PQ%"=="4" set "ZONA=bodega"
 if "%PQ%"=="5" set "ZONA=autos"
-if "%PQ%"=="9" (
-  start "" "%EXE%" L_Parque -ir=parque -dev -dpcvars=r.DynamicGlobalIlluminationMethod=0,r.ReflectionMethod=2,r.Shadow.Virtual.Enable=0,r.MegaLights.Enable=0,r.Lumen.DiffuseIndirect.Allow=0,r.Lumen.Reflections.Allow=0
-  goto menu
-)
+if /i "%PQ%"=="D1" start "" "%EXE%" L_Parque -ir=parque -dev & goto menu
+if /i "%PQ%"=="D2" start "" "%EXE%" L_Parque -ir=parque -dev -dpcvars=%PA% & goto menu
+if /i "%PQ%"=="D3" start "" "%EXE%" L_Parque -ir=parque -dev -dpcvars=%PA%,r.ScreenPercentage=50,r.VolumetricFog=0,r.ViewDistanceScale=0.5 & goto menu
+if /i "%PQ%"=="D4" start "" "%EXE%" L_Parque -ir=parque -dev -dpcvars=%PA%,r.Streaming.PoolSize=256,r.Streaming.LimitPoolSizeToVRAM=1 & goto menu
+if /i "%PQ%"=="D5" start "" "%EXE%" L_Hospital -ir=pasillo -dev -dpcvars=%PA% & goto menu
+if /i "%PQ%"=="D6" start "" "%EXE%" L_Parque -ir=parque -dev -dpcvars=%PA%,r.MaxAnisotropy=0,r.Shadow.MaxResolution=256,r.LightMaxDrawDistanceScale=0.3 & goto menu
 if not defined ZONA goto menu
 start "" "%EXE%" L_Parque -ir=%ZONA% -dev
 goto menu
