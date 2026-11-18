@@ -3,6 +3,14 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.67] — 2026-11-18 · Vuelve el parque; sin pantalla de fin (sin build)
+
+### Cambiado
+- **El CTO pide sacar la pantalla "FIN DE LA DEMO" y volver a conectar el parque.** La demo del HTML no termina en el hospital: sigue en el parque (interruptores, cintas VHS, casa de Alfredo, cabina VIDEO y finales). Por eso se revierte la decisión "demo sin parque" del 18-11.
+  - `Demo_SinParque` = **falso** en `DA_Tuning`, cambiado con el script nuevo `herramientas/ajustar_tuning.py`, que no necesita abrir el editor.
+  - Tras el glitch y la TV se carga **`L_Parque`** como antes. La pantalla de fin no aparece, porque solo se muestra con `Demo_SinParque` activo.
+- **Pendiente crítico:** el parque **cierra el juego en la iGPU** (GPUCrash, falta de recursos). La solución sale de la reunión "Replicar el HTML" (`auditoria/html_completo/`).
+
 ## [0.3.66] — 2026-11-18 · Tubos fluorescentes en falla + pantalla de FIN DE LA DEMO
 
 Playtest del CTO (v0.3.65): la botella y recoger objetos funcionan bien.

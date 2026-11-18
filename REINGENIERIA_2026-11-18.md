@@ -59,7 +59,7 @@ Los 5 super-agentes rediseñaron su área, cada uno con su equipo. Detalle en `a
 
 ## Decisiones del CTO: ✅ las 8 aprobadas tal como se recomendaron (18-11-2026)
 1. **Patrón `Arq_*` para partir el BP del jugador** (sí).
-2. **Demo sin parque ni payaso**, con hospital y teaser de la Casona: unos 400 MB menos (sí).
+2. ~~Demo sin parque ni payaso~~ → **REVERTIDA por el CTO (18-11):** el parque vuelve a la demo, como en el HTML.
 3. **Cook sin shaders SM6:** unos 250 MB menos y sin efecto, porque el juego corre en DX11. Sería una excepción acotada al veto del Perfil A (sí).
 4. **Canon:** Isidora tiene leucemia en recaída más miocardiopatía por la quimio (el "corazón débil" del HTML). Muere a las 03:33 del 13/03/1998. La Casona es la casa de Alfredo. El año queda en 1998, no 2001 (sí a todo).
 5. **Vida:** 4 golpes y checkpoint (sí) o muerte de un golpe.
