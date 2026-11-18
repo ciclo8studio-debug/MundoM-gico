@@ -52,6 +52,8 @@
 | Sombra_RepeleSeg / HuidaSeg | Segundos apuntando para ahuyentarla / segundos que huye | 2,5 / 5 | 1–5 / 2–10 |
 | Sombra_VistaApagada | Hasta dónde te ve si tu linterna está apagada (cm) | 700 | 300–1500 |
 | Bateria_GastoSeg | Gasto de batería por segundo con la linterna encendida (%) | 0,35 | 0,1–1 |
+| Sombra_PausaGolpe | Segundos que la Sombra se retira después de golpearte | 3 | 1–8 |
+| **Sombra_AntiAtasco** | Si la Sombra queda trabada 2,5 s, vuelve a patrullar | ✅ | — |
 | **Camara_PrimeraPorDefecto** | El juego arranca en 1ª persona (desmárcalo para volver a la 3ª) | ✅ | — |
 
 > **Si algo falla en un playtest,** apágalo desmarcando su casilla y haz la build. No hace falta tocar ningún Blueprint.

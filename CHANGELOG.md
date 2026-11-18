@@ -3,6 +3,21 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.65] — 2026-11-18 · Sprint A5 + A7: la botella distrae y la Sombra es más justa (sin build)
+
+### Corregido
+- **A5 · La botella atraía a la Sombra hacia ti.** `Lanzar` registraba el ruido en **tu posición**, porque la distancia se multiplicaba por 0. Ahora el ruido y el sonido de vidrio quedan **12 m adelante**, donde cae la botella, y la Sombra va a investigar ahí. Así puedes usarla para alejarla y pasar.
+
+### Añadido
+- **A7 · Sombra más justa** (@gameplay-engineer y ai-programmer):
+  - **Pausa después del golpe:** tras golpearte, la Sombra **vuelve a su zona** y no te caza durante **`Sombra_PausaGolpe` = 3 s**. Se acabó encadenar golpes sin poder escapar.
+  - **Anti-atasco:** si persigue o investiga y queda trabada (velocidad < 20 durante 2,5 s), vuelve a patrullar con un punto nuevo. Interruptor **`Sombra_AntiAtasco`** (activo).
+  - Las dos van dentro de `RevisarLinterna`, que ya corre cada 0,2 s; no se agregó Tick.
+
+### Para probar en la próxima build
+- Lanzar una botella (T / R2) lejos de la Sombra y ver que va hacia donde sonó el vidrio.
+- Dejarse golpear una vez: la Sombra debería retirarse unos segundos.
+
 ## [0.3.64] — 2026-11-18 · Sprint A3: la linterna te delata y ahuyenta a la Sombra (sin build)
 
 Pilar 1 de la reingeniería, "la luz te salva y te delata" (@gameplay-engineer, ai-programmer y systems-designer). Se agregó como un sentido aparte de la Sombra para no reescribir su IA.
