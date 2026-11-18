@@ -3,6 +3,29 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.66] — 2026-11-18 · Tubos fluorescentes en falla + pantalla de FIN DE LA DEMO
+
+Playtest del CTO (v0.3.65): la botella y recoger objetos funcionan bien.
+
+### Añadido
+- **`BP_TuboFalla`** (`/Game/MundoMagico/Mundo/`): un tubo fluorescente que **parpadea al azar** en vez de quedar fijo.
+  - La luz `Tubo` (PointLight) es blanco frío verdoso, de 8 cd, con forma de tubo de 1,2 m, 6,5 m de alcance y **sin sombras** (barato para la iGPU).
+  - La función `Parpadeo` se llama con timers que se reprograman al azar (sin Tick):
+    - El 75 % de las veces es un **corte corto** (0,04–0,15 s al 8 %).
+    - El 25 % es un **apagón** de 1–3,5 s, con chasquido eléctrico (`LightFlicker02`).
+    - Encendido dura 0,3–4 s.
+  - **7 tubos en `L_Hospital`:** 2 en Reanimación, 1 en Farmacia, 2 en la sala del despertar y 2 en el pasillo de Urgencias. Las habitaciones se ubicaron con rayos (techo a 3,2 m).
+  - Interruptor nuevo **`Tubos_Falla`** en `DA_Tuning` (activo). Si lo apagas, quedan encendidos fijos.
+- **Pantalla "FIN DE LA DEMO"** (playtest: *"al salir del pasillo se cae el juego y vuelve al inicio"*). No era un cierre: con `Demo_SinParque` se volvía al menú sin aviso.
+  - Ahora, tras la TV, se ve **fondo negro y el texto** "FIN DE LA DEMO · Capítulo 1 · Hospital · La historia de Isidora continúa en la Casona… · Gracias por jugar · Ciclo Studio Game" durante **6,5 s**. Después vuelve al menú.
+  - Componentes en `WBP_Transicion`: `FinFondo`, `FinTexto` y `TFin`.
+
+### Hallazgo
+- Las luces originales de las habitaciones tienen **LightColor negro**, así que no alumbran y por eso solo se veía la luna. Se dejaron así: ahora los tubos son la luz de cada sala.
+
+### Pendiente (del playtest)
+- **Recoger con varios objetos juntos:** hoy se toma siempre el **más cercano**, no el que miras. Cambiar a "el más centrado en la vista" (va con A4, pistas e interacción).
+
 ## [0.3.65] — 2026-11-18 · Sprint A5 + A7: la botella distrae y la Sombra es más justa (sin build)
 
 ### Corregido
