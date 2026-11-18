@@ -3,6 +3,18 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.72] — 2026-11-18 · Al cruzar el glitch ya no vuelve al menú: la marca de transición se guarda
+
+Playtest del CTO (v0.3.71, build normal): *"va fluido en el hospital, pero al salir al parque llego a la pantalla de iniciar juego"*.
+
+### Corregido
+- **Causa:** `BP_GestorNivel.VigilarSalida` guardaba la marca "Transicion" con `CreateSaveGameObject("/Script/Engine.SaveGame")`, que es una **clase abstracta**: Unreal no puede crear la instancia, `SaveGameToSlot` guardaba nada y el parque no encontraba la marca. Sin ella, el parque cree que se abrió directo y manda de vuelta al hospital (`OpenLevel L_Hospital`), que abre en el menú.
+- **Arreglo:** la clase es ahora `BP_Partida` (concreta). Al cruzar el glitch se guarda la marca, el parque la encuentra, la borra, hace la transición VHS y te deja en la entrada.
+- Revisé el resto del proyecto: es el único uso de la clase abstracta.
+
+### Aprendido (mediciones)
+- **Las builds Development distorsionan el rendimiento en esta iGPU** (3 FPS en el hospital contra fluido en la build normal). Las mediciones de la v0.3.69–0.3.71_dev no valen para FPS. Se usan solo para buscar cierres.
+
 ## [0.3.71] — 2026-11-18 · Sin teclados de código en el parque (cofres directos)
 
 Playtest del CTO: *"al entrar al parque aparece como un cofre de código; solo hay un código y es en el teatro, el resto se puede desactivar"*.
