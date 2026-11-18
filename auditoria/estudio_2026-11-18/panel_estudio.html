@@ -204,6 +204,32 @@ footer{color:var(--mut);font-size:12.5px;border-top:1px solid var(--line);paddin
 </section>
 
 <section>
+  <h2>Reingeniería · 18-11</h2>
+  <p class="note">Cada super-agente rediseñó su área con su equipo. Los cruces quedaron resueltos en REINGENIERIA_2026-11-18.md.</p>
+  <div class="dec" style="margin-bottom:14px">
+    <div class="d" style="border-left-color:#c9a45c"><b>🛡️ @tech-lead</b>El BP del jugador (11,3 MB) se parte en 6 componentes con el patrón "estrangulador": cada pieza se puede volver atrás desde DA_Tuning. Calidad en 3 niveles con bajada automática, prueba de humo automática y cook sin SM6 (unos 250 MB menos).</div>
+    <div class="d" style="border-left-color:#7f9bb8"><b>🕹️ @gameplay-engineer</b>Bucle del Nivel 1 de 25 minutos, IA unificada en AC_Percepcion (9 estados, sospecha gradual), Director como planificador con respiros de 60 s y unas 30 claves de balance.</div>
+    <div class="d" style="border-left-color:#6fae7a"><b>🏚️ @world-builder</b>Sótano en anillo: negatoscopio que marca 03:33, puerta 0333 y gaveta 4 de la morgue. Canon de Isidora, las 15 páginas escritas, biblia de luz y teaser de la Casona de 75 s.</div>
+    <div class="d" style="border-left-color:#b58fd0"><b>🎨 @ux-toolsmith</b>AC_UI con pila de pantallas y avisos desde DT_Avisos. Audio con 6 clases, 4 mezclas y música de 3 capas según la tensión. Subtítulos con dirección del susto y un Probar.bat nuevo.</div>
+    <div class="d" style="border-left-color:#c2584a"><b>🧪 @qa-publisher</b>Definición de "listo" en 6 puntos, humo H1–H7, severidades S1–S4, checklist v0.3.61 con unos 22 casos, kit de testers y página v0.5.0 en español e inglés.</div>
+  </div>
+  <div class="tbl"><table>
+    <thead><tr><th>Build</th><th>Fecha</th><th>Contenido</th></tr></thead>
+    <tbody>
+      <tr><td class="id">v0.3.62</td><td>19-11</td><td>A6 sombras según calidad + A2 avisos según el mando · Probar.bat nuevo</td></tr>
+      <tr><td class="id">v0.3.63</td><td>20-11</td><td>DA_NovelaData con las 15 páginas + contador de páginas</td></tr>
+      <tr><td class="id">v0.3.64</td><td>21-11</td><td>AC_Linterna: delata, ahuyenta, batería ajustable (A3)</td></tr>
+      <tr><td class="id">v0.3.65</td><td>22-11</td><td>AC_Percepcion v1 en la Sombra (A7) + la botella distrae (A5)</td></tr>
+      <tr><td class="id">v0.3.66</td><td>23-11</td><td>Pistas y objetivos (A4) + pantalla final (A8)</td></tr>
+      <tr><td class="id">v0.3.67</td><td>24-11</td><td>Humo automático, calidad automática, NeverCook, cook sin SM6</td></tr>
+      <tr><td class="id">rc1</td><td>25-11</td><td>Freeze de gameplay → testers</td></tr>
+      <tr><td class="id">B</td><td>26-11 → 1-12</td><td>Sótano y morgue, subtítulos y mezcla, música 3 capas, vida y autoguardado, clímax, teaser de la Casona</td></tr>
+      <tr><td class="id">v0.5.0</td><td>8 → 10-12</td><td>Gold y versión pública en itch.io</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section>
   <h2>Decisiones del CTO</h2>
   <div class="dec">
     <div class="d"><b>¿La linterna ahuyenta a la Sombra?</b>Es el corazón del bucle del HTML: encendida te delata y apuntada la espanta.<div class="rec">Recomendación: sí, de forma híbrida</div></div>
