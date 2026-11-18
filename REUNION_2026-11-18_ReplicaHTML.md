@@ -57,7 +57,7 @@
 ## Divergencias aceptadas (no cuentan como falla de paridad)
 1ª persona, Sombra en el hospital, transición TV/VHS, vida de 4 golpes y batería ajustada por mapa (0,35 %/s en el hospital y unos 0,6 %/s en el parque).
 
-## Decisiones del CTO (recomendación)
+## Decisiones del CTO: ✅ las 9 aprobadas como se recomendaron (18-11)
 1. **El parque reemplaza al Sprint B** (sótano y morgue) para el 10-12 (sí).
 2. **Cvars por mapa en runtime**, y si no bastan, ajustes en `DefaultScalability.ini`. No se recompilan shaders ni se aplica el Perfil A al proyecto (sí).
 3. **Gates G0 (22-11) y final (1-12)**, con Plan B `Demo_SinParque` si fallan (sí).
