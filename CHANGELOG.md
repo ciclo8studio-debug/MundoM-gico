@@ -3,6 +3,16 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.70] — 2026-11-18 · Perfil liviano forzado en el parque (diagnóstico de rendimiento)
+
+### Cambiado
+- **El parque corría a 3 FPS** (medición D11 del CTO: Frame 347–373 ms, CPU 13 ms, **GPU 348–373 ms**, 120–132 draws, 474K prims). La GPU se va en pases de pantalla completa. El log mostró que `CalidadExtra` aplicaba la rama pesada (TSR, `DistanceFieldAO`, `t.MaxFPS 0`, resolución 80 %) porque la calidad guardada no es Baja.
+- **`CalidadExtra` fuerza el perfil liviano en `L_Parque`**, sin importar la calidad elegida: `r.AntiAliasingMethod 2` (TAA), `r.MegaLights.Allow 0`, `t.MaxFPS 30` y `r.DistanceFieldAO 0`. Interruptor nuevo **`Parque_PerfilBajo`** en `DA_Tuning` (activo). El hospital no cambia.
+- `CalidadExtra` se reescribió completa; mantiene las sombras de la linterna por calidad, los avisos por mando, las páginas con texto y el gasto de batería.
+
+### Para verificar
+- En la build Development, `ProfileGPU` en el log muestra el pase más caro. Esperado: 25–30 FPS en el parque. Si sigue lento, el perfil dirá qué pase es.
+
 ## [0.3.69] — 2026-11-18 · Arreglo del cierre al entrar al parque con partida guardada
 
 ### Corregido
