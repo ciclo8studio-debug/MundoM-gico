@@ -3,6 +3,29 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.74] — 2026-11-18 · A4: pistas según tu progreso (sin build)
+
+Plan de la reunión "Replicar el HTML": el HTML tiene una pista bajo demanda y una automática si te atascas.
+
+### Añadido
+- **`MostrarPista`** (jugador): un mensaje de 7 s con la siguiente cosa que hacer, según lo que ya tienes. Orden:
+  1. sin linterna → "la linterna está sobre el mostrador de recepción";
+  2. sin energía → "sal por Urgencias y enciende los 4 interruptores";
+  3. menos de 3 cintas → "busca las cintas por el parque";
+  4. sin llave → "la llave está en los disfraces de la bodega";
+  5. casa cerrada → "abre la casa de Alfredo con la llave";
+  6. menos de 4 cintas → "la última cinta está dentro de la casa";
+  7. sin fusible → "el fusible está en el compartimento del reloj; escucha el fonógrafo";
+  8. cintas sin ver → "ve a la cabina VIDEO";
+  9. al final → "vuelve a la sala psiquiátrica del Pabellón 4 y lee el expediente".
+- **Tecla Y** (teclado) para pedir la pista cuando quieras.
+- **Pista automática**: `RevisarPista` corre cada 30 s en un timer (sin Tick). Si tu progreso (cintas, páginas y los 6 indicadores) no cambia durante `Pista_AutoSeg` (180 s), muestra la pista sola.
+- **`Pistas_Activas`** (activo) y **`Pista_AutoSeg`** (180) en `DA_Tuning`. Los valores y el timer se cargan desde `CalidadExtra`.
+
+### Nota técnica
+- `CallFunction|MostrarMensaje` en DSL exige parámetros por nombre (`:Texto`, `:Duracion`); con posicionales el texto se corría a `self`. Anotado para futuros cambios.
+- Con mando no hay botón libre, así que se usa la pista automática.
+
 ## [0.3.73] — 2026-11-18 · El parque siempre arranca + se recoge lo que miras
 
 Playtest del CTO (v0.3.72): *"llego al parque y el juego llega a la pantalla de inicio"*; y pendiente de antes: *"si hay varios objetos juntos a la linterna no pude interactuar bien"*.

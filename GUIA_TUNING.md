@@ -58,6 +58,8 @@
 | **Parque_PerfilBajo** | En el parque se fuerza el perfil liviano (TAA, sin DFAO, tope de 30 FPS) aunque la calidad sea Media o Alta | ✅ | — |
 | **Codigos_Teclado** | Los candados con teclado del parque (cofre de la bodega y caja fuerte). Apagado: se abren directo con E y dan su recompensa | ❌ | — |
 | Interaccion_MiradaCm | Se recoge el objeto más cercano a un punto delante de tu mirada, a esta distancia en cm (0 = casi como antes) | 150 | 0–250 |
+| **Pistas_Activas** | Tecla Y y pista automática según tu progreso | ✅ | — |
+| Pista_AutoSeg | Segundos sin progreso para que salga la pista sola | 180 | 60–600 |
 | **Camara_PrimeraPorDefecto** | El juego arranca en 1ª persona (desmárcalo para volver a la 3ª) | ✅ | — |
 
 > **Si algo falla en un playtest,** apágalo desmarcando su casilla y haz la build. No hace falta tocar ningún Blueprint.
