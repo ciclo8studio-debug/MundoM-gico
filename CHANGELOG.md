@@ -3,6 +3,19 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.69] — 2026-11-18 · Arreglo del cierre al entrar al parque con partida guardada
+
+### Corregido
+- **El parque cerraba el juego y "partías en la sala del hospital"** (causa H2 de la reunión de avance). Evidencia: con `Partida.sav` borrado, `L_Parque -ir=parque` corrió más de 5 min sin cerrarse en la build Development; todos los cierres tenían partida guardada.
+  - `Cargar` hacía `SetActorLocation(PosControl)` sin comprobar el mapa. La posición guardada era del hospital y `L_Parque` conserva una copia de esa sala: el jugador aparecía dentro y se caía.
+  - **`BP_Partida` guarda ahora `Mapa`** (el nombre del mapa donde se guardó) y `Guardar` lo escribe.
+  - **`Cargar` restaura la posición solo si `Mapa` es igual al mapa actual.** Si la partida viene de otro mapa, o es antigua y no tiene `Mapa`, se carga todo lo demás (inventario, flags, cintas, batería) y el jugador queda en el punto de inicio del mapa.
+  - Con esto, cruzar el glitch del hospital deja al jugador en la **entrada del parque**, no en la sala del hospital.
+- Las partidas antiguas siguen cargando; en el primer uso no restauran la posición.
+
+### Pendiente
+- Si el parque se cae igual, la causa es otra. Reproducir con la build Development `v0.3.69_dev` y mirar `Saved\Logs`. Mover o borrar la copia de la sala del hospital que sigue dentro de `L_Parque` (`NavMesh_Hospital`, `BP_IsidoraAparicion`).
+
 ## [0.3.68] — 2026-11-18 · Parque sin sombras dinámicas (NO resolvió el cierre)
 
 > **Corrección (18-11, reunión de avance):** los reportes de cierre muestran que **D9 y D10 también se cayeron** (11:34 y 11:35), y que la v0.3.68 se cae igual (`-ir=parque` 11:54, `-ir=teatro` 11:57). Las sombras **no** eran la causa, o no la única. Se mantiene el cambio, que es más liviano, y la causa raíz sigue abierta: ver build Development `v0.3.68_dev` con logs y `auditoria/html_completo/estado_parque_2026-11-18.md`.
