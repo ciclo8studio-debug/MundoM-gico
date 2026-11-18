@@ -3,7 +3,9 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
-## [0.3.68] — 2026-11-18 · El parque ya no cierra el juego
+## [0.3.68] — 2026-11-18 · Parque sin sombras dinámicas (NO resolvió el cierre)
+
+> **Corrección (18-11, reunión de avance):** los reportes de cierre muestran que **D9 y D10 también se cayeron** (11:34 y 11:35), y que la v0.3.68 se cae igual (`-ir=parque` 11:54, `-ir=teatro` 11:57). Las sombras **no** eran la causa, o no la única. Se mantiene el cambio, que es más liviano, y la causa raíz sigue abierta: ver build Development `v0.3.68_dev` con logs y `auditoria/html_completo/estado_parque_2026-11-18.md`.
 
 ### Corregido
 - **Causa del GPUCrash al entrar al parque (S1)**, encontrada con el diagnóstico P0 del CTO en `Probar.bat` (opciones D1–D10):
