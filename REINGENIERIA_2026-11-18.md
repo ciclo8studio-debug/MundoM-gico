@@ -57,7 +57,7 @@ Los 5 super-agentes rediseñaron su área, cada uno con su equipo. Detalle en `a
 - Bugs con severidad S1–S4 en `auditoria/bugs.md`.
 - Kit de testers con mensaje listo, formulario v2 de 12 preguntas, rutas de logs y crashes, y metas: 0 cierres y ≥80 % termina.
 
-## Decisiones del CTO (recomendación entre paréntesis)
+## Decisiones del CTO: ✅ las 8 aprobadas tal como se recomendaron (18-11-2026)
 1. **Patrón `Arq_*` para partir el BP del jugador** (sí).
 2. **Demo sin parque ni payaso**, con hospital y teaser de la Casona: unos 400 MB menos (sí).
 3. **Cook sin shaders SM6:** unos 250 MB menos y sin efecto, porque el juego corre en DX11. Sería una excepción acotada al veto del Perfil A (sí).

@@ -3,6 +3,26 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.62] — 2026-11-18 · Sprint A: A6 (sombras según la calidad) + A2 (avisos según el mando) + herramientas
+
+### Cambiado
+- **A6 · Las sombras de la linterna dependen de la calidad y no solo del mapa** (reingeniería de @tech-lead).
+  - `CalidadExtra` aplica: sombras = (no es el parque **y** calidad ≥ `Linterna_SombraMinCalidad`) **o** `Linterna_SombrasParque`.
+- **Nuevo en `DA_Tuning`: `Linterna_SombraMinCalidad`** = 1 (Media). En calidad Baja la linterna ya no proyecta sombras y se gana rendimiento en la iGPU. Pon **0** para tener sombras también en Baja, como en la v0.3.61.
+
+### Añadido
+- **A2 · Avisos según el dispositivo** (@ux-toolsmith):
+  - Al tocar un botón del mando, los avisos del HUD cambian a **[□] Recoger / [□] Usar**. Al tocar una tecla vuelven a **[E]**.
+  - Usa el evento `AnyKey`, sin consumir la entrada, más `IsGamepadKey` → `UsandoMando`.
+  - Interruptor nuevo **`UI_AvisosPorDispositivo`** en `DA_Tuning` (activo). Si lo apagas, siempre muestra [E].
+- **`Probar.bat` nuevo** (@ux-toolsmith y @qa-publisher):
+  - El hospital va primero.
+  - Juego **sin sonido**.
+  - **Borrar partida**, que la mueve a `SaveGames\respaldo_<fecha>` sin eliminarla.
+  - **Abrir logs y cierres**.
+  - **Recoger logs en un ZIP** al Escritorio, con `herramientas/Recoger_Logs.ps1`.
+  - El parque pasa a un submenú interno, porque queda fuera de la demo pública.
+
 ## [0.3.61] — 2026-11-18 · Sprint A de Ciclo Studio Game: A1 (look del HTML en el hospital) + A10
 
 ### Añadido

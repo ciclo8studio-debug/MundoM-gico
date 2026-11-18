@@ -44,6 +44,8 @@
 | Sombra_RadioPatrulla | Cuánto se aleja al patrullar (cm) | 1200 | 400–3000 |
 | **PostHTML_Activo** | Look del juego HTML en el hospital (LUT verdosa, viñeta, grano, aberración) | ✅ | — |
 | **Linterna_SombrasParque** | La linterna proyecta sombras también en el parque (solo con GPU dedicada) | ❌ | — |
+| Linterna_SombraMinCalidad | Calidad mínima para que la linterna proyecte sombras (0 Baja, 1 Media, 2 Alta) | 1 | 0–3 |
+| **UI_AvisosPorDispositivo** | Los avisos muestran [□] con mando y [E] con teclado | ✅ | — |
 | **Camara_PrimeraPorDefecto** | El juego arranca en 1ª persona (desmárcalo para volver a la 3ª) | ✅ | — |
 
 > **Si algo falla en un playtest,** apágalo desmarcando su casilla y haz la build. No hace falta tocar ningún Blueprint.
