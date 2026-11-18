@@ -16,8 +16,14 @@ La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
   - Con la etiqueta `Escondido`, **la Sombra no te ve**, y sigue funcionando contener la respiración (Shift).
 - **`BP_ThirdPersonCharacter.PonerEscondido(Si)`**: agrega o quita la etiqueta `Escondido`.
 
+- **2 escondites colocados en `L_Hospital`, en el pasillo de la Sombra** (paredes en x = ±195):
+  - `ESC_HideSpot_1`: (110, −3000), pared derecha.
+  - `ESC_HideSpot_2`: (−110, −3350), pared izquierda.
+  - Los dos miran al centro y el frente queda a 90 cm del eje del pasillo. Se verificó con rayos.
+- Al entrar, el jugador y la **cámara** miran hacia la puerta (se usa la flecha del clóset y `SetControlRotation`).
+
 ### Pendiente
-- Colocar 2–3 escondites en `L_Hospital`, cerca del pasillo de la Sombra (ver `GUIA_TUNING.md`, sección 6) y probarlos en la próxima build.
+- Probarlos en la próxima build (opción 2 de `Probar.bat`, pasillo).
 
 ## [0.3.56] — 2026-11-16 · Build más liviana (sin build)
 
