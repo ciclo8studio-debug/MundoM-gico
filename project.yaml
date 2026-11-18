@@ -1,0 +1,41 @@
+# Configuracion de Claude Code Game Studios (instalacion selectiva, 18-11-2026) para Mundo Magico: Turno Nocturno.
+# Esquema: .claude/docs/effects-map.md y .claude/docs/config-resolution.md.
+
+schema_version: 1
+
+framework:
+  version: 1.3.0
+  last_upgraded: 2026-11-18
+  install: selective        # sin hooks, sin statusline, sin chequeo de actualizaciones
+
+project:
+  name: "Mundo Magico: Turno Nocturno"
+  version: 0.3.60           # espejo de ProjectVersion en Config/DefaultGame.ini del proyecto Unreal
+  genre: survival-horror
+  kind: game
+  stage: Production         # demo publica itch.io 10-12-2026 (Nivel 1 Hospital + teaser Casona)
+
+engine:
+  name: Unreal
+  version: "5.8"
+  language: Blueprint       # solo Blueprints, editados via unreal-mcp (DSL con -culture=en)
+  project_path: "C:/Users/pansh/Documents/Unreal Projects/MUNDO_MÁGICO"
+
+specialists:
+  code: ue-blueprint-specialist
+  ui: ue-umg-specialist
+
+platform:
+  targets: [PC]
+  input: [keyboard_mouse, gamepad]
+
+performance:
+  target_framerate: 30      # iGPU Intel Iris Plus, 8 GB RAM (calidad Baja)
+  frame_budget_ms: 33.3
+  draw_call_limit: 2000
+  memory_ceiling_mb: 3000
+  enforce: off
+
+modes:
+  rigor: minimal
+  automation: autonomous
