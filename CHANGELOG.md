@@ -3,6 +3,18 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.71] — 2026-11-18 · Sin teclados de código en el parque (cofres directos)
+
+Playtest del CTO: *"al entrar al parque aparece como un cofre de código; solo hay un código y es en el teatro, el resto se puede desactivar"*.
+
+### Cambiado
+- **Los teclados de código del parque se desactivan.** Eran 2: el **candado del cofre de la bodega** (`BOD_Candado`, código 317) y la **caja fuerte de la casa** (`CASA_CajaFuerte`, código 842). Ambos dan +2 pilas y +1 botiquín y no bloquean la historia.
+- **`AbrirCandado` ahora decide según `Codigos_Teclado`** (`DA_Tuning`, apagado): con el interruptor apagado no sale el panel "CANDADO [0] 0 0"; **E / □ abre el cofre o la caja directo** y entrega su recompensa, como si hubieras puesto el código bueno. Con el interruptor encendido vuelve el teclado.
+- **Se deja el reloj de la casa** (`CASA_Reloj`): no es un código numérico y su compartimento es el camino al fusible. El puzle del teatro no cambia.
+
+### Medición de rendimiento (v0.3.70_dev, `herramientas/barrido_zonas.ps1`)
+- El FPS depende de la zona: la entrada del parque iba a unos 30 FPS y los autos a unos 3 antes del perfil liviano; con `Parque_PerfilBajo`, teatro ~9 y autos ~13 FPS (muestras poco precisas). **La noria se cerró sola** sin reporte de cierre. Pendiente: aislar qué translucidez pesa en esas zonas (el perfil GPU mostró el pase *Translucency (AfterDOF)*).
+
 ## [0.3.70] — 2026-11-18 · Perfil liviano forzado en el parque (diagnóstico de rendimiento)
 
 ### Cambiado

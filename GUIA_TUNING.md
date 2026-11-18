@@ -56,6 +56,7 @@
 | **Sombra_AntiAtasco** | Si la Sombra queda trabada 2,5 s, vuelve a patrullar | ✅ | — |
 | **Tubos_Falla** | Los tubos fluorescentes de las salas parpadean al azar (apagado = fijos) | ✅ | — |
 | **Parque_PerfilBajo** | En el parque se fuerza el perfil liviano (TAA, sin DFAO, tope de 30 FPS) aunque la calidad sea Media o Alta | ✅ | — |
+| **Codigos_Teclado** | Los candados con teclado del parque (cofre de la bodega y caja fuerte). Apagado: se abren directo con E y dan su recompensa | ❌ | — |
 | **Camara_PrimeraPorDefecto** | El juego arranca en 1ª persona (desmárcalo para volver a la 3ª) | ✅ | — |
 
 > **Si algo falla en un playtest,** apágalo desmarcando su casilla y haz la build. No hace falta tocar ningún Blueprint.
