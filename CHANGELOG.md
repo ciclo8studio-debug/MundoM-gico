@@ -3,6 +3,19 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.68] — 2026-11-18 · El parque ya no cierra el juego
+
+### Corregido
+- **Causa del GPUCrash al entrar al parque (S1)**, encontrada con el diagnóstico P0 del CTO en `Probar.bat` (opciones D1–D10):
+  - D2–D8 se cayeron todas (configuración liviana, resolución al 50 %, sin RayTracing, menos memoria de texturas, sin nubes ni partículas). **No era memoria ni resolución:** quedaban unos 800 MB libres.
+  - **D10, solo "sin sombras dinámicas", no se cae**, y D9 tampoco.
+  - Culpable: en `L_Parque`, **14 luces puntuales proyectaban sombras** (6 pasadas por cuadro cada una sobre unos 1.400 actores) más **el sol, con 4 cascadas dinámicas**. La iGPU Iris Plus no termina el cuadro a tiempo y Windows la resetea (TDR). En el hospital las luces nunca tuvieron sombra; por eso aguantaba.
+- **Arreglo en el mapa, sin tocar el proyecto:** `CastShadows = false` en las 14 luces, el sol y el `SkyLight` de `L_Parque`. El parque queda con la misma regla que el hospital: **solo la linterna puede proyectar sombras**, y en el parque está apagada (`Linterna_SombrasParque`).
+
+### Diagnóstico agregado a `Probar.bat` (submenú P)
+- D1–D10 para aislar cierres por tipo de carga: memoria, resolución, RayTracing, texturas, nubes, partículas y sombras.
+- D5 ahora es la ruta normal **sin `-ir`**, porque el salto de zona devolvía al hospital al llegar al parque.
+
 ## [0.3.67] — 2026-11-18 · Vuelve el parque; sin pantalla de fin (sin build)
 
 ### Cambiado
