@@ -3,6 +3,23 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.58] — 2026-11-17 · Arreglo del cierre al llegar al parque + portada web (sin build)
+
+### Corregido
+- **El juego se cerraba solo al pasar al parque** (playtest de la v0.3.57).
+  - El reporte dice `GPUCrash`: la iGPU se colgaba.
+  - Causa: desde la v0.3.55 la linterna proyecta sombras siempre, y en `L_Parque` (unos 1.400 actores) eso supera lo que aguanta la Iris Plus.
+  - Arreglo: `CalidadExtra` apaga las sombras de la linterna en `L_Parque`. En el hospital siguen activas.
+- **Nuevo interruptor `Linterna_SombrasParque` en `DA_Tuning`** (apagado). Si lo marcas, vuelven las sombras en el parque. Úsalo solo en un PC con GPU dedicada.
+
+### Cambiado
+- **Portada del menú igual a la versión web:**
+  - Imagen en 1ª persona de la entrada del parque con la linterna en la mano (`T_Portada_FP`, 1920×1080).
+  - **Luz de linterna que sigue al mouse**: `LuzMouse` con `T_LuzPortada`, centro cálido y bordes oscuros, con suavizado. La mueve la función `MoverLuz`, que se llama desde el Tick del menú.
+  - Los botones bajan a 740, 806 y 872 (marco de 1920×1080).
+  - Se mantienen el zoom lento, la niebla, la lluvia, el grano y el parpadeo.
+- Scripts: `herramientas/componer_luz_portada.py` e `importar_portada_fp.py`.
+
 ## [0.3.57] — 2026-11-17 · Escondites que no atascan (etapa E2, sin build)
 
 ### Añadido
