@@ -83,6 +83,7 @@ echo   D7. Parque directo con el MODO LIVIANO del editor (RayTracing apagado)
 echo   D8. D7 + sin particulas GPU, sin nubes volumetricas, sin AO de campos de distancia
 echo   D9. D7 + SIN SOMBRAS dinamicas + cielo sin captura en tiempo real
 echo   D10. D7 + SIN SOMBRAS dinamicas (solo eso)
+echo   D11. Autos con MEDIDOR en pantalla (stat unit + stat gpu): saca una captura
 echo   0. Volver
 set /p PQ="Elige: "
 set "ZONA="
@@ -102,6 +103,7 @@ if /i "%PQ%"=="D7" start "" "%EXE%" L_Parque -ir=parque -dev -dpcvars=r.RayTraci
 if /i "%PQ%"=="D8" start "" "%EXE%" L_Parque -ir=parque -dev -dpcvars=r.RayTracing.Enable=0,r.Shadow.Virtual.Enable=0,r.DynamicGlobalIlluminationMethod=0,r.ReflectionMethod=2,r.Lumen.DiffuseIndirect.Allow=0,r.Lumen.Reflections.Allow=0,r.VolumetricFog.GridPixelSize=16,r.VolumetricFog.GridSizeZ=64,FX.AllowGPUParticles=0,r.VolumetricCloud=0,r.DistanceFieldAO=0,r.AOGlobalDistanceField=0 & goto menu
 if /i "%PQ%"=="D9" start "" "%EXE%" L_Parque -ir=parque -dev -dpcvars=r.RayTracing.Enable=0,r.Shadow.Virtual.Enable=0,r.DynamicGlobalIlluminationMethod=0,r.ReflectionMethod=2,r.Lumen.DiffuseIndirect.Allow=0,r.Lumen.Reflections.Allow=0,r.VolumetricFog.GridPixelSize=16,r.VolumetricFog.GridSizeZ=64,r.ShadowQuality=0,r.SkyLight.RealTimeReflectionCapture=0,r.VolumetricCloud=0 & goto menu
 if /i "%PQ%"=="D10" start "" "%EXE%" L_Parque -ir=parque -dev -dpcvars=r.RayTracing.Enable=0,r.Shadow.Virtual.Enable=0,r.DynamicGlobalIlluminationMethod=0,r.ReflectionMethod=2,r.Lumen.DiffuseIndirect.Allow=0,r.Lumen.Reflections.Allow=0,r.VolumetricFog.GridPixelSize=16,r.VolumetricFog.GridSizeZ=64,r.ShadowQuality=0 & goto menu
+if /i "%PQ%"=="D11" start "" "%EXE%" L_Parque -ir=autos -dev -ExecCmds="stat unit,stat gpu" & goto menu
 if not defined ZONA goto menu
 start "" "%EXE%" L_Parque -ir=%ZONA% -dev
 goto menu
