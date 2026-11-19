@@ -63,6 +63,7 @@
 | Acto3_Persecucion | Tras la sala vuelves al hospital con el payaso | true | on/off |
 | Payaso_VelFinal | Velocidad del payaso final (cm/s) | 520 | 300–700 |
 | HospitalGrande_Activo | La puerta del ARCHIVO lleva al hospital grande (en construcción) | false | on/off |
+| Salida_Y | Y del hospital a partir de la cual (tras el glitch) pasas al parque | -12600 | -13000..-4000 |
 | **Camara_PrimeraPorDefecto** | El juego arranca en 1ª persona (desmárcalo para volver a la 3ª) | ✅ | — |
 
 > **Si algo falla en un playtest,** apágalo desmarcando su casilla y haz la build. No hace falta tocar ningún Blueprint.

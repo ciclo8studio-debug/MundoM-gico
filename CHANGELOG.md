@@ -3,6 +3,20 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.77] — 2026-11-19 · Hospital más largo: Ala de Internación (sin build)
+
+Decisión del CTO: el Pabellón 4 es el hospital. Quedan 3 niveles: `L_Hospital`, `L_Parque` y `L_Casona`.
+
+### Añadido
+- **Ala de Internación** en `L_Hospital` (bloqueo con cubos), después de la plataforma del glitch: pasillo de 66 m, 12 cuartos (6 por lado) y una sala de espera final de 16×16 m, entre Y -4900 y -13100. 6 luces suaves sin sombras. Carpeta `Ala_Internacion`.
+- `DA_Tuning.Salida_Y` (-12600): `BP_GestorNivel.VigilarSalida` ya no usa -4000 escrito a mano. Al pasar esa Y (con `SalidaHecha`) arranca la transición TV al parque, igual que antes.
+
+### Quitado
+- `L_HospitalGrande` (mapa y puerta `PUERTA_HospitalGrande`). Se retira del cocinado. Se mantiene `L_Casona`.
+
+### Por probar
+- Que tras el glitch se pueda caminar por el ala nueva y que la salida al parque se dispare al final. El texto de objetivo y el navmesh (volumen existente hasta Y -19500) no se han verificado.
+
 ## [0.3.76] — 2026-11-19 · Mapas nuevos: hospital grande y casona (bloqueo, sin build)
 
 Ordenar los 3 mapas del plan. Auditoría en `auditoria/mapas_2026-11-19.md`.
