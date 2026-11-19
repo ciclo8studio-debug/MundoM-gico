@@ -8,4 +8,4 @@
 **Fechas:** G0 del parque 22-11 · rc1 25-11 · rc2 3-12 · gold 8-12 · pública 10-12. Plan B: `Demo_SinParque` (hospital + Acto 3).
 **Restricciones duras:** 8 GB RAM + iGPU (sin PIE; solo builds, 1/día); sin Event Tick nuevo; cada feature con interruptor en `DA_Tuning`; el CTO hace `git push`; nunca editor y juego a la vez; Perfil A (renderer) vetado.
 **Decisiones aprobadas (18-11):** 3 niveles; 1ª persona principal; el parque vuelve a la demo; patrón `Arq_*`; 62 Recuerdos + 15 clínicas E1–E15; vida 4 golpes; canon de Isidora (leucemia + miocardiopatía, 03:33 del 13/03/1998); gate firme.
-**Mapa de documentos:** plan `REUNION_2026-11-18_ReplicaHTML.md` · avance `REUNION_2026-11-18_Avance.md` · reingeniería `REINGENIERIA_2026-11-18.md` · ajustes `GUIA_TUNING.md` · agentes `ESTUDIO_AGENTES.md` · tablero `BOARD.md`.
+**Mapa de documentos:** plan `docs/historico/REUNION_2026-11-18_ReplicaHTML.md` · avance `docs/historico/REUNION_2026-11-18_Avance.md` · reingeniería `REINGENIERIA_2026-11-18.md` · ajustes `GUIA_TUNING.md` · agentes `ESTUDIO_AGENTES.md` · tablero `BOARD.md`.

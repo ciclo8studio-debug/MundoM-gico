@@ -1,6 +1,6 @@
 # Reunión de AVANCE · 4 super-agentes · 18-11-2026 (tarde)
 
-**Base:** acta `REUNION_2026-11-18_ReplicaHTML.md`, informes `reunion_*.md`, `estado_parque_2026-11-18.md`, CHANGELOG 0.3.61–0.3.68 y BOARD.
+**Base:** acta `docs/historico/REUNION_2026-11-18_ReplicaHTML.md`, informes `reunion_*.md`, `estado_parque_2026-11-18.md`, CHANGELOG 0.3.61–0.3.68 y BOARD.
 **Hecho clave:** la v0.3.68 (sin `CastShadows` en 14 luces, sol y SkyLight) **no arregló el parque**. `-ir=parque` y `-ir=teatro` se cayeron a las 11:54 y 11:57, y D9/D10 también se cayeron según los reportes (el CHANGELOG y el BOARD dicen lo contrario y hay que corregirlos). D2–D10 cayeron todas con unos 800 MB libres, y el CTO "parte en la sala del hospital" antes del cierre. Falta la build Development `v0.3.68_dev` con logs. **El bloqueo n.º 1 sigue abierto.** Además, el número v0.3.68 ya se usó, así que la hoja de ruta corre un número.
 
 ## 🕹️ @gameplay-engineer

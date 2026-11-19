@@ -41,4 +41,4 @@
 - Decisión de hardware de un partner el 17-11.
 **Plan:** demo corta 13-11 (itch.io) y demo completa v0.5.0 el 10-12-2026, con sprints de 1 semana.
 **Packs disponibles sin usar o archivados:** UndergroundTunnel, SciFi_Beast06, RoninGirl (sigilo), DynamicFalling (voltereta), RadialWheel (plugin), FreeSurvivalIconsKG, Horror_Hospital (18 GB, se usan unos 40 assets), SoulCity, DetectiveOffice.
-**Documentos del estudio:** BOARD.md, AUDIT_REPORT.md, PLAN_DE_TRABAJO.md, CHANGELOG.md y auditoria/*.md (auditoría previa, diseño del BT, diseño Carrusel/Casa).
+**Documentos del estudio:** BOARD.md, docs/historico/AUDIT_REPORT.md, PLAN_DE_TRABAJO.md, CHANGELOG.md y auditoria/*.md (auditoría previa, diseño del BT, diseño Carrusel/Casa).

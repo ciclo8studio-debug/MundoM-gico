@@ -1034,7 +1034,7 @@ Responde a lo que el CTO vio jugando la v0.3.34 con `auditoria/checklist_v0.3.34
 - Herramientas:
   - `Abrir_MundoMagico_Liviano.bat`: abre Unreal sin RayTracing, VSM ni Lumen, solo mientras está abierto.
   - `Respaldar_Proyecto.bat`: zip con fecha de lo propio del proyecto. Conserva los últimos 10.
-- Documentación del estudio: `BOARD.md`, `AUDIT_REPORT.md`, `auditoria/*.md`.
+- Documentación del estudio: `BOARD.md`, `docs/historico/AUDIT_REPORT.md`, `auditoria/*.md`.
 
 ### Cambiado
 - `DefaultGame.ini`: `ProjectName`, `CompanyName` y `ProjectVersion=0.2.0`.
@@ -1064,7 +1064,7 @@ Responde a lo que el CTO vio jugando la v0.3.34 con `auditoria/checklist_v0.3.34
 - 20 archivos `.tmp` de guardados interrumpidos en `Saved/` enviados a la Papelera.
 
 ### Problemas conocidos
-- En el PC de desarrollo (Intel Iris Plus, 8 GB) el editor y PIE se cuelgan por GPU (`DXGI_ERROR_DEVICE_HUNG`). Ver `AUDIT_REPORT.md`.
+- En el PC de desarrollo (Intel Iris Plus, 8 GB) el editor y PIE se cuelgan por GPU (`DXGI_ERROR_DEVICE_HUNG`). Ver `docs/historico/AUDIT_REPORT.md`.
 
 ## [0.1.0] — 2026-11-02
 - Primer build Shipping Win64, 2,2 GB, 0 errores, generado desde `C:\MM_Build`.

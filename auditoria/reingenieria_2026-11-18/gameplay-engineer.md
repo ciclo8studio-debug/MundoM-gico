@@ -1,5 +1,5 @@
 # Reingeniería 18-11 · @gameplay-engineer (Gameplay)
-Base: evaluación `estudio_2026-11-18/gameplay-engineer.md`, `PLAN_ESTUDIO_2026-11-18.md` (recorte N1: sin 2.º piso, negatoscopio en sótano), CHANGELOG v0.3.37–0.3.61, `GUIA_TUNING.md`, HTML de referencia. Solo lectura. Lentes: game-designer, systems-designer, gameplay-programmer, ai-programmer, ue-blueprint-specialist, prototyper.
+Base: evaluación `estudio_2026-11-18/gameplay-engineer.md`, `docs/historico/PLAN_ESTUDIO_2026-11-18.md` (recorte N1: sin 2.º piso, negatoscopio en sótano), CHANGELOG v0.3.37–0.3.61, `GUIA_TUNING.md`, HTML de referencia. Solo lectura. Lentes: game-designer, systems-designer, gameplay-programmer, ai-programmer, ue-blueprint-specialist, prototyper.
 
 ## 1. Visión
 - **Un solo dilema por pasillo:** la luz te salva (ahuyenta, ves) y te delata (te ven a 16 m), y cuesta batería.

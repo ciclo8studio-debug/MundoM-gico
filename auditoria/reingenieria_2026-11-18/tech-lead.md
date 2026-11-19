@@ -1,6 +1,6 @@
 # @tech-lead · Reingeniería 18-11-2026: arquitectura, iGPU, pipeline y dirección
 
-Este documento parte de `auditoria/estudio_2026-11-18/tech-lead.md` y `PLAN_ESTUDIO_2026-11-18.md`, y no repite el diagnóstico.
+Este documento parte de `auditoria/estudio_2026-11-18/tech-lead.md` y `docs/historico/PLAN_ESTUDIO_2026-11-18.md`, y no repite el diagnóstico.
 Lentes: technical-director, lead-programmer, unreal-specialist, engine-programmer, performance-analyst, devops-engineer, producer y creative-director.
 
 ## 1. Visión objetivo

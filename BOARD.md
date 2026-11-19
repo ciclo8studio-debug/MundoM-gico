@@ -8,20 +8,20 @@
 ## 🎯 Estado actual (2026-11-11)
 - 📅 **Nuevo calendario (decisión del CTO, 12-11):** **se cancelan el itch.io restringido del 13-11 y la publicación del 16-11.** Habrá testers privados (3–5) alrededor del **26-11**, con el hospital AAA terminado (cierre de E4). El **lanzamiento público en itch.io es el 10-12**, con la v0.5.0 y el Nivel 1 completo. La v0.3.42 queda como respaldo. Los documentos de itch.io siguen vigentes para esa fecha.
 - 🏗️ **Arquitectura en 3 niveles** (System Prompt Maestro del CTO): ver [`ARQUITECTURA_3_NIVELES.md`](ARQUITECTURA_3_NIVELES.md). La secuencia es Hospital → Casona → Parque, con `BP_GI_MundoMagico`, `BPI_Interactuable`, `DA_NovelaData`, IA Sombra con Perception y BT, escondites, puertas con código, superficies sonoras, cordura y cámara 1ª/3ª. ✅ **El CTO aprobó los 3 niveles el 11-11.** ✅ **Demo del 10-12: el Nivel 1 completo.** ✅ **La 1ª persona es el modo principal** y la 3ª queda como opción.
-- 🎮 **Reunión "Replicar el HTML completo" (18-11):** el equipo recorrió el HTML ([recorrido](auditoria/html_completo/RECORRIDO_HTML.md)) → [acta](REUNION_2026-11-18_ReplicaHTML.md). El parque vuelve (3 actos: hospital → parque → persecución y expediente). ⚠️ Bloqueo n.º 1 **sigue abierto**: la v0.3.68 (sin sombras) también se cae; D9 y D10 se cayeron según los reportes. Build Development con logs para encontrar la causa raíz. Plan reordenado: hospital y datos primero. Gate G0 el 22-11. ✅ El CTO aprobó las 9 decisiones (18-11). Build v0.3.67 para el diagnóstico P0.
-- 🗓️ **Reunión de cierre (18-11, noche):** [acta](REUNION_2026-11-18_Cierre.md). Cierre del parque resuelto en v0.3.69 (H2); v0.3.73 (parque arranca) y v0.3.75 (Acto 3) **sin probar**; FPS del parque en Shipping desconocido. El CTO prueba 5 puntos el 19-11; el producer decide G0 el 20-11 a las 20:00 (parque o Plan B ampliado). rc1 el 25-11, demo el 10-12.
+- 🎮 **Reunión "Replicar el HTML completo" (18-11):** el equipo recorrió el HTML ([recorrido](auditoria/html_completo/RECORRIDO_HTML.md)) → [acta](docs/historico/REUNION_2026-11-18_ReplicaHTML.md). El parque vuelve (3 actos: hospital → parque → persecución y expediente). ⚠️ Bloqueo n.º 1 **sigue abierto**: la v0.3.68 (sin sombras) también se cae; D9 y D10 se cayeron según los reportes. Build Development con logs para encontrar la causa raíz. Plan reordenado: hospital y datos primero. Gate G0 el 22-11. ✅ El CTO aprobó las 9 decisiones (18-11). Build v0.3.67 para el diagnóstico P0.
+- 🗓️ **Reunión de cierre (18-11, noche):** [acta](docs/historico/REUNION_2026-11-18_Cierre.md). Cierre del parque resuelto en v0.3.69 (H2); v0.3.73 (parque arranca) y v0.3.75 (Acto 3) **sin probar**; FPS del parque en Shipping desconocido. El CTO prueba 5 puntos el 19-11; el producer decide G0 el 20-11 a las 20:00 (parque o Plan B ampliado). rc1 el 25-11, demo el 10-12.
 - 🔧 **Reingeniería (18-11):** los 5 super-agentes rediseñaron su área → [`REINGENIERIA_2026-11-18.md`](REINGENIERIA_2026-11-18.md) (detalle en `auditoria/reingenieria_2026-11-18/`). Hoja de ruta: v0.3.62–v0.3.67 → rc1 el 25-11 → Sprint B → v0.5.0 el 10-12. ✅ El CTO aprobó las 8 decisiones (18-11): BP por piezas `Arq_*`, demo sin parque ni payaso, cook sin SM6, canon de Isidora (leucemia + miocardiopatía, 03:33 del 13/03/1998), vida de 4 golpes, clímax de la llave, subtítulos activos y música de 3 capas, gate firme y String Tables.
-- 🏢 **Estudio ampliado (18-11):** 31 agentes de Claude Code Game Studios bajo los 5 super-agentes ([organigrama](ESTUDIO_AGENTES.md)). Evaluación completa en [`auditoria/estudio_2026-11-18/`](auditoria/estudio_2026-11-18/) → [plan consolidado](PLAN_ESTUDIO_2026-11-18.md): Sprint A (A1–A10, build de testers el 25-11), Sprint B (Nivel 1, freeze el 1-12), release el 10-12. ✅ El CTO aprobó el Sprint A con las recomendaciones (18-11). Hechos: A1 + A10 (v0.3.61, build lista). Siguiente: A6 + A2.
-- 🛡️ **Reunión CTO + @tech-lead** ([acta](REUNION_2026-11-11_TechLead.md)): @tech-lead queda autorizado a proponer mejoras AAA. ✅ **Manda `MUNDO_MÁGICO` con itch.io.** `MundoMagico2` queda en pausa. ✅ **Aprobado:** el hospital y el parque pasan a 2 mapas, unidos por la transición glitch → TV (13-11, v0.3.42).
-- ✅ **El CTO descartó la refundación.** Se sigue el [plan de mejora rápida](PLAN_MEJORA_RAPIDA.md), que combina lo mejor de las dos reuniones. Fase 1, el kit del CTO, en curso.
-- 🔁 *(Archivada)* **Refundación propuesta (11-11, noche):** ver el [acta](REUNION_2026-11-11_Refundacion.md). Los 5 agentes votan la opción **A**: mapa nuevo y núcleo nuevo en `/Game/MM`, dentro del mismo proyecto. La v0.3.40 queda congelada como respaldo. Hay 5 decisiones pendientes del CTO.
-- 🧭 **Reunión del plan de mejora (11-11, noche):** ver el [acta](REUNION_2026-11-11_PlanMejora.md). Se congelan las features hasta validar la v0.3.40. Viene un kit de afinación para el CTO (`DA_Tuning`, saltos de prueba y guía), el hospital con `Horror_Hospital` y un Director de miedo. ✅ **itch.io:** el 13-11 se abre restringido para testers y el 16-11 se publica (decisión del CTO). ✅ Después del kit va primero el **hospital con `Horror_Hospital`**. Quedan 2 decisiones: el Perfil A parcial y borrar builds viejas.
+- 🏢 **Estudio ampliado (18-11):** 31 agentes de Claude Code Game Studios bajo los 5 super-agentes ([organigrama](ESTUDIO_AGENTES.md)). Evaluación completa en [`auditoria/estudio_2026-11-18/`](auditoria/estudio_2026-11-18/) → [plan consolidado](docs/historico/PLAN_ESTUDIO_2026-11-18.md): Sprint A (A1–A10, build de testers el 25-11), Sprint B (Nivel 1, freeze el 1-12), release el 10-12. ✅ El CTO aprobó el Sprint A con las recomendaciones (18-11). Hechos: A1 + A10 (v0.3.61, build lista). Siguiente: A6 + A2.
+- 🛡️ **Reunión CTO + @tech-lead** ([acta](docs/historico/REUNION_2026-11-11_TechLead.md)): @tech-lead queda autorizado a proponer mejoras AAA. ✅ **Manda `MUNDO_MÁGICO` con itch.io.** `MundoMagico2` queda en pausa. ✅ **Aprobado:** el hospital y el parque pasan a 2 mapas, unidos por la transición glitch → TV (13-11, v0.3.42).
+- ✅ **El CTO descartó la refundación.** Se sigue el [plan de mejora rápida](docs/historico/PLAN_MEJORA_RAPIDA.md), que combina lo mejor de las dos reuniones. Fase 1, el kit del CTO, en curso.
+- 🔁 *(Archivada)* **Refundación propuesta (11-11, noche):** ver el [acta](docs/historico/REUNION_2026-11-11_Refundacion.md). Los 5 agentes votan la opción **A**: mapa nuevo y núcleo nuevo en `/Game/MM`, dentro del mismo proyecto. La v0.3.40 queda congelada como respaldo. Hay 5 decisiones pendientes del CTO.
+- 🧭 **Reunión del plan de mejora (11-11, noche):** ver el [acta](docs/historico/REUNION_2026-11-11_PlanMejora.md). Se congelan las features hasta validar la v0.3.40. Viene un kit de afinación para el CTO (`DA_Tuning`, saltos de prueba y guía), el hospital con `Horror_Hospital` y un Director de miedo. ✅ **itch.io:** el 13-11 se abre restringido para testers y el 16-11 se publica (decisión del CTO). ✅ Después del kit va primero el **hospital con `Horror_Hospital`**. Quedan 2 decisiones: el Perfil A parcial y borrar builds viejas.
 - 🆕 **11-11 noche · build v0.3.40 lista** (`Build0.3.40`, 0 errores en el cook):
   - **Qué trae:** hospital AAA (balizas rojas, alarma, cuerpos y papeles de `SM_Notes`), sustos en el teatro y la noria, payaso acosador a distancia, Isidora y latido más notorios, y descompresión tras el glitch.
   - **Mañana (12-11):** el CTO la prueba con [`auditoria/checklist_v0.3.40.md`](auditoria/checklist_v0.3.40.md) y decide qué se publica: **v0.3.40**, o la v0.3.35 si algo falla.
   - **Excepción a la regla de builds:** el CTO pidió esta segunda build del día.
   - **Pendiente:** el slider de SFX, que toca el menú y el guardado, se hace después de validar la build.
-- Hubo **reunión de avance** con los 5 super-agentes: ver el [acta](REUNION_2026-11-11.md).
+- Hubo **reunión de avance** con los 5 super-agentes: ver el [acta](docs/historico/REUNION_2026-11-11.md).
 - Del 10 al 11-11 entraron 33 builds de prueba (v0.3.2 a v0.3.34) con mejoras visuales, de audio y de mecánicas. Están en el CHANGELOG, pero **casi nada se ha probado en el `.exe`**.
 - **Para el 13-11:** se recomienda publicar **v0.3.1** y corregir el borrador de itch.io, que promete contenido de la v0.4.
 - **Escondites:** desde la v0.3.2 los clósets volvieron a `Hospital/Escondites` (`BP_Hiding_Door` arreglado) y están **activos**. Nadie los ha probado.
@@ -42,7 +42,7 @@ Validado por el CTO:
 
 Último ajuste: los 3 clósets-escondite (`ESC_Armario_*`) quedan fuera de la demo porque el jugador se atascaba dentro. Se movieron a `Parque/Demo/Sobrantes`.
 
-### ✅ Mejoras aprobadas por el CTO en la reunión del 2026-11-09 ([acta](REUNION_2026-11-09.md))
+### ✅ Mejoras aprobadas por el CTO en la reunión del 2026-11-09 ([acta](docs/historico/REUNION_2026-11-09.md))
 - **S2 (desde ya, sin refactors grandes antes del 13-11):**
   - ✅ **Versionado (hecho 2026-11-09):** el proyecto Unreal (contenido propio, unos 200 MB, 403 assets en LFS) está en la rama `unreal` del repo privado. Para subir cambios: `herramientas/Versionar_Unreal.bat`.
   - Guardado con puntos de control.
@@ -86,12 +86,12 @@ Validado por el CTO:
 | Diagnóstico de Player Controller y Linterna | `@gameplay-engineer` | ✅ Completada | [`auditoria/gameplay-engineer.md`](auditoria/gameplay-engineer.md) | ❌ No |
 | Evaluación de mapa de prueba y tensión visual | `@world-builder` | ✅ Completada | [`auditoria/world-builder.md`](auditoria/world-builder.md) | ❌ No |
 | Revisión de HUD y componentes de Audio 3D | `@ux-toolsmith` | ✅ Completada | [`auditoria/ux-toolsmith.md`](auditoria/ux-toolsmith.md) | ❌ No |
-| Inspección de warnings de compilación y linters | `@qa-publisher` | ✅ Completada | [`auditoria/qa-publisher.md`](auditoria/qa-publisher.md) · [`AUDIT_REPORT.md`](AUDIT_REPORT.md) | ❌ No |
+| Inspección de warnings de compilación y linters | `@qa-publisher` | ✅ Completada | [`auditoria/qa-publisher.md`](auditoria/qa-publisher.md) · [`docs/historico/AUDIT_REPORT.md`](docs/historico/AUDIT_REPORT.md) | ❌ No |
 
 ---
 
 ## 🚀 Plan a Detalle del Sprint 1: Cimientos de Tensión e Interacción
-> *Propuesto por `@tech-lead` sobre los hallazgos de `AUDIT_REPORT.md`. Estado: ✅ **Aprobado por el CTO (2026-11-09)** · 🟡 En ejecución.*
+> *Propuesto por `@tech-lead` sobre los hallazgos de `docs/historico/AUDIT_REPORT.md`. Estado: ✅ **Aprobado por el CTO (2026-11-09)** · 🟡 En ejecución.*
 
 ### 📊 Avance del Sprint 1 (2026-11-09)
 | # | Estado | Resultado |
