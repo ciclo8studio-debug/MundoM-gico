@@ -3,6 +3,21 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.78] — 2026-11-19 · Ala de Internación con la atmósfera de referencia (sin build)
+
+Referencia del CTO: pasillo largo y oscuro, azulejo blanco hasta media pared, muros verdosos descascarados, tubos fluorescentes, escombros, silla de ruedas y luz cálida al fondo.
+
+### Añadido
+- **Materiales del hospital** en el ala nueva: `MI_Muro_VerdeAzulado` (muros), `MI_Piso_Azulejo` (piso), `MI_Techo`.
+- **Friso de azulejos** (`MI_Azulejo`, 0–150 cm) en las dos paredes del pasillo, con huecos en las puertas, y **marcos de puerta azules** (`MI_Marco_Azul`) en los 12 cuartos.
+- **6 tubos fluorescentes** en el techo (uno de cada tres apagado) y una **ventana cálida con luz ámbar** al fondo de la sala de espera.
+- **Utilería del pack Horror_Hospital:** 2 sillas de ruedas, 2 camillas, cubos de residuos, cajas, atril de suero, banca, barrera médica, silla.
+- **8 montones de escombro** con papeles arrugados y **16 decals** (suciedad de piso, grietas y daño en muros).
+- Todo en la carpeta `Ala_Internacion` del outliner.
+
+### Pendiente
+- Ver en juego el equilibrio de luz y presupuesto de FPS; el resto del hospital no se tocó.
+
 ## [0.3.77] — 2026-11-19 · Hospital más largo: Ala de Internación (sin build)
 
 Decisión del CTO: el Pabellón 4 es el hospital. Quedan 3 niveles: `L_Hospital`, `L_Parque` y `L_Casona`.
