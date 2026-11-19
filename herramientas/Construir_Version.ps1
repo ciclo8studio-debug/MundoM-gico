@@ -21,7 +21,7 @@ if (Test-Path "$proy\Fuentes") { robocopy "$proy\Fuentes" "$bld\Fuentes" /MIR /N
 $up = Get-ChildItem $proy -Filter 'MUNDO*.uproject' | Select-Object -First 1
 [IO.File]::WriteAllBytes("$bld\MundoMagico.uproject", [IO.File]::ReadAllBytes($up.FullName))
 $uat = 'C:\Program Files\Epic Games\UE_5.8\Engine\Build\BatchFiles\RunUAT.bat'
-$log = Join-Path $repo "Build_log_v$ver$Config.txt"
+$log = Join-Path $repo "logsBuild_log_v$ver$Config.txt"
 & $uat BuildCookRun "-project=$bld\MundoMagico.uproject" -noP4 -platform=Win64 "-clientconfig=$Config" -build -cook `
   -map=/Game/MundoMagico/Maps/L_Hospital+/Game/MundoMagico/Maps/L_Parque+/Game/MundoMagico/Maps/L_HospitalGrande+/Game/MundoMagico/Maps/L_Casona -stage -pak -prereqs -archive "-archivedirectory=$out" `
   -nocompileeditor -skipbuildeditor "-unrealexe=C:\Program Files\Epic Games\UE_5.8\Engine\Binaries\Win64\UnrealEditor-Cmd.exe" `
