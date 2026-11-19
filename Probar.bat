@@ -71,7 +71,7 @@ goto menu
 :parque
 cls
 echo   PARQUE (pruebas internas)
-echo   1. Entrada   2. Teatro   3. Noria   4. Bodega   5. Autos chocadores
+echo   1. Entrada   2. Teatro   3. Noria   4. Bodega   5. Autos chocadores   6. Castillo   7. CASONA (mapa nuevo)
 echo   --- DIAGNOSTICO DEL CIERRE (anota si se cae y los fps, 3 min cada una) ---
 echo   D1. Parque directo (sin pasar por el hospital)
 echo   D2. Parque directo + Perfil A en vivo
@@ -93,6 +93,8 @@ if "%PQ%"=="2" set "ZONA=teatro"
 if "%PQ%"=="3" set "ZONA=noria"
 if "%PQ%"=="4" set "ZONA=bodega"
 if "%PQ%"=="5" set "ZONA=autos"
+if "%PQ%"=="6" set "ZONA=castillo"
+if "%PQ%"=="7" start "" "%EXE%" /Game/MundoMagico/Maps/L_Casona -ir=casona -dev & goto menu
 if /i "%PQ%"=="D1" start "" "%EXE%" /Game/MundoMagico/Maps/L_Parque -ir=parque -dev & goto menu
 if /i "%PQ%"=="D2" start "" "%EXE%" /Game/MundoMagico/Maps/L_Parque -ir=parque -dev -dpcvars=%PA% & goto menu
 if /i "%PQ%"=="D3" start "" "%EXE%" /Game/MundoMagico/Maps/L_Parque -ir=parque -dev -dpcvars=%PA%,r.ScreenPercentage=50,r.VolumetricFog=0,r.ViewDistanceScale=0.5 & goto menu

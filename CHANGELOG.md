@@ -3,6 +3,21 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.80] — 2026-11-19 · El castillo lleva a la Casona (sin build)
+
+Idea del CTO: la Casona es el interior imposible del castillo del parque; se entra con un glitch, sin replicar el castillo.
+
+### Añadido
+- **`BP_PuertaCastillo`** en `L_Parque`, frente al portón del castillo (0,-12140): al acercarte (< 1,3 m) guarda y lanza el glitch + TV hacia `L_Casona`.
+- **Regreso:** `SALIDA_Parque` (ático de la Casona) marca el flag `VuelveDeCasona` y lanza el glitch hacia `L_Parque`; `BP_GestorNivel` te deja frente al castillo (0,-12000) mirando hacia afuera, de espaldas al castillo.
+- **`WBP_Transicion.IniciarTV`** acepta un destino ya puesto (`Destino`); si viene vacío elige como antes (hospital/parque). Sin cambios en el flujo de la demo.
+- **`BP_GestorNivel`** tiene rama para `L_Casona` (VHS + `Comenzar`, así se carga el inventario). `BP_GestorNivel` y `BP_KitPrueba` puestos en `L_Casona`.
+- `-ir=casona` y `-ir=castillo`; `Probar.bat` → **P → 6** (castillo) y **P → 7** (casona).
+
+### Pendiente
+- Verificar que el portón no esté bloqueado por otra malla y que el trigger se active; el castillo seguirá vacío por dentro.
+- La Casona no pasa por la persecución ni el Acto 3; solo el regreso al parque.
+
 ## [0.3.79] — 2026-11-19 · La Casona construida y `L_Pabellon4` retirado (sin build)
 
 Quedan 3 niveles: `L_Hospital` (con el pabellón), `L_Casona` y `L_Parque`. Validación en `auditoria/mapas_2026-11-19.md`; diseño en `docs/DISENO_CASONA.md`.
