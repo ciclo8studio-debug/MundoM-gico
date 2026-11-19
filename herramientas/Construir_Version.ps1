@@ -23,7 +23,7 @@ $up = Get-ChildItem $proy -Filter 'MUNDO*.uproject' | Select-Object -First 1
 $uat = 'C:\Program Files\Epic Games\UE_5.8\Engine\Build\BatchFiles\RunUAT.bat'
 $log = Join-Path $repo "Build_log_v$ver$Config.txt"
 & $uat BuildCookRun "-project=$bld\MundoMagico.uproject" -noP4 -platform=Win64 "-clientconfig=$Config" -build -cook `
-  -map=/Game/MundoMagico/Maps/L_Hospital+/Game/MundoMagico/Maps/L_Parque -stage -pak -prereqs -archive "-archivedirectory=$out" `
+  -map=/Game/MundoMagico/Maps/L_Hospital+/Game/MundoMagico/Maps/L_Parque+/Game/MundoMagico/Maps/L_HospitalGrande+/Game/MundoMagico/Maps/L_Casona -stage -pak -prereqs -archive "-archivedirectory=$out" `
   -nocompileeditor -skipbuildeditor "-unrealexe=C:\Program Files\Epic Games\UE_5.8\Engine\Binaries\Win64\UnrealEditor-Cmd.exe" `
   -utf8output -unattended *> $log
 if ($LASTEXITCODE -eq 0) { Write-Host "BUILD OK: $out\Windows" } else { Write-Host "BUILD FALLO (codigo $LASTEXITCODE). Revisa $log" }

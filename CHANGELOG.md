@@ -3,6 +3,24 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.76] — 2026-11-19 · Mapas nuevos: hospital grande y casona (bloqueo, sin build)
+
+Ordenar los 3 mapas del plan. Auditoría en `auditoria/mapas_2026-11-19.md`.
+
+### Añadido
+- **`L_HospitalGrande`** (bloqueo con cubos, sin arte): pasillo principal de 72 m con 12 cuartos, recepción de 24×24 m y un ala norte de 42 m con 6 cuartos más. 10 luces suaves sin sombras. Entrada en (250,0) con marcador `Entrada_Pabellon`.
+- **`L_Casona`** (bloqueo mínimo): recibidor, pasillo de 28 m y 6 cuartos. Marcadores `Entrada_Hospital` y `Salida_Parque`.
+- **`BP_PuertaNivel`** (`/Game/MundoMagico/Mundo`): vigila con un temporizador de 0,3 s (sin Tick) y abre `L_HospitalGrande` al acercarse a menos de 1,2 m. Solo funciona si `HospitalGrande_Activo` es true.
+- **`PUERTA_HospitalGrande`** puesta en `L_Hospital` en (-330,-2700), junto al cartel ARCHIVO. **Posición provisional**: el CTO decide la puerta real.
+- `DA_Tuning`: `HospitalGrande_Activo` (false). La demo no cambia.
+- `Construir_Version.ps1` cocina también los mapas nuevos.
+
+### Corregido
+- `Probar.bat` abre los mapas con la ruta completa; en Shipping el nombre corto caía a `L_Hospital` y el salto al parque no funcionaba.
+
+### Pendiente
+- Falta: arte, navmesh real, `BP_GestorNivel`, volver al pabellón y conectar la casona con el hospital y el parque.
+
 ## [0.3.75] — 2026-11-18 · Acto 3: la persecución final (sin build)
 
 Tras elegir "sala" en la cabina, el juego vuelve al hospital y el payaso te persigue hasta el expediente.
