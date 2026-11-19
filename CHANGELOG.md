@@ -3,6 +3,25 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.79] — 2026-11-19 · La Casona construida y `L_Pabellon4` retirado (sin build)
+
+Quedan 3 niveles: `L_Hospital` (con el pabellón), `L_Casona` y `L_Parque`. Validación en `auditoria/mapas_2026-11-19.md`; diseño en `docs/DISENO_CASONA.md`.
+
+### Añadido: `L_Casona` (blockout vestido, ~700 actores)
+- **Estructura** (cubos con materiales de `DetectiveOffice` y `SICKA`): planta baja (vestíbulo, comedor, biblioteca, cocina, estudio), **escalera central** de 19 peldaños, planta alta (pasillo alfombrado, dormitorio principal, baño, dormitorio B) y **ático** con escalera propia. Friso de madera, papel mural, piso de madera, techo de yeso.
+- **Muebles de los packs:** `UnrealBucket` (araña, consola, espejo, reloj de pie, piano, aparador, libreros, sofá y sillón victorianos, camas góticas, roperos, veladores), `DetectiveOffice` (marcos, escritorios, tablero de evidencias, alfombras), `AnimatedWoodenCrate` (ático), `Horror_Hospital` (lavabos y decals).
+- **Luz:** 16 puntuales ámbar sin sombras. 16 decals de desgaste.
+- **Juego:** `PlayerStart` en la entrada, linterna sobre la consola (para pruebas), 2 escondites (`BP_HideSpot`) en los roperos, y **`SALIDA_Parque`** en el ático, que abre `L_Parque`.
+- **Marcadores** con etiqueta: `Entrada_Hospital`, `Salida_Parque`, `Album_1..4` (con 4 marcos), `Escondite_1/2`, `Evento_Apagon`, `Sombra_Anciana_Inicio`.
+- `BP_PuertaNivel` ya no depende de `DA_Tuning`; abre `L_Parque`. Lo dejó de usar `L_Hospital`.
+
+### Quitado
+- `L_Pabellon4.umap` salió del proyecto (copia en `Documents/Unreal Projects/Respaldos_Config`; también en git por el tag `v0.3.41-monolito`).
+
+### Pendiente
+- Puzle de álbumes, apagón, Sombra anciana, páginas 16–40, conexión Hospital → Casona (glitch + TV) y Casona → Parque con VHS, horneado de luz, ajuste fino de posiciones y rotaciones de los muebles (se colocaron sin verlos).
+- No es alcanzable desde el menú: solo con `-ir=casona` (falta agregar la zona a `BP_KitPrueba`) o abriendo el mapa directo.
+
 ## [0.3.78] — 2026-11-19 · Ala de Internación con la atmósfera de referencia (sin build)
 
 Referencia del CTO: pasillo largo y oscuro, azulejo blanco hasta media pared, muros verdosos descascarados, tubos fluorescentes, escombros, silla de ruedas y luz cálida al fondo.
