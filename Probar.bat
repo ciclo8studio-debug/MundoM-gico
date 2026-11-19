@@ -37,8 +37,8 @@ echo   0. Salir
 echo ----------------------------------------------
 set /p OP="Elige una opcion: "
 if "%OP%"=="0" exit /b 0
-if "%OP%"=="1" start "" "%EXE%" L_Hospital -ir=hospital -dev & goto menu
-if "%OP%"=="2" start "" "%EXE%" L_Hospital -ir=pasillo -dev & goto menu
+if "%OP%"=="1" start "" "%EXE%" /Game/MundoMagico/Maps/L_Hospital -ir=hospital -dev & goto menu
+if "%OP%"=="2" start "" "%EXE%" /Game/MundoMagico/Maps/L_Hospital -ir=pasillo -dev & goto menu
 if "%OP%"=="3" start "" "%EXE%" -dev & goto menu
 if "%OP%"=="4" start "" "%EXE%" -dev -nosound & goto menu
 if "%OP%"=="5" goto borrar
@@ -93,17 +93,17 @@ if "%PQ%"=="2" set "ZONA=teatro"
 if "%PQ%"=="3" set "ZONA=noria"
 if "%PQ%"=="4" set "ZONA=bodega"
 if "%PQ%"=="5" set "ZONA=autos"
-if /i "%PQ%"=="D1" start "" "%EXE%" L_Parque -ir=parque -dev & goto menu
-if /i "%PQ%"=="D2" start "" "%EXE%" L_Parque -ir=parque -dev -dpcvars=%PA% & goto menu
-if /i "%PQ%"=="D3" start "" "%EXE%" L_Parque -ir=parque -dev -dpcvars=%PA%,r.ScreenPercentage=50,r.VolumetricFog=0,r.ViewDistanceScale=0.5 & goto menu
-if /i "%PQ%"=="D4" start "" "%EXE%" L_Parque -ir=parque -dev -dpcvars=%PA%,r.Streaming.PoolSize=256,r.Streaming.LimitPoolSizeToVRAM=1 & goto menu
+if /i "%PQ%"=="D1" start "" "%EXE%" /Game/MundoMagico/Maps/L_Parque -ir=parque -dev & goto menu
+if /i "%PQ%"=="D2" start "" "%EXE%" /Game/MundoMagico/Maps/L_Parque -ir=parque -dev -dpcvars=%PA% & goto menu
+if /i "%PQ%"=="D3" start "" "%EXE%" /Game/MundoMagico/Maps/L_Parque -ir=parque -dev -dpcvars=%PA%,r.ScreenPercentage=50,r.VolumetricFog=0,r.ViewDistanceScale=0.5 & goto menu
+if /i "%PQ%"=="D4" start "" "%EXE%" /Game/MundoMagico/Maps/L_Parque -ir=parque -dev -dpcvars=%PA%,r.Streaming.PoolSize=256,r.Streaming.LimitPoolSizeToVRAM=1 & goto menu
 if /i "%PQ%"=="D5" start "" "%EXE%" -dev -dpcvars=r.RayTracing.Enable=0,r.Shadow.Virtual.Enable=0,r.DynamicGlobalIlluminationMethod=0,r.ReflectionMethod=2,r.Lumen.DiffuseIndirect.Allow=0,r.Lumen.Reflections.Allow=0,r.VolumetricFog.GridPixelSize=16,r.VolumetricFog.GridSizeZ=64 & goto menu
-if /i "%PQ%"=="D6" start "" "%EXE%" L_Parque -ir=parque -dev -dpcvars=%PA%,r.MaxAnisotropy=0,r.Shadow.MaxResolution=256,r.LightMaxDrawDistanceScale=0.3 & goto menu
-if /i "%PQ%"=="D7" start "" "%EXE%" L_Parque -ir=parque -dev -dpcvars=r.RayTracing.Enable=0,r.Shadow.Virtual.Enable=0,r.DynamicGlobalIlluminationMethod=0,r.ReflectionMethod=2,r.Lumen.DiffuseIndirect.Allow=0,r.Lumen.Reflections.Allow=0,r.VolumetricFog.GridPixelSize=16,r.VolumetricFog.GridSizeZ=64 & goto menu
-if /i "%PQ%"=="D8" start "" "%EXE%" L_Parque -ir=parque -dev -dpcvars=r.RayTracing.Enable=0,r.Shadow.Virtual.Enable=0,r.DynamicGlobalIlluminationMethod=0,r.ReflectionMethod=2,r.Lumen.DiffuseIndirect.Allow=0,r.Lumen.Reflections.Allow=0,r.VolumetricFog.GridPixelSize=16,r.VolumetricFog.GridSizeZ=64,FX.AllowGPUParticles=0,r.VolumetricCloud=0,r.DistanceFieldAO=0,r.AOGlobalDistanceField=0 & goto menu
-if /i "%PQ%"=="D9" start "" "%EXE%" L_Parque -ir=parque -dev -dpcvars=r.RayTracing.Enable=0,r.Shadow.Virtual.Enable=0,r.DynamicGlobalIlluminationMethod=0,r.ReflectionMethod=2,r.Lumen.DiffuseIndirect.Allow=0,r.Lumen.Reflections.Allow=0,r.VolumetricFog.GridPixelSize=16,r.VolumetricFog.GridSizeZ=64,r.ShadowQuality=0,r.SkyLight.RealTimeReflectionCapture=0,r.VolumetricCloud=0 & goto menu
-if /i "%PQ%"=="D10" start "" "%EXE%" L_Parque -ir=parque -dev -dpcvars=r.RayTracing.Enable=0,r.Shadow.Virtual.Enable=0,r.DynamicGlobalIlluminationMethod=0,r.ReflectionMethod=2,r.Lumen.DiffuseIndirect.Allow=0,r.Lumen.Reflections.Allow=0,r.VolumetricFog.GridPixelSize=16,r.VolumetricFog.GridSizeZ=64,r.ShadowQuality=0 & goto menu
-if /i "%PQ%"=="D11" start "" "%EXE%" L_Parque -ir=autos -dev -ExecCmds="stat unit,stat gpu" & goto menu
+if /i "%PQ%"=="D6" start "" "%EXE%" /Game/MundoMagico/Maps/L_Parque -ir=parque -dev -dpcvars=%PA%,r.MaxAnisotropy=0,r.Shadow.MaxResolution=256,r.LightMaxDrawDistanceScale=0.3 & goto menu
+if /i "%PQ%"=="D7" start "" "%EXE%" /Game/MundoMagico/Maps/L_Parque -ir=parque -dev -dpcvars=r.RayTracing.Enable=0,r.Shadow.Virtual.Enable=0,r.DynamicGlobalIlluminationMethod=0,r.ReflectionMethod=2,r.Lumen.DiffuseIndirect.Allow=0,r.Lumen.Reflections.Allow=0,r.VolumetricFog.GridPixelSize=16,r.VolumetricFog.GridSizeZ=64 & goto menu
+if /i "%PQ%"=="D8" start "" "%EXE%" /Game/MundoMagico/Maps/L_Parque -ir=parque -dev -dpcvars=r.RayTracing.Enable=0,r.Shadow.Virtual.Enable=0,r.DynamicGlobalIlluminationMethod=0,r.ReflectionMethod=2,r.Lumen.DiffuseIndirect.Allow=0,r.Lumen.Reflections.Allow=0,r.VolumetricFog.GridPixelSize=16,r.VolumetricFog.GridSizeZ=64,FX.AllowGPUParticles=0,r.VolumetricCloud=0,r.DistanceFieldAO=0,r.AOGlobalDistanceField=0 & goto menu
+if /i "%PQ%"=="D9" start "" "%EXE%" /Game/MundoMagico/Maps/L_Parque -ir=parque -dev -dpcvars=r.RayTracing.Enable=0,r.Shadow.Virtual.Enable=0,r.DynamicGlobalIlluminationMethod=0,r.ReflectionMethod=2,r.Lumen.DiffuseIndirect.Allow=0,r.Lumen.Reflections.Allow=0,r.VolumetricFog.GridPixelSize=16,r.VolumetricFog.GridSizeZ=64,r.ShadowQuality=0,r.SkyLight.RealTimeReflectionCapture=0,r.VolumetricCloud=0 & goto menu
+if /i "%PQ%"=="D10" start "" "%EXE%" /Game/MundoMagico/Maps/L_Parque -ir=parque -dev -dpcvars=r.RayTracing.Enable=0,r.Shadow.Virtual.Enable=0,r.DynamicGlobalIlluminationMethod=0,r.ReflectionMethod=2,r.Lumen.DiffuseIndirect.Allow=0,r.Lumen.Reflections.Allow=0,r.VolumetricFog.GridPixelSize=16,r.VolumetricFog.GridSizeZ=64,r.ShadowQuality=0 & goto menu
+if /i "%PQ%"=="D11" start "" "%EXE%" /Game/MundoMagico/Maps/L_Parque -ir=autos -dev -ExecCmds="stat unit,stat gpu" & goto menu
 if not defined ZONA goto menu
-start "" "%EXE%" L_Parque -ir=%ZONA% -dev
+start "" "%EXE%" /Game/MundoMagico/Maps/L_Parque -ir=%ZONA% -dev
 goto menu

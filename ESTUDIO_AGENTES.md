@@ -23,5 +23,8 @@ Reglas:
 - **@ux-toolsmith:** `/team-ui`, `/team-audio`, `/ux-review`, `/localize`
 - **@qa-publisher:** `/playtest-report`, `/bug-report`, `/smoke-check`, `/release-checklist`, `/patch-notes`, `/team-release`
 
+## Estado (18-11, cierre)
+Versión v0.3.75; builds v0.3.73 y v0.3.75 sin probar por el CTO. Cierre del parque resuelto (v0.3.69); FPS en Shipping por medir. Decisión G0 el 20-11 20:00. Detalle: `REUNION_2026-11-18_Cierre.md`.
+
 ## Evaluaciones
 - 18-11-2026, evaluación completa (HTML→Unreal y demo): `auditoria/estudio_2026-11-18/`, un informe por super-agente, y `PLAN_ESTUDIO_2026-11-18.md`, que es el consolidado.
