@@ -3,6 +3,22 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.84] — 2026-11-20 · TSR solo en calidad Alta: arregla los 3 FPS en la iGPU
+
+### Hallazgo
+- Perfil de GPU (build Development, `ProfileGPU`): de 363 ms por cuadro, **315 ms eran `TSR RejectShading`**; el resto sumaba ~48 ms. El hilo del juego gastaba solo 23 ms (`stat unit`), así que no era lógica.
+- Causa: `Opciones.sav` guardaba **Calidad = 1 (Media)**, y `CalidadExtra` usa TSR (`r.AntiAliasingMethod 4`) en todo lo que no sea Baja. Con la calidad en Baja (TAA) el hospital pasó de 3 a ~30 FPS en el PC del CTO (ASUS VivoBook X515JA, i7-1065G7).
+- El `Parque_PerfilBajo` de la v0.3.70 ya lo evitaba en el parque, pero el hospital no.
+
+### Añadido
+- **`TSR_SoloAlta`** en `DA_Tuning` (activo). Con calidad Baja o Media, `CalidadExtra` fuerza `r.AntiAliasingMethod 2` (TAA) justo después del bloque que aplica la calidad. TSR queda solo para Alta. Apagado, vuelve al comportamiento anterior.
+- `BP_AfinacionDatos.EsTSRSoloAlta`: función auxiliar de lectura (mismo patrón que `EsCalidadAuto`).
+
+### Pendiente
+- Verificar en build: hospital y parque con calidad Media guardada (antes 3 FPS) y con Alta (TSR sigue activo).
+- Error visto en el playtest del 20-11: al salir del pasillo se mostró "Mundo Mágico" pero el juego siguió en el mismo mapa. Sin reproducir; sospecha: destino `L_Hospital` por `Demo_SinParque` o por un flag guardado.
+- Media aún usa `MegaLights 1`, `t.MaxFPS 0` y `DistanceFieldAO 1`; medir si pesan una vez quitado TSR.
+
 ## [0.3.83] — 2026-11-20 · A8: interruptores del contador de páginas y de la pantalla FIN (sin build)
 
 ### Añadido
