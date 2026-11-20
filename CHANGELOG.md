@@ -13,7 +13,7 @@ La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 - `CalidadExtra`: la condición `NO estamos en L_Parque` pasa a `(NO L_Parque) O Calidad_Auto`. Sin Event Tick nuevo.
 
 ### Pendiente
-- **A6 parte 2:** elegir `Calidad` automáticamente según la GPU al primer arranque (integrada → Baja). Falta decidir dónde se engancha (primer arranque sin opciones guardadas).
+- **A6 parte 2 (detección por GPU): no viable en Blueprint puro.** Revisado el 20-11: no hay nodo que lea la marca/modelo de la GPU, y `RunHardwareBenchmark` solo entrega el resultado aplicándolo (`ApplyHardwareBenchmarkResults` cambia la escalabilidad del renderer = Perfil A, requiere OK del CTO). Hoy, sin opciones guardadas, `CargarOpciones` no toca `Calidad` y queda en su valor por defecto 0 (Baja), que es lo correcto para la iGPU; el jugador sube la calidad en Opciones. Alternativas: dejarlo así (recomendado), pedir OK de Perfil A para el benchmark, o una función en C++.
 - Sin probar en build: verificar sombras de linterna en Hospital y Parque con calidad Baja/Media.
 
 ## [0.3.81] — 2026-11-19 · Recorrido circular y regreso al hospital (sin build)
