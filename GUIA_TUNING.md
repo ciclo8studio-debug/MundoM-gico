@@ -45,6 +45,7 @@
 | **PostHTML_Activo** | Look del juego HTML en el hospital (LUT verdosa, viñeta, grano, aberración) | ✅ | — |
 | **Linterna_SombrasParque** | La linterna proyecta sombras también en el parque (solo con GPU dedicada) | ❌ | — |
 | Linterna_SombraMinCalidad | Calidad mínima para que la linterna proyecte sombras (0 Baja, 1 Media, 2 Alta) | 1 | 0–3 |
+| **Calidad_Auto** | Las sombras de la linterna dependen solo de la calidad, no del mapa (apagado: como antes, sin sombras en el parque) | ✅ | — |
 | **UI_AvisosPorDispositivo** | Los avisos muestran [□] con mando y [E] con teclado | ✅ | — |
 | **Demo_SinParque** | Después del glitch y la TV la demo vuelve al menú (no carga el parque, que cierra el juego en la iGPU) | ✅ | — |
 | **Novela_Texto** | Las páginas 1–15 se muestran como texto en papel (DA_NovelaData) en vez de imágenes | ✅ | — |

@@ -3,6 +3,19 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.82] — 2026-11-20 · A6 (parte 1): sombras de linterna por calidad, no por mapa (sin build)
+
+### Añadido
+- **`Calidad_Auto`** en `DA_Tuning` (activo por defecto): con el interruptor activo, la sombra de la linterna depende solo de la calidad (`Calidad >= Linterna_SombraMinCalidad`) y ya no del mapa `L_Parque`. Apagado, se comporta como antes (v0.3.81).
+- `BP_AfinacionDatos.EsCalidadAuto`: función auxiliar que expone `Calidad_Auto` para `BP_ThirdPersonCharacter.CalidadExtra`.
+
+### Cambiado
+- `CalidadExtra`: la condición `NO estamos en L_Parque` pasa a `(NO L_Parque) O Calidad_Auto`. Sin Event Tick nuevo.
+
+### Pendiente
+- **A6 parte 2:** elegir `Calidad` automáticamente según la GPU al primer arranque (integrada → Baja). Falta decidir dónde se engancha (primer arranque sin opciones guardadas).
+- Sin probar en build: verificar sombras de linterna en Hospital y Parque con calidad Baja/Media.
+
 ## [0.3.81] — 2026-11-19 · Recorrido circular y regreso al hospital (sin build)
 
 Ver `docs/RECORRIDO_JUEGO.md` (hospital → parque → castillo → casona → parque → hospital).
