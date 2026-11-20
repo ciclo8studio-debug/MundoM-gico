@@ -3,6 +3,21 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.83] — 2026-11-20 · A8: interruptores del contador de páginas y de la pantalla FIN (sin build)
+
+### Añadido
+- **`UI_FinalDemo`** en `DA_Tuning` (activo). Apagado, `IniciarTV` no muestra la pantalla "FIN DE LA DEMO" ni alarga la transición (queda la TV corta de siempre), aunque `Demo_SinParque` esté activo. La decisión de a qué mapa viaja no cambia.
+- **`UI_ContadorPaginas`** en `DA_Tuning` (activo). Apagado, el HUD vuelve al contador original de botellas y páginas "/62".
+- `BP_AfinacionDatos.EsFinalDemo` y `EsContadorPaginas`: funciones auxiliares para leer los interruptores desde otros Blueprints.
+- `BP_ThirdPersonCharacter.ContadorPaginasActivo` (copia local, por defecto activo), llenada en `CalidadExtra` junto a las demás.
+
+### Cambiado
+- `WBP_Transicion.IniciarTV`: las tres selecciones de la pantalla FIN usan `Demo_SinParque Y UI_FinalDemo`.
+- `MostrarObjetivo`: el "/15 o /62" usa `Novela_Texto Y UI_ContadorPaginas`. Sin Event Tick nuevo.
+
+### Pendiente
+- Sin probar en build: verificar el contador "x/15" y la pantalla FIN con los interruptores activos y apagados.
+
 ## [0.3.82] — 2026-11-20 · A6 (parte 1): sombras de linterna por calidad, no por mapa (sin build)
 
 > Amplía lo hecho en v0.3.62: allí la sombra ya dependía de la calidad pero conservaba la condición "no es el parque". Esta versión añade el interruptor para quitarla. A2 ya estaba hecha en v0.3.62.
