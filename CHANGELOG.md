@@ -5,6 +5,8 @@ La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
 ## [0.3.82] — 2026-11-20 · A6 (parte 1): sombras de linterna por calidad, no por mapa (sin build)
 
+> Amplía lo hecho en v0.3.62: allí la sombra ya dependía de la calidad pero conservaba la condición "no es el parque". Esta versión añade el interruptor para quitarla. A2 ya estaba hecha en v0.3.62.
+
 ### Añadido
 - **`Calidad_Auto`** en `DA_Tuning` (activo por defecto): con el interruptor activo, la sombra de la linterna depende solo de la calidad (`Calidad >= Linterna_SombraMinCalidad`) y ya no del mapa `L_Parque`. Apagado, se comporta como antes (v0.3.81).
 - `BP_AfinacionDatos.EsCalidadAuto`: función auxiliar que expone `Calidad_Auto` para `BP_ThirdPersonCharacter.CalidadExtra`.
