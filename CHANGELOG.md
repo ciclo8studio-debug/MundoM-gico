@@ -3,6 +3,17 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.81] — 2026-11-19 · Recorrido circular y regreso al hospital (sin build)
+
+Ver `docs/RECORRIDO_JUEGO.md` (hospital → parque → castillo → casona → parque → hospital).
+
+### Cambiado
+- **Acto 3 / regreso al hospital:** aparece al fondo del Ala de Internación (0,-11800) mirando al norte y el payaso a 10 m detrás (0,-12900). Hay que correr todo el hospital hasta el Pabellón 4. Antes aparecía en (0,-3300), que quedó a mitad de camino tras alargar el hospital.
+- Mensaje: "¡CORRE! Vuelve al Pabellón 4, al fondo del pasillo."
+
+### Añadido
+- `docs/RECORRIDO_JUEGO.md`: diagrama, tabla de tramos con su disparador y estado, flags y decisiones abiertas.
+
 ## [0.3.80] — 2026-11-19 · El castillo lleva a la Casona (sin build)
 
 Idea del CTO: la Casona es el interior imposible del castillo del parque; se entra con un glitch, sin replicar el castillo.
