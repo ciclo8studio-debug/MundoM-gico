@@ -3,6 +3,19 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.86] — 2026-11-21 · Casona: luces de 650 cd a 15 cd (sin build)
+
+### Hallazgo
+- En la captura de `v0.3.85_dev` la Casona se veía casi blanca. Causa: sus 16 `PointLight` eran de **650 cd**, y las del hospital son de 8 cd. La exposición está fija (`autoExposureMin/MaxBrightness` = 0,4 en `PostProcessVolume_0`, desde la v0.3.x para aclarar el hospital), así que el juego no puede oscurecerse ante luces tan fuertes.
+
+### Cambiado (`L_Casona`)
+- Las 16 `PointLight` (`_0`, `_1`, `_3`, `_4`, `_7` a `_18`) pasan de 650 a **15 cd**. Un poco más que el hospital porque las salas son más grandes (alcance de 7,5 m). Alcance, color y sombras sin cambios.
+- No se tocó la exposición, el `SkyLight` (0,3, captura en tiempo real) ni los volúmenes de post-proceso.
+
+### Pendiente
+- Sin build ni prueba: es un ajuste a ojo. Si queda oscura, subir de a 5 cd; si sigue clara, revisar el `SkyLight` (0,3) y los materiales emisivos.
+- Sin interruptor en `DA_Tuning`: es un ajuste de nivel, no de jugabilidad.
+
 ## [0.3.85] — 2026-11-21 · Arreglo B1: spam de avisos de script en Casona y Parque (sin build)
 
 ### Hallazgo
