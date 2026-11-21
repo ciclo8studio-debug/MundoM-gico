@@ -14,6 +14,10 @@ La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 - **`TSR_SoloAlta`** en `DA_Tuning` (activo). Con calidad Baja o Media, `CalidadExtra` fuerza `r.AntiAliasingMethod 2` (TAA) justo después del bloque que aplica la calidad. TSR queda solo para Alta. Apagado, vuelve al comportamiento anterior.
 - `BP_AfinacionDatos.EsTSRSoloAlta`: función auxiliar de lectura (mismo patrón que `EsCalidadAuto`).
 
+### Documentos (20-11)
+- Build **v0.3.84** empaquetada (Shipping y Development), 0 errores. Panel del estudio al día (`auditoria/estudio_2026-11-18/panel_estudio.html`).
+- **A9:** checklist de humo en `auditoria/humo/v0.3.84.md` (prueba de TSR, H1–H7 y casos nuevos). Sin ejecutar.
+
 ### Pendiente
 - Verificar en build: hospital y parque con calidad Media guardada (antes 3 FPS) y con Alta (TSR sigue activo).
 - Error visto en el playtest del 20-11: al salir del pasillo se mostró "Mundo Mágico" pero el juego siguió en el mismo mapa. Sin reproducir; sospecha: destino `L_Hospital` por `Demo_SinParque` o por un flag guardado.
