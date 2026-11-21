@@ -50,6 +50,8 @@ tr:last-child td{border-bottom:0}
 td.id{font:700 15px var(--head);color:var(--acc);white-space:nowrap}
 .pill{display:inline-block;font:600 11.5px var(--head);letter-spacing:.08em;padding:2px 8px;border-radius:2px;border:1px solid currentColor;white-space:nowrap}
 .S{color:var(--ok)}.M{color:var(--warn)}.L{color:var(--bad)}
+.ok{color:var(--ok)}.wip{color:var(--warn)}.no{color:var(--bad)}
+.bar{height:10px;background:#0f1317;border:1px solid var(--line);margin:6px 0 4px;display:flex}.bar i{display:block;height:100%}
 .tag{font:12px var(--head);letter-spacing:.06em;color:var(--mut)}
 .k{font:12.5px/1.3 ui-monospace,Consolas,monospace;color:var(--cold);word-break:break-word}
 /* sprint B + release */
@@ -71,7 +73,7 @@ footer{color:var(--mut);font-size:12.5px;border-top:1px solid var(--line);paddin
 <div class="wrap">
 <header>
   <div>
-    <div class="ficha">Mundo Mágico: Turno Nocturno · evaluación 18-11-2026 · build v0.3.60</div>
+    <div class="ficha">Mundo Mágico: Turno Nocturno · actualizado 20-11-2026 · versión v0.3.84</div>
     <h1>Ciclo Studio Game</h1>
     <p class="sub">5 super-agentes dirigen a 31 agentes de Claude Code Game Studios. Evaluaron todo el proyecto: qué falta para que la versión Unreal se sienta como el juego HTML y qué mejora la demo pública del 10-12.</p>
   </div>
@@ -157,21 +159,36 @@ footer{color:var(--mut);font-size:12.5px;border-top:1px solid var(--line);paddin
 </section>
 
 <section>
+  <h2>Estado de los 31 agentes · 20-11</h2>
+  <p class="note">Los agentes no trabajan solos: Claude implementa lo que cada departamento propone. Este es el avance por departamento.</p>
+  <div class="dec" style="margin-bottom:14px">
+    <div class="d" style="border-left-color:#c9a45c"><b>🛡️ @tech-lead · 8 agentes</b>A1, A6 y A10 hechas. Hallazgo del día: TSR gastaba 315 de 363 ms por cuadro; v0.3.84 lo limita a calidad Alta (hospital de 3 a ~30 FPS en Baja). Falta confirmar en build y decidir el gate G0 del parque.</div>
+    <div class="d" style="border-left-color:#7f9bb8"><b>🕹️ @gameplay-engineer · 6 agentes</b>A3 (linterna), A4 (pistas), A5 (botella) y A7 (Sombra justa) hechas. Acto 3 y recorrido circular en documentos, sin probar. Pendiente: AC_Percepcion completo y el Director de miedo.</div>
+    <div class="d" style="border-left-color:#6fae7a"><b>🏚️ @world-builder · 6 agentes</b>Casona construida (~700 actores), 3 niveles definidos y 15 páginas cargadas. Falta el sótano y la morgue del Sprint B y probar la Casona en build.</div>
+    <div class="d" style="border-left-color:#b58fd0"><b>🎨 @ux-toolsmith · 7 agentes</b>A2 y A8 hechas con sus interruptores. Pendientes: stinger de página, final según páginas, subtítulos y música de 3 capas (Sprint B).</div>
+    <div class="d" style="border-left-color:#c2584a"><b>🧪 @qa-publisher · 4 agentes</b>Es el área más atrasada: A9 sin hacer, casi nada jugado en el .exe y la página de itch.io por actualizar a v0.5.0. Hay un error sin reproducir (el pasillo no cambia de mapa).</div>
+  </div>
+</section>
+
+<section>
   <h2>Sprint A · paridad con el HTML</h2>
   <p class="note">Del 19-11 a la build de testers del 25-11. Una o dos mejoras por build, cada una con su interruptor en DA_Tuning.</p>
+  <div class="card" style="margin-bottom:14px"><b>Avance: 9 de 10 hechas en código · 1 pendiente (A9) · casi todo sin probar en el .exe</b>
+    <div class="bar"><i style="width:80%;background:var(--ok)"></i><i style="width:10%;background:var(--warn)"></i><i style="width:10%;background:var(--bad)"></i></div>
+    <span class="tag">Las demás líneas del plan están en el estado de abajo. El cuello de botella es probar en build, no escribir código.</span></div>
   <div class="tbl"><table>
-    <thead><tr><th>#</th><th>Mejora</th><th>Departamento</th><th>Esfuerzo</th><th>Interruptor</th></tr></thead>
+    <thead><tr><th>#</th><th>Mejora</th><th>Departamento</th><th>Esfuerzo</th><th>Interruptor</th><th>Estado (20-11)</th></tr></thead>
     <tbody>
-      <tr><td class="id">A1</td><td>Post-proceso del HTML + LUT verdosa + niebla de interior en el hospital</td><td class="tag">@world-builder</td><td><span class="pill S">S</span></td><td class="k">Activar_PostHTML</td></tr>
-      <tr><td class="id">A2</td><td>Avisos según el dispositivo: □ ✕ △ con mando, E/F con teclado</td><td class="tag">@ux-toolsmith</td><td><span class="pill S">S</span></td><td class="k">UI_AvisosPorDispositivo</td></tr>
-      <tr><td class="id">A3</td><td>Dilema de la linterna: encendida te delata y, apuntada 2,5 s, ahuyenta a la Sombra; batería ajustable</td><td class="tag">@gameplay-engineer</td><td><span class="pill M">M</span></td><td class="k">Sombra_RepeleLinterna · Bateria_GastoSeg</td></tr>
-      <tr><td class="id">A4</td><td>Objetivos y pistas con H/△, y pista automática a los 180 s</td><td class="tag">@tech-lead · @gameplay-engineer</td><td><span class="pill M">M</span></td><td class="k">Pistas_Activas · Pista_AutoSeg</td></tr>
-      <tr><td class="id">A5</td><td>La botella distrae a la Sombra + barra de ruido en el HUD</td><td class="tag">@gameplay-engineer</td><td><span class="pill S">S</span></td><td class="k">Botella_Distrae · HUD_Ruido</td></tr>
-      <tr><td class="id">A6</td><td>Sombras de linterna según la calidad + calidad automática</td><td class="tag">@tech-lead</td><td><span class="pill S">S</span></td><td class="k">Calidad_Auto · Linterna_SombraMinCalidad</td></tr>
-      <tr><td class="id">A7</td><td>Sombra más justa: pausa después del golpe y anti-atasco</td><td class="tag">@gameplay-engineer</td><td><span class="pill S">S</span></td><td class="k">Sombra_PausaGolpe</td></tr>
-      <tr><td class="id">A8</td><td>Contador de páginas, pantalla final de la demo y "tic" de UI</td><td class="tag">@ux-toolsmith</td><td><span class="pill S">S</span></td><td class="k">UI_ContadorPaginas · UI_FinalDemo</td></tr>
-      <tr><td class="id">A9</td><td>Prueba de humo por zona en cada build y Probar.bat con escondites y borrar partida</td><td class="tag">@qa-publisher</td><td><span class="pill S">S</span></td><td class="k">—</td></tr>
-      <tr><td class="id">A10</td><td>MoverLuz del menú pasa del Tick a un timer (regla de no usar Event Tick)</td><td class="tag">@tech-lead</td><td><span class="pill S">S</span></td><td class="k">—</td></tr>
+      <tr><td class="id">A1</td><td>Post-proceso del HTML + LUT verdosa + niebla de interior en el hospital</td><td class="tag">@world-builder</td><td><span class="pill S">S</span></td><td class="k">Activar_PostHTML</td><td><span class="pill ok">Hecha · v0.3.61</span></td></tr>
+      <tr><td class="id">A2</td><td>Avisos según el dispositivo: □ ✕ △ con mando, E/F con teclado</td><td class="tag">@ux-toolsmith</td><td><span class="pill S">S</span></td><td class="k">UI_AvisosPorDispositivo</td><td><span class="pill ok">Hecha · v0.3.62</span></td></tr>
+      <tr><td class="id">A3</td><td>Dilema de la linterna: encendida te delata y, apuntada 2,5 s, ahuyenta a la Sombra; batería ajustable</td><td class="tag">@gameplay-engineer</td><td><span class="pill M">M</span></td><td class="k">Sombra_RepeleLinterna · Bateria_GastoSeg</td><td><span class="pill ok">Hecha · v0.3.64</span></td></tr>
+      <tr><td class="id">A4</td><td>Objetivos y pistas con H/△, y pista automática a los 180 s</td><td class="tag">@tech-lead · @gameplay-engineer</td><td><span class="pill M">M</span></td><td class="k">Pistas_Activas · Pista_AutoSeg</td><td><span class="pill ok">Hecha · v0.3.74</span></td></tr>
+      <tr><td class="id">A5</td><td>La botella distrae a la Sombra + barra de ruido en el HUD</td><td class="tag">@gameplay-engineer</td><td><span class="pill S">S</span></td><td class="k">Botella_Distrae · HUD_Ruido</td><td><span class="pill ok">Hecha · v0.3.65</span></td></tr>
+      <tr><td class="id">A6</td><td>Sombras de linterna según la calidad + calidad automática</td><td class="tag">@tech-lead</td><td><span class="pill S">S</span></td><td class="k">Calidad_Auto · Linterna_SombraMinCalidad</td><td><span class="pill ok">Cerrada · v0.3.62 y v0.3.82 (Baja por defecto; GPU auto descartada)</span></td></tr>
+      <tr><td class="id">A7</td><td>Sombra más justa: pausa después del golpe y anti-atasco</td><td class="tag">@gameplay-engineer</td><td><span class="pill S">S</span></td><td class="k">Sombra_PausaGolpe</td><td><span class="pill ok">Hecha · v0.3.65</span></td></tr>
+      <tr><td class="id">A8</td><td>Contador de páginas, pantalla final de la demo y "tic" de UI</td><td class="tag">@ux-toolsmith</td><td><span class="pill S">S</span></td><td class="k">UI_ContadorPaginas · UI_FinalDemo</td><td><span class="pill wip">Hecha · v0.3.63/66/83. Falta stinger y final según páginas (textos del CTO)</span></td></tr>
+      <tr><td class="id">A9</td><td>Prueba de humo por zona en cada build y Probar.bat con escondites y borrar partida</td><td class="tag">@qa-publisher</td><td><span class="pill S">S</span></td><td class="k">—</td><td><span class="pill no">Pendiente: humo por zona en una build nueva</span></td></tr>
+      <tr><td class="id">A10</td><td>MoverLuz del menú pasa del Tick a un timer (regla de no usar Event Tick)</td><td class="tag">@tech-lead</td><td><span class="pill S">S</span></td><td class="k">—</td><td><span class="pill ok">Hecha · v0.3.61</span></td></tr>
     </tbody>
   </table></div>
 </section>
@@ -214,13 +231,12 @@ footer{color:var(--mut);font-size:12.5px;border-top:1px solid var(--line);paddin
   <div class="tbl"><table>
     <thead><tr><th>Paso</th><th>Fecha</th><th>Contenido</th></tr></thead>
     <tbody>
-      <tr><td class="id">P0</td><td>19-11</td><td>CTO: Probar.bat → P → D1…D6 (¿se cae?, fps). Separa memoria de render</td></tr>
-      <tr><td class="id">v0.3.68</td><td>20-11</td><td>Perfil de render por mapa + interacción por mirada</td></tr>
-      <tr><td class="id">v0.3.69</td><td>21-11</td><td>Recorte de render del parque (luces, culling, zonas)</td></tr>
-      <tr><td class="id">v0.3.70</td><td>22-11</td><td>Progresión y objetivos encadenados · gate G0 del parque</td></tr>
-      <tr><td class="id">v0.3.71</td><td>23-11</td><td>Acto 2 completo: interruptores, 4 cintas, llave, casa y fusible</td></tr>
-      <tr><td class="id">v0.3.72</td><td>24-11</td><td>Cabina VIDEO + Acto 3 + 3 finales</td></tr>
-      <tr><td class="id">rc1</td><td>25-11</td><td>Freeze → testers (con Plan B si el parque no pasa G0)</td></tr>
+      <tr><td class="id">v0.3.67–69</td><td>18–19-11</td><td>Diagnóstico del cierre y recorte de render del parque (parque arranca). Sin confirmar el FPS en Shipping</td></tr>
+      <tr><td class="id">v0.3.73–75</td><td>19-11</td><td>El parque siempre arranca, interacción por mirada, pistas (A4) y Acto 3. Sin probar</td></tr>
+      <tr><td class="id">v0.3.76–81</td><td>19-11</td><td>Mapas nuevos: Casona construida, <code>L_Pabellon4</code> retirado, castillo → Casona y recorrido circular. Sin build</td></tr>
+      <tr><td class="id">v0.3.82–84</td><td>20-11</td><td>A6, interruptores de A8 y arreglo de TSR (hospital de 3 a ~30 FPS). Falta verificar en build</td></tr>
+      <tr><td class="id">G0</td><td>20-11 20:00</td><td>Decisión del producer: parque o Plan B ampliado (pendiente)</td></tr>
+      <tr><td class="id">rc1</td><td>25-11</td><td>Freeze → testers, con humo por zona (A9) en una build nueva</td></tr>
     </tbody>
   </table></div>
 </section>
@@ -238,12 +254,11 @@ footer{color:var(--mut);font-size:12.5px;border-top:1px solid var(--line);paddin
   <div class="tbl"><table>
     <thead><tr><th>Build</th><th>Fecha</th><th>Contenido</th></tr></thead>
     <tbody>
-      <tr><td class="id">v0.3.62</td><td>19-11</td><td>A6 sombras según calidad + A2 avisos según el mando · Probar.bat nuevo</td></tr>
-      <tr><td class="id">v0.3.63</td><td>20-11</td><td>DA_NovelaData con las 15 páginas + contador de páginas</td></tr>
-      <tr><td class="id">v0.3.64</td><td>21-11</td><td>AC_Linterna: delata, ahuyenta, batería ajustable (A3)</td></tr>
-      <tr><td class="id">v0.3.65</td><td>22-11</td><td>AC_Percepcion v1 en la Sombra (A7) + la botella distrae (A5)</td></tr>
-      <tr><td class="id">v0.3.66</td><td>23-11</td><td>Pistas y objetivos (A4) + pantalla final (A8)</td></tr>
-      <tr><td class="id">v0.3.67</td><td>24-11</td><td>Humo automático, calidad automática, NeverCook, cook sin SM6</td></tr>
+      <tr><td class="id">v0.3.61–62</td><td>18–19-11</td><td>✅ A1, A10, A6 y A2 · Probar.bat nuevo</td></tr>
+      <tr><td class="id">v0.3.63–66</td><td>19-11</td><td>✅ 15 páginas y contador (A8), linterna (A3), Sombra y botella (A7, A5), pantalla final · sin probar</td></tr>
+      <tr><td class="id">v0.3.74</td><td>19-11</td><td>✅ Pistas y objetivos (A4)</td></tr>
+      <tr><td class="id">v0.3.82–84</td><td>20-11</td><td>✅ A6 cerrada, interruptores de A8, TSR solo en Alta</td></tr>
+      <tr><td class="id">Pendiente</td><td>hasta 25-11</td><td>A9 (humo), stinger de página y final según páginas, verificar v0.3.84 en build</td></tr>
       <tr><td class="id">rc1</td><td>25-11</td><td>Freeze de gameplay → testers</td></tr>
       <tr><td class="id">B</td><td>26-11 → 1-12</td><td>Sótano y morgue, subtítulos y mezcla, música 3 capas, vida y autoguardado, clímax, teaser de la Casona</td></tr>
       <tr><td class="id">v0.5.0</td><td>8 → 10-12</td><td>Gold y versión pública en itch.io</td></tr>
