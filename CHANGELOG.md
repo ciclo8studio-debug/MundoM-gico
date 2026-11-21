@@ -3,6 +3,22 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.85] — 2026-11-21 · Arreglo B1: spam de avisos de script en Casona y Parque (sin build)
+
+### Hallazgo
+- Logs de `v0.3.84_dev`: ~46.000 avisos de script en 15 min en la Casona (`Accessed None` y `index 0 de un arreglo de largo 0`). Los actores buscados (cintas, luces viejas, fonógrafo, reloj, caja fuerte) no existen en ese mapa. No cierra el juego, pero llena el log y gasta CPU en la iGPU.
+
+### Cambiado (`BP_ThirdPersonCharacter`)
+- `ActualizarPosObjetivo` (el origen de ~28.000 avisos, llamada desde `ActualizarBateria`): si no hay actores con tag `Cinta`, usa la posición del propio jugador en vez de leer la lista vacía. Con cintas el resultado es el mismo de antes; sin cintas la flecha de objetivo queda a 0 m y se oculta.
+- `ParpadeoParque` (timer de 0,12 s): no hace nada si no hay actores `LuzVieja`.
+- `ActualizarCerca`: fonógrafo, reloj y caja fuerte solo miden distancia si existe el actor; si no, "cerca" = falso. Los tres mensajes se conservan.
+- Sin Event Tick nuevo y sin coordenadas nuevas. Compila sin errores; queda el aviso de siempre (`GetCurrentLevelName was pruned`), que no es de este cambio.
+
+### Pendiente
+- Sin build: verificar en la Casona y el Parque que el log baje de ~46.000 a casi 0 avisos, y que la flecha, el fonógrafo, el reloj, la caja fuerte y el parpadeo de luces del parque funcionen igual.
+- Quedan sin tocar: `Munecas` (~2.000 avisos, función aún sin ubicar) y `PanelDev` de `BP_KitPrueba` (solo con `-dev`). `LimpiarMensaje` con `SetTimer` en cero (B2) sigue igual.
+- Sin interruptor en `DA_Tuning`: es un arreglo de avisos, sin cambio de jugabilidad.
+
 ## [0.3.84] — 2026-11-20 · TSR solo en calidad Alta: arregla los 3 FPS en la iGPU
 
 ### Hallazgo
