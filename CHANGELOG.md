@@ -14,8 +14,13 @@ La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 - `ActualizarCerca`: fonógrafo, reloj y caja fuerte solo miden distancia si existe el actor; si no, "cerca" = falso. Los tres mensajes se conservan.
 - Sin Event Tick nuevo y sin coordenadas nuevas. Compila sin errores; queda el aviso de siempre (`GetCurrentLevelName was pruned`), que no es de este cambio.
 
+### Verificado (21-11, `v0.3.85_dev`, Casona, 76 s de juego, 28 FPS en el panel)
+- Sin cierres. Las 3 funciones arregladas ya no aparecen en el log; antes eran ~34.000 de ~46.000 avisos. Quedan ~1.500 avisos en 76 s (~20/s, antes ~53/s), de `PanelDev` (solo `-dev`), `ActualizarCandado` y `Munecas`.
+- Parque, flecha de objetivo, fonógrafo, reloj y caja fuerte: sin probar en juego.
+- Visto en la captura: la Casona se ve muy sobreexpuesta (blanco y verde) y el HUD muestra textos del hospital (minimapa y objetivo de la linterna).
+
 ### Pendiente
-- Sin build: verificar en la Casona y el Parque que el log baje de ~46.000 a casi 0 avisos, y que la flecha, el fonógrafo, el reloj, la caja fuerte y el parpadeo de luces del parque funcionen igual.
+- Sin build: verificar en el Parque que el log baje de ~46.000 a casi 0 avisos, y que la flecha, el fonógrafo, el reloj, la caja fuerte y el parpadeo de luces del parque funcionen igual.
 - Quedan sin tocar: `Munecas` (~2.000 avisos, función aún sin ubicar) y `PanelDev` de `BP_KitPrueba` (solo con `-dev`). `LimpiarMensaje` con `SetTimer` en cero (B2) sigue igual.
 - Sin interruptor en `DA_Tuning`: es un arreglo de avisos, sin cambio de jugabilidad.
 
