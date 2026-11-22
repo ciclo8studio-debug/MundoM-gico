@@ -21,3 +21,11 @@ Build/
 # Plugins compilados
 Plugins/**/Binaries/
 Plugins/**/Intermediate/
+
+# Anula el "*" del .gitignore raiz: versionar codigo y config del proyecto
+!*.h
+!*.cpp
+!*.cs
+!*.uproject
+!*.ini
+!.gitattributes
