@@ -12,7 +12,7 @@ Leyenda: ✅ hecho · 🔄 en curso · ⬜ pendiente · ⚠️ riesgo/bloqueo
 | Mapa plano `L_FlatRoad_Chile` + `BP_BlacklineVan` + inputs + GameMode | ✅ | Generados por script; no vistos en pantalla |
 | Target de editor con el C++ nuevo | ✅ | Compila (22-11) |
 | Importar `DT_BlacklineContracts` en el editor | ✅ | 25 filas, 0 problemas |
-| Patrulla, zona de entrega, director de clima, tablet de encargos, tests (C++) | 🔄 | Escritos 22-11; falta compilar y correr tests (esperando que se libere la RAM) |
+| Patrulla, zona de entrega, director de clima, tablet de encargos, tests (C++) | ✅ | Compilan; 3 tests de Automation pasan; mapa regenerado con NavMesh, entrega y clima |
 | Manejo del furgón probado | ⬜ | Carrocería placeholder (OffroadCar) |
 | Render nocturno y rendimiento | ⬜ | Snippet sin aplicar; iGPU limita |
 | Audio (MetaSounds) | ⬜ | Sin samples |

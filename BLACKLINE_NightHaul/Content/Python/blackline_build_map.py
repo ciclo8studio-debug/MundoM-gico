@@ -281,7 +281,16 @@ def build_map(mats):
     import os
     umap = os.path.join(unreal.SystemLibrary.get_project_directory(), "Content", "Blackline", "Maps", MAP_NAME + ".umap")
     if os.path.exists(umap):
+        # El editor puede tener el mapa abierto (es el mapa de inicio): carga otro nivel para soltar el archivo.
+        try:
+            lvl.new_level("/Temp/BlacklineScratch")
+        except Exception as e:
+            warn("no pude soltar el mapa antes de borrarlo: %r" % (e,))
         os.remove(umap)  # new_level no sobrescribe; regeneramos siempre
+        try:
+            unreal.AssetRegistryHelpers.get_asset_registry().scan_paths_synchronous([DIR_MAP], True)
+        except Exception as e:
+            warn("rescan del registro fallo: %r" % (e,))
     if not lvl.new_level(map_path):
         raise RuntimeError("new_level fallo para " + map_path)
     cube = unreal.load_asset(CUBE)
