@@ -3,6 +3,25 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.94] — 2026-11-22 · Casona: exterior tipo castillo (sin build)
+
+### Hallazgo
+- El castillo del parque (`L_Parque`, frente al portón en 0,-12140) es de formas básicas: cuerpo `Cube` 14 × 10 × 10 m con `MI_Piedra`, 4 torres `Cylinder` (3 × 3 × 14 m, `MI_Piedra`) con techos `Cone` (`MI_Pintura_Azul`), puerta `MI_Oscuro` y dos mallas de fachada: `SM_Cast_Neon` (`MI_Neon_Rosa`) y `SM_Cast_Ventanas` (`MI_Ventana_Calida`).
+
+### Añadido (`L_Casona`, carpeta del outliner `Castillo_Exterior`, 22 actores `EXT_*`)
+- **Revestimiento de piedra por fuera de los muros** (`MI_Piedra`, 20 cm de grosor, pegado por fuera: oeste, este, norte y los 3 tramos del frente que dejan libre la puerta). El interior no cambia.
+- **4 torres de esquina** (`Cylinder`, 4 × 4 × 15 → 4 m de diámetro, 15 m de alto) con **techos cónicos azules** (4,8 × 4,8 × 4). Centradas fuera de las esquinas: no entran al interior.
+- **Fachada frontal** (la del lado de la puerta, y < 0): `SM_Cast_Neon` y `SM_Cast_Ventanas` del castillo, giradas 180°, a escala 1, con sus materiales originales.
+- Sin Event Tick, sin BPs nuevos, sin tocar la colisión del interior.
+
+### Verificado en el editor (sin ver la imagen)
+- La puerta del frente queda libre: 9 trazas (x −90/0/90 × z 30/120/220) no chocan.
+- Torres con bounds fuera del interior; neón y ventanas pegados a la fachada (y ≈ −40).
+
+### Pendiente
+- **Sin verlo en pantalla**: la captura del visor del editor sale ilegible (4 visores mezclados). Hay que mirarlo en una build (la Casona solo se ve desde afuera a través del ático y las ventanas).
+- La fachada es a escala 1: el neón (±7,1 m) queda más angosto que el frente de la Casona (20 m). Si se ve desproporcionado, escalar `EXT_Neon` y `EXT_Ventanas` en X ×1,4.
+
 ## [0.3.93] — 2026-11-22 · Casona: la escalera al 2.º piso se puede subir (sin build)
 
 ### Hallazgo (prueba de `v0.3.92_dev`, captura del CTO)
