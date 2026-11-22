@@ -10,8 +10,8 @@ Leyenda: ✅ hecho · 🔄 en curso · ⬜ pendiente · ⚠️ riesgo/bloqueo
 | Módulo C++ `Blackline` (carga, retén, persecución, terreno, ruedas, furgón, HUD) | ✅ | Compila en target de juego |
 | 25 contratos (CSV + subsistema) | ✅ | DataTable aún sin importar |
 | Mapa plano `L_FlatRoad_Chile` + `BP_BlacklineVan` + inputs + GameMode | ✅ | Generados por script; no vistos en pantalla |
-| Target de editor con el C++ nuevo | 🔄 | Reconstruyendo |
-| Importar `DT_BlacklineContracts` en el editor | ⬜ | Tras el build de editor |
+| Target de editor con el C++ nuevo | ✅ | Compila (22-11) |
+| Importar `DT_BlacklineContracts` en el editor | ✅ | 25 filas, 0 problemas |
 | Manejo del furgón probado | ⬜ | Carrocería placeholder (OffroadCar) |
 | Render nocturno y rendimiento | ⬜ | Snippet sin aplicar; iGPU limita |
 | Audio (MetaSounds) | ⬜ | Sin samples |
@@ -21,8 +21,8 @@ Leyenda: ✅ hecho · 🔄 en curso · ⬜ pendiente · ⚠️ riesgo/bloqueo
 Cada fase termina con una build compilada y probada. No se avanza de fase con criterios sin cumplir. Una sola sesión de editor a la vez.
 
 ### Fase 0 — Cerrar la base (1 sesión)
-- [ ] Terminar build de editor; abrir proyecto sin errores.
-- [ ] Importar `DT_BlacklineContracts` (`blackline_contracts.import_datatable()`).
+- [x] Terminar build de editor.
+- [x] Importar `DT_BlacklineContracts` (`blackline_contracts.import_datatable()`).
 - [ ] Revisar y corregir los `VERIFY-5.8` que aparezcan en log (ruedas, diferencial, cvars).
 - **Listo cuando:** el proyecto abre, el DataTable tiene 25 filas y `StartContract("C01")` carga la carga sin errores en log.
 
