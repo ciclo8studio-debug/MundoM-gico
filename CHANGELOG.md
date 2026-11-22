@@ -3,6 +3,20 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.98] — 2026-11-22 · Casona: luna en el cielo (sin build)
+
+### Hallazgo (prueba de `v0.3.97_dev`, CTO: "podemos agregar una luna a ese nivel")
+- Se salió por la puerta y se vio la fachada (41 FPS, log con 0 avisos de script y 0 errores de GPU). El cielo de la Casona estaba vacío. En el hospital la luna es un disco + un halo: `LUNA_Disco` (esfera `Sphere` 60 × 60 × 60, `MI_Luna`, en 0, 65500, 45900) y `LUNA_Halo` (esfera 150, `MI_HaloLuna`, un poco detrás), más una `DirectionalLight` "Luna" (azul, 1,2 lux, con sombras).
+
+### Añadido (`L_Casona`, carpeta `Luna`)
+- `LUNA_Disco` en (15000, −65000, 33000) y `LUNA_Halo` en (15800, −68500, 34760), mismas escalas y materiales que en el hospital. Quedan al **sur**, a ~74.000 de distancia y ~27° de altura, para verlas al salir por la puerta de frente. Desde la fachada mirando al norte no se ven (las tapa la casa).
+- `ExponentialHeightFog_0`: `FogCutoffDistance` de 0 a **20000**. La niebla (densidad 0,09, opacidad máxima 1) habría tapado por completo la luna; nada más en el nivel está más allá de 20.000.
+- **Sin `DirectionalLight`**: la luz azul con sombras del hospital no se copió (costo en la iGPU y riesgo de iluminar el interior). La luna es solo visual.
+
+### Pendiente
+- Sin ver en pantalla (el visor del editor no sirve para capturas). Si no se ve: revisar `MI_Luna` y el corte de niebla; si se quiere más cielo, subir la luna o moverla al norte.
+- Opcional: luz de luna tenue y sin sombras sobre el exterior.
+
 ## [0.3.97] — 2026-11-22 · Texturas más nítidas: `MipFilter=linear` (sin build)
 
 ### Hallazgo
