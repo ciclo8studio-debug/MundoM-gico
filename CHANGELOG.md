@@ -3,6 +3,19 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.97] — 2026-11-22 · Texturas más nítidas: `MipFilter=linear` (sin build)
+
+### Hallazgo
+- En la Casona las texturas se veían por bloques (captura del CTO, `v0.3.92_dev`, 21 FPS). Los grupos de texturas de `DefaultDeviceProfiles.ini` usaban `MipFilter=point`: el paso entre niveles de detalle (mips) es abrupto y se nota como bloques o bandas.
+- Prueba en `Build\v0.3.95_dev` (con el cambio solo durante el build): "quedó mejor", 24 FPS en el panel `-dev` (antes 21). Sin cierres de GPU en esa prueba.
+
+### Cambiado (`Config/DefaultDeviceProfiles.ini`, autorizado por el CTO el 22-11)
+- `MipFilter=point` → **`MipFilter=linear`** en los 13 grupos `TextureLODGroups` (World, Character, Weapon, Vehicle, Effects, etc. y sus mapas normal/specular). Sigue `r.Streaming.PoolSize=300`, `MipBias=1` y `MaxAnisotropy=4`: no cambia la memoria reservada.
+- **Cómo volver atrás** (no hay interruptor en `DA_Tuning`: es configuración del perfil de dispositivo): `git revert` de este commit o poner otra vez `MipFilter=point`.
+
+### Pendiente
+- Verificar en una build (Shipping y `_dev`) que la mejora se mantiene en el hospital y el parque y que no suben los cierres de GPU. Si hace falta más nitidez, probar `PoolSize` 450 con OK del CTO.
+
 ## [0.3.96] — 2026-11-22 · Casona: la puerta del frente ya no se bloquea (sin build)
 
 ### Hallazgo (prueba de `v0.3.95_dev`, CTO)
