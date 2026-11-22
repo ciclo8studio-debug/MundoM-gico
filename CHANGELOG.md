@@ -3,6 +3,20 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.96] — 2026-11-22 · Casona: la puerta del frente ya no se bloquea (sin build)
+
+### Hallazgo (prueba de `v0.3.95_dev`, CTO)
+- "No puedo salir de la casona, algo bloquea la entrada." Consulta de solapes con canales WorldStatic/WorldDynamic/Pawn en la zona de la puerta (x ±100, y −150…60, z 5…240): el único actor que aparecía era `EXT_Neon` (la malla `SM_Cast_Neon` de la v0.3.94, perfil `BlockAll`, ~14 cm de grosor y 14 m de ancho). Mis trazas verticales de la v0.3.94 no lo detectaron porque van por el canal de visibilidad.
+- No fue posible desactivar su colisión desde el editor por MCP (`BodyInstance.collisionEnabled` no se aplica; el perfil `NoCollision` tampoco la quitó en el consulta).
+
+### Cambiado (`L_Casona`)
+- Se **eliminó `EXT_Neon`**. Quedan las torres, los techos azules, el revestimiento de piedra y `EXT_Ventanas` (perfil pasado a `NoCollision`, pero ahí tampoco se confirmó el efecto; está a z 405–597 y y −42…−38, fuera del paso).
+- Verificado con la misma consulta: sin actores con colisión en la puerta (y −150…60), en el recibidor (y 10…400) ni en el exterior inmediato (y −900…−30).
+
+### Pendiente
+- La fachada pierde el letrero de neón rosa. Si se quiere recuperar: reponerlo con colisión desactivada desde el editor de la malla (`SM_Cast_Neon` → colisión: ninguna) y volver a colocarlo.
+- Sin probar caminando hasta afuera. Fuera de la casa el suelo es el plano grande `StaticMeshActor_235` (z ≈ −22): hay un escalón hacia abajo de ~22 cm al salir.
+
 ## Prueba de nitidez — `Build\v0.3.95_dev` (22-11, no es una versión nueva)
 
 - Esa carpeta es la `_dev` de la v0.3.95 compilada con **`MipFilter=linear`** en los 13 grupos de `DefaultDeviceProfiles.ini` (el proyecto tiene `point`). Autorizado por el CTO el 22-11 para probar los bloques de textura vistos en la Casona.
