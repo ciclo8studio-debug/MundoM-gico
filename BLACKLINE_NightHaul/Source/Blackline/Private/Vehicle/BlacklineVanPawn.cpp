@@ -2,6 +2,7 @@
 #include "Vehicle/BlacklineVanPawn.h"
 
 #include "Blackline.h"
+#include "Components/StaticMeshComponent.h"
 #include "Cargo/CargoSimulationComponent.h"
 #include "Terrain/TerrainModifierVolume.h"
 #include "Pursuit/PursuitDirectorSubsystem.h"
@@ -81,6 +82,22 @@ ABlacklineVanPawn::ABlacklineVanPawn(const FObjectInitializer& ObjectInitializer
 		Move->DifferentialSetup.DifferentialType = EVehicleDifferential::AllWheelDrive;
 		Move->DifferentialSetup.FrontRearSplit = 0.4f;
 	}
+
+	// Partes visuales sin colision (la fisica la lleva el esqueleto y el Physics Asset).
+	auto MakeVisual = [this, VanMesh](const TCHAR* Name, FName Socket) -> UStaticMeshComponent*
+	{
+		UStaticMeshComponent* C = CreateDefaultSubobject<UStaticMeshComponent>(Name);
+		C->SetupAttachment(VanMesh, Socket);
+		C->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		C->SetGenerateOverlapEvents(false);
+		C->bCastDynamicShadow = true;
+		return C;
+	};
+	BodyVisual = MakeVisual(TEXT("BodyVisual"), NAME_None);
+	WheelVisualFL = MakeVisual(TEXT("WheelVisualFL"), TEXT("VisWheel_FL"));
+	WheelVisualFR = MakeVisual(TEXT("WheelVisualFR"), TEXT("VisWheel_FR"));
+	WheelVisualRL = MakeVisual(TEXT("WheelVisualRL"), TEXT("VisWheel_BL"));
+	WheelVisualRR = MakeVisual(TEXT("WheelVisualRR"), TEXT("VisWheel_BR"));
 
 	Cargo = CreateDefaultSubobject<UCargoSimulationComponent>(TEXT("Cargo"));
 

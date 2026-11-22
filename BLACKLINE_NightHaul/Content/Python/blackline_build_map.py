@@ -217,6 +217,17 @@ def build_van(actions, imc):
         mesh.set_anim_instance_class(abp.generated_class())
     bones = pick_wheel_bones(mesh)
 
+    # Carroceria y neumaticos visuales (mallas aparte en la plantilla OffroadCar)
+    body = unreal.load_asset("/Game/Vehicles/OffroadCar/SM_Offroad_Body")
+    tire = unreal.load_asset("/Game/Vehicles/OffroadCar/SM_Offroad_Tire")
+    for prop, asset in (("body_visual", body), ("wheel_visual_fl", tire), ("wheel_visual_fr", tire),
+                        ("wheel_visual_rl", tire), ("wheel_visual_rr", tire)):
+        try:
+            comp = cdo.get_editor_property(prop)
+            comp.set_static_mesh(asset)
+        except Exception as e:
+            warn("no pude asignar malla a %s: %r" % (prop, e))
+
     move = cdo.get_editor_property("vehicle_movement_component")
     order = [("FL", bp_wf), ("FR", bp_wf), ("RL", bp_wr), ("RR", bp_wr)]
     setups = []
@@ -281,11 +292,7 @@ def build_map(mats):
     import os
     umap = os.path.join(unreal.SystemLibrary.get_project_directory(), "Content", "Blackline", "Maps", MAP_NAME + ".umap")
     if os.path.exists(umap):
-        # El editor puede tener el mapa abierto (es el mapa de inicio): carga otro nivel para soltar el archivo.
-        try:
-            lvl.new_level("/Temp/BlacklineScratch")
-        except Exception as e:
-            warn("no pude soltar el mapa antes de borrarlo: %r" % (e,))
+        # Ejecutar con /Engine/Maps/Entry como mapa de inicio para que el editor no tenga abierto este archivo.
         os.remove(umap)  # new_level no sobrescribe; regeneramos siempre
         try:
             unreal.AssetRegistryHelpers.get_asset_registry().scan_paths_synchronous([DIR_MAP], True)
@@ -324,17 +331,32 @@ def build_map(mats):
     ds.set_actor_rotation(unreal.Rotator(roll=0, pitch=-38, yaw=60), False)
     dc = ds.get_component_by_class(unreal.DirectionalLightComponent)
     dc.set_editor_property("intensity", 0.6)
+    dc.set_mobility(unreal.ComponentMobility.MOVABLE)
+    setp(dc, ["atmosphere_sun_light"], False)  # sin sol: el cielo queda oscuro (noche)
     dc.set_editor_property("light_color", unreal.Color(150, 175, 255, 255))
     actor_sub.spawn_actor_from_class(unreal.SkyAtmosphere, unreal.Vector(0, 0, 0))
     sk = actor_sub.spawn_actor_from_class(unreal.SkyLight, unreal.Vector(0, 0, 500))
     skc = sk.get_component_by_class(unreal.SkyLightComponent)
-    skc.set_editor_property("intensity", 0.25)
+    skc.set_editor_property("intensity", 0.4)
+    skc.set_mobility(unreal.ComponentMobility.MOVABLE)
     skc.set_editor_property("real_time_capture", True)
     fog = actor_sub.spawn_actor_from_class(unreal.ExponentialHeightFog, unreal.Vector(0, 0, 0))
     fc = fog.get_component_by_class(unreal.ExponentialHeightFogComponent)
     setp(fc, ["fog_density"], 0.02)
     # presupuesto: niebla volumetrica apagada; se activa luego segun D1_escena_nocturna.md
     setp(fc, ["enable_volumetric_fog", "volumetric_fog"], False)
+
+    # Post-proceso global: baja la exposicion para que se lea de noche (la autoexposicion levanta todo)
+    try:
+        ppv = actor_sub.spawn_actor_from_class(unreal.PostProcessVolume, unreal.Vector(0, 0, 0))
+        ppv.set_actor_label("PP_Noche")
+        ppv.set_editor_property("unbound", True)
+        st = ppv.get_editor_property("settings")
+        st.set_editor_property("override_auto_exposure_bias", True)
+        st.set_editor_property("auto_exposure_bias", -2.0)
+        ppv.set_editor_property("settings", st)
+    except Exception as e:
+        warn("post proceso fallo: %r" % (e,))
 
     # Zonas de barro (ATerrainModifierVolume) junto a la ruta + visual
     tv_cls = unreal.load_class(None, "/Script/Blackline.TerrainModifierVolume")

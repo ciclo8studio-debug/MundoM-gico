@@ -7,6 +7,7 @@
 #include "BlacklineVanPawn.generated.h"
 
 class UCameraComponent;
+class UStaticMeshComponent;
 class USpringArmComponent;
 class USpotLightComponent;
 class UCargoSimulationComponent;
@@ -47,6 +48,20 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Blackline|Components")
 	TObjectPtr<USpotLightComponent> HeadlightRight;
+
+	/** Carroceria visual (placeholder). La malla se asigna en el BP hijo. */
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Blackline|Components")
+	TObjectPtr<UStaticMeshComponent> BodyVisual;
+
+	/** Neumaticos visuales, anclados a los huesos VisWheel_* del esqueleto. */
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Blackline|Components")
+	TObjectPtr<UStaticMeshComponent> WheelVisualFL;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Blackline|Components")
+	TObjectPtr<UStaticMeshComponent> WheelVisualFR;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Blackline|Components")
+	TObjectPtr<UStaticMeshComponent> WheelVisualRL;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Blackline|Components")
+	TObjectPtr<UStaticMeshComponent> WheelVisualRR;
 
 	// ---- Input (Enhanced Input) ----
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Blackline|Input")
