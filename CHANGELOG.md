@@ -3,6 +3,21 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.87] — 2026-11-22 · Casona: exposición 0,8 y `-ir=casona` (sin build)
+
+### Hallazgo
+- Prueba de `v0.3.86` (22-11): la Casona seguía muy clara con las luces en 15 cd. Causa: el `PostProcessVolume_0` de la Casona fija la exposición en 0,4 (copiada del hospital).
+- `-ir=casona` no movía a nadie: `BP_KitPrueba` busca un actor con la etiqueta `Ir_<zona>` y la Casona no tenía `Ir_casona`. El jugador aparecía en el `PlayerStart` por defecto, en el recibidor (0, 150, 100).
+
+### Cambiado (`L_Casona`)
+- `PostProcessVolume_0`: `AutoExposureMin/MaxBrightness` de 0,4 a **0,8** (imagen ~2× más oscura, solo en la Casona).
+- `PlayerStart_0` lleva la etiqueta **`Ir_casona`**: `-ir=casona` ya funciona y lleva al recibidor.
+- Sin tocar luces (15 cd), `SkyLight` ni el hospital. Sin interruptor en `DA_Tuning` (ajuste de nivel).
+
+### Pendiente
+- Sin build ni prueba. Si queda oscura, subir la exposición de a 0,2 hacia 0,6; si sigue clara, revisar materiales emisivos.
+- El recibidor sigue siendo el único punto de entrada para pruebas: si "la pieza sola" no es el recibidor, hay que revisar el mapa con una captura.
+
 ## [0.3.86] — 2026-11-21 · Casona: luces de 650 cd a 15 cd (sin build)
 
 ### Hallazgo
