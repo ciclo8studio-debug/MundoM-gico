@@ -3,6 +3,16 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.89] — 2026-11-22 · Casona: sin minimapa del hospital (sin build)
+
+### Cambiado (`BP_ThirdPersonCharacter` → `AplicarHUD`)
+- Al final de `AplicarHUD` se agregaron 5 nodos: `GetCurrentLevelName` → `Contains("Casona")` → `Rama` → `SetVisibility(MapaClip, Collapsed)`. En la Casona el panel del minimapa (`MapaClip`, con la imagen del hospital) queda colapsado; en los otros niveles no hace nada. Sin Event Tick nuevo ni coordenadas.
+- La tecla de mapa grande (`ToggleMapa`) sigue funcionando sobre el panel, pero en la Casona no se ve nada.
+
+### Pendiente
+- Sin probar en juego ni en build. Sin interruptor en `DA_Tuning` (arreglo de HUD por nivel).
+- Si más adelante la Casona tiene su propio mapa, hay que cambiar esta regla por una imagen propia.
+
 ## [0.3.88] — 2026-11-22 · Casona: texto de objetivo propio (sin build)
 
 ### Hallazgo
