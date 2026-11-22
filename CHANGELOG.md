@@ -3,6 +3,17 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.95] — 2026-11-22 · Menos avisos de script: `RevisarCines`, `CineVer` y `AngelPayaso` (sin build)
+
+### Hallazgo (log de `v0.3.92_dev`, Casona, 122 avisos en total tras los arreglos de 0.3.90–0.3.92)
+- 108 avisos en `RevisarCines` y 1 en `CineVer` (`index 0` de `OutActors` con largo 0) y 13 en la variable `Payasos` (la función no figuraba en el log; era `AngelPayaso`). Mismo patrón que `MoverMuneca`: la `Rama` pide `IsValid(lista[0])` y el `Get(0)` se evalúa aunque la lista esté vacía (la Casona no tiene payasos ni cines).
+
+### Cambiado (`BP_ThirdPersonCharacter`)
+- **`RevisarCines`**, **`CineVer`** y **`AngelPayaso`**: antes de la `Rama` que lee el índice 0, una `Rama` nueva con `Utilidades|Matriz|IsNotEmpty` sobre la misma lista (`GetAllActorsWithTag` en las dos primeras, `Payasos` en la tercera). Con actores el camino es el de antes; sin ellos termina sin leer nada. Sin Event Tick nuevo.
+
+### Pendiente
+- Sin probar en juego. Con esto el log de la Casona debería quedar sin avisos de script; falta confirmarlo en una `_dev`.
+
 ## [0.3.94] — 2026-11-22 · Casona: exterior tipo castillo (sin build)
 
 ### Hallazgo
