@@ -3,6 +3,12 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## Prueba de nitidez — `Build\v0.3.95_dev` (22-11, no es una versión nueva)
+
+- Esa carpeta es la `_dev` de la v0.3.95 compilada con **`MipFilter=linear`** en los 13 grupos de `DefaultDeviceProfiles.ini` (el proyecto tiene `point`). Autorizado por el CTO el 22-11 para probar los bloques de textura vistos en la Casona.
+- El `ini` se cambió solo durante el build y se restauró (`git status` limpio): el proyecto y el repo siguen con `point`, `PoolSize=300` y `MipBias=1`.
+- Qué mirar: ¿desaparecen los bloques de las texturas en la Casona? ¿Cuántos FPS (antes 21 con el panel)? Si mejora, se decide subir `PoolSize` a 450 y/o dejar `linear` en la v0.3.96 con interruptor.
+
 ## [0.3.95] — 2026-11-22 · Menos avisos de script: `RevisarCines`, `CineVer` y `AngelPayaso` (sin build)
 
 ### Hallazgo (log de `v0.3.92_dev`, Casona, 122 avisos en total tras los arreglos de 0.3.90–0.3.92)
