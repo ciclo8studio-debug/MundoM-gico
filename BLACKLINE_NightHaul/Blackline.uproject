@@ -16,6 +16,8 @@
 		{ "Name": "Niagara", "Enabled": true },
 		{ "Name": "MetaSound", "Enabled": true },
 		{ "Name": "CommonUI", "Enabled": true },
-		{ "Name": "GameplayTagsEditor", "Enabled": true }
+		{ "Name": "GameplayTagsEditor", "Enabled": true },
+		{ "Name": "PythonScriptPlugin", "Enabled": true },
+		{ "Name": "EditorScriptingUtilities", "Enabled": true }
 	]
 }
