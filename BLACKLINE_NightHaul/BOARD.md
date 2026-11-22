@@ -42,8 +42,13 @@ Cada fase termina con una build compilada y probada. No se avanza de fase con cr
 ### Fase 3 — Campaña (contratos)
 - [ ] Pantalla de tablet con lista por broker (`WBP_Contracts`), selección y manifiesto (`WBP_Manifest`).
 - [ ] Clima y terreno por contrato (lluvia, niebla, barro, hielo) conectados a `WeatherType`/`TerrainType`.
-- [ ] Alcance del slice: **3 contratos jugables** (uno por escenario: asfalto, barro, retén doble); los otros 22 quedan en datos.
-- **Listo cuando:** se puede aceptar, jugar y cerrar 3 contratos de punta a punta con pago.
+- [ ] Alcance del slice (decidido 22-11): **5 contratos jugables, uno por arco**; los otros 20 quedan en datos.
+  - C01 Operación Pudahuel (Arco 1): asfalto nocturno, tutorial del inhibidor GPS.
+  - C09 Prototipo Cero (Arco 2): carga asimétrica en curvas.
+  - C12 Reliquias de Madera (Arco 3): barro profundo con 4x4.
+  - C18 Bajando la Cuesta (Arco 4): bajada bajo lluvia fuerte.
+  - C21 Paso Fantasma (Arco 5): aduana con escáner y documento nivel 3.
+- **Listo cuando:** se pueden aceptar, jugar y cerrar los 5 contratos de punta a punta con pago.
 
 ### Fase 4 — Arte y audio
 - [ ] Furgón propio con cabina (nube/DCC), botones `Dash.*`, cargas por contrato.
@@ -63,7 +68,7 @@ Cada fase termina con una build compilada y probada. No se avanza de fase con cr
 - **Listo cuando:** build limpia instalada y jugada de inicio a fin en un PC distinto.
 
 ## Decisiones pendientes del CTO
-1. Alcance final del slice: ¿3 contratos o más? (propuesto: 3).
+1. ~~Alcance del slice~~ → decidido: 5 contratos, uno por arco (C01, C09, C12, C18, C21).
 2. ¿Una tabla de strings o tres? (`06_textos.md` vs `18_localizacion.md`).
 3. Nombres propios de narrativa y mundo (Veldmark, Mara Quiroga, Vantor, Faro): aprobar o cambiar.
 4. Dónde publicar y fecha objetivo.
