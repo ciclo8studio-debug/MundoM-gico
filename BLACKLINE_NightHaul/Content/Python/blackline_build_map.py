@@ -351,6 +351,21 @@ def build_map(mats):
     ps.set_actor_rotation(unreal.Rotator(0, 0, 0), False)
     ps.set_actor_label("Inicio")
 
+    # Zona de entrega al final de la ruta (cierra el contrato activo al detenerse)
+    dz_cls = unreal.load_class(None, "/Script/Blackline.DeliveryZone")
+    dz = actor_sub.spawn_actor_from_class(dz_cls, unreal.Vector(1500 * 100, 1.75 * 100, 150))
+    dz.set_actor_label("Entrega_Final")
+
+    # Director de clima: sigue el WeatherType del contrato activo
+    wd_cls = unreal.load_class(None, "/Script/Blackline.WeatherDirector")
+    wd = actor_sub.spawn_actor_from_class(wd_cls, unreal.Vector(0, 0, 200))
+    wd.set_actor_label("Clima")
+
+    # NavMesh para las patrullas (AAIController::MoveTo). Caja de 1.7 km x 400 m x 40 m sobre la ruta.
+    nav = actor_sub.spawn_actor_from_class(unreal.NavMeshBoundsVolume, unreal.Vector(cx * 100, 0, 0))
+    nav.set_actor_label("NavMesh_Ruta")
+    nav.set_actor_scale3d(unreal.Vector((L + 200) * 100 / 200.0, 400 * 100 / 200.0, 40 * 100 / 200.0))
+
     # GameMode de este mapa
     world = unreal.get_editor_subsystem(unreal.UnrealEditorSubsystem).get_editor_world()
     gm_cls = unreal.load_asset(DIR_CORE + "/GM_Blackline").generated_class()
