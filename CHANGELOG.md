@@ -3,6 +3,18 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.99] — 2026-11-22 · Casona: luz de luna (sin build)
+
+### Añadido (`L_Casona`, carpeta `Luna`)
+- **`LUNA_Luz`**: `DirectionalLight` (la Casona no tenía ninguna). Azul (0,33 / 0,47 / 0,73, el mismo color de la del hospital), **0,6 lux** (el hospital usa 1,2; la Casona tiene la exposición fija en 0,8, o sea la mitad de brillante que el hospital, por eso la mitad de intensidad), `Mobility = Movable`, con sombras.
+- Orientada desde la luna (que está al sur, `LUNA_Disco`): `pitch −27°`, `yaw 103°`. La luz cae hacia el norte, sobre el frente de la casa (el lado de la puerta).
+- Para cuidar la iGPU (41 FPS en la `v0.3.97_dev`): sombras de **2 cascadas** y distancia de sombra **4.000** (por defecto eran 4 y 40.000). Los muros siguen proyectando sombra, así que el interior no debería recibir luz salvo por las ventanas y la puerta.
+- Los valores por defecto de la luz nueva (10 lux, blanca, `Stationary`) se cambiaron antes de guardar.
+
+### Pendiente
+- Sin probar: hay que mirar (1) que el exterior se vea azulado y no se queme, (2) que el interior siga oscuro y (3) el costo en FPS (referencia 41). Si pesa: bajar a 1 cascada, a `CastShadows` falso solo si el interior no se ilumina, o quitar `LUNA_Luz`.
+- Si el exterior queda muy oscuro, subir `Intensity` a 1,0.
+
 ## [0.3.98] — 2026-11-22 · Casona: luna en el cielo (sin build)
 
 ### Hallazgo (prueba de `v0.3.97_dev`, CTO: "podemos agregar una luna a ese nivel")
