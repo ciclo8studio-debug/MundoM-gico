@@ -3,6 +3,15 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.91] — 2026-11-22 · Menos avisos de script: `MoverMuneca` (sin build)
+
+### Cambiado (`BP_ThirdPersonCharacter` → `MoverMuneca`)
+- Ubicada la función que faltaba: `Munecas` es una variable del BP del jugador y `MoverMuneca` la lee (índice 0, 10 veces). La rama de entrada ya pedía `Length > 0 Y IsValid(Munecas[0])`, pero el `Get(0)` se evalúa aunque la lista esté vacía (en la Casona y el parque no hay muñecas) y daba ~2.000 avisos por sesión.
+- Se agregó una `Rama` previa con `Length > 0`: solo entra a la rama de antes si hay muñecas. Con muñecas no cambia nada. Sin Event Tick nuevo.
+
+### Pendiente
+- Sigue `PanelDev` de `BP_KitPrueba` (solo con `-dev`). Sin probar en juego ni en build; confirmar en el log de una `_dev`.
+
 ## [0.3.90] — 2026-11-22 · Menos avisos de script: `LimpiarMensaje` (B2) y `ActualizarCandado` (sin build)
 
 ### Cambiado (`BP_ThirdPersonCharacter`)
