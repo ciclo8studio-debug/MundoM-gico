@@ -3,6 +3,20 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.88] — 2026-11-22 · Casona: texto de objetivo propio (sin build)
+
+### Hallazgo
+- En la Casona el HUD mostraba el texto de objetivo del hospital/parque. `MostrarObjetivo` arma `HObjetivo` con una cadena larga de condiciones del hospital y no distingue el nivel.
+
+### Cambiado (`BP_ThirdPersonCharacter` → `MostrarObjetivo`)
+- Antes de `SetHObjetivo` se agregaron 3 nodos: `GetCurrentLevelName` → `Contains("Casona")` → `SelectString`. En la Casona `HObjetivo` = "Explora la casona y busca la salida en el ático."; en los otros niveles queda el texto de siempre (sin Event Tick nuevo, sin coordenadas).
+- Respaldo del BP previo en `Respaldos/BP_ThirdPersonCharacter_pre0.3.88.uasset` (carpeta ignorada por git).
+
+### Pendiente
+- **Sin interruptor en `DA_Tuning`**: es un arreglo de texto, no una feature; si el CTO lo exige, se agrega.
+- El minimapa del hospital en el HUD de la Casona sigue visible (se ve en `ToggleMapa` / `ActualizarZona`; no se tocó).
+- Sin probar en juego ni en build.
+
 ## [0.3.87] — 2026-11-22 · Casona: exposición 0,8 y `-ir=casona` (sin build)
 
 ### Hallazgo
