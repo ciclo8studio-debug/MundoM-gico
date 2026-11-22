@@ -3,6 +3,15 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.92] — 2026-11-22 · Menos avisos de script: `PanelDev` (sin build)
+
+### Cambiado (`BP_KitPrueba` → `PanelDev`, solo con `-dev`)
+- Causa: `GetActorOfClass(BP_DirectorMiedo)` devuelve nada en la Casona y el parque (no hay director) y el panel leía `Tension` de ese actor igual (`Accessed None` en cada actualización de 0,5 s).
+- Nueva variable `TensionDev` (float) en `BP_KitPrueba`. Después de `GetActorOfClass`, una `Rama` con `IsValid(director)`: con director guarda su `Tension`; sin director guarda 0. El texto del panel usa `TensionDev`. El panel (FPS, posición, batería, ruido) sigue mostrándose en la Casona. Sin Event Tick nuevo.
+
+### Pendiente
+- Con esto quedan atendidas las 4 fuentes de avisos del log de `v0.3.84_dev`. Sin probar en juego ni en build: confirmar en el log de una `_dev` que bajan.
+
 ## [0.3.91] — 2026-11-22 · Menos avisos de script: `MoverMuneca` (sin build)
 
 ### Cambiado (`BP_ThirdPersonCharacter` → `MoverMuneca`)
