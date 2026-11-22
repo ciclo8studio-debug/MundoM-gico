@@ -4,13 +4,16 @@
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 #include "Core/BlacklineTypes.h"
+#include "Core/BlacklineContractTypes.h"
 #include "CargoSimulationComponent.generated.h"
 
 class UCargoItemDataAsset;
 class UPrimitiveComponent;
+class UDataTable;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnCargoIntegrityChanged, float, Integrity01, float, Delta);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnCargoShifted, float, Severity01);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnCargoDestroyed);
 
 UCLASS(ClassGroup = (Blackline), meta = (BlueprintSpawnableComponent))
 class BLACKLINE_API UCargoSimulationComponent : public UActorComponent
@@ -25,6 +28,21 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Cargo")
 	void ClearCargo();
+
+	/** Reemplaza la carga por la del contrato: masa, fragilidad, firma EM y asimetria lateral. */
+	UFUNCTION(BlueprintCallable, Category = "Cargo|Contract")
+	bool LoadContract(const FBlacklineContractRow& Row);
+
+	/** Busca la fila RowName en el DataTable y la carga. */
+	UFUNCTION(BlueprintCallable, Category = "Cargo|Contract")
+	bool LoadContractFromTable(UDataTable* Table, FName RowName);
+
+	UFUNCTION(BlueprintPure, Category = "Cargo|Contract")
+	FName GetActiveContractId() const { return ActiveContractId; }
+
+	/** true si la integridad llego a ~0 (carga perdida). */
+	UFUNCTION(BlueprintPure, Category = "Cargo")
+	bool IsCargoDestroyed() const { return bDestroyedBroadcast; }
 
 	UFUNCTION(BlueprintPure, Category = "Cargo")
 	float GetTotalCargoMassKg() const;
@@ -54,7 +72,31 @@ public:
 	UPROPERTY(BlueprintAssignable, Category = "Cargo")
 	FOnCargoShifted OnCargoShifted;
 
+	/** Se dispara una vez cuando la integridad cae bajo DestroyedThreshold01. */
+	UPROPERTY(BlueprintAssignable, Category = "Cargo")
+	FOnCargoDestroyed OnCargoDestroyed;
+
 	// ---- Configuracion (EditAnywhere) ----
+	/** Integridad bajo la cual la carga se considera destruida. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Cargo|Config", meta = (ClampMin = "0", ClampMax = "0.5"))
+	float DestroyedThreshold01 = 0.02f;
+
+	/** Posicion longitudinal local de la carga del contrato (cm; negativo = hacia atras). */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Cargo|Contract")
+	float ContractCargoXCm = -120.f;
+
+	/** Altura local de la carga del contrato (cm). */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Cargo|Contract")
+	float ContractCargoZCm = 60.f;
+
+	/** Desplazamiento lateral maximo (cm) cuando LateralBias = +-1. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Cargo|Contract", meta = (ClampMin = "0"))
+	float ContractLateralSpanCm = 45.f;
+
+	/** Umbral de firma EM bajo el cual la carga no exige blindaje. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Cargo|Contract", meta = (ClampMin = "0", ClampMax = "1"))
+	float ContractShieldingSignatureMin = 0.05f;
+
 
 	/** Hay blindaje instalado: anula la firma sin blindar. */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Cargo|Config")
@@ -132,6 +174,11 @@ protected:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 private:
+	UPROPERTY(Transient)
+	FName ActiveContractId;
+
+	bool bDestroyedBroadcast = false;
+
 	UPROPERTY(Transient)
 	TArray<FCargoSlot> Slots;
 

@@ -171,6 +171,24 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Blackline|Vehicle")
 	float GetSpeedKmh() const;
 
+	/** RPM actuales del motor (0 si esta apagado). */
+	UFUNCTION(BlueprintPure, Category = "Blackline|Vehicle")
+	float GetEngineRpm() const;
+
+	/** RPM normalizadas 0..1 respecto al maximo del motor (para MetaSounds/HUD). */
+	UFUNCTION(BlueprintPure, Category = "Blackline|Vehicle")
+	float GetEngineRpm01() const;
+
+	UFUNCTION(BlueprintPure, Category = "Blackline|Dash")
+	bool AreHeadlightsOn() const { return bHeadlightsOn; }
+
+	UFUNCTION(BlueprintPure, Category = "Blackline|Dash")
+	bool IsSignalJammerOn() const { return bSignalJammerOn; }
+
+	/** Sigilo 0..1: 1 = muy dificil de detectar (motor apagado, luces apagadas, inhibidor activo, lento). */
+	UFUNCTION(BlueprintPure, Category = "Blackline|Suspicion")
+	float GetStealth01() const;
+
 	UFUNCTION(BlueprintCallable, Category = "Blackline|Terrain")
 	void PushSurfaceModifier(ATerrainModifierVolume* Volume);
 

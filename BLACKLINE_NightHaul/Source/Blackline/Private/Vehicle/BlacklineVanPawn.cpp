@@ -648,6 +648,38 @@ float ABlacklineVanPawn::GetSpeedKmh() const
 	return 0.f;
 }
 
+float ABlacklineVanPawn::GetEngineRpm() const
+{
+	if (!bEngineOn)
+	{
+		return 0.f;
+	}
+	const UChaosWheeledVehicleMovementComponent* Move = GetChaosMovement();
+	return Move ? Move->GetEngineRotationSpeed() : 0.f;
+}
+
+float ABlacklineVanPawn::GetEngineRpm01() const
+{
+	const UChaosWheeledVehicleMovementComponent* Move = GetChaosMovement();
+	if (!Move || !bEngineOn)
+	{
+		return 0.f;
+	}
+	const float MaxRpm = FMath::Max(1.f, Move->GetEngineMaxRotationSpeed());
+	return FMath::Clamp(Move->GetEngineRotationSpeed() / MaxRpm, 0.f, 1.f);
+}
+
+float ABlacklineVanPawn::GetStealth01() const
+{
+	// Pesos simples: el motor apagado y las luces apagadas son lo que mas enfria el rastro.
+	float Stealth = 0.f;
+	Stealth += bEngineOn ? 0.f : 0.45f;
+	Stealth += bHeadlightsOn ? 0.f : 0.25f;
+	Stealth += bSignalJammerOn ? 0.15f : 0.f;
+	Stealth += 0.15f * (1.f - FMath::Clamp(GetSpeedKmh() / 80.f, 0.f, 1.f));
+	return FMath::Clamp(Stealth, 0.f, 1.f);
+}
+
 void ABlacklineVanPawn::SampleSpeed()
 {
 	if (SpeedHistoryKmh.Num() == 0)

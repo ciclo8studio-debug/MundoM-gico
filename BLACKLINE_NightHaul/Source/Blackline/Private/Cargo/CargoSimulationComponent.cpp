@@ -1,4 +1,5 @@
 #include "Cargo/CargoSimulationComponent.h"
+#include "Engine/DataTable.h"
 #include "Data/CargoItemDataAsset.h"
 #include "Blackline.h"
 #include "Components/PrimitiveComponent.h"
@@ -57,6 +58,7 @@ bool UCargoSimulationComponent::AddCargo(UCargoItemDataAsset* Item, FVector Loca
 	NewSlot.Item = Item;
 	NewSlot.LocalOffsetCm = LocalOffsetCm;
 	SlotIntegrity.Add(1.f);
+	bDestroyedBroadcast = false;
 
 	BroadcastIntegrityIfChanged(OldIntegrity);
 	ApplyCenterOfMassToOwner();
@@ -70,6 +72,8 @@ void UCargoSimulationComponent::ClearCargo()
 	Slots.Reset();
 	SlotIntegrity.Reset();
 	CurrentSlideCm = 0.f;
+	bDestroyedBroadcast = false;
+	ActiveContractId = NAME_None;
 
 	BroadcastIntegrityIfChanged(OldIntegrity);
 	ApplyCenterOfMassToOwner();
@@ -165,6 +169,48 @@ void UCargoSimulationComponent::ApplyImpact(float ImpactSpeedMs, FVector LocalNo
 	ApplyCenterOfMassToOwner();
 }
 
+bool UCargoSimulationComponent::LoadContract(const FBlacklineContractRow& Row)
+{
+	ClearCargo();
+
+	// Item sintetico a partir del contrato (sin depender de assets en disco).
+	UCargoItemDataAsset* Item = NewObject<UCargoItemDataAsset>(this, NAME_None, RF_Transient);
+	Item->ItemId = Row.ContractID;
+	Item->DisplayName = Row.CargoDisplayName;
+	Item->MassKg = FMath::Max(0.f, Row.CargoWeightKg);
+	Item->Fragility01 = FMath::Clamp(Row.Fragility, 0.f, 1.f);
+	Item->ContrabandSignature01 = FMath::Clamp(Row.EMSignature, 0.f, 1.f);
+	Item->bRequiresShielding = Row.EMSignature > ContractShieldingSignatureMin;
+	Item->CargoClass = Row.Fragility >= 0.6f ? ECargoClass::Fragile : ECargoClass::Standard;
+	Item->ValueCredits = static_cast<float>(Row.Payout);
+
+	const float Y = FMath::Clamp(Row.LateralBias, -1.f, 1.f) * ContractLateralSpanCm;
+	const bool bOk = AddCargo(Item, FVector(ContractCargoXCm, Y, ContractCargoZCm));
+	if (bOk)
+	{
+		ActiveContractId = Row.ContractID;
+		UE_LOG(LogBlackline, Log, TEXT("Contrato %s cargado: %.0f kg, frag %.2f, EM %.2f, sesgo %.2f"),
+			*Row.ContractID.ToString(), Row.CargoWeightKg, Row.Fragility, Row.EMSignature, Row.LateralBias);
+	}
+	return bOk;
+}
+
+bool UCargoSimulationComponent::LoadContractFromTable(UDataTable* Table, FName RowName)
+{
+	if (!Table)
+	{
+		UE_LOG(LogBlackline, Warning, TEXT("LoadContractFromTable: DataTable nulo."));
+		return false;
+	}
+	const FBlacklineContractRow* Row = Table->FindRow<FBlacklineContractRow>(RowName, TEXT("LoadContractFromTable"));
+	if (!Row)
+	{
+		UE_LOG(LogBlackline, Warning, TEXT("LoadContractFromTable: fila %s no existe en %s."), *RowName.ToString(), *Table->GetName());
+		return false;
+	}
+	return LoadContract(*Row);
+}
+
 void UCargoSimulationComponent::ApplyDamageToSlots(float Damage01, float& OutDelta)
 {
 	OutDelta = 0.f;
@@ -185,6 +231,11 @@ void UCargoSimulationComponent::BroadcastIntegrityIfChanged(float OldIntegrity)
 	if (!FMath::IsNearlyZero(Delta, 1e-5f))
 	{
 		OnCargoIntegrityChanged.Broadcast(NewIntegrity, Delta);
+	}
+	if (!bDestroyedBroadcast && Slots.Num() > 0 && NewIntegrity <= DestroyedThreshold01)
+	{
+		bDestroyedBroadcast = true;
+		OnCargoDestroyed.Broadcast();
 	}
 }
 

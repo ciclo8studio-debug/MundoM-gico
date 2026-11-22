@@ -4,6 +4,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Core/BlacklineTypes.h"
+#include "Core/BlacklineContractTypes.h"
 #include "CheckpointController.generated.h"
 
 class UBoxComponent;
@@ -65,6 +66,17 @@ public:
 	/** Solo tiene efecto en estado Inspecting (ventanilla abierta). */
 	UFUNCTION(BlueprintCallable, Category = "Checkpoint")
 	void PresentManifest(UManifestDataAsset* Manifest);
+
+	/** Aplica el contrato activo: exige RequiredManifestLevel y registra el nombre para logs. */
+	UFUNCTION(BlueprintCallable, Category = "Checkpoint|Contract")
+	void ApplyContract(const FBlacklineContractRow& Row);
+
+	UFUNCTION(BlueprintPure, Category = "Checkpoint|Contract")
+	int32 GetRequiredManifestLevel() const { return RequiredManifestLevel; }
+
+	/** Nivel (1-3) que cubre un manifiesto segun su calidad de falsificacion. */
+	UFUNCTION(BlueprintPure, Category = "Checkpoint|Contract")
+	static int32 ManifestLevelFromQuality(float ForgeryQuality01);
 
 	UFUNCTION(BlueprintPure, Category = "Checkpoint")
 	float GetSuspicion01() const;
@@ -145,6 +157,14 @@ public:
 	// ---- Sospecha ----
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Checkpoint|Suspicion")
 	FSuspicionWeights Weights;
+
+	/** Nivel de documento exigido por el contrato activo (0 = sin exigencia). */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Checkpoint|Contract", meta = (ClampMin = "0", ClampMax = "3"))
+	int32 RequiredManifestLevel = 0;
+
+	/** Sospecha extra por cada nivel de documento que falta (se multiplica por el escrutinio). */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Checkpoint|Contract", meta = (ClampMin = "0", ClampMax = "1"))
+	float ManifestLevelDeficitPenalty = 0.30f;
 
 	/** Sospecha >= este valor: inspeccion secundaria. */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Checkpoint|Suspicion", meta = (ClampMin = "0", ClampMax = "1"))

@@ -247,6 +247,18 @@ void ACheckpointController::PresentManifest(UManifestDataAsset* Manifest)
 	GetWorldTimerManager().SetTimer(VerdictTimer, this, &ACheckpointController::ResolveInspection, FMath::Max(0.01f, VerdictDelaySeconds), false);
 }
 
+int32 ACheckpointController::ManifestLevelFromQuality(float ForgeryQuality01)
+{
+	return FMath::Clamp(FMath::CeilToInt(FMath::Clamp(ForgeryQuality01, 0.0f, 1.0f) * 3.0f), 1, 3);
+}
+
+void ACheckpointController::ApplyContract(const FBlacklineContractRow& Row)
+{
+	RequiredManifestLevel = FMath::Clamp(Row.RequiredManifestLevel, 1, 3);
+	UE_LOG(LogBlackline, Log, TEXT("Reten %s: contrato %s exige documento nivel %d"),
+		*GetName(), *Row.ContractID.ToString(), RequiredManifestLevel);
+}
+
 float ACheckpointController::ComputeStaticSuspicion(bool bScrutiny) const
 {
 	if (!ActiveVan)
@@ -294,6 +306,13 @@ float ACheckpointController::ComputeStaticSuspicion(bool bScrutiny) const
 
 		const float ForgeryHide = 1.0f - FMath::Clamp(PresentedManifest->ForgeryQuality01, 0.0f, 1.0f) * ForgeryMitigation;
 		Score += (Weights.MassMismatch * MassFactor + Weights.SignatureMismatch * SigFactor) * ForgeryHide * Scrutiny;
+
+		// Contrato: el documento debe cubrir el nivel exigido (1-3).
+		const int32 Deficit = RequiredManifestLevel - ManifestLevelFromQuality(PresentedManifest->ForgeryQuality01);
+		if (Deficit > 0)
+		{
+			Score += ManifestLevelDeficitPenalty * static_cast<float>(Deficit) * Scrutiny;
+		}
 	}
 
 	return FMath::Clamp(Score, 0.0f, 1.0f);
