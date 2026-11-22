@@ -1,0 +1,23 @@
+# Unreal Engine
+Binaries/
+Intermediate/
+DerivedDataCache/
+Saved/
+Build/
+.vs/
+.vscode/
+.idea/
+*.sln
+*.suo
+*.opensdf
+*.sdf
+*.VC.db
+*.VC.opendb
+*.xcworkspace
+*.xcodeproj
+*.code-workspace
+*.log
+*.tmp
+# Plugins compilados
+Plugins/**/Binaries/
+Plugins/**/Intermediate/
