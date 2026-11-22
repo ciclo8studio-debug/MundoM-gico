@@ -93,7 +93,7 @@ public:
 	float CameraBlendTimeSec = 0.6f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Blackline|Camera")
-	ECameraPerspective StartPerspective = ECameraPerspective::Cockpit;
+	ECameraPerspective StartPerspective = ECameraPerspective::ThirdPerson; // placeholder: se ve el furgon hasta tener cabina propia
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Blackline|Camera")
 	float LookSensitivity = 1.0f;

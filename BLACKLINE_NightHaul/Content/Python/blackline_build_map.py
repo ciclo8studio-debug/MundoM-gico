@@ -137,42 +137,59 @@ def build_input():
     imc = make_input_asset("IMC_Van", unreal.InputMappingContext,
                            ["InputMappingContext_Factory", "InputMappingContextFactory"])
     if imc:
-        imc.unmap_all()
-
+        # Se construyen las asignaciones completas (accion + tecla + modificadores) y se escriben de una vez:
+        # map_key() devuelve una copia, asi que modificar su resultado no cambia el IMC.
         def key(n):
             k = unreal.Key()
-            try:
-                k.set_editor_property("key_name", n)
-            except Exception:
-                k.import_text('(KeyName="%s")' % n)
+            k.set_editor_property("key_name", n)
             return k
 
-        def map_(action, keyname, negate=False, swizzle=False):
-            m = imc.map_key(actions[action], key(keyname))
-            mods = []
-            if swizzle:
-                mods.append(unreal.InputModifierSwizzleAxis())
-            if negate:
-                mods.append(unreal.InputModifierNegate())
-            if mods:
-                m.set_editor_property("modifiers", mods)
+        def mod(cls):
+            return unreal.new_object(cls, outer=imc)
 
-        map_("IA_Throttle", "W")
-        map_("IA_Throttle", "Up")
-        map_("IA_Brake", "S")
-        map_("IA_Brake", "Down")
-        map_("IA_Steer", "D")
-        map_("IA_Steer", "Right")
-        map_("IA_Steer", "A", negate=True)
-        map_("IA_Steer", "Left", negate=True)
-        map_("IA_Handbrake", "SpaceBar")
-        map_("IA_ToggleCamera", "V")
-        map_("IA_Interact", "E")
-        map_("IA_Interact", "LeftMouseButton")
-        map_("IA_DriveMode", "F")
-        map_("IA_Look", "MouseX")
-        map_("IA_Look", "MouseY", swizzle=True)  # Y del mouse al eje 2; pitch invertido por convencion de camara
+        rows = []
+
+        def add(action, keyname, negate=False, swizzle=False, deadzone=False):
+            m = unreal.EnhancedActionKeyMapping()
+            m.set_editor_property("action", actions[action])
+            m.set_editor_property("key", key(keyname))
+            mods = []
+            if deadzone:
+                mods.append(mod(unreal.InputModifierDeadZone))
+            if swizzle:
+                mods.append(mod(unreal.InputModifierSwizzleAxis))
+            if negate:
+                mods.append(mod(unreal.InputModifierNegate))
+            m.set_editor_property("modifiers", mods)
+            rows.append(m)
+
+        # --- Teclado y mouse
+        add("IA_Throttle", "W"); add("IA_Throttle", "Up")
+        add("IA_Brake", "S"); add("IA_Brake", "Down")
+        add("IA_Steer", "D"); add("IA_Steer", "Right")
+        add("IA_Steer", "A", negate=True); add("IA_Steer", "Left", negate=True)
+        add("IA_Handbrake", "SpaceBar")
+        add("IA_ToggleCamera", "V")
+        add("IA_Interact", "E"); add("IA_Interact", "LeftMouseButton")
+        add("IA_DriveMode", "F")
+        add("IA_Look", "MouseX")
+        add("IA_Look", "MouseY", swizzle=True)
+        # --- Mando (PS4/DualShock vista como XInput): R2 acelera, L2 frena, stick izq. gira, stick der. mira
+        add("IA_Throttle", "Gamepad_RightTriggerAxis")
+        add("IA_Brake", "Gamepad_LeftTriggerAxis")
+        add("IA_Steer", "Gamepad_LeftX", deadzone=True)
+        add("IA_Look", "Gamepad_RightX", deadzone=True)
+        add("IA_Look", "Gamepad_RightY", swizzle=True, deadzone=True)
+        add("IA_Handbrake", "Gamepad_FaceButton_Left")      # Cuadrado
+        add("IA_ToggleCamera", "Gamepad_FaceButton_Top")    # Triangulo
+        add("IA_Interact", "Gamepad_FaceButton_Right")      # Circulo
+        add("IA_DriveMode", "Gamepad_LeftShoulder")         # L1
+
+        dkm = imc.get_editor_property("default_key_mappings")
+        dkm.set_editor_property("mappings", rows)
+        imc.set_editor_property("default_key_mappings", dkm)
         save(DIR_IN + "/IMC_Van")
+        log("IMC_Van: %d asignaciones" % len(rows))
     return actions, imc
 
 

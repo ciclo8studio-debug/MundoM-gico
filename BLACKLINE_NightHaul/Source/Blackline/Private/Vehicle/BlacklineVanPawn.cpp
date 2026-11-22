@@ -205,6 +205,8 @@ void ABlacklineVanPawn::RegisterIMC()
 	APlayerController* PC = Cast<APlayerController>(GetController());
 	if (!PC || !DefaultIMC)
 	{
+		UE_LOG(LogBlackline, Log, TEXT("Input: RegisterIMC pendiente (controller=%s, IMC=%s)"),
+			PC ? TEXT("si") : TEXT("no"), DefaultIMC ? TEXT("si") : TEXT("NO ASIGNADO"));
 		return;
 	}
 	if (ULocalPlayer* LP = PC->GetLocalPlayer())
@@ -213,6 +215,7 @@ void ABlacklineVanPawn::RegisterIMC()
 		{
 			Sub->AddMappingContext(DefaultIMC, IMCPriority);
 			IMCController = PC;
+			UE_LOG(LogBlackline, Log, TEXT("Input: IMC %s registrado para %s"), *DefaultIMC->GetName(), *PC->GetName());
 		}
 	}
 }
@@ -245,6 +248,10 @@ void ABlacklineVanPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 		UE_LOG(LogBlackline, Error, TEXT("BlacklineVanPawn: el InputComponent no es EnhancedInputComponent (revisar Project Settings > Input)."));
 		return;
 	}
+
+	UE_LOG(LogBlackline, Log, TEXT("Input: SetupPlayerInputComponent (Throttle=%s Steer=%s Brake=%s Camera=%s)"),
+		IA_Throttle ? TEXT("ok") : TEXT("NULL"), IA_Steer ? TEXT("ok") : TEXT("NULL"),
+		IA_Brake ? TEXT("ok") : TEXT("NULL"), IA_ToggleCamera ? TEXT("ok") : TEXT("NULL"));
 
 	if (IA_Throttle)
 	{
@@ -290,6 +297,7 @@ void ABlacklineVanPawn::OnThrottle(const FInputActionValue& Value)
 	{
 		// Motor apagado: no hay traccion.
 		Move->SetThrottleInput(bEngineOn ? FMath::Clamp(Value.Get<float>(), 0.f, 1.f) : 0.f);
+		UE_LOG(LogBlackline, Verbose, TEXT("Input: Throttle=%.2f motor=%d"), Value.Get<float>(), bEngineOn ? 1 : 0);
 	}
 }
 
