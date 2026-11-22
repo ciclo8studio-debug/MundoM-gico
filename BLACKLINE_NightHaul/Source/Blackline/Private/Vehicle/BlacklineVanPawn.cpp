@@ -42,6 +42,46 @@ ABlacklineVanPawn::ABlacklineVanPawn(const FObjectInitializer& ObjectInitializer
 	USkeletalMeshComponent* VanMesh = GetMesh();
 	VanMesh->SetNotifyRigidBodyCollision(true);
 
+	// Motor, caja y diferencial por defecto (docs/C_chaos_vehicles.md). Sin curva de torque Chaos desactiva
+	// la simulacion mecanica y no crea el diferencial (crash al cambiar el reparto de traccion).
+	if (UChaosWheeledVehicleMovementComponent* Move = Cast<UChaosWheeledVehicleMovementComponent>(GetVehicleMovementComponent()))
+	{
+		Move->Mass = 2200.f;
+
+		Move->EngineSetup.MaxTorque = 420.f;
+		Move->EngineSetup.MaxRPM = 4800.f;
+		Move->EngineSetup.EngineIdleRPM = 800.f;
+		Move->EngineSetup.EngineBrakeEffect = 0.08f;
+		Move->EngineSetup.EngineRevUpMOI = 0.6f;
+		Move->EngineSetup.EngineRevDownRate = 450.f;
+		if (FRichCurve* Curve = Move->EngineSetup.TorqueCurve.GetRichCurve())
+		{
+			Curve->Reset();
+			// X = RPM / MaxRPM, Y = Nm / MaxTorque (diesel turbo, par plano).
+			static const float Points[][2] = {
+				{0.f, 0.43f}, {0.167f, 0.62f}, {0.25f, 0.81f}, {0.375f, 1.0f},
+				{0.52f, 1.0f}, {0.667f, 0.93f}, {0.833f, 0.74f}, {1.0f, 0.48f} };
+			for (const float(&P)[2] : Points)
+			{
+				const FKeyHandle H = Curve->AddKey(P[0], P[1]);
+				Curve->SetKeyInterpMode(H, RCIM_Cubic);
+			}
+		}
+
+		Move->TransmissionSetup.bUseAutomaticGears = true;
+		Move->TransmissionSetup.bUseAutoReverse = true;
+		Move->TransmissionSetup.ChangeUpRPM = 3800;
+		Move->TransmissionSetup.ChangeDownRPM = 1600;
+		Move->TransmissionSetup.GearChangeTime = 0.35f;
+		Move->TransmissionSetup.TransmissionEfficiency = 0.9f;
+		Move->TransmissionSetup.FinalRatio = 4.1f;
+		Move->TransmissionSetup.ForwardGearRatios = { 3.6f, 2.2f, 1.45f, 1.0f, 0.78f };
+		Move->TransmissionSetup.ReverseGearRatios = { 3.2f };
+
+		Move->DifferentialSetup.DifferentialType = EVehicleDifferential::AllWheelDrive;
+		Move->DifferentialSetup.FrontRearSplit = 0.4f;
+	}
+
 	Cargo = CreateDefaultSubobject<UCargoSimulationComponent>(TEXT("Cargo"));
 
 	CockpitCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("CockpitCamera"));
@@ -437,6 +477,13 @@ void ABlacklineVanPawn::ApplyDriveConfig()
 	UChaosWheeledVehicleMovementComponent* Move = GetChaosMovement();
 	if (!Move)
 	{
+		return;
+	}
+
+	// Sin curva de torque Chaos no crea el diferencial y SetDifferentialFrontRearSplit revienta (aserto).
+	if (Move->EngineSetup.TorqueCurve.GetRichCurveConst()->IsEmpty())
+	{
+		UE_LOG(LogBlackline, Warning, TEXT("ApplyDriveConfig: el motor no tiene curva de torque; no se aplica el reparto 2WD/4WD."));
 		return;
 	}
 

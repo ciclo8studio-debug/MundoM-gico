@@ -95,7 +95,7 @@ public:
 	float InteractRangeCm = 250.f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Blackline|Dash")
-	bool bStartEngineOn = false;
+	bool bStartEngineOn = true; // true mientras no exista el boton fisico Dash.Ignition en la cabina propia
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Blackline|Dash")
 	bool bStartHeadlightsOn = true;
