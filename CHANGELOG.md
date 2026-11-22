@@ -3,6 +3,26 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.100] — 2026-11-22 · Casona: luna real, luz de luna y haces de luz (sin build)
+
+### Hallazgo (prueba de `v0.3.99_dev`, CTO: "luna y luz de luna reales, como una noche de terror")
+- La luna se veía como un disco blanco liso (`MI_Luna` y `MI_HaloLuna` son el mismo material emisivo plano, `M_Emisivo`, intensidad 6 y 1,2): sin relieve ni brillo alrededor. El exterior casi no recibía luz (0,6 lux) y la prueba bajó a 32 FPS (con 41 antes de la luz).
+- Error mío en la v0.3.99: la Casona tiene la exposición fija en 0,8 y el hospital en 0,4 (más alto = más oscuro), o sea que la Casona necesita **más** lux que el hospital, no menos.
+- No se pudo usar el cielo con luna de `SoulCity` (`T_UN_Sky_SM_Overcast01_Bonus` en `M_SkyClouds`): no hay forma de ver su textura ni de saber en qué punto del domo queda la luna.
+
+### Añadido / cambiado (`L_Casona`, `Content/MundoMagico/Materials`)
+- **`M_LunaReal`** (material nuevo, sin luz, sin Event Tick): nodo `Custom` (HLSL) sobre UV de la esfera, normal y vector de cámara. 5 octavas de ruido dan los mares oscuros y las zonas claras, puntos de cráter por hash, y oscurecimiento hacia el borde (limb). Brillo 0,9 (antes 6 plano). Compila sin errores.
+- **`M_LunaHalo`** (material nuevo, aditivo, sin luz): resplandor azul frío con centro blanco que se desvanece hacia el borde (`pow(N·V)`).
+- `LUNA_Disco` usa `M_LunaReal`; `LUNA_Halo` usa `M_LunaHalo` y quedó concéntrico con el disco (15000, −65000, 33000), escala 150.
+- **`LUNA_Luz`**: intensidad de 0,6 a **3,0 lux**, color (0,60 / 0,72 / 1,0), orientada exacto desde la luna (`pitch −26,3°`, `yaw 103,0°`), `VolumetricScatteringIntensity` 4.
+- **Niebla volumétrica** de `ExponentialHeightFog_0` activada (estaba apagada): dispersión 0,55 (hacia adelante, para que se vean los haces), extinción 0,5, distancia 4.000. La resolución del juego ya era baja (`r.VolumetricFog.GridPixelSize=16`, `GridSizeZ=64`).
+- Captura del visor del editor: luna con halo azul suave, el relieve no se apreció (el editor tiene autoexposición y el disco salía quemado; el brillo se bajó de 2,6 a 0,9 después de esa captura).
+
+### Pendiente
+- Sin probar en el juego: (1) que el disco muestre manchas y cráteres, (2) que el exterior se vea azulado con la luz de 3 lux sin quemarse, (3) que se vean haces de luz en la niebla, (4) los **FPS** (32 en la `v0.3.99_dev`; la niebla volumétrica y sombras de 3 lux cuestan en la iGPU).
+- Si pesa: `bEnableVolumetricFog` en falso (se pierden los haces), 1 cascada de sombra, o `VolumetricFogDistance` 2.500.
+- Los "haces de luna" dentro de la casa por las ventanas no existen aún: las ventanas son mallas emisivas, no huecos. Solo se ven los haces fuera (siluetas en la niebla) y por la puerta.
+
 ## [0.3.99] — 2026-11-22 · Casona: luz de luna (sin build)
 
 ### Añadido (`L_Casona`, carpeta `Luna`)
