@@ -3,6 +3,20 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.93] — 2026-11-22 · Casona: la escalera al 2.º piso se puede subir (sin build)
+
+### Hallazgo (prueba de `v0.3.92_dev`, captura del CTO)
+- "No puedo caminar por el segundo piso." Trazas verticales en el editor: el suelo del piso 2 (z = 340) tiene colisión en todo el plano, pero desde y ≈ 1250 las trazas chocaban a z ≈ 460 sobre la escalera y el pasillo norte.
+- Causa: 5 cuadros de `DetectiveOffice` (`StaticMeshActor_280`–`284`, mallas `SM_frame_1` y `SM_frame_14`) estaban a escala 1 con la malla acostada: placas de ~13,7 × 7,6 m flotando a z 428–464, con colisión (`QueryAndPhysics`). Con el suelo a 340 quedaban 90–120 cm de altura libre y la cápsula del jugador (~176 cm) no cabía al llegar arriba de la escalera.
+
+### Cambiado (`L_Casona`)
+- Los 5 cuadros: escala 0,1 y `roll` 90° (verticales), pegados a la pared norte (y = 1590, z ≈ 460). Quedan de 137 × 76 cm (`SM_frame_1`) y 51 × 41 cm (`SM_frame_14`).
+- Verificado con trazas: la escalera principal (y 920–1430) y la del ático (x 900, y 520–1080) tienen ≥ 180 cm libres sobre cada peldaño; el piso 2 solo queda bloqueado por muebles.
+
+### Pendiente
+- Sin probar caminando (no hay build con este cambio).
+- Pedido del CTO: que el exterior de la Casona se parezca al castillo. Se hace después de confirmar el piso 2.
+
 ## [0.3.92] — 2026-11-22 · Menos avisos de script: `PanelDev` (sin build)
 
 ### Cambiado (`BP_KitPrueba` → `PanelDev`, solo con `-dev`)
