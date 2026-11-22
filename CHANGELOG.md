@@ -3,6 +3,16 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.90] — 2026-11-22 · Menos avisos de script: `LimpiarMensaje` (B2) y `ActualizarCandado` (sin build)
+
+### Cambiado (`BP_ThirdPersonCharacter`)
+- **B2 · `MostrarMensaje`**: con texto vacío el `SetTimer` de `LimpiarMensaje` recibía tiempo 0 (~130 avisos por sesión). Ahora usa 0,05 s en ese caso (`SelectFloat` pin B); borra el mensaje igual y no genera aviso. Con texto no cambia nada.
+- **`ActualizarCandado`**: en mapas sin candado (Casona, parque) leía el índice 0 de una lista vacía en cada llamada. Ahora una `Rama` (`Length > 0`) separa los dos casos: sin candado deja `CercaCandado = false` y sigue a `AvisoCandado`; con candado el camino es el de antes. Sin Event Tick nuevo.
+
+### Pendiente
+- Siguen sin tocar `Munecas` (función sin ubicar) y `PanelDev` de `BP_KitPrueba` (solo con `-dev`).
+- Sin probar en juego ni en build; hay que revisar el log de una `_dev` para confirmar que bajan los avisos.
+
 ## [0.3.89] — 2026-11-22 · Casona: sin minimapa del hospital (sin build)
 
 ### Cambiado (`BP_ThirdPersonCharacter` → `AplicarHUD`)
