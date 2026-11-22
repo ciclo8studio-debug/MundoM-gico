@@ -1,6 +1,8 @@
 # Changelog — BLACKLINE: NIGHT HAUL
 
 ## 0.1.0-dev (en curso)
+### 2026-11-22 (noche)
+- `UBlacklineQualityGovernor` (subsistema de mundo, sin Tick, timer de 1 s): resolucion adaptativa por FPS medidos, ajusta `r.ScreenPercentage` 60-90 % en pasos de 5 con histeresis (baja al tiro, sube tras 5 mediciones con holgura). Interruptor y limites en Project Settings > Game > Blackline Quality. Compila (Development); sin probar en juego.
 ### 2026-11-22 (tarde)
 - `ABlacklinePatrolCar` (patrulla placeholder con sirena, AIController), `ADeliveryZone` (cierra el contrato al detenerse; bloquea con persecución activa), `AWeatherDirector` (clima por contrato: lluvia, mojado, nieve, niebla), `UContractTabletWidget` (base C++ de la tablet).
 - Tests de Automation `Blackline.*` (tabla de 25 contratos, nivel de manifiesto, carga de contrato). Ejecutados: 3/3 pasan (`Automation RunTests Blackline.`).
