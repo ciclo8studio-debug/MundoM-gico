@@ -19,8 +19,8 @@ Hola. Gracias por probar **Mundo Mágico: Turno Nocturno**, un juego de terror q
 3. En **Configuración** deja la calidad en **Baja**. Si se ve muy lento, avísanos, no la subas.
 
 **Cómo se juega**
-- Teclado: WASD moverse, mouse mirar, **F** linterna, **E** interactuar o recoger, **H** pista. Agacharse y correr: `[CONFIRMAR TECLAS]`.
-- Control: ✕ saltar, □ interactuar o recoger, △ pista.
+- Teclado: WASD moverse, mouse mirar, **F** linterna, **E** interactuar o recoger, **Y** pista (con mando la pista sale sola si te atascas 3 minutos), **T** lanzar botella (R2 con mando). Agacharse y correr: `[CONFIRMAR TECLAS]`.
+- Control: ✕ saltar, □ interactuar o recoger, R2 lanzar botella.
 - Juega **de corrido 30 a 40 minutos**: el hospital y el pasillo de Urgencias, hasta la pantalla **FIN DE LA DEMO**. Esta versión termina ahí; el parque y la casona no están en la demo.
 - Si algo se cierra o se congela, vuelve a abrir el juego y sigue. **Continuar** retoma tu partida.
 
