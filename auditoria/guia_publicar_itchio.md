@@ -28,7 +28,8 @@ Son unos 30–45 min y la hace el CTO, porque es su cuenta. Claude no inicia ses
 - **Si pesa más de 1 GB** (lo más probable, porque el juego ocupa 3,3 GB): itch.io no lo acepta desde el navegador, así que hay que subirlo con su programa oficial, **butler**:
   1. Descárgalo desde https://itch.io/docs/butler/installing.html.
   2. `butler login`. Se abre el navegador e inicias sesión tú.
-  3. `butler push "Publicar\MundoMagico_Demo_v0.3.40_Win64.zip" TU_USUARIO/mundo-magico-turno-nocturno:windows-demo --userversion 0.3.40`
+  3. `butler push "Build\zip\MundoMagico_v0.3.108.zip" TU_USUARIO/mundo-magico-turno-nocturno:windows-demo --userversion 0.3.108` (ZIP de la RC1: 1,21 GB; se arma con `herramientas\Empaquetar_ZIP.ps1 -Version v0.3.108`).
+     Para una prueba sin publicar, usa un canal privado nuevo (por ejemplo `windows-rc1`) y revisa la página de itch.io antes de hacerla pública.
   4. Vuelve a la página: el archivo aparece en *Uploads*, marcado como Windows.
 
 ## 13-11 · Abrirla solo a testers (modo restringido)

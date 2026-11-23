@@ -58,3 +58,16 @@ El 6/10 del 18-11 era la opinión de cada super-agente. Aquí cada departamento 
 
 ## Fuera de alcance del 10-12 (no se persigue en esta ronda)
 Quitar el `ReceiveTick` heredado del jugador (refactor grande del BP de 11 MB): se deja como ◐ en T5 hasta después de la demo.
+
+## Plan de @tech-lead para sus criterios (23-11)
+**T1 y T2 (los juega el CTO):** G0 con `Probar.bat` → P → 1 (usa la `_dev`, deja logs). Para medir FPS reales en Shipping: `Probar.bat` → **9** abre la última build Shipping con el panel de FPS (no guarda logs). Medir hospital, Casona y avenida del parque en calidad Baja; meta 25 FPS o más.
+**T4 (falta una cosa del CTO):** el ZIP de la RC1 pesa 1,21 GB, así que itch.io exige butler. Pasos en `auditoria/guia_publicar_itchio.md` (comando ya con el ZIP de la v0.3.108). Recomendado: probar primero la subida a un canal privado (`windows-rc1`).
+**T5 (una sesión de editor, después del humo):** 12 Blueprints ya leen `DA_Tuning`: `BP_ThirdPersonCharacter`, `BP_DirectorMiedo`, `BP_GestorNivel`, `BP_IsidoraAparicion`, `BP_LatidoMiedo`, `BP_PayasoAcecho`, `BP_PostHTML`, `BP_SustoNoria`, `BP_SustoTeatro`, `BP_AI_Sombra`, `BP_PayasoPersecucion` y `AC_Ruido`. Interruptores que faltan, con su nombre propuesto:
+| Feature | Interruptor | Dónde se lee | Riesgo |
+|---|---|---|---|
+| Agachado con escala (0.3.104) | `agachado_Activo`, `agachado_Escala` (0,72) | `BP_ThirdPersonCharacter`: `Agachar`, `Levantar` y el salto | Bajo |
+| La botella distrae (A5) | `botella_Distrae` | Botella y `BP_AI_Sombra` | Medio |
+| Barra de ruido en el HUD (A5) | `hud_Ruido` | `AplicarHUD` del jugador | Bajo |
+| Luna, estrellas y luz de luna de la Casona | `casona_Cielo` | `BP_GestorNivel` (ocultar actores `LUNA_*` y `ESTRELLAS_Domo`) | Bajo |
+| Cristales de ventana de la Casona | `casona_VentanasLuz` | `BP_GestorNivel` (ocultar `VentLuz_*`) | Bajo |
+**Event Tick:** el `ReceiveTick` heredado del jugador (llama `ActualizarBateria`) se mueve a un temporizador de 0,1 s **después de la demo**; no antes, por riesgo.

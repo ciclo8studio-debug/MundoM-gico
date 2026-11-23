@@ -30,6 +30,7 @@ echo   2. Pasillo de Urgencias (Sombra y escondites)
 echo   3. Juego normal desde el menu
 echo   4. Juego normal SIN SONIDO
 echo   8. CASONA (nivel 2, con panel de prueba)
+echo   9. ULTIMA BUILD SHIPPING con panel (para medir FPS reales; no guarda logs)
 echo ----------------------------------------------
 echo   HERRAMIENTAS
 echo   5. Borrar partida (la guarda como .bak, no la elimina)
@@ -47,6 +48,8 @@ if "%OP%"=="2" start "" "%EXE%" /Game/MundoMagico/Maps/L_Hospital -ir=pasillo -d
 if "%OP%"=="3" start "" "%EXE%" -dev & goto menu
 if "%OP%"=="4" start "" "%EXE%" -dev -nosound & goto menu
 if "%OP%"=="8" start "" "%EXE%" /Game/MundoMagico/Maps/L_Casona -ir=casona -dev & goto menu
+if "%OP%"=="9" for /f "delims=" %%d in ('dir /b /ad /o-d "%RAIZ%Build\v*" ^| findstr /v "_dev"') do if not defined SHIP set "SHIP=%RAIZ%Build\%%d\Windows\MundoMagico.exe"
+if "%OP%"=="9" if defined SHIP start "" "%SHIP%" -dev & set "SHIP=" & goto menu
 if "%OP%"=="5" goto borrar
 if "%OP%"=="6" (
   if not exist "%SAVED%" mkdir "%SAVED%"
