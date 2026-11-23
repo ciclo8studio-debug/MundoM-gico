@@ -3,6 +3,16 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.113] — 2026-11-23 · Sprint A: sonido de recoger y diagnóstico de la linterna
+
+### Pedido (feedback del CTO sobre el Sprint A)
+- **Sonido de recoger (A8/pistas):** "cuando aprieto el botón suena aunque no agarre nada". `RecogerObjeto` reproducía `SW_Pickup_small` y `SFX_Pagina` al inicio, sin comprobar la distancia. Ahora la `Rama` inicial exige `ListaRecogibles` no vacía **y** el objeto más cercano a menos de 200 cm (`FindNearestActor.Distance < 200`); si no, no hace nada (ni sonido ni temporizador `AntesDePagina`).
+- **A3 linterna (no ahuyentaba a la Sombra):** la lógica de `BP_AI_Sombra.RevisarLinterna` (timer 0,2 s) es correcta: exige `Sombra_RepeleLinterna`, linterna encendida, producto punto de la mira con la dirección a la Sombra > 0,96 (unos 16°) y distancia < 1800 cm; suma 0,2 s por revisión y resta 0,1 si dejas de apuntar; huye al llegar a `Sombra_RepeleSeg`. Valores en `DA_Tuning`: todo activo, `Sombra_VistaDist` 2200, `Sombra_PausaGolpe` 3.
+  - **Cambio:** `Sombra_RepeleSeg` de 2,5 a **1,5 s** (`herramientas/ajustar_tuning.py`, confirmado en el log).
+  - **Diagnóstico temporal:** dos `PrintString` (pantalla y log) en `RevisarLinterna`: "LINTERNA: apuntando a la Sombra" cuando se cumple la condición y "LINTERNA: la Sombra huye" al llegar al tiempo. Quitarlos cuando A3 pase el humo.
+- **Pistas:** la tecla es **Y** (teclado); con mando, solo la pista automática a los 180 s. El plan decía H; el kit de testers ya dice Y. Botellas: **T** (R2 con mando). Pendiente ubicar dónde hay botellas en los mapas.
+- **Probar:** apretar □/E sin nada cerca (sin sonido) y recoger algo (con sonido); en un encuentro con la Sombra, encender la linterna con F y apuntarla: deben salir los mensajes en pantalla.
+
 ## Nota técnica — 2026-11-23 · Cuelgue de GPU tras el viaje hospital → parque (sin versión)
 
 ### Prueba de `v0.3.112_dev` (CTO: "se cayó, se cerró solo")
