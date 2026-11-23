@@ -7,6 +7,10 @@ rem Cierra Unreal antes de usarlo (el PC tiene 8 GB de RAM).
 set "RAIZ=%~dp0"
 set "SAVED=%LOCALAPPDATA%\MundoMagico\Saved"
 set "EXE="
+rem Prefiere la build _dev mas nueva (tiene logs y panel de fps); si no hay ninguna, usa la mas nueva de cualquier tipo.
+for /f "delims=" %%d in ('dir /b /ad /o-d "%RAIZ%Build\v*_dev" 2^>nul') do (
+  if not defined EXE if exist "%RAIZ%Build\%%d\Windows\MundoMagico.exe" set "EXE=%RAIZ%Build\%%d\Windows\MundoMagico.exe" & set "VER=%%d"
+)
 for /f "delims=" %%d in ('dir /b /ad /o-d "%RAIZ%Build\v*" 2^>nul') do (
   if not defined EXE if exist "%RAIZ%Build\%%d\Windows\MundoMagico.exe" set "EXE=%RAIZ%Build\%%d\Windows\MundoMagico.exe" & set "VER=%%d"
 )
