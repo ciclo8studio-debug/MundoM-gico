@@ -3,6 +3,14 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.110] — 2026-11-23 · El parque vuelve a la demo (`Demo_SinParque` falso)
+
+### Decisión del CTO ("reconecta") tras probar el Plan B
+- Con `Demo_SinParque` activo (0.3.109) el glitch mandaba directo al hospital final y mostraba FIN. El CTO quiere el recorrido completo: hospital → glitch → **parque** → TV → hospital final → FIN. `Demo_SinParque` vuelve a **falso** (`herramientas/ajustar_tuning.py`, confirmado en el log: `TUNING_OK Demo_SinParque = False`).
+- **Hallazgo del log de la sesión Plan B (13:27–13:32):** nuevo cuelgue de GPU (`DXGI_ERROR_DEVICE_HUNG`, pase `BatchedLights/DirectLighting`, frame 5573) a los 53 s de recargar `L_Hospital` para la escena final; 1,1 GB de RAM libre. Junto al cuelgue parque → Casona (70 s), el patrón es: **cuelgue de GPU ~1 minuto después de cualquier cambio de mapa**. Sin cambio de mapa nunca se colgó (hospital 32 min, Casona directa 7 y 10 min, parque 3 min). Plan B no evitaba el problema. El volcado de calidad es idéntico en la primera y la segunda carga, así que no es una subida de calidad.
+- **Pendientes de esta versión (sin tocar aún):** título "PARQUE MUNDO MÁGICO" en la sala final del hospital (`ActualizarZona` elige el nombre por coordenadas y esa sala cae al valor por defecto) y minimapa del parque en esa sala (no ubicado todavía).
+- **Prueba sugerida:** hospital → glitch → parque con la RAM despejada (navegador y apps cerrados) y anotar si el juego se cuelga ~1 minuto después de cargar el parque.
+
 ## [0.3.109] — 2026-11-23 · Plan B: el parque sale de la demo (`Demo_SinParque` activo)
 
 ### Decisión del CTO ("Plan B ya") tras el G0
