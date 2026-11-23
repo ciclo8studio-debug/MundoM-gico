@@ -3,6 +3,15 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.107] — 2026-11-23 · Casona: luz de ventana sobre las ventanas con marco (sin build)
+
+### Pedido (prueba de `v0.3.106_dev`, CTO: "aún no están bien posicionadas")
+- Las arcadas (`EXT_Ventanas`, `SM_Cast_Ventanas`) quedaban entre las filas de ventanas con marco de la textura (`T_Building_Diffuse`, triplanar de 500 cm). Quedan ocultas (`bHidden`), no borradas.
+- Medido en el editor con `CaptureViewport` (cámara y=-2000, z=400): las ventanas de la fachada sur están en x = +787, +289, -212, -713 (cada 500 cm) y en z ≈ 277 (planta baja) y z ≈ 780 (planta alta); la puerta ocupa x ≈ ±106.
+- 6 cristales nuevos `VentLuz_A1..A4` (planta alta, las 4 ventanas) y `VentLuz_B1..B2` (planta baja, solo los extremos para no tapar la puerta): cubos 100×5×170 cm en y=-33 (pared sur en y=-30) con `MI_Ventana_Casona` (Intensidad 0,7), sin sombra.
+- Si quedan muy brillantes: bajar `Intensidad` de `MI_Ventana_Casona` a 0,4. Para más ventanas: copiar un cristal a x/z de las otras (planta baja x=289 y x=-212; torres x=±1085).
+- Pendiente: las caras este, oeste y norte siguen sin luz en ventanas (solo se hizo la sur).
+
 ## [0.3.106] — 2026-11-23 · Casona: las arcadas dejan de quemarse a blanco (sin build)
 
 ### Pedido (prueba de `v0.3.105_dev`, CTO: "las ventanas aún no las ajustas")
