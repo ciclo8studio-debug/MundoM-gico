@@ -5,6 +5,7 @@ import unreal
 
 VALORES = {
     "Demo_SinParque": False,   # 23-11 (tarde): el CTO reconecta el parque; Plan B no evita el cuelgue de GPU tras cambiar de mapa
+    "Salida_Y": -4600.0,        # 23-11: el viaje al parque ocurre justo despues de la puerta de Urgencias (antes -12600)
 }
 
 da = unreal.load_asset("/Game/MundoMagico/Datos/DA_Tuning.DA_Tuning")

@@ -3,6 +3,14 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.112] — 2026-11-23 · El viaje al parque ocurre justo después de la puerta de Urgencias
+
+### Pedido (prueba de `v0.3.111_dev`, CTO: "sí, adelanta")
+- **Prueba de la 0.3.111:** log limpio (2,6 min en `L_Hospital`, 0 cuelgues, 4 avisos menores). El glitch se activó al pasar la puerta (captura en Y -4302, afuera, de noche), pero el viaje a `L_Parque` esperaba hasta Y -12600, unos 83 m más adelante.
+- **`Salida_Y`: -12600 → -4600** en `DA_Tuning` (`herramientas/ajustar_tuning.py`, confirmado: `TUNING_OK Salida_Y = -4600.0`). `BP_GestorNivel.VigilarSalida` manda a `L_Parque` al pasar esa Y con `SalidaHecha`, así que el viaje ocurre unos 3 m después de la puerta (el glitch parte en Y -3470; la puerta está cerca de Y -4300).
+- **Riesgo:** el cambio de mapa es donde se colgaba la GPU (53 a 70 s después de cargar). Probar con la RAM despejada y anotar si se cuelga en el parque.
+- **Si no basta con la puerta:** `Salida_Y` admite de -13000 a -4000; para volver al recorrido largo, poner -12600.
+
 ## [0.3.111] — 2026-11-23 · El glitch de salida del hospital ya no se salta
 
 ### Pedido (prueba de `v0.3.110_dev`, CTO: "no me mandó a ningún lado porque salté y llegué al hospital")
