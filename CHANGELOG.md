@@ -3,6 +3,17 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.103] — 2026-11-23 · Casona: ventanas del castillo con vidrio cálido tenue (sin build)
+
+### Pedido (prueba de `v0.3.102_dev`, CTO)
+- "Más luz y estrellas se ven bien." Con la exposición nueva (0,55) las arcadas de `SM_Cast_Ventanas` se quemaban a blanco con `MI_Ventana_Calida` (emisivo 2,2/1,2/0,45) y no calzaban con las ventanas con marco de la fachada.
+- Nuevo `MI_Ventana_Casona` (padre `M_Emisivo`, color 0,5/0,26/0,08) aplicado solo a `EXT_Ventanas` de la Casona; el material del Parque no se toca.
+- Si aún se ven distintas a las otras ventanas: pasar a una malla con marco o bajar el color a 0,35.
+
+### Hallazgos sin arreglar
+- **Isidora no se agacha (visual):** `Agachar` sí llama a `Crouch` y `bCanCrouch` está en true (cápsula 40 de media altura, velocidad 200), pero `ABP_Isidora` no tiene variable ni animación de agachado y el proyecto no trae ninguna animación de agacharse. Solo cambia la cápsula y la cámara. Falta una animación (retarget) o un truco procedural.
+- **Se pegó y se movía solo:** en el log de `v0.3.102_dev` hay un tirón de carga (`FlushAsyncLoading`) y un cambio de teclado (pérdida de foco) justo antes; probable tecla pegada al perder el foco. Sin confirmar.
+
 ## [0.3.102] — 2026-11-23 · Casona: más luz y cielo con estrellas (sin build)
 
 ### Pedido (prueba de `v0.3.101_dev`, CTO: "la luna se ve bien, pero está muy oscuro, quizás estrellas")
