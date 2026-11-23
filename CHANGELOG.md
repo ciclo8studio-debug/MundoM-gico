@@ -3,6 +3,16 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## Nota técnica — 2026-11-23 (noche) · El cuelgue tras el viaje parece falta de RAM (sin versión)
+
+### Prueba de `v0.3.113_dev` (CTO: "se cerró al irse al parque")
+- Hospital 13,5 min sin problemas; viaje a `L_Parque` a las 16:24:02; cuelgue de GPU a los 14 s. **Un solo fotograma del hilo de juego tardó 10,3 s** (del 185 al 186, de 16:24:10,9 a 16:24:21,2): la GPU integrada no contesta y Windows la reinicia (TDR de 10 s). Los pases de render cambian en cada cuelgue (decals, luces, `Substrate`), así que no es un efecto concreto.
+- **Memoria en el cuelgue:** 790 MB libres de 7.931 MB; el juego usa 2.089 MB (pico 2.734 MB). En los cuatro cuelgues del 23-11 quedaban entre 790 y 1.240 MB libres. La GPU integrada comparte la RAM: con tan poca libre, sus recursos se paginan y un fotograma se alarga hasta tumbar el controlador.
+- **Por qué solo tras un viaje:** el juego sube de ~260 MB a ~2,7 MB de pico; en una carga directa cabe, pero tras el viaje hay que cargar el mapa nuevo mientras se libera el anterior y se pasa el límite.
+- **Línea base del PC con el juego cerrado:** 5.702 MB en uso y 2.229 MB libres. Mayores consumidores: app de Claude 1.362 MB, `svchost` 580, Edge 259, Defender 210, Epic Launcher y overlay ~200.
+- **Prueba para confirmar:** repetir hospital → parque con la RAM libre ≥ 4 GB (cerrar Claude, Edge y el Epic Games Launcher). Si no se cuelga, la causa es la memoria y hay que bajar el consumo del juego tras el viaje (texturas, distancia de vista, follaje) y declarar un mínimo de 16 GB, o 8 GB con todo cerrado.
+- **Linterna:** en 13,5 min no apareció ningún mensaje "LINTERNA: apuntando a la Sombra" (0 en el log): la condición de apuntado no se cumplió nunca.
+
 ## [0.3.113] — 2026-11-23 · Sprint A: sonido de recoger y diagnóstico de la linterna
 
 ### Pedido (feedback del CTO sobre el Sprint A)
