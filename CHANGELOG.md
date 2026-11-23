@@ -3,6 +3,22 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.101] — 2026-11-23 · Casona: se apaga la niebla volumétrica (cuelgue de la GPU) (sin build)
+
+### Hallazgo (prueba de `v0.3.100_dev`, CTO: "abre el juego dev")
+- El juego se cerró solo a los ~2 min, las dos veces que se abrió. Log: `GameThread timed out waiting for RenderThread after 120.00 seconds`; breadcrumbs del RHI: `VolumetricFog::LightScattering → VolumetricFog → ComputeVolumetricFog`. La iGPU (Iris Plus, 8 GB) se cuelga calculando la dispersión de la niebla volumétrica con la luz direccional de 3 lux con sombras. El cuelgue empieza al cargar el mapa, antes de ver la pantalla.
+- Pasar `-dpcvars=r.VolumetricFog=0` no sirve: el juego vuelve a poner `r.VolumetricFog` en 1 al arrancar (el log imprime `r.VolumetricFog = "1"`; probablemente la función de calidad del BP del jugador). Quedó el mismo cuelgue.
+- Fue el riesgo que se anotó en la v0.3.100 ("la niebla volumétrica cuesta en la iGPU"), pero no pensé que fuera un cuelgue y no un bajón de FPS.
+
+### Cambiado (`L_Casona`)
+- `ExponentialHeightFog_0`: `bEnableVolumetricFog` en **falso** (vuelve a como estaba antes de la v0.3.100).
+- `LUNA_Luz`: `VolumetricScatteringIntensity` de 4 a **0**.
+- Siguen igual: la luna con relieve (`M_LunaReal`), el halo (`M_LunaHalo`), la luz de 3 lux con sombras de 2 cascadas y el corte de niebla a 20.000.
+
+### Pendiente
+- Los **haces de luna** reales (niebla volumétrica) quedan descartados en esta PC. Alternativas baratas sin volumétrica: `bEnableLightShaftBloom` en la luz (resplandor de pantalla alrededor de la luna, sin pase volumétrico), o mallas de rayos aditivas (conos translúcidos) junto a la puerta y detrás de la casa. Ninguna está hecha.
+- Sin probar: hay que confirmar que ya no se cuelga, ver la luna y la luz, y los FPS (referencia 32 en `v0.3.99_dev`).
+
 ## [0.3.100] — 2026-11-22 · Casona: luna real, luz de luna y haces de luz (sin build)
 
 ### Hallazgo (prueba de `v0.3.99_dev`, CTO: "luna y luz de luna reales, como una noche de terror")
