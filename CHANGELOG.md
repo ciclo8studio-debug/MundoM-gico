@@ -3,6 +3,14 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.105] — 2026-11-23 · Casona: Isidora se movía sola (colisión del domo de estrellas) (sin build)
+
+### Hallazgo (prueba de `v0.3.104_dev`, CTO: "se mueve sola Isidora")
+- Causa: la esfera `ESTRELLAS_Domo` (v0.3.102, `/Engine/BasicShapes/Sphere` ×500) conservaba la colisión (`collisionEnabled = QueryAndPhysics`) aunque el perfil decía `NoCollision`. Isidora aparece dentro de ese volumen sólido y el motor la empujaba hacia afuera (de ahí el "se pega y se mueve sola", el avance hacia Y negativo y la cámara metida en el brazo). Confirmado con una consulta de colisión en el editor sobre el punto de aparición: devolvía el domo.
+- Arreglo: el domo usa `/Engine/EngineSky/SM_SkySphere` (sin colisión; la misma consulta ahora devuelve vacío), escala ×30 (radio ~123.000 cm), mismo material `M_Estrellas`.
+- Log de `v0.3.104_dev`: 0 avisos de script, sin cuelgues, solo teclado y mouse (no era un mando con deriva).
+- Notas: el agachado (0.3.104) y las ventanas (0.3.103) quedan por probar sin el empuje del domo.
+
 ## [0.3.104] — 2026-11-23 · Isidora: agachado visual con truco de escala (sin build)
 
 ### Pedido (CTO: "Truco ahora")
