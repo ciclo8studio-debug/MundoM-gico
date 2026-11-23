@@ -3,6 +3,16 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.102] — 2026-11-23 · Casona: más luz y cielo con estrellas (sin build)
+
+### Pedido (prueba de `v0.3.101_dev`, CTO: "la luna se ve bien, pero está muy oscuro, quizás estrellas")
+- Luna y halo se ven bien; FPS 28; sin cuelgues (log limpio).
+- `PostProcessVolume_0`: exposición mín/máx 0,8 → 0,55 (más claro; el hospital usa 0,4).
+- `LUNA_Luz`: intensidad 3 → 6 lux.
+- Nuevo `M_Estrellas` (Unlit, aditivo, doble cara, solo en el emisivo: puntos por hash, más densos hacia arriba, sin textura ni Tick) en `ESTRELLAS_Domo` (esfera ×500 sin colisión ni sombra, carpeta `Luna`).
+- Si queda muy claro: subir `autoExposure` a 0,65. Si las estrellas se ven pocas: bajar el umbral `0.9963` del material.
+- Pendiente: interruptor en `DA_Tuning` (hoy es solo de mapa).
+
 ## [0.3.101] — 2026-11-23 · Casona: se apaga la niebla volumétrica (cuelgue de la GPU) (sin build)
 
 ### Hallazgo (prueba de `v0.3.100_dev`, CTO: "abre el juego dev")
