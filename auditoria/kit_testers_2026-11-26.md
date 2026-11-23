@@ -1,7 +1,7 @@
 # Kit de testers · RC1 de Mundo Mágico (privado, hacia el 26-11)
 
 **Para el CTO:** copia el mensaje de la sección 1 a cada tester (3 a 5 personas, al menos 2 con iGPU o notebook sin tarjeta dedicada). Respuesta en 48 h. Reemplaza a `formulario_testers.md` (13–15-11).
-**Antes de mandarlo:** completa `[LINK]`, `[CLAVE]` y `[VERSIÓN]` con la build RC1 que pase la prueba de humo (`auditoria/humo/rc1_2026-11-24.md`).
+**Antes de mandarlo:** completa `[LINK]`, `[CLAVE]` y `[VERSIÓN]` con la build RC1 que pase la prueba de humo (`auditoria/humo/rc1_2026-11-24.md`). **Plan B (23-11):** la demo es hospital más Acto 3, sin parque ni Casona (versión 0.3.109).
 
 ---
 
@@ -21,7 +21,7 @@ Hola. Gracias por probar **Mundo Mágico: Turno Nocturno**, un juego de terror q
 **Cómo se juega**
 - Teclado: WASD moverse, mouse mirar, **F** linterna, **E** interactuar o recoger, **H** pista. Agacharse y correr: `[CONFIRMAR TECLAS]`.
 - Control: ✕ saltar, □ interactuar o recoger, △ pista.
-- Juega **de corrido 30 a 40 minutos**: hospital, el pasillo de Urgencias y, si llegas, la casona. No hace falta terminarlo.
+- Juega **de corrido 30 a 40 minutos**: el hospital y el pasillo de Urgencias, hasta la pantalla **FIN DE LA DEMO**. Esta versión termina ahí; el parque y la casona no están en la demo.
 - Si algo se cierra o se congela, vuelve a abrir el juego y sigue. **Continuar** retoma tu partida.
 
 **Qué hacer cuando falle algo**
@@ -36,7 +36,7 @@ Cuando termines, responde las preguntas de abajo. Gracias.
 ## 2. Preguntas para el tester
 
 1. **Tu PC.** Modelo o tarjeta de video (por ejemplo "notebook con Intel Iris"), RAM y Windows 10 u 11.
-2. **¿Cuántos minutos jugaste y hasta dónde llegaste?** (hospital, pasillo, televisor, casona, otra)
+2. **¿Cuántos minutos jugaste y hasta dónde llegaste?** (sala del despertar, pasillo, televisor, pantalla FIN, otra)
 3. **¿El juego se cerró, se congeló o se puso muy lento?** ¿Dónde? Si viste los fps, anótalos.
 4. **¿Quedó la imagen muy oscura, muy clara o borrosa en algún lugar?** ¿Dónde?
 5. **¿Isidora se movió sola o quedó pegada en algún momento?** ¿Qué estabas haciendo?
