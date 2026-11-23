@@ -3,6 +3,15 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## Nota técnica — 2026-11-23 · Cuelgue de GPU tras el viaje hospital → parque (sin versión)
+
+### Prueba de `v0.3.112_dev` (CTO: "se cayó, se cerró solo")
+- El viaje funcionó: a las 14:36:31 el juego cargó `L_Parque` justo después de la puerta (`Salida_Y` = -4600). Luego, a las 14:36:54 (23 s después), la GPU se colgó (`DXGI_ERROR_DEVICE_HUNG`, falla al crear texturas BC5 de 1024). Entre las 14:36:35 y las 14:36:54 el juego dibujó solo 11 fotogramas (~1,7 s cada uno) y un fotograma tuvo `Max iterations 8 hit` (>95 ms). RAM libre al abrir: 2,4 GB (no es falta de memoria).
+- El volcado de calidad es idéntico en la carga directa del hospital, del parque y del parque por viaje (`ScreenPercentage` 80, `VolumetricFog` 1, `Shadow.MaxResolution` 2048): la calidad no cambia al viajar.
+- Cuatro cuelgues del 23-11 comparten patrón: parque → Casona (70 s), hospital → hospital final (53 s), hospital → parque (23 s) y la sesión 2 del G0. Las cargas directas (hospital 32 min, parque 10 min, Casona 7 y 10 min) no se colgaron nunca.
+- **Primer glitch (`GlitchLlegar`):** teletransporta a (0, -4300, 100) con la cámara en fundido: es la calle de afuera (parte del mapa del hospital). El segundo glitch (TV, `IniciarTV`) abre `L_Parque` al pasar `Salida_Y`. `IniciarTV` carga `DA_Tuning` con `LoadAsset_Blocking` y anima la TV con un temporizador de 0,02 s; no se encontró nada que explique la carga de GPU.
+- **Prueba sugerida:** `Probar.bat` → P → **D5** (juego normal con el perfil sin Lumen/VSM/GI) y repetir el recorrido hasta el parque: si no se cuelga, la causa es la iluminación dinámica tras cambiar de mapa.
+
 ## [0.3.112] — 2026-11-23 · El viaje al parque ocurre justo después de la puerta de Urgencias
 
 ### Pedido (prueba de `v0.3.111_dev`, CTO: "sí, adelanta")
