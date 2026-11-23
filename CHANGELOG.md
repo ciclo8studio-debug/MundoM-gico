@@ -3,6 +3,15 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.108] — 2026-11-23 · Higiene de logs: `RecogerObjeto` sin avisos (sin build)
+
+### Origen (log final de `v0.3.107_dev` y reunión corta del `producer`)
+- 36 avisos `Accessed None ... CallFunc_FindNearestActor_ReturnValue` por sesión de ~10 min: al apretar □/E sin objetos recogibles (`ListaRecogibles` vacía, como en la Casona), `RecogerObjeto` seguía leyendo un actor nulo.
+- Arreglo: `Rama` al inicio de `RecogerObjeto` con `ListaRecogibles` → `IsNotEmpty`; si está vacía no hace nada (tampoco suena el sonido de recoger). Si no está vacía, el flujo es el de siempre.
+- No se tocó `AntesDePagina` (aviso `SetTimer` en cero, 3 por sesión, inocuo) ni `LimpiarMensaje`.
+- Probar: en la Casona apretar □/E sin nada cerca (0 avisos y sin sonido) y en el hospital/parque recoger llave, página y botiquín (debe seguir igual).
+- Sin interruptor en `DA_Tuning`: es una guarda de seguridad, no una feature.
+
 ## [0.3.107] — 2026-11-23 · Casona: luz de ventana sobre las ventanas con marco (sin build)
 
 ### Pedido (prueba de `v0.3.106_dev`, CTO: "aún no están bien posicionadas")
