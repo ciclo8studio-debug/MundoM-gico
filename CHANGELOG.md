@@ -3,6 +3,21 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.114] — 2026-11-23 · Sprint A: cierre (botella P4, flecha, interruptores, Pabellón 4 ampliado, portada)
+
+### Hecho
+- **Botella en el Pabellón 4 (A5):** `REC_BotellaP4` (`BP_Recogible`, tag `Botella`) en (0, -2400, 15), en el pasillo del Pabellón 4. Se lanza con T / R2.
+- **Marcador de objetivo:** `WBP_HUD.FlechaObj` pasa de "▲" a una flecha "↑" (tamaño 56). Revisar en la build que el glifo se vea con `BarlowCondensed`.
+- **Interruptores nuevos en `DA_Tuning`** (variables en `BP_AfinacionDatos`, todas ✅): `Botella_Activa`, `UI_BarraRuido`, `Agachar_Visual`, `Casona_Cielo`, `Casona_Ventanas`.
+  - `BP_ThirdPersonCharacter`: variables `BotellaActiva`, `AgacharVisual`, `BarraRuidoActiva` (por defecto true) y la función `CargarTuningExtra` (la llama `CrearHUD`). `IntentarLanzar` y `Agachar` consultan el interruptor; la barra de ruido se colapsa si está apagada; en `L_Casona` oculta los actores con tag `CasonaCielo` (domo de estrellas y luna) y `CasonaVentanas` (`VentLuz_*`).
+- **Pabellón 4 (`L_Hospital`):** la puerta `P4_PuertaCruje` se escala a 1,76 × 1,19 para cubrir el hueco de 160 × 240 cm, con la hoja cerrada, material `MI_Madera_Vieja` y dos pomos; su marco propio queda oculto. Las 3 losas de techo del Ala Internación llegan hasta y = -3520. El pasillo (y -3520 a -520) pasa de 440 a **1800 cm** de ancho: piso y techo ampliados, corredor central intacto y, a cada lado, 3 salas (muros exteriores, cierres norte y sur y divisiones, carpeta `Pabellon4_Ampliacion`). Las puertas laterales siguen siendo decorativas y las salas no tienen luz.
+- **Portada (`WBP_Menu`):** botones centrados en las posiciones del HTML (745 px de izquierda; 653, 733 y 811 de arriba; 447 × 54), fondo oscuro translúcido, borde fino color arena, texto `IM Fell English` 24 con 300 de espaciado y color crema; subtítulo "EL DESPERTAR DE ISIDORA". La opción elegida se pinta roja (`RefrescarMenu` ahora cambia el `BackgroundColor` según `MenuSel`). El fondo sigue siendo `T_Portada_FP`.
+- **Herramientas:** `Abrir_MundoMagico_Liviano.ps1` ahora pasa `-culture=en` (sin eso el DSL de Blueprints devuelve vacío).
+
+### Sin verificar (falta build y prueba)
+- Que el pomo, la flecha y la portada se vean bien; que el DSL de `RefrescarMenu` conserve el comportamiento del menú; que la botella nueva se recoja y se lance.
+- Quedan: A3 (linterna, con mensajes de diagnóstico), prueba de RAM del viaje al parque y humo RC1.
+
 ## Nota técnica — 2026-11-23 (noche) · El cuelgue tras el viaje parece falta de RAM (sin versión)
 
 ### Prueba de `v0.3.113_dev` (CTO: "se cerró al irse al parque")

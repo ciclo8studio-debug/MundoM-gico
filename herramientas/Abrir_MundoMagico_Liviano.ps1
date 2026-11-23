@@ -12,5 +12,5 @@ $cv = @(
   'r.VolumetricFog.GridPixelSize=16',
   'r.VolumetricFog.GridSizeZ=64'
 ) -join ','
-$a = @("`"$p`"", '/Game/MundoMagico/Maps/L_Hospital', '-dx11', '-ModelContextProtocolStartServer', "-dpcvars=$cv")
+$a = @("`"$p`"", '/Game/MundoMagico/Maps/L_Hospital', '-dx11', '-ModelContextProtocolStartServer', '-culture=en', "-dpcvars=$cv")
 Start-Process 'C:\Program Files\Epic Games\UE_5.8\Engine\Binaries\Win64\UnrealEditor.exe' -ArgumentList $a
