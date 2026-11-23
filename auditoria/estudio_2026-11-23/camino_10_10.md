@@ -3,11 +3,11 @@
 El 6/10 del 18-11 era la opinión de cada super-agente. Aquí cada departamento tiene **5 criterios con prueba**; 10/10 = los 5 verificados. Puntaje = (✔ ×1 + ◐ ×0,5) × 2.
 **✔** verificado (se jugó o se midió en el .exe) · **◐** construido, sin verificar · **✘** falta.
 
-## 🛡️ @tech-lead — 5,0 / 10
+## 🛡️ @tech-lead — 6,0 / 10
 | # | Criterio | Estado | Evidencia o falta |
 |---|---|:-:|---|
-| T1 | RC1 sin cierres: G0 del parque (3×15 min) y 3 sesiones de la RC1 | ✘ | G0 sin correr; el log del 23-11 en la Casona salió limpio |
-| T2 | 25 FPS o más en Baja, medido en Shipping: hospital, Casona y parque | ◐ | Hospital ~30 (0.3.84) y Casona 30–42 en `_dev`; falta Shipping y el parque |
+| T1 | RC1 sin cierres: 3 sesiones de 15 min o más del recorrido de la demo (hospital → glitch y TV → FIN) | ◐ | Plan B (23-11): el G0 del parque no pasó y el parque sale de la demo. Hospital: 1 sesión de 32 min sin cierres; faltan 2 con la v0.3.109 |
+| T2 | 25 FPS o más en Baja, medido en Shipping, en el recorrido de la demo (hospital) | ◐ | Hospital ~30 (0.3.84); falta remedirlo con la RC (`Probar.bat` → 9). El parque se mide aparte para la versión completa (avenida 25 o más) |
 | T3 | Calidad automática (A6) | ✔ | Medido en 0.3.84: hospital de 3 a ~30 FPS |
 | T4 | Pipeline de release: ZIP medido, builds ordenadas y subida a itch.io probada | ◐ | ZIP de la v0.3.87: **1,21 GB en 165 s** (`Empaquetar_ZIP.ps1`); `Build/` de 85 a 12 GB; `NeverCook` no hace falta (la build ya pesa 1,46 GB); falta butler: no está instalado y requiere descargarlo y entrar a itch.io (lo hace el CTO) |
 | T5 | Reglas técnicas: cero Event Tick y un interruptor en `DA_Tuning` por feature | ◐ | El jugador conserva un `ReceiveTick` heredado (llama `ActualizarBateria`); sin interruptor: agachado, luna, exposición, textos por nivel, botella y barra de ruido |
@@ -21,14 +21,14 @@ El 6/10 del 18-11 era la opinión de cada super-agente. Aquí cada departamento 
 | G4 | Sombra justa: pausa tras el golpe y anti-atasco (A7), probada | ◐ | 0.3.65; caso N5 sin ejecutar |
 | G5 | Director de miedo: empuje cada 40–65 s y autoguardado (B6) | ✘ | Sin evidencia de avance |
 
-## 🏚️ @world-builder — 5,0 / 10
+## 🏚️ @world-builder — 6,0 / 10
 | # | Criterio | Estado | Evidencia o falta |
 |---|---|:-:|---|
 | W1 | Atmósfera del HTML portada (post, LUT, niebla, luna) | ◐ | Casona validada por el CTO; hospital (A1) sin humo |
 | W2 | Casona recorrible de punta a punta: 3 pisos, escondites y salida del ático | ◐ | Escalera revisada por geometría; recorrido completo sin jugar |
 | W3 | Páginas 1–15 en `DA_NovelaData`, leídas en el juego | ◐ | Cargadas (0.3.63); lectura sin probar |
 | W4 | Canon de Isidora decidido | ✔ | Aprobado el 18-11 (leucemia más miocardiopatía, 03:33 del 13/03/1998) |
-| W5 | Recorrido Hospital → Casona → Parque cerrado | ✘ | Pasillo que no sale; parque sin G0 |
+| W5 | Recorrido de la demo cerrado (hospital → glitch y TV → FIN) | ◐ | Plan B: `Demo_SinParque` activo, FIN al salir (0.3.109); el "pasillo que no sale" se atribuye a la falta de pantalla FIN; sin verificar. El recorrido completo hospital → Casona → parque queda para la versión completa |
 
 ## 🎨 @ux-toolsmith — 3,0 / 10
 | # | Criterio | Estado | Evidencia o falta |
@@ -71,3 +71,7 @@ Quitar el `ReceiveTick` heredado del jugador (refactor grande del BP de 11 MB): 
 | Luna, estrellas y luz de luna de la Casona | `casona_Cielo` | `BP_GestorNivel` (ocultar actores `LUNA_*` y `ESTRELLAS_Domo`) | Bajo |
 | Cristales de ventana de la Casona | `casona_VentanasLuz` | `BP_GestorNivel` (ocultar `VentLuz_*`) | Bajo |
 **Event Tick:** el `ReceiveTick` heredado del jugador (llama `ActualizarBateria`) se mueve a un temporizador de 0,1 s **después de la demo**; no antes, por riesgo.
+
+## Ajuste por el Plan B (23-11)
+El CTO decidió el Plan B tras el G0 (cuelgue de GPU al viajar parque → Casona). Se cambiaron T1, T2 y W5 para medir la demo real (hospital hasta la pantalla FIN). El parque y la Casona pasan a la versión completa con sus propios criterios: avenida del parque a 25 FPS o más, 3×15 min sin cierres y tránsito parque → Casona sin cuelgue de GPU.
+**Qué puede cerrar Claude solo:** T5 (interruptores en `DA_Tuning`, una sesión de editor). **Lo que necesita al CTO:** T1 y T2 (jugar la RC y mirar el panel), T4 (instalar butler e iniciar sesión en itch.io).
