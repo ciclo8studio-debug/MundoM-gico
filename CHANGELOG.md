@@ -3,6 +3,15 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.111] — 2026-11-23 · El glitch de salida del hospital ya no se salta
+
+### Pedido (prueba de `v0.3.110_dev`, CTO: "no me mandó a ningún lado porque salté y llegué al hospital")
+- **Causa:** `RevisarSalida` (jugador, cada tick) solo marcaba `SalidaHecha` si la Y del jugador estaba en la franja -3620 a -3470 (150 cm). Con un salto de prueba, un reinicio o al reaparecer más adelante (el CTO estaba en Y -5197) la franja se salta, `SalidaHecha` nunca se activa y `BP_GestorNivel.VigilarSalida` (que exige `SalidaHecha` y pasar `Salida_Y` = -12600) no manda al parque.
+- **Arreglo:** el mínimo de la franja pasa de -3620 a **-30000**: el glitch se activa en cuanto la Y es -3470 o menor, sin importar cómo se llegó. Sin interruptor nuevo (es una guarda).
+- **Diseño que se mantiene:** glitch desde Y -3470; el viaje a `L_Parque` ocurre al pasar `Salida_Y` (-12600), unos 70 m más adelante. Si se quiere que el viaje ocurra al salir por Urgencias, hay que bajar `Salida_Y` (pendiente de decisión del CTO: falta confirmar la Y de la puerta de Urgencias).
+- **Riesgo:** en el Acto 3 (regreso al hospital) cualquier zona con Y menor a -3470 activaría el glitch al entrar; hoy el regreso apunta al Pabellón 4 (Y cercana a 0). Probar el regreso desde el parque.
+- **Probar:** Iniciar juego → pasillo; saltar (o reaparecer) más allá de Y -3470 debe activar el glitch; seguir hasta Y -12600 manda al parque.
+
 ## [0.3.110] — 2026-11-23 · El parque vuelve a la demo (`Demo_SinParque` falso)
 
 ### Decisión del CTO ("reconecta") tras probar el Plan B
