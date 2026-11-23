@@ -25,6 +25,7 @@ echo   1. Sala del despertar
 echo   2. Pasillo de Urgencias (Sombra y escondites)
 echo   3. Juego normal desde el menu
 echo   4. Juego normal SIN SONIDO
+echo   8. CASONA (nivel 2, con panel de prueba)
 echo ----------------------------------------------
 echo   HERRAMIENTAS
 echo   5. Borrar partida (la guarda como .bak, no la elimina)
@@ -41,6 +42,7 @@ if "%OP%"=="1" start "" "%EXE%" /Game/MundoMagico/Maps/L_Hospital -ir=hospital -
 if "%OP%"=="2" start "" "%EXE%" /Game/MundoMagico/Maps/L_Hospital -ir=pasillo -dev & goto menu
 if "%OP%"=="3" start "" "%EXE%" -dev & goto menu
 if "%OP%"=="4" start "" "%EXE%" -dev -nosound & goto menu
+if "%OP%"=="8" start "" "%EXE%" /Game/MundoMagico/Maps/L_Casona -ir=casona -dev & goto menu
 if "%OP%"=="5" goto borrar
 if "%OP%"=="6" (
   if not exist "%SAVED%" mkdir "%SAVED%"
