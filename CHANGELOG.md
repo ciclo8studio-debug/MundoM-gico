@@ -3,6 +3,21 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.115] — 2026-11-23 · Portada abajo a la izquierda y diagnóstico de la botella
+
+### Prueba de `v0.3.114_dev` (CTO)
+- Se cayó 14 s después del viaje al parque (23:10:19 → 23:10:33, `DXGI_ERROR_DEVICE_HUNG`). Quedaban **1.198 MB libres** de 8.316 (el juego usaba 2.182 MB; pico 2.844 MB). Con la app de Claude (1,3 GB) abierta no se llega a los 4 GB libres que pide la prueba limpia.
+- Las botellas funcionaron. La Sombra no se movió: el log no decía nada del ruido.
+- El glitch deja al jugador más allá de la primera salida, en la calle de afuera y en el mismo mapa; es el diseño actual (`Salida_Y` = -4600 abre el parque).
+
+### Cambios
+- **Portada (`WBP_Menu`):** botones y subtítulo de vuelta **abajo a la izquierda** (140 px de izquierda; 740, 806 y 872 de arriba; 620 × 62), texto alineado a la izquierda con 26 px de margen. Se conserva el estilo nuevo (fondo oscuro, borde arena, `IM Fell English`, opción elegida en rojo).
+- **Diagnóstico de la botella:** `SonidoBotella` escribe "BOTELLA: ruido emitido…" en pantalla y log. La Sombra solo reacciona si está a menos de `Sombra_OidoDist` (1800 cm) del punto del ruido (12 m delante del jugador) y no está persiguiendo.
+- `MakeNoise` en `SonidoBotella` se reescribió con pines por nombre (sin cambio de comportamiento).
+
+### Pendiente
+- Decidir con el CTO: efecto de la botella, adelantar el viaje al parque y repetir la prueba con 4 GB libres.
+
 ## [0.3.114] — 2026-11-23 · Sprint A: cierre (botella P4, flecha, interruptores, Pabellón 4 ampliado, portada)
 
 ### Hecho
