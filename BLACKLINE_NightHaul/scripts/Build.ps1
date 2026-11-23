@@ -65,7 +65,7 @@ $uat = @(
     '-build','-cook','-stage','-pak','-archive','-compressed',
     "-archivedirectory=$OutDir",
     '-utf8output','-unattended','-nop4','-nosplash','-noP4',
-    '-prereqs'
+    '-prereqs','-WaitForUATMutex'
 )
 if ($Config -eq 'Shipping') { $uat += '-nodebuginfo' }   # sin consola ni stat en Shipping
 

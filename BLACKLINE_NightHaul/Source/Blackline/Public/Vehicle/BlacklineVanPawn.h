@@ -237,6 +237,10 @@ private:
 	void OnDriveModeInput(const FInputActionValue& Value);
 
 	void RegisterIMC();
+
+	/** Ultimo valor de acelerador recibido (solo para telemetria en log). */
+	float LastThrottleInput = 0.f;
+	int32 TelemetryCounter = 0;
 	void UnregisterIMC();
 
 	UChaosWheeledVehicleMovementComponent* GetChaosMovement() const;

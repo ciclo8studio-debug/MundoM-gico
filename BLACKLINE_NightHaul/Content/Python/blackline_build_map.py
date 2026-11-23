@@ -349,6 +349,7 @@ def build_map(mats):
     dc = ds.get_component_by_class(unreal.DirectionalLightComponent)
     dc.set_editor_property("intensity", 0.6)
     dc.set_mobility(unreal.ComponentMobility.MOVABLE)
+    setp(dc, ["cast_shadows"], False)  # perfil liviano: la luna no proyecta sombras
     setp(dc, ["atmosphere_sun_light"], False)  # sin sol: el cielo queda oscuro (noche)
     dc.set_editor_property("light_color", unreal.Color(150, 175, 255, 255))
     actor_sub.spawn_actor_from_class(unreal.SkyAtmosphere, unreal.Vector(0, 0, 0))
@@ -356,7 +357,7 @@ def build_map(mats):
     skc = sk.get_component_by_class(unreal.SkyLightComponent)
     skc.set_editor_property("intensity", 0.4)
     skc.set_mobility(unreal.ComponentMobility.MOVABLE)
-    skc.set_editor_property("real_time_capture", True)
+    skc.set_editor_property("real_time_capture", False)  # perfil liviano: sin recaptura por cuadro
     fog = actor_sub.spawn_actor_from_class(unreal.ExponentialHeightFog, unreal.Vector(0, 0, 0))
     fc = fog.get_component_by_class(unreal.ExponentialHeightFogComponent)
     setp(fc, ["fog_density"], 0.02)

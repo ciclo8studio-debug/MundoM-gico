@@ -2,6 +2,7 @@
 #include "Vehicle/BlacklineVanPawn.h"
 
 #include "Blackline.h"
+#include "PhysicsEngine/PhysicsAsset.h"
 #include "Components/StaticMeshComponent.h"
 #include "Cargo/CargoSimulationComponent.h"
 #include "Terrain/TerrainModifierVolume.h"
@@ -42,6 +43,9 @@ ABlacklineVanPawn::ABlacklineVanPawn(const FObjectInitializer& ObjectInitializer
 	// Fisica del chasis (la malla/ruedas se asignan en el BP hijo).
 	USkeletalMeshComponent* VanMesh = GetMesh();
 	VanMesh->SetNotifyRigidBodyCollision(true);
+	VanMesh->SetCollisionProfileName(TEXT("Vehicle"));
+	VanMesh->BodyInstance.bSimulatePhysics = true; // sin esto el chasis queda congelado y Chaos no mueve las ruedas
+	VanMesh->BodyInstance.bUseCCD = true;
 
 	// Motor, caja y diferencial por defecto (docs/C_chaos_vehicles.md). Sin curva de torque Chaos desactiva
 	// la simulacion mecanica y no crea el diferencial (crash al cambiar el reparto de traccion).
@@ -164,6 +168,12 @@ void ABlacklineVanPawn::BeginPlay()
 
 	if (USkeletalMeshComponent* VanMesh = GetMesh())
 	{
+		if (!VanMesh->IsSimulatingPhysics())
+		{
+			UE_LOG(LogBlackline, Warning, TEXT("Chasis sin simulacion de fisica (physics asset=%s): se fuerza SetSimulatePhysics(true)."),
+				VanMesh->GetPhysicsAsset() ? *VanMesh->GetPhysicsAsset()->GetName() : TEXT("NINGUNO"));
+			VanMesh->SetSimulatePhysics(true);
+		}
 		VanMesh->SetNotifyRigidBodyCollision(true);
 		VanMesh->OnComponentHit.AddDynamic(this, &ABlacklineVanPawn::OnMeshHit);
 	}
@@ -296,6 +306,7 @@ void ABlacklineVanPawn::OnThrottle(const FInputActionValue& Value)
 	if (UChaosWheeledVehicleMovementComponent* Move = GetChaosMovement())
 	{
 		// Motor apagado: no hay traccion.
+		LastThrottleInput = Value.Get<float>();
 		Move->SetThrottleInput(bEngineOn ? FMath::Clamp(Value.Get<float>(), 0.f, 1.f) : 0.f);
 		UE_LOG(LogBlackline, Verbose, TEXT("Input: Throttle=%.2f motor=%d"), Value.Get<float>(), bEngineOn ? 1 : 0);
 	}
@@ -760,6 +771,23 @@ void ABlacklineVanPawn::SampleSpeed()
 	}
 	SpeedHistoryKmh[SpeedHistoryHead] = GetSpeedKmh();
 	SpeedHistoryHead = (SpeedHistoryHead + 1) % SpeedHistoryKmh.Num();
+
+	// Telemetria 1 vez por segundo (diagnostico de manejo; barata).
+	if (++TelemetryCounter >= FMath::Max(1, FMath::RoundToInt(1.f / FMath::Max(0.05f, SpeedSampleIntervalSec))))
+	{
+		TelemetryCounter = 0;
+		if (const UChaosWheeledVehicleMovementComponent* Move = GetChaosMovement())
+		{
+			int32 InAir = 0;
+			for (const UChaosVehicleWheel* W : Move->Wheels)
+			{
+				InAir += (W && W->IsInAir()) ? 1 : 0;
+			}
+			UE_LOG(LogBlackline, Log, TEXT("Telemetria: v=%.1f km/h rpm=%.0f marcha=%d acel=%.2f motor=%d fisica=%d z=%.0f ruedas=%d aire=%d"),
+				GetSpeedKmh(), GetEngineRpm(), Move->GetCurrentGear(), LastThrottleInput, bEngineOn ? 1 : 0,
+				(GetMesh() && GetMesh()->IsSimulatingPhysics()) ? 1 : 0, GetActorLocation().Z, Move->Wheels.Num(), InAir);
+		}
+	}
 }
 
 FSuspicionSnapshot ABlacklineVanPawn::GetSuspicionSnapshot() const
