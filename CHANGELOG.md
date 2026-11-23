@@ -3,6 +3,11 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.116] — 2026-11-23 · El viaje al parque ocurre al llegar del glitch
+
+- **`Salida_Y` de -4600 a -4250** (`DA_Tuning`): el glitch deja al jugador en y = -4300, así que `BP_GestorNivel.VigilarSalida` abre `L_Parque` apenas llega, sin caminar unos pasos más. Se cambió desde el editor porque `ajustar_tuning.py` no encuentra `DA_Tuning` en modo Cmd (queda anotado en el script, con un escaneo previo del registro que tampoco bastó).
+- Sin cambios en el cuelgue: sigue pendiente repetir la prueba con 4 GB libres.
+
 ## [0.3.115] — 2026-11-23 · Portada abajo a la izquierda y diagnóstico de la botella
 
 ### Prueba de `v0.3.114_dev` (CTO)
