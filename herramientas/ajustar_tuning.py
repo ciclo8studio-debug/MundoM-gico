@@ -4,7 +4,7 @@
 import unreal
 
 VALORES = {
-    "Demo_SinParque": False,   # 18-11: el CTO pide volver a conectar el parque (sin pantalla de fin de demo)
+    "Demo_SinParque": True,    # 23-11: G0 del parque no pasa (cuelgue de GPU al pasar parque -> Casona); el CTO activa el Plan B
 }
 
 da = unreal.load_asset("/Game/MundoMagico/Datos/DA_Tuning.DA_Tuning")

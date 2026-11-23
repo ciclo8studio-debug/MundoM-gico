@@ -3,6 +3,16 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.109] — 2026-11-23 · Plan B: el parque sale de la demo (`Demo_SinParque` activo)
+
+### Decisión del CTO ("Plan B ya") tras el G0
+- **G0 del parque no pasó.** Sesión 2 del G0 (13:05): el parque corrió 3 minutos bien (25 FPS o más); a las 13:08 el portón del castillo viajó a `L_Casona` y a las 13:09:15 la GPU se colgó (`DXGI_ERROR_DEVICE_HUNG`, pase `DeferredDecals Emissive`, 1,2 GB de RAM libre). Detalle en `auditoria/humo/g0_parque_2026-11-23.md`.
+- **`Demo_SinParque` = verdadero** en `DA_Tuning` (con `herramientas/ajustar_tuning.py`, sin abrir el editor; confirmado en el log: `TUNING_OK Demo_SinParque = True`).
+- **Recorrido de la demo:** hospital → pasillo de Urgencias → glitch y TV → pantalla "FIN DE LA DEMO" (con `UI_FinalDemo` activo) → menú. La Casona y el parque quedan fuera del recorrido normal y pasan a la versión completa. `Probar.bat` → 8 (Casona) y P (parque) siguen sirviendo para pruebas internas.
+- **Pendiente de decisión del CTO:** si el adelanto de la Casona entra a la demo pública (por ejemplo TV → Casona directa, sin pasar por el parque). Hoy no entra.
+- **Riesgo anotado:** el tránsito parque → Casona cuelga la GPU con poca RAM libre; hay que resolverlo antes de la versión completa (decals emisivos y memoria al cambiar de mapa).
+- **Probar:** hospital completo hasta el glitch y la TV: aparece la pantalla FIN y vuelve al menú; "Continuar" no manda al parque.
+
 ## RC1 — 2026-11-23 · congelamiento de la Casona visual (contenido = v0.3.108)
 
 ### Decisión del CTO
