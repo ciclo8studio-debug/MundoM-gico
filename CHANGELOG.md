@@ -3,6 +3,14 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.104] — 2026-11-23 · Isidora: agachado visual con truco de escala (sin build)
+
+### Pedido (CTO: "Truco ahora")
+- `Agachar` (tras `Crouch`) escala la malla a (1, 1, 0,72); `Levantar` y la salida por salto (`UnCrouch` del EventGraph) la devuelven a (1, 1, 1). La escala parte de los pies, así que no se hunde.
+- Es un truco: no reemplaza una animación real de agachado (ver 0.3.103).
+- Pendiente: interruptor en `DA_Tuning` (hoy el valor 0,72 está fijo en el BP) y animación real por retarget.
+- Probar: agacharse, caminar agachada, levantarse y saltar agachada; revisar que no quede achatada.
+
 ## [0.3.103] — 2026-11-23 · Casona: ventanas del castillo con vidrio cálido tenue (sin build)
 
 ### Pedido (prueba de `v0.3.102_dev`, CTO)
