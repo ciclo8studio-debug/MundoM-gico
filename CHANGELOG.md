@@ -3,6 +3,14 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## RC1 — 2026-11-23 · congelamiento de la Casona visual (contenido = v0.3.108)
+
+### Decisión del CTO
+- "Sí, arma la RC1": la Casona visual queda **congelada** desde la v0.3.108 (exterior de castillo, luna y estrellas, luz de ventanas, agachado con truco de escala). No se agregan cambios visuales hasta después de la demo del 10-12.
+- Build RC1: `Build/v0.3.108/Windows` (Shipping) y `Build/v0.3.108_dev/Windows` (con panel de FPS). Mismo contenido; la versión del juego sigue en 0.3.108.
+- Siguiente paso: prueba de humo A9 con `auditoria/humo/rc1_2026-11-24.md`, G0 del parque con `auditoria/humo/g0_parque_2026-11-23.md` y, si pasa, envío a testers con `auditoria/kit_testers_2026-11-26.md`.
+- Solo entran a la RC2 las correcciones de lo que falle en el humo o en los testers.
+
 ## [0.3.108] — 2026-11-23 · Higiene de logs: `RecogerObjeto` sin avisos (sin build)
 
 ### Origen (log final de `v0.3.107_dev` y reunión corta del `producer`)
