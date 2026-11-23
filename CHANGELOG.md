@@ -3,6 +3,15 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.106] — 2026-11-23 · Casona: las arcadas dejan de quemarse a blanco (sin build)
+
+### Pedido (prueba de `v0.3.105_dev`, CTO: "las ventanas aún no las ajustas")
+- Causa real del blanco: `M_Emisivo` multiplica el color por el parámetro `Intensidad` (por defecto **8**), así que el color tenue de `MI_Ventana_Casona` (0,5/0,26/0,08) salía a 4/2/0,64. La 0.3.103 no lo había visto.
+- Arreglo: `Intensidad` = 0,7 en `MI_Ventana_Casona` (resultado ≈ 0,35/0,18/0,06: vidrio cálido tenue). `MI_Ventana_Calida` del Parque no se toca.
+- Si aún se ven brillantes: bajar `Intensidad` a 0,4; si quedan apagadas: subir a 1,0.
+- La forma de arco sigue distinta a las ventanas con marco de la pared (son malla aparte); si se quiere igualar, cambiar la malla.
+- `v0.3.105_dev`: log limpio y Isidora ya no se mueve sola (el domo sin colisión funcionó); agachado aún sin confirmar.
+
 ## [0.3.105] — 2026-11-23 · Casona: Isidora se movía sola (colisión del domo de estrellas) (sin build)
 
 ### Hallazgo (prueba de `v0.3.104_dev`, CTO: "se mueve sola Isidora")
