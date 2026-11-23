@@ -25,7 +25,7 @@ Casona visual congelada; RC1 armada (Shipping y `_dev` de la 0.3.108); G0 corrid
 
 ## 5. Pendientes, en orden
 1. **Prueba de RAM** (cerrar Claude, Edge y Epic; `Probar.bat` → 3; hospital → parque; 2 min en el parque). Si no se cuelga: bajar el consumo tras el viaje y fijar requisitos para testers. Si se cuelga: otras hipótesis (por ejemplo un mapa intermedio de carga).
-2. **Botella en el Pabellón 4** para probar A5 (tag `Botella`; había una lectura de mapas en curso para ubicar botellas, `scratchpad/info_mapas.py`).
+2. **Botella en el Pabellón 4** para probar A5 (lectura de mapas hecha: `L_Hospital` ya tiene 1 botella en (140,500,15), cerca del inicio; `L_Parque` tiene 10; falta ubicar el Pabellón 4 para poner una más) (tag `Botella`; había una lectura de mapas en curso para ubicar botellas, `scratchpad/info_mapas.py`).
 3. **Flecha en vez del triángulo** del marcador de objetivo (pedido del CTO).
 4. **Linterna (A3):** probar de nuevo con la Sombra de frente y quitar los mensajes de diagnóstico cuando pase.
 5. **Interruptores faltantes en `DA_Tuning`:** botella y barra de ruido (A5), agachado, cielo y ventanas de la Casona. Una sola sesión de editor.
