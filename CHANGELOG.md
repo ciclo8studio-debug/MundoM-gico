@@ -3,6 +3,15 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.127] — 2026-11-24 · Portada: la mano de la foto se mueve y el haz termina redondo
+
+- **Se descartó la linterna dibujada de la 0.3.126** (se veía falsa). Ahora la mano con la linterna sale de la propia foto.
+- **Mano recortada:** `T_ManoLinterna` (420×270) es la mano y la linterna recortadas de `MUSICA_PARA_UNREAL/T_Portada_FP.jpg` (cabeza elíptica + brazo, borde difuminado). Va en `LienzoMenu` justo sobre su lugar original (1200, 810). `MoverLuz` la desplaza de izquierda a derecha según el mouse (±40 px, 5 % de la distancia al centro, suavizado con `FInterpTo` velocidad 4), solo en X; no gira.
+- **Foto sin mano:** `T_Portada_FP2` (1920×1080) es la misma foto con la zona de la mano rellenada y suavizada (queda una sombra oscura redonda donde estaba). `Portada` usa `T_Portada_FP2`; `T_Portada_FP` queda intacta.
+- **Haz nuevo `T_Haz`:** sin linterna dibujada; cono de borde suave que se apaga antes de llegar al borde de la imagen y termina en un charco de luz redondo (ya no hay punta cortada arriba). Nace de la cabeza de la linterna (1290, 870) y se mueve con la mano; sigue apuntando al mouse (±70°).
+- Límite: el relleno de la foto es una aproximación (la foto no tiene el fondo detrás de la mano). Con la niebla y el grano encima casi no se nota, pero si se ve una mancha hay que ajustar `T_Portada_FP2` o usar menos recorrido.
+- Sin build probada. Fuentes: `Fuentes/UI/T_Haz.png`, `T_ManoLinterna.png`, `T_Portada_FP2.png`.
+
 ## [0.3.126] — 2026-11-24 · Portada: la linterna sigue al mouse con un haz definido
 
 - **Linterna que apunta:** nueva imagen `Linterna` (`T_Linterna`, 1024×1024) en `LienzoMenu`: una linterna oscura con la lente brillante y un haz en cono de borde marcado, hecha a mano (fuente `Fuentes/UI/T_Linterna.png`). Su pivote es la lente (0,5; 0,86) y queda sobre la mano de la foto (en 1315, 890 del lienzo de 1920×1080). `MoverLuz` (el temporizador de 0,033 s que ya existía, sin Event Tick nuevo) calcula el ángulo hacia el mouse con `Atan2`, lo limita a ±70° y lo suaviza con `FInterpTo` (velocidad 5); lo guarda en la nueva variable `LinternaAng`.
