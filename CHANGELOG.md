@@ -3,6 +3,13 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.129] — 2026-11-24 · Portada: haz desde la lente de la mano, hasta el círculo de luz
+
+- **Haz nuevo `T_Haz2`** (1024×1024, largo de diseño 800 px, semiapertura 7°): perfil gaussiano sin bordes duros, nace en un brillo pequeño de la lente y se apaga antes del final, sin punta cortada. La lente va en (1258, 848) del lienzo de 1920×1080 (arriba a la izquierda de la cabeza de la linterna, hacia donde apunta la luz de la foto) y el pivote del widget `Linterna` es ese punto (0,5; 0,879).
+- **Apunta al mouse y llega hasta él:** `MoverLuz` calcula el ángulo desde la lente (que se mueve con la mano, `LinternaX`) con `Atan2`, limitado a ±80° y suavizado (velocidad 7), y escala el haz según la distancia al mouse (distancia/800, entre 0,3 y 1,8), así el haz termina en el círculo de luz de `LuzMouse`.
+- La mano y el círculo de luz de la 0.3.128 siguen igual. `T_Haz` y `T_Linterna` quedan sin uso. Sin Event Tick nuevo.
+- Sin build probada. Si la lente no calza con la linterna: cambiar `left`/`top` del slot de `Linterna` (746, -52) y las constantes 1258/848 de `MoverLuz` a la vez.
+
 ## [0.3.128] — 2026-11-24 · Portada: círculo de luz en el mouse (sin haz en cono)
 
 - **Se quitó el haz en cono** de la 0.3.127 (`Linterna` queda `Collapsed`; `T_Haz` sin uso): no se veía real.
