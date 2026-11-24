@@ -3,6 +3,13 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.122] — 2026-11-24 · Portada: niebla sin corte, ojos y letras más chicas
+
+- **Niebla continua:** la imagen `Niebla` de `WBP_Menu` ahora se espeja en horizontal (`mirroring`), así el borde entre repeticiones no se nota (el corte que se veía abajo a la derecha era la unión de la textura). El ciclo pasó de 1024 a 2048 px (relleno derecho -2048, `Fraction(t*0,01953125)*2048`), con la misma velocidad de 40 px/s.
+- **Ojos que brillan:** 6 imágenes `OjoA1..OjoC2` (glow rojo, `T_LuzPortada`) en `LienzoMenu`, en 3 pares sobre zonas oscuras. La función `ParpadeoOjos` corre cada 0,2 s (temporizador en `EventConstruct`, sin Event Tick nuevo) y enciende cada par al azar (12 %, 10 % y 8 % por pasada, opacidad 0,4–0,9), como los ojos de la portada del HTML.
+- **Letras más chicas:** opciones del menú 24 → 18 (espaciado 300 → 240) y "EL DESPERTAR DE ISIDORA" 20 → 16. La fuente sigue siendo la misma (IM Fell); la portada del HTML trae el texto dentro de la imagen, así que no hay una fuente HTML que copiar.
+- Sin interruptor en `DA_Tuning` (es solo estética del menú). Sin build probada: mirar que el corte de la niebla haya desaparecido, que los ojos no se vean como puntos fijos y que las letras calcen con los marcos de los botones.
+
 ## [0.3.121] — 2026-11-24 · Parque más liviano tras el viaje de mapa
 
 - **Causa probable:** la prueba de v0.3.120_dev volvió a colgar la GPU (`DXGI_ERROR_DEVICE_REMOVED`) unos 20 s después de viajar al parque, creando texturas (decals y suelo). Con las caídas de antes (pase `DeferredDecals`) el parque queda como sospechoso. `L_Parque` tiene 1.101 mallas, **79 decals**, 48 luces puntuales, una nube volumétrica y niebla volumétrica.
