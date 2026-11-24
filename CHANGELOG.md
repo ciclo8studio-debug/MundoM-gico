@@ -3,6 +3,13 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.118] — 2026-11-23 · Sprint B: música ligada a la tensión (B4)
+
+- **Capa de tensión:** `BP_DirectorMiedo.Decaer` (el timer de 1 s que ya existía, sin Event Tick) lee `Director_Musica` en `DA_Tuning` y hace sonar `MUS_Persecucion` (loop de 250 s, clase Music, sin uso hasta ahora) como capa 2D. El volumen sube de forma lineal entre tensión 10 y 100, hasta `Director_MusicaVol` (0,5). Con tensión menor a ~11 se apaga con un fade de 3 s; al subir entra con 0,01 y sube en 2 s.
+- **Funciones nuevas:** `CapaVolumen(Nivel)` y `CapaApagar` en `BP_DirectorMiedo` (el DSL elegía el `AdjustVolume` de `SynthComponent`, así que los nodos se crearon con `declaring_class = AudioComponent`). Variable `CapaTension` (AudioComponent).
+- **Interruptores nuevos en `DA_Tuning`:** `Director_Musica` (✅) y `Director_MusicaVol` (0,5). Obedece el deslizador de Música del menú (clase Music).
+- Sin build ni prueba. Probar: acercarse a la Sombra o ver al payaso y comprobar que la capa entra y sale sin cortes ni estática (hubo estática con música en la v0.3.11: si vuelve, `Director_Musica` en falso).
+
 ## [0.3.117] — 2026-11-23 · Sprint B: autoguardado y aviso de mensajes
 
 - **Autoguardado (B6):** `BP_ThirdPersonCharacter.AutoGuardar` llama a `Guardar` cada 60 s (timer nuevo en `IniciarTimers`, sin Event Tick), salvo con el juego en pausa. Interruptor nuevo `Autoguardado_Activo` en `DA_Tuning` (✅). Los timers solo arrancan tras elegir partida, así que el menú no pisa la partida guardada.

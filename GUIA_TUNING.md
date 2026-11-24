@@ -75,6 +75,8 @@
 | **Casona_Cielo** | Domo de estrellas y luna visibles en la Casona | ✅ | — |
 | **Casona_Ventanas** | Cristales cálidos de las ventanas de la Casona | ✅ | — |
 | **Autoguardado_Activo** | Guarda la partida sola cada 60 s | ✅ | — |
+| **Director_Musica** | Una capa de música sube con la tensión del Director y baja sola | ✅ | — |
+| Director_MusicaVol | Volumen máximo de esa capa (con tensión 100) | 0,5 | 0–1 |
 
 > **Si algo falla en un playtest,** apágalo desmarcando su casilla y haz la build. No hace falta tocar ningún Blueprint.
 
