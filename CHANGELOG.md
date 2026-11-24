@@ -3,6 +3,14 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.126] — 2026-11-24 · Portada: la linterna sigue al mouse con un haz definido
+
+- **Linterna que apunta:** nueva imagen `Linterna` (`T_Linterna`, 1024×1024) en `LienzoMenu`: una linterna oscura con la lente brillante y un haz en cono de borde marcado, hecha a mano (fuente `Fuentes/UI/T_Linterna.png`). Su pivote es la lente (0,5; 0,86) y queda sobre la mano de la foto (en 1315, 890 del lienzo de 1920×1080). `MoverLuz` (el temporizador de 0,033 s que ya existía, sin Event Tick nuevo) calcula el ángulo hacia el mouse con `Atan2`, lo limita a ±70° y lo suaviza con `FInterpTo` (velocidad 5); lo guarda en la nueva variable `LinternaAng`.
+- **Halo azul fuera:** `LuzMouse` queda oculta (`Collapsed`). La luz suave de la 0.3.124 velaba toda la portada; el haz ahora es lo único que ilumina.
+- **Límite conocido:** la mano y la linterna de la foto siguen pintadas en la imagen `T_Portada_FP` (no se pueden mover); la linterna nueva se dibuja encima para taparla, así que si no calza del todo hay que mover `left`/`top` del slot de `Linterna` o rehacer la foto sin mano. El haz que trae la foto hacia arriba sigue ahí, más tenue que el nuevo.
+- El tamaño y color del cono se cambian en `Fuentes/UI/T_Linterna.png` (apertura 10,5°, alfa máxima 0,5).
+- Sin build probada.
+
 ## [0.3.125] — 2026-11-24 · Niebla de la portada al doble de largo y con la unión difuminada
 
 - **Textura nueva `T_Niebla2` (2048×512):** la mitad izquierda es la niebla original y la derecha es su espejo, así que el borde derecho coincide con el izquierdo y la repetición es continua. Además se difuminó en horizontal alrededor de las dos uniones (40 px a cada lado, más fuerte cerca de la unión). La fuente queda en `Fuentes/UI/T_Niebla2.png` (la original de 1024 se guardó como `T_Niebla_old_1024.png`).
