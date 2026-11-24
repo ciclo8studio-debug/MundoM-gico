@@ -3,6 +3,14 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.135] — 2026-11-24 · Sprint B: arreglo del temblor de cámara y un solo corte en el glitch
+
+- **Humo de la v0.3.134_dev (CTO):** portada ✔; giro rápido y correr ✔; el susto de la niña no apareció (sin probar); pausa y pasos sin probar; **temblor de cámara constante** (adelante y atrás); **cierre al viajar al parque**; el glitch muestra dos cortes.
+- **Temblor de cámara — causa:** `InerciaLinterna` (0.3.131, cada 0,02 s) y `ActualizarBateria` (cada tick, heredado) fijaban el FOV a la vez (base + 8 contra 90 o 100) y se peleaban cada cuadro. **Arreglo:** `Camara_FovCorrer` = 0 en `DA_Tuning`; con eso `InerciaLinterna` no toca el FOV y queda solo el FOV original (90, 100 al correr). La inercia de la luz sigue activa.
+- **Corte doble del glitch:** `GlitchLlegar` mostraba la tarjeta "MUNDO MÁGICO" (`MostrarCarga`) y después la TV (canal 317) hacía su propia transición. Se quitó la llamada a `MostrarCarga` de `GlitchLlegar`; queda solo la TV. El resto de la función no cambia (teletransporte a 0, -4300, 100, giro y fundido de 1,3 s).
+- **Cierre al viajar al parque (`DXGI_ERROR_DEVICE_HUNG`):** otra vez ~10 s después de cargar `L_Parque`, con 788 MB de RAM libre (el juego usaba 1,8 GB y el sistema 7,1 GB de 7,9 GB). Es el 5.º viaje de mapa que se cuelga con poca RAM; **la prueba sigue sin hacerse con ≥ 4 GB libres**, así que no descarta ni confirma la 0.3.121.
+- Sin build probada. Probar: correr y girar sin vibración; glitch con un solo corte (TV 317); pausa y pasos (B3b, B3c); susto de la niña en el pasillo (B3a).
+
 ## [0.3.134] — 2026-11-24 · Portada: luz copiada del HTML y mano sin corte
 
 - **Luz como en el HTML:** la versión web (`MundoMagico_Web/index.html`, `#mlight`) no tiene haz: es un círculo que sigue al mouse con `radial-gradient(rgba(255,236,200,.2) 0, .07 a 9vmax, 0 a 15vmax, rgba(0,0,0,.6) a 36vmax)`. `T_LuzMouse4` (1024×576 sobre 3840×2160) copia esos valores en píxeles (cálido 0,20 → 0,07 a 173 px → 0 a 288 px; negro 0 → 0,6 a 691 px y se mantiene). `LuzMouse` usa esa textura con `RenderScale` 2 y relleno 0 (en vez del relleno negativo), así el widget siempre cubre la pantalla y no hay borde.
