@@ -3,6 +3,13 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.134] — 2026-11-24 · Portada: luz copiada del HTML y mano sin corte
+
+- **Luz como en el HTML:** la versión web (`MundoMagico_Web/index.html`, `#mlight`) no tiene haz: es un círculo que sigue al mouse con `radial-gradient(rgba(255,236,200,.2) 0, .07 a 9vmax, 0 a 15vmax, rgba(0,0,0,.6) a 36vmax)`. `T_LuzMouse4` (1024×576 sobre 3840×2160) copia esos valores en píxeles (cálido 0,20 → 0,07 a 173 px → 0 a 288 px; negro 0 → 0,6 a 691 px y se mantiene). `LuzMouse` usa esa textura con `RenderScale` 2 y relleno 0 (en vez del relleno negativo), así el widget siempre cubre la pantalla y no hay borde.
+- **Haz en cono desactivado:** `Linterna` queda `Collapsed` (la textura `T_Haz3` y el código de ángulo se quitaron de `MoverLuz`). Para volver: poner `Linterna` en `HitTestInvisible` y recuperar el código de la 0.3.132.
+- **Mano sin corte:** `T_ManoLinterna2` es la mano alargada 200 px hacia abajo (470 de alto, pivote 0,714; 0,5745) para que al girar no se vea su borde inferior; el giro se limitó a ±14° (25 % de la diferencia entre la dirección al mouse y la posición de reposo, velocidad 6). Sigue moviéndose a izquierda y derecha (±40 px).
+- Sin build probada. Fuentes: `Fuentes/UI/T_LuzMouse4.png`, `T_ManoLinterna2.png`.
+
 ## [0.3.133] — 2026-11-24 · Sprint B (B3): mezcla de pausa y límite de sonidos simultáneos
 
 - **Música baja al pausar** (`MezclaPausa`, llamada al final de `TogglePausa`): con el panel de pausa abierto la clase `Music` baja a `Audio_PausaMusica` (0,25) de su volumen y la ambiente a la mitad más la mitad de ese factor (0,625), con 0,3 s de fundido, usando el mismo `SoundMix` y las mismas sobreescrituras que `AplicarOpciones` (respeta `VolMusica`, `Volumen`, `VolGeneral` y `Audio_MezclaAmbiente`). Al cerrar la pausa vuelven a su volumen. `Audio_PausaMusica` en 1 lo apaga. Nuevo en `DA_Tuning`.
