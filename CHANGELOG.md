@@ -3,6 +3,13 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.120] — 2026-11-24 · Sprint B: subtítulos de sonidos clave (B3)
+
+- **Función `Subtitulo(Texto)`** en `BP_ThirdPersonCharacter`: si `Subtitulos_Activo` está encendido, muestra el texto con `MostrarMensaje` por 2,5 s. No hay voces ni String Tables, así que son descripciones de sonido.
+- **Textos puestos (3):** chillido de la niña en `BP_SustoPasillo` ("[chillido de una niña, muy cerca]"), grito y silueta en `BP_SustoEnergia`, y chillido de la Sombra al verte en `BP_AI_Sombra.Pensar` ("[chillido de la Sombra]").
+- **Interruptor:** `Subtitulos_Activo` (true) en `DA_Tuning`.
+- Sin build ni prueba. Probar: los tres sustos muestran su texto; con el interruptor apagado no sale nada; el chillido de la Sombra no debe tapar mensajes de objetos más de 2,5 s.
+
 ## [0.3.119] — 2026-11-23 · Sprint B: empuje del Director (B6)
 
 - **Empuje:** `BP_DirectorMiedo.Empujar` corre una vez entre `Director_EmpujeMin` y `Director_EmpujeMax` segundos (40 a 65; el primero a los 45 s, arrancado desde `Decaer`; sin Event Tick). Si la tensión es menor a 20, cada `BP_AI_Sombra` en patrulla (Estado 0) y más lejos que su `TOido` pasa a Estado 1 (investigar) con el objetivo en la posición del jugador y 10 s extra de investigación (16 s en total). No toca a la Sombra que ya persigue.
