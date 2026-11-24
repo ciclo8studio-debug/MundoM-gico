@@ -3,6 +3,13 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.123] — 2026-11-24 · Portada: corte de la luz y ojos como en el HTML
+
+- **Corte vertical junto a la linterna:** no era la niebla. Era el borde derecho de `LuzMouse` (la luz que sigue al mouse, imagen de 1920×1080 centrada en el cursor): su textura no llega a transparente en el borde y, con el mouse sobre los botones, el borde caía hacia x=1300. Ahora la imagen es el doble de grande que la pantalla (relleno -960/-540 en `Raiz.OverlaySlot_8`), así que su borde queda fuera de la vista con el mouse en cualquier lugar. La luz se ve más ancha y suave.
+- **Ojos como en el HTML:** quedaron solo 2 (`OjoA1`, `OjoA2`), puntos ámbar con brillo redondo (`T_OjoGlow`, 46 px, nueva) a la derecha, junto a la caseta "JUEGO" (posición medida desde la captura del HTML: +285, +133 px respecto del cartel). Quietos. `ParpadeoOjos` (cada 0,2 s) los enciende juntos en ráfagas de 0,9 a 2,2 s, una cada 15 s en promedio (nueva variable `OjosHasta`), con opacidad 0,55–0,95.
+- Se borraron los pares B y C de la 0.3.122. El corte de la niebla que se intentó arreglar en la 0.3.122 (espejado) queda, no hace daño.
+- Sin build probada. Ver: sin corte vertical moviendo el mouse por toda la pantalla; los dos puntos sobre el fondo oscuro a la derecha.
+
 ## [0.3.122] — 2026-11-24 · Portada: niebla sin corte, ojos y letras más chicas
 
 - **Niebla continua:** la imagen `Niebla` de `WBP_Menu` ahora se espeja en horizontal (`mirroring`), así el borde entre repeticiones no se nota (el corte que se veía abajo a la derecha era la unión de la textura). El ciclo pasó de 1024 a 2048 px (relleno derecho -2048, `Fraction(t*0,01953125)*2048`), con la misma velocidad de 40 px/s.
