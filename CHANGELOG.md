@@ -3,6 +3,13 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.125] — 2026-11-24 · Niebla de la portada al doble de largo y con la unión difuminada
+
+- **Textura nueva `T_Niebla2` (2048×512):** la mitad izquierda es la niebla original y la derecha es su espejo, así que el borde derecho coincide con el izquierdo y la repetición es continua. Además se difuminó en horizontal alrededor de las dos uniones (40 px a cada lado, más fuerte cerca de la unión). La fuente queda en `Fuentes/UI/T_Niebla2.png` (la original de 1024 se guardó como `T_Niebla_old_1024.png`).
+- **`WBP_Menu`:** `Niebla` usa `T_Niebla2` con `imageSize` 2048×512 y sin espejado (ya no hace falta). El ciclo de 2048 px y los 40 px/s de la 0.3.122 siguen igual.
+- El corte que se veía en la animación era la unión de la textura original (alfa 27 contra 40 en sus bordes). Se verá en la próxima build.
+- Sin build probada.
+
 ## [0.3.124] — 2026-11-24 · Portada: botones más chicos y luz del mouse nueva
 
 - **Botones del menú:** de 620×62 a 400×50 (arriba 744, 808 y 872), con el texto centrado (antes a la izquierda con 26 px de margen). "EL DESPERTAR DE ISIDORA" mide 400 de ancho, alineado con los botones.
