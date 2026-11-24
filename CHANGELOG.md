@@ -3,6 +3,20 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.131] — 2026-11-24 · Sprint B (B5): inercia de la linterna, FOV al correr y aliento
+
+- **Inercia de la linterna** (`InerciaLinterna`, temporizador de 0,02 s en `IniciarTimers`, sin Event Tick): en primera persona la `Linterna` se queda un poco atrás al girar la cámara y la alcanza con suavidad. Se calcula el cambio del `ControlRotation` entre pasadas y se acumula un desfase en `InerOffP` (cabeceo) e `InerOffY` (giro), limitado a ±7° y que decae a velocidad `Inercia_Vel`. Se suma a la rotación en reposo de la linterna, que se guarda sola (`LinRest`) la primera vez en primera persona; si se cambia a tercera persona o se apaga el interruptor se vuelve a leer.
+- **FOV al correr** (misma función): el `FollowCamera` sube `Camara_FovCorrer` grados (8) cuando `Corriendo` y vuelve al valor base (`FovBase`, el FOV que tenga la cámara al inicio), a velocidad `Camara_FovVel` (5). Con `Camara_FovCorrer` en 0 no toca el FOV.
+- **Aliento al correr** (`AlientoCorrer`, temporizador de 1,7 s): mientras `Corriendo`, suena `SFX_Respiracion` a volumen `Aliento_CorrerVol` (0,35) con tono al azar entre 0,95 y 1,05. En 0 no suena.
+- **Interruptores nuevos en `DA_Tuning`:** `Inercia_Activa` (true), `Inercia_Vel` (8; más bajo = más retraso), `Camara_FovCorrer` (8), `Camara_FovVel` (5), `Aliento_CorrerVol` (0,35). Variables nuevas del personaje: `InerOffP`, `InerOffY`, `PrevCtrl`, `LinRest`, `LinRestOk`, `FovBase`.
+- Sin build probada. Probar: girar rápido y ver que la luz se retrasa y vuelve; correr con Shift y notar el FOV y el aliento; con `Inercia_Activa` en false la luz va pegada a la cámara como antes. Riesgo: si la linterna tiene una rotación en reposo distinta de la que se captura, el primer cuadro puede saltar; si pasa, avisar.
+
+## [0.3.130] — 2026-11-24 · Portada: haz que no se encoge y con la base más grande
+
+- **Mini linterna cuando el mouse está cerca:** el haz se escalaba hasta 0,3 y quedaba chico. Ahora el mínimo es 0,6 (el haz se acorta pero conserva la forma) en el `Clamp` de `MoverLuz`.
+- **Base más grande:** `T_Haz3` (reemplaza a `T_Haz2` en `Linterna`): la base mide 34 px de semiancho (antes 14) y el brillo de la lente es el doble (62×34).
+- Sin build probada.
+
 ## [0.3.129] — 2026-11-24 · Portada: haz desde la lente de la mano, hasta el círculo de luz
 
 - **Haz nuevo `T_Haz2`** (1024×1024, largo de diseño 800 px, semiapertura 7°): perfil gaussiano sin bordes duros, nace en un brillo pequeño de la lente y se apaga antes del final, sin punta cortada. La lente va en (1258, 848) del lienzo de 1920×1080 (arriba a la izquierda de la cabeza de la linterna, hacia donde apunta la luz de la foto) y el pivote del widget `Linterna` es ese punto (0,5; 0,879).

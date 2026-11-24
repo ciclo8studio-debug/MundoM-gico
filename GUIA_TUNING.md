@@ -81,6 +81,11 @@
 | Director_EmpujeMin | Mínimo de segundos entre empujes | 40 | 5–120 |
 | Subtitulos_Activo | Muestra descripciones de sonidos clave (chillidos) | true | true/false |
 | Parque_Recorte | En el parque oculta decals y apaga nube y niebla volumétricas | true | true/false |
+| Inercia_Activa | La linterna se retrasa un poco al girar la cámara (primera persona) | true | true/false |
+| Inercia_Vel | Velocidad con que la linterna alcanza la cámara; más bajo = más retraso | 8 | 3–20 |
+| Camara_FovCorrer | Grados de FOV que se suman al correr (0 = apagado) | 8 | 0–15 |
+| Camara_FovVel | Velocidad del cambio de FOV | 5 | 2–12 |
+| Aliento_CorrerVol | Volumen del aliento al correr (0 = apagado) | 0,35 | 0–1 |
 
 > **Si algo falla en un playtest,** apágalo desmarcando su casilla y haz la build. No hace falta tocar ningún Blueprint.
 
