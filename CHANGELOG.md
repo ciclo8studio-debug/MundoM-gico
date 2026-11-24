@@ -3,6 +3,13 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.128] — 2026-11-24 · Portada: círculo de luz en el mouse (sin haz en cono)
+
+- **Se quitó el haz en cono** de la 0.3.127 (`Linterna` queda `Collapsed`; `T_Haz` sin uso): no se veía real.
+- **Círculo de luz que apunta a la pantalla:** `LuzMouse` vuelve a seguir al mouse con la textura nueva `T_LuzMouse3` (1024×576 sobre 3840×2160): una luz cálida tenue en el centro (alfa 0,20, hasta 260 px), oscuridad alrededor (negro, alfa 0,46, desde 210 px) y fundido a transparente hacia el borde de la imagen (1150–1890 px), así que no queda ningún borde duro. El seguimiento vuelve a ser el de antes (`Vector2DInterpTo`, velocidad 6, en `MoverLuz`).
+- **Mano animada sin cambios:** `ManoLinterna` sigue moviéndose a izquierda y derecha (`LinternaX`).
+- Sin build probada. Fuente: `Fuentes/UI/T_LuzMouse3.png`.
+
 ## [0.3.127] — 2026-11-24 · Portada: la mano de la foto se mueve y el haz termina redondo
 
 - **Se descartó la linterna dibujada de la 0.3.126** (se veía falsa). Ahora la mano con la linterna sale de la propia foto.
