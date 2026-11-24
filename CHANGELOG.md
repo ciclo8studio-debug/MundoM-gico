@@ -3,6 +3,13 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.121] — 2026-11-24 · Parque más liviano tras el viaje de mapa
+
+- **Causa probable:** la prueba de v0.3.120_dev volvió a colgar la GPU (`DXGI_ERROR_DEVICE_REMOVED`) unos 20 s después de viajar al parque, creando texturas (decals y suelo). Con las caídas de antes (pase `DeferredDecals`) el parque queda como sospechoso. `L_Parque` tiene 1.101 mallas, **79 decals**, 48 luces puntuales, una nube volumétrica y niebla volumétrica.
+- **Nueva función `ParqueRecorte`** en `BP_ThirdPersonCharacter`, llamada al final de la rama `L_Parque` de `CalidadExtra` (sin Event Tick): oculta todos los `DecalActor`, apaga `r.VolumetricCloud` y `r.VolumetricFog`.
+- **Interruptor:** `Parque_Recorte` (true) en `DA_Tuning`. En false el parque queda como antes.
+- Sin build probada. Probar: hospital → glitch → parque; si ya no se cuelga, volver a encender de a poco (niebla, nube, decals) para ver cuál pesaba; ver los FPS del panel `-dev`.
+
 ## [0.3.120] — 2026-11-24 · Sprint B: subtítulos de sonidos clave (B3)
 
 - **Función `Subtitulo(Texto)`** en `BP_ThirdPersonCharacter`: si `Subtitulos_Activo` está encendido, muestra el texto con `MostrarMensaje` por 2,5 s. No hay voces ni String Tables, así que son descripciones de sonido.

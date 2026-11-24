@@ -80,6 +80,7 @@
 | **Director_EmpujeMax** | Cada X s la Sombra lejana va a investigar dónde estás (0 = apagado) | 65 | 0–120 |
 | Director_EmpujeMin | Mínimo de segundos entre empujes | 40 | 5–120 |
 | Subtitulos_Activo | Muestra descripciones de sonidos clave (chillidos) | true | true/false |
+| Parque_Recorte | En el parque oculta decals y apaga nube y niebla volumétricas | true | true/false |
 
 > **Si algo falla en un playtest,** apágalo desmarcando su casilla y haz la build. No hace falta tocar ningún Blueprint.
 
