@@ -77,6 +77,8 @@
 | **Autoguardado_Activo** | Guarda la partida sola cada 60 s | ✅ | — |
 | **Director_Musica** | Una capa de música sube con la tensión del Director y baja sola | ✅ | — |
 | Director_MusicaVol | Volumen máximo de esa capa (con tensión 100) | 0,5 | 0–1 |
+| **Director_EmpujeMax** | Cada X s la Sombra lejana va a investigar dónde estás (0 = apagado) | 65 | 0–120 |
+| Director_EmpujeMin | Mínimo de segundos entre empujes | 40 | 5–120 |
 
 > **Si algo falla en un playtest,** apágalo desmarcando su casilla y haz la build. No hace falta tocar ningún Blueprint.
 

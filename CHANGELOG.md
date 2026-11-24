@@ -3,6 +3,13 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.119] — 2026-11-23 · Sprint B: empuje del Director (B6)
+
+- **Empuje:** `BP_DirectorMiedo.Empujar` corre una vez entre `Director_EmpujeMin` y `Director_EmpujeMax` segundos (40 a 65; el primero a los 45 s, arrancado desde `Decaer`; sin Event Tick). Si la tensión es menor a 20, cada `BP_AI_Sombra` en patrulla (Estado 0) y más lejos que su `TOido` pasa a Estado 1 (investigar) con el objetivo en la posición del jugador y 10 s extra de investigación (16 s en total). No toca a la Sombra que ya persigue.
+- **Interruptor:** `Director_EmpujeMax` = 0 apaga el empuje (la función no se reprograma). Nuevos `Director_EmpujeMin` (40) y `Director_EmpujeMax` (65) en `DA_Tuning`. Nueva variable `EmpujeIniciado` en el Director.
+- Solo actúa donde hay Director (hospital); la Casona y el parque no tienen.
+- Sin build ni prueba. Probar: quedarse quieto sin ver a la Sombra y comprobar que, pasado cerca de un minuto, se acerca a donde estás; con `Director_EmpujeMax` en 0 no debe pasar.
+
 ## [0.3.118] — 2026-11-23 · Sprint B: música ligada a la tensión (B4)
 
 - **Capa de tensión:** `BP_DirectorMiedo.Decaer` (el timer de 1 s que ya existía, sin Event Tick) lee `Director_Musica` en `DA_Tuning` y hace sonar `MUS_Persecucion` (loop de 250 s, clase Music, sin uso hasta ahora) como capa 2D. El volumen sube de forma lineal entre tensión 10 y 100, hasta `Director_MusicaVol` (0,5). Con tensión menor a ~11 se apaga con un fade de 3 s; al subir entra con 0,01 y sube en 2 s.
