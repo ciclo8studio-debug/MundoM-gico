@@ -3,6 +3,13 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.124] — 2026-11-24 · Portada: botones más chicos y luz del mouse nueva
+
+- **Botones del menú:** de 620×62 a 400×50 (arriba 744, 808 y 872), con el texto centrado (antes a la izquierda con 26 px de margen). "EL DESPERTAR DE ISIDORA" mide 400 de ancho, alineado con los botones.
+- **Corte vertical que seguía en la 0.3.123:** el corte cae a unos 955 px a la derecha del mouse (x≈1300 con el mouse en "CONTINUAR", x≈1395 con el mouse en "INICIAR"; no cambia con el tiempo), y agrandar `LuzMouse` al doble no lo movió. La conclusión es que la textura `T_LuzPortada` tiene un borde duro en su interior. Se reemplazó por `T_LuzMouse2`: un brillo radial suave (azul pálido, radio 720 px, centro 0,55 de opacidad) hecho a mano, sin bordes. `T_OjoGlow` y `T_LuzMouse2` sin compresión de mipmaps ni DXT.
+- La luz se verá distinta a la anterior (más simple). Si el corte sigue, no es `LuzMouse` y el siguiente sospechoso es la propia imagen `T_Portada_FP` (la foto trae un objeto negro y una zona marrón a la derecha de la linterna).
+- Sin build probada.
+
 ## [0.3.123] — 2026-11-24 · Portada: corte de la luz y ojos como en el HTML
 
 - **Corte vertical junto a la linterna:** no era la niebla. Era el borde derecho de `LuzMouse` (la luz que sigue al mouse, imagen de 1920×1080 centrada en el cursor): su textura no llega a transparente en el borde y, con el mouse sobre los botones, el borde caía hacia x=1300. Ahora la imagen es el doble de grande que la pantalla (relleno -960/-540 en `Raiz.OverlaySlot_8`), así que su borde queda fuera de la vista con el mouse en cualquier lugar. La luz se ve más ancha y suave.
