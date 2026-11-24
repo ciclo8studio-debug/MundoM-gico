@@ -86,6 +86,7 @@
 | Camara_FovCorrer | Grados de FOV que se suman al correr (0 = apagado) | 8 | 0–15 |
 | Camara_FovVel | Velocidad del cambio de FOV | 5 | 2–12 |
 | Aliento_CorrerVol | Volumen del aliento al correr (0 = apagado) | 0,35 | 0–1 |
+| Audio_PausaMusica | Factor de volumen de la música al abrir la pausa (1 = no baja) | 0,25 | 0–1 |
 
 > **Si algo falla en un playtest,** apágalo desmarcando su casilla y haz la build. No hace falta tocar ningún Blueprint.
 

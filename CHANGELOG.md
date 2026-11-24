@@ -3,6 +3,19 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.133] — 2026-11-24 · Sprint B (B3): mezcla de pausa y límite de sonidos simultáneos
+
+- **Música baja al pausar** (`MezclaPausa`, llamada al final de `TogglePausa`): con el panel de pausa abierto la clase `Music` baja a `Audio_PausaMusica` (0,25) de su volumen y la ambiente a la mitad más la mitad de ese factor (0,625), con 0,3 s de fundido, usando el mismo `SoundMix` y las mismas sobreescrituras que `AplicarOpciones` (respeta `VolMusica`, `Volumen`, `VolGeneral` y `Audio_MezclaAmbiente`). Al cerrar la pausa vuelven a su volumen. `Audio_PausaMusica` en 1 lo apaga. Nuevo en `DA_Tuning`.
+- **Límite de sonidos simultáneos** (por asset, sin `SoundConcurrency` porque no se puede crear por MCP): `bOverrideConcurrency` activo en `SFX_Paso` (3, con 0,12 s entre repeticiones), `SFX_Latido` (2), `SFX_Respiracion` (2), `SFX_T_Respiracion` (2), `SFX_Pedestal` (3) y `SFX_Vidrio` (3), regla "detener el más bajo". Para quitarlo: desmarcar "Override Concurrency" en el asset.
+- Ya existían las clases `SC_SFX`, `SC_Ambiente` y `Music` con sus controles; no se crearon `SC_Voz` ni `SC_UI` (no hay voces grabadas ni sonidos de UI propios).
+- Sin build probada. Probar: pausar con la música sonando (baja y vuelve), caminar y correr (pasos sin amontonarse), con `Audio_PausaMusica` en 1 no baja.
+
+## [0.3.132] — 2026-11-24 · Portada: la mano gira con el haz
+
+- **La mano acompaña a la luz:** `ManoLinterna` gira (`HandAng`) alrededor de la base del brazo (pivote 0,714; 1,0) para apuntar hacia el mouse: ángulo = 35° + dirección al mouse desde la lente, limitado a ±40° y suavizado (velocidad 7). Además sigue desplazándose a izquierda y derecha (`LinternaX`).
+- **El haz nace de la lente ya girada:** `MoverLuz` calcula dónde queda la lente (1258, 848 respecto de la base 1500, 1080) con `Cos`/`Sin` del ángulo de la mano y mueve `Linterna` a ese punto; el ángulo del haz se calcula desde ahí hasta el mouse (±80°) y su largo se escala con la distancia (0,6 a 1,8).
+- Sin build probada. Si la lente no se queda sobre la linterna al girar: ajustar el pivote de `ManoLinterna` o las constantes 242 y 232 de `MoverLuz`.
+
 ## [0.3.131] — 2026-11-24 · Sprint B (B5): inercia de la linterna, FOV al correr y aliento
 
 - **Inercia de la linterna** (`InerciaLinterna`, temporizador de 0,02 s en `IniciarTimers`, sin Event Tick): en primera persona la `Linterna` se queda un poco atrás al girar la cámara y la alcanza con suavidad. Se calcula el cambio del `ControlRotation` entre pasadas y se acumula un desfase en `InerOffP` (cabeceo) e `InerOffY` (giro), limitado a ±7° y que decae a velocidad `Inercia_Vel`. Se suma a la rotación en reposo de la linterna, que se guarda sola (`LinRest`) la primera vez en primera persona; si se cambia a tercera persona o se apaga el interruptor se vuelve a leer.
