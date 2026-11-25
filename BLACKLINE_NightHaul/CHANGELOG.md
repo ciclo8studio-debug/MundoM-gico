@@ -1,6 +1,13 @@
 # Changelog — BLACKLINE: NIGHT HAUL
 
 ## 0.1.0-dev (en curso)
+### 2026-11-25 (noche) — v0.1.15 a v0.1.20
+- Historia nueva (docs/24): Mateo Salinas, su perro Chuño y La Cofradia. Briefings de los 25 contratos, bienestar de Chuño (+10% a tiempo, -15% plazo vencido, -25% carga perdida, -10% al ser descubierto), plazo por encargo, pruebas de vida y finales.
+- Suelo: sin triangulos duplicados (manchas negras), desnivel terreno-calzada de 5 cm, faros sin sombras.
+- Furgon: curva de torque en RPM reales (Chaos no la normaliza), 800 Nm, llega a ~165 km/h; combustible; recuperacion al volcar (3 s, vuelve al inicio de la ruta; `bRespawnAtRouteStart`).
+- Ruta: bencinera y restaurante (E / Circulo), 6 autos en contra, minimapa, reten con manifiesto automatico y veredictos, contrato automatico por zona (`-contract=C09` para forzar uno).
+- Patrullas con persecucion propia (sin NavMesh). Teclas: L luces, I motor, J inhibidor, R volver a la carretera (mando: cruceta y Select).
+
 ### 2026-11-25
 - **Chile comprimido 1:100:** `FChileWaypointRow`, `DT_ChileWaypoints` (26 waypoints de ciudades reales en 4 zonas: Norte, Centro, Sur, Cordillera; ~29 km), `AChileRouteActor` (ruta en spline, calzada con lineas, terreno procedural por bioma) y mapa `L_ChileRoute` (mapa de inicio). Zona con `ZoneId` o `-zone=N`.
 - Perfil grafico liviano (DX11, sin Lumen/VSM/RT, sg.*=0, resolucion 50%) aplicado a Blackline.

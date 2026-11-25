@@ -126,6 +126,8 @@ def build_input():
         ("IA_Throttle", VT.AXIS1D), ("IA_Steer", VT.AXIS1D), ("IA_Brake", VT.AXIS1D),
         ("IA_Handbrake", VT.BOOLEAN), ("IA_Look", VT.AXIS2D), ("IA_ToggleCamera", VT.BOOLEAN),
         ("IA_Interact", VT.BOOLEAN), ("IA_DriveMode", VT.BOOLEAN),
+        ("IA_ToggleHeadlights", VT.BOOLEAN), ("IA_ToggleEngine", VT.BOOLEAN),
+        ("IA_ToggleJammer", VT.BOOLEAN), ("IA_Recover", VT.BOOLEAN),
     ]
     actions = {}
     for name, vt in specs:
@@ -172,6 +174,10 @@ def build_input():
         add("IA_ToggleCamera", "V")
         add("IA_Interact", "E"); add("IA_Interact", "LeftMouseButton")
         add("IA_DriveMode", "F")
+        add("IA_ToggleHeadlights", "L")
+        add("IA_ToggleEngine", "I")
+        add("IA_ToggleJammer", "J")
+        add("IA_Recover", "R")
         add("IA_Look", "MouseX")
         add("IA_Look", "MouseY", swizzle=True)
         # --- Mando (PS4/DualShock vista como XInput): R2 acelera, L2 frena, stick izq. gira, stick der. mira
@@ -184,6 +190,10 @@ def build_input():
         add("IA_ToggleCamera", "Gamepad_FaceButton_Top")    # Triangulo
         add("IA_Interact", "Gamepad_FaceButton_Right")      # Circulo
         add("IA_DriveMode", "Gamepad_LeftShoulder")         # L1
+        add("IA_ToggleHeadlights", "Gamepad_DPad_Up")
+        add("IA_ToggleEngine", "Gamepad_DPad_Down")
+        add("IA_ToggleJammer", "Gamepad_DPad_Left")
+        add("IA_Recover", "Gamepad_Special_Left")           # Select / Share
 
         dkm = imc.get_editor_property("default_key_mappings")
         dkm.set_editor_property("mappings", rows)
@@ -264,7 +274,9 @@ def build_van(actions, imc):
     for name, prop in [("IA_Throttle", "ia_throttle"), ("IA_Steer", "ia_steer"), ("IA_Brake", "ia_brake"),
                        ("IA_Handbrake", "ia_handbrake"), ("IA_Look", "ia_look"),
                        ("IA_ToggleCamera", "ia_toggle_camera"), ("IA_Interact", "ia_interact"),
-                       ("IA_DriveMode", "ia_drive_mode")]:
+                       ("IA_DriveMode", "ia_drive_mode"),
+                       ("IA_ToggleHeadlights", "ia_toggle_headlights"), ("IA_ToggleEngine", "ia_toggle_engine"),
+                       ("IA_ToggleJammer", "ia_toggle_jammer"), ("IA_Recover", "ia_recover")]:
         if name in actions:
             setp(cdo, [prop, name], actions[name])
 

@@ -3,21 +3,21 @@
 Actualizado: 2026-11-22 · Versión: 0.1.0-dev · Motor: UE 5.8.4 · Meta: Vertical Slice jugable a 60 FPS (8–16 GB, GPU media)
 Leyenda: ✅ hecho · 🔄 en curso · ⬜ pendiente · ⚠️ riesgo/bloqueo
 
-## Estado actual
+## Estado actual (25-11-2026, build v0.1.20)
 | Área | Estado | Nota |
 |---|---|---|
-| Diseño y documentación (docs 00–23) | ✅ | 31 agentes; cifras estimadas, sin medir |
-| Módulo C++ `Blackline` (carga, retén, persecución, terreno, ruedas, furgón, HUD) | ✅ | Compila en target de juego |
-| 25 contratos (CSV + subsistema) | ✅ | DataTable aún sin importar |
-| Mapa plano `L_FlatRoad_Chile` + `BP_BlacklineVan` + inputs + GameMode | ✅ | Generados por script; no vistos en pantalla |
-| Target de editor con el C++ nuevo | ✅ | Compila (22-11) |
-| Importar `DT_BlacklineContracts` en el editor | ✅ | 25 filas, 0 problemas |
-| Patrulla, zona de entrega, director de clima, tablet de encargos, tests (C++) | ✅ | Compilan; 3 tests de Automation pasan; mapa regenerado con NavMesh, entrega y clima |
-| Chile comprimido 1:100 (zona 2 jugable) | ✅ | Ruta y terreno se generan; furgón se sostiene. Zonas 1, 3 y 4 sin probar |
-| Manejo del furgón probado | 🔄 | Se sostiene sobre la ruta; falta confirmar avance, giro, mando y cámara |
-| Render nocturno y rendimiento | ⬜ | Snippet sin aplicar; iGPU limita |
-| Audio (MetaSounds) | ⬜ | Sin samples |
-| Assets propios (furgón, cabina, cargas) | ⬜ | Tareas para nube |
+| Módulo C++, 25 contratos, 3 tests de Automation | ✅ | Compila (juego y editor) |
+| Chile comprimido 1:100: ruta, terreno por bioma, 4 zonas | ✅ | Zona 2 probada; zonas 1, 3 y 4 sin probar |
+| Furgón: física, 165 km/h, mando PS4, combustible, volcado | ✅ | Carrocería de plantilla (placeholder) |
+| Historia (Chuño y La Cofradía): briefings, bienestar, plazo, pruebas de vida, finales | ✅ | Como mensajes en pantalla |
+| Bencinera, restaurante, tráfico en contra, minimapa, panel de encargo | ✅ | Probados en pantalla |
+| Retén con manifiesto automático, veredictos, patrullas | 🔄 | En build v0.1.20; sin probar en pantalla |
+| Teclas de motor, luces, inhibidor y volver a la carretera | 🔄 | En build v0.1.20 |
+| Arresto, decisión de avisar a la policía, finales alternativos | ⬜ | |
+| Cabina propia con botones, guardia y barrera con modelo | ⬜ | Arte (nube) |
+| Audio (motor, lluvia, sirenas, prueba de vida) y clima visible | ⬜ | Sin ningún sonido todavía |
+| Menú de contratos y cambio de zona | ⬜ | Hoy se elige con `-zone=N` / `-contract=Cxx` |
+| Release (Shipping, remapeo, localización) | ⬜ | |
 
 ## Plan hasta el final
 Cada fase termina con una build compilada y probada. No se avanza de fase con criterios sin cumplir. Una sola sesión de editor a la vez.

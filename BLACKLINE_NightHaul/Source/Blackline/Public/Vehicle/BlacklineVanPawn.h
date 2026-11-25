@@ -89,6 +89,22 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Blackline|Input")
 	TObjectPtr<UInputAction> IA_DriveMode;
 
+	/** L / D-pad arriba: luces. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Blackline|Input")
+	TObjectPtr<UInputAction> IA_ToggleHeadlights;
+
+	/** I / D-pad abajo: motor. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Blackline|Input")
+	TObjectPtr<UInputAction> IA_ToggleEngine;
+
+	/** J / D-pad izquierda: inhibidor GPS/EM. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Blackline|Input")
+	TObjectPtr<UInputAction> IA_ToggleJammer;
+
+	/** R / Select: volver a la carretera. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Blackline|Input")
+	TObjectPtr<UInputAction> IA_Recover;
+
 	// ---- Tuning ----
 	/** Duracion de la transicion cockpit <-> chase (s). */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Blackline|Camera", meta = (ClampMin = "0.05"))
@@ -279,6 +295,10 @@ private:
 	void OnLook(const FInputActionValue& Value);
 	void OnToggleCameraInput(const FInputActionValue& Value);
 	void OnInteract(const FInputActionValue& Value);
+	void OnToggleHeadlightsInput(const FInputActionValue& Value);
+	void OnToggleEngineInput(const FInputActionValue& Value);
+	void OnToggleJammerInput(const FInputActionValue& Value);
+	void OnRecoverInput(const FInputActionValue& Value);
 	void OnDriveModeInput(const FInputActionValue& Value);
 
 	void RegisterIMC();

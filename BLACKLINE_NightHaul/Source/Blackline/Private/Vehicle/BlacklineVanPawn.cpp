@@ -306,6 +306,22 @@ void ABlacklineVanPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 	{
 		EIC->BindAction(IA_DriveMode, ETriggerEvent::Started, this, &ABlacklineVanPawn::OnDriveModeInput);
 	}
+	if (IA_ToggleHeadlights)
+	{
+		EIC->BindAction(IA_ToggleHeadlights, ETriggerEvent::Started, this, &ABlacklineVanPawn::OnToggleHeadlightsInput);
+	}
+	if (IA_ToggleEngine)
+	{
+		EIC->BindAction(IA_ToggleEngine, ETriggerEvent::Started, this, &ABlacklineVanPawn::OnToggleEngineInput);
+	}
+	if (IA_ToggleJammer)
+	{
+		EIC->BindAction(IA_ToggleJammer, ETriggerEvent::Started, this, &ABlacklineVanPawn::OnToggleJammerInput);
+	}
+	if (IA_Recover)
+	{
+		EIC->BindAction(IA_Recover, ETriggerEvent::Started, this, &ABlacklineVanPawn::OnRecoverInput);
+	}
 }
 
 void ABlacklineVanPawn::OnThrottle(const FInputActionValue& Value)
@@ -388,6 +404,29 @@ void ABlacklineVanPawn::OnToggleCameraInput(const FInputActionValue&)
 void ABlacklineVanPawn::OnDriveModeInput(const FInputActionValue&)
 {
 	SetDriveMode(DriveMode == EDriveMode::RWD ? EDriveMode::FourWheel : EDriveMode::RWD);
+}
+
+void ABlacklineVanPawn::OnToggleHeadlightsInput(const FInputActionValue&)
+{
+	ActivateDashControl(EDashControl::Headlights);
+	ShowHudMessage(bHeadlightsOn ? NSLOCTEXT("Blackline", "LightsOn", "Luces encendidas") : NSLOCTEXT("Blackline", "LightsOff", "Luces apagadas (te ven menos)"), 2.f);
+}
+
+void ABlacklineVanPawn::OnToggleEngineInput(const FInputActionValue&)
+{
+	ActivateDashControl(EDashControl::Ignition);
+	ShowHudMessage(bEngineOn ? NSLOCTEXT("Blackline", "EngineOn", "Motor encendido") : NSLOCTEXT("Blackline", "EngineOff", "Motor apagado (te oyen menos)"), 2.f);
+}
+
+void ABlacklineVanPawn::OnToggleJammerInput(const FInputActionValue&)
+{
+	ActivateDashControl(EDashControl::SignalJammer);
+	ShowHudMessage(bSignalJammerOn ? NSLOCTEXT("Blackline", "JamOn", "Inhibidor GPS activo") : NSLOCTEXT("Blackline", "JamOff", "Inhibidor GPS apagado"), 2.f);
+}
+
+void ABlacklineVanPawn::OnRecoverInput(const FInputActionValue&)
+{
+	OnVanFlipped.Broadcast(); // la ruta lo devuelve a la carretera (misma logica que al volcar)
 }
 
 void ABlacklineVanPawn::OnInteract(const FInputActionValue&)
@@ -786,8 +825,11 @@ void ABlacklineVanPawn::SampleSpeed()
 	SpeedHistoryKmh[SpeedHistoryHead] = GetSpeedKmh();
 	SpeedHistoryHead = (SpeedHistoryHead + 1) % SpeedHistoryKmh.Num();
 
-	// Volcado: si lleva FlipResetSeconds de lado o patas arriba y casi sin moverse, se avisa para recuperarlo.
-	if (GetActorUpVector().Z < FlipUpDotThreshold && GetSpeedKmh() < 15.f)
+	// Volcado: de lado o patas arriba y casi parado por FlipResetSeconds. La velocidad es la del cuerpo (no la "hacia adelante",
+	// que oscila con las ruedas girando en el aire) y el contador baja de a poco en vez de reiniciarse con una lectura mala.
+	const float UpZ = static_cast<float>(GetActorUpVector().Z);
+	const float BodySpeedKmh = static_cast<float>(GetVelocity().Size()) * BlacklineVanPrivate::CmPerSecToKmh;
+	if (UpZ < FlipUpDotThreshold && BodySpeedKmh < 40.f)
 	{
 		FlippedSeconds += SpeedSampleIntervalSec;
 		if (FlippedSeconds >= FlipResetSeconds)
@@ -795,15 +837,15 @@ void ABlacklineVanPawn::SampleSpeed()
 			FlippedSeconds = 0.f;
 			OnVanFlipped.Broadcast();
 		}
-		else
-		{
-			ShowHudMessage(FText::Format(NSLOCTEXT("Blackline", "Flipped", "VOLCASTE - recuperando en {0} s"),
-				FText::AsNumber(FMath::CeilToInt(FlipResetSeconds - FlippedSeconds))), 0.6f);
-		}
 	}
 	else
 	{
-		FlippedSeconds = 0.f;
+		FlippedSeconds = FMath::Max(0.f, FlippedSeconds - SpeedSampleIntervalSec * 0.5f);
+	}
+	if (FlippedSeconds > 0.f && UpZ < FlipUpDotThreshold)
+	{
+		ShowHudMessage(FText::Format(NSLOCTEXT("Blackline", "Flipped", "VOLCASTE - recuperando en {0} s"),
+			FText::AsNumber(FMath::Max(1, FMath::CeilToInt(FlipResetSeconds - FlippedSeconds)))), 0.6f);
 	}
 
 	// Consumo de combustible por distancia recorrida.
