@@ -85,10 +85,22 @@ bool UBlacklineContractSubsystem::StartContract(FName ContractID)
 		return false;
 	}
 
-	// Cierra el anterior sin pagar.
+	// Descarta el anterior sin pagar y SIN castigo: al recargar el mapa (reinicio, reintento, viaje) el contrato viejo
+	// sigue activo en el subsistema y antes se contaba como fallido (-25% de paciencia en cada recarga).
 	if (HasActiveContract())
 	{
-		FinishContract(false);
+		if (UCargoSimulationComponent* OldCargo = BoundCargo.Get())
+		{
+			OldCargo->OnCargoDestroyed.RemoveDynamic(this, &UBlacklineContractSubsystem::HandleCargoDestroyed);
+		}
+		if (UGameInstance* GI = GetGameInstance())
+		{
+			GI->GetTimerManager().ClearTimer(DeadlineTimer);
+		}
+		bHasDeadline = false;
+		ActiveContractId = NAME_None;
+		ActivePayout = 0;
+		BoundCargo.Reset();
 	}
 
 	// Carga en el furgon del jugador.

@@ -290,6 +290,10 @@ private:
 	void ToggleHelp();
 	void ScheduleNewRun();
 	void RestartCampaign();
+	/** ENTER tras un final: nueva partida sin esperar. */
+	void RestartNow();
+	/** Pausa (Esc / Options). */
+	void TogglePause();
 	/** Tras un encargo fallido: repite el mismo contrato a los 10 s. */
 	void RetryContract();
 	void SelectPrevContract();

@@ -356,6 +356,21 @@ void ABlacklineVanPawn::OnBrake(const FInputActionValue& Value)
 	}
 }
 
+void ABlacklineVanPawn::FreezeForEnding()
+{
+	bHandbrakeHeld = true;
+	if (UChaosWheeledVehicleMovementComponent* Move = GetChaosMovement())
+	{
+		Move->SetThrottleInput(0.f);
+		Move->SetBrakeInput(1.f);
+		Move->SetHandbrakeInput(true);
+	}
+	if (APlayerController* PC = Cast<APlayerController>(GetController()))
+	{
+		DisableInput(PC);
+	}
+}
+
 void ABlacklineVanPawn::OnHandbrakeStarted(const FInputActionValue&)
 {
 	bHandbrakeHeld = true;

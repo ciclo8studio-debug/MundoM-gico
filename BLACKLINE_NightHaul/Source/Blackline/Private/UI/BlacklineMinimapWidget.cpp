@@ -204,7 +204,7 @@ int32 UBlacklineMinimapWidget::NativePaint(const FPaintArgs& Args, const FGeomet
 		const FLinearColor Dim(0.85f, 0.85f, 0.9f, 0.85f);
 		const float Y0 = ScreenSize.Y - 96.f;
 		Text(TEXT("W/S acelerar-frenar   A/D girar   Espacio freno   V camara   F 4x4"), FVector2f(MarginPx, Y0), 11, Dim);
-		Text(TEXT("L luces   I motor   J inhibidor   E interactuar   R volver a la carretera   F5/F6 contrato anterior/siguiente   H ocultar ayuda"), FVector2f(MarginPx, Y0 + 16.f), 11, Dim);
+		Text(TEXT("L luces   I motor   J inhibidor   E interactuar   R volver a la carretera   F5/F6 contrato anterior/siguiente   H ocultar ayuda   Esc pausa"), FVector2f(MarginPx, Y0 + 16.f), 11, Dim);
 		Text(TEXT("Mando: R2/L2 acelerar-frenar  stick girar  Cuadrado freno  Triangulo camara  L1 4x4  Cruceta: luces/motor/inhibidor"), FVector2f(MarginPx, Y0 + 32.f), 11, Dim);
 	}
 	++Layer;

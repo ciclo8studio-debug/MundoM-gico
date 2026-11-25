@@ -200,6 +200,11 @@ void AChileRouteActor::BeginPlay()
 					}), 8.f, false);
 				}
 				InputComponent->BindKey(EKeys::H, IE_Pressed, this, &AChileRouteActor::ToggleHelp);
+				// Pausa: Esc (o Options del mando); sigue funcionando con el juego en pausa.
+				InputComponent->BindKey(EKeys::Escape, IE_Pressed, this, &AChileRouteActor::TogglePause).bExecuteWhenPaused = true;
+				InputComponent->BindKey(EKeys::Gamepad_Special_Left, IE_Pressed, this, &AChileRouteActor::TogglePause).bExecuteWhenPaused = true;
+				InputComponent->BindKey(EKeys::Enter, IE_Pressed, this, &AChileRouteActor::RestartNow);
+				InputComponent->BindKey(EKeys::Gamepad_Special_Right, IE_Pressed, this, &AChileRouteActor::RestartNow);
 				InputComponent->BindKey(EKeys::P, IE_Pressed, this, &AChileRouteActor::ChooseCallPolice);
 				InputComponent->BindKey(EKeys::Gamepad_FaceButton_Right, IE_Pressed, this, &AChileRouteActor::ChooseCallPolice);
 				if (bCampaignMode)
@@ -378,10 +383,11 @@ void AChileRouteActor::UpdateTraffic()
 		if (TrafficHitCooldown <= 0.f)
 		{
 			ABlacklineVanPawn* HitVan = Cast<ABlacklineVanPawn>(UGameplayStatics::GetPlayerPawn(this, 0));
-			if (HitVan && FVector::DistXY(HitVan->GetActorLocation(), Car->GetActorLocation()) < 340.f
-				&& FMath::Abs(HitVan->GetActorLocation().Z - Car->GetActorLocation().Z) < 250.f)
+			// En el marco del auto: choque real solo si se solapan las cajas (largo ~460, ancho ~200), no al cruzarse en carriles vecinos.
+			const FVector Local = HitVan ? Car->GetActorTransform().InverseTransformPosition(HitVan->GetActorLocation()) : FVector(1e6f);
+			if (HitVan && FMath::Abs(Local.X) < 460.f && FMath::Abs(Local.Y) < 200.f && FMath::Abs(Local.Z) < 250.f)
 			{
-				TrafficHitCooldown = 2.5f;
+				TrafficHitCooldown = 4.f;
 				if (UPrimitiveComponent* VanBody = Cast<UPrimitiveComponent>(HitVan->GetRootComponent()))
 				{
 					VanBody->SetPhysicsLinearVelocity(VanBody->GetPhysicsLinearVelocity() * 0.25f);
@@ -454,7 +460,7 @@ void AChileRouteActor::HandleDogWellbeingChanged(float Wellbeing01)
 	if (Wellbeing01 <= 0.f)
 	{
 		bEndingShown = true;
-		Van->ShowHudMessage(NSLOCTEXT("Blackline", "EndBad", "FIN: La Cofradia perdio la paciencia y corto la comunicacion. Pancito ya no volvera a la cabina."), 20.f);
+		Van->ShowHudMessage(NSLOCTEXT("Blackline", "EndBad", "FIN: La Cofradia perdio la paciencia y corto la comunicacion. Pancito ya no volvera a la cabina.  [ENTER: nueva partida]"), 38.f);
 			ScheduleNewRun();
 	}
 	else if (Wellbeing01 < 0.3f)
@@ -831,7 +837,7 @@ void AChileRouteActor::ResolveFinal(bool bCallPolice)
 			? NSLOCTEXT("Blackline", "EndGood", "RESCATE: el Arriero abre una puerta. Pancito corre a la cabina y se sube al asiento del copiloto. FIN.")
 			: NSLOCTEXT("Blackline", "EndCost", "Llegas tarde: Pancito esta debil, pero vivo, y vuelve contigo. Final con costo. FIN.");
 	}
-	Van->ShowHudMessage(Message, 20.f);
+	Van->ShowHudMessage(FText::Format(NSLOCTEXT("Blackline", "EndWithRestart", "{0}  [ENTER: nueva partida]"), Message), 38.f);
 	ScheduleNewRun();
 }
 
@@ -849,11 +855,29 @@ void AChileRouteActor::ToggleHelp()
 	UBlacklineMinimapWidget::bShowHelp = !UBlacklineMinimapWidget::bShowHelp;
 }
 
+void AChileRouteActor::TogglePause()
+{
+	if (bEndingShown)
+	{
+		return;
+	}
+	const bool bPause = !UGameplayStatics::IsGamePaused(this);
+	UGameplayStatics::SetGamePaused(this, bPause);
+	if (ABlacklineVanPawn* Van = Cast<ABlacklineVanPawn>(UGameplayStatics::GetPlayerPawn(this, 0)))
+	{
+		Van->ShowHudMessage(bPause ? NSLOCTEXT("Blackline", "Paused", "PAUSA  -  ESC para continuar") : FText::GetEmpty(), bPause ? 3600.f : 0.1f);
+	}
+}
+
 void AChileRouteActor::ScheduleNewRun()
 {
+	if (ABlacklineVanPawn* Van = Cast<ABlacklineVanPawn>(UGameplayStatics::GetPlayerPawn(this, 0)))
+	{
+		Van->FreezeForEnding();
+	}
 	if (bCampaignMode)
 	{
-		GetWorldTimerManager().SetTimer(TravelTimer, this, &AChileRouteActor::RestartCampaign, 25.f, false);
+		GetWorldTimerManager().SetTimer(TravelTimer, this, &AChileRouteActor::RestartCampaign, 35.f, false);
 	}
 }
 
@@ -867,6 +891,14 @@ void AChileRouteActor::RestartCampaign()
 		}
 	}
 	UGameplayStatics::OpenLevel(this, FName(TEXT("/Game/Blackline/Maps/L_ChileRoute")));
+}
+
+void AChileRouteActor::RestartNow()
+{
+	if (bEndingShown && bCampaignMode)
+	{
+		RestartCampaign();
+	}
 }
 
 void AChileRouteActor::RetryContract()

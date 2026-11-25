@@ -217,6 +217,10 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Blackline|Dash")
 	bool IsEngineOn() const { return bEngineOn; }
 
+	/** Al llegar a un final: suelta el acelerador, frena y deja de aceptar controles. */
+	UFUNCTION(BlueprintCallable, Category = "Blackline|Vehicle")
+	void FreezeForEnding();
+
 	UFUNCTION(BlueprintPure, Category = "Blackline|Dash")
 	bool IsDiffLocked() const { return bDiffLocked; }
 

@@ -1,6 +1,16 @@
 # Changelog — BLACKLINE: NIGHT HAUL
 
 ## 0.1.0-dev (en curso)
+### 2026-11-25 — v0.1.27
+- **Pausa** con Esc (Options en el mando).
+- **Furgón congelado en los finales:** suelta acelerador, frena y deja de aceptar controles hasta la nueva partida (`FreezeForEnding`).
+- Release: build Shipping y ZIP para testers con `Empaquetar_Shipping.ps1`.
+
+### 2026-11-25 — v0.1.26 (paciencia y final)
+- **Cada recarga del mapa costaba -25% de paciencia:** `StartContract` cerraba el contrato viejo como fallido. Ahora lo descarta sin castigo.
+- **Choque con autos más justo:** solo cuenta si se solapan las cajas del auto y del furgón (antes se cruzar en el carril vecino contaba y bajó la paciencia 9 veces seguidas). Enfriamiento de 4 s.
+- **Final visible:** los textos de final duran 38 s y dicen `[ENTER: nueva partida]`; ENTER (o Start del mando) reinicia al instante; el reinicio automático pasa a 35 s.
+
 ### 2026-11-25 — v0.1.25 (corrección del volcado)
 - **Causa del furgón atascado tras volcar (confirmada en el log):** el teletransporte del actor no movía el cuerpo físico simulado (z se quedaba en -79 mientras el log decía «repuesto en Z=3350»). Ahora `TeleportVan` mueve el cuerpo físico (`SetAllPhysicsPosition/Rotation`) y lo deja quieto. También lo usa el arresto. Prueba automática: `-teleporttest` manda el furgón al 30% de la ruta a los 8 s y el log muestra la posición final.
 - **Caída bajo el mundo:** cada 1 s se revisa si el furgón está 30 m bajo la ruta; si es así, se devuelve a la carretera.
