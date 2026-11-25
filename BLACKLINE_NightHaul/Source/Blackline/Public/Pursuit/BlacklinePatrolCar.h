@@ -59,8 +59,10 @@ protected:
 
 private:
 	void FlashSiren();
+	void ChaseTick();
 	void ApplySirenState();
 
 	FTimerHandle SirenTimer;
+	FTimerHandle ChaseTimer;
 	bool bRedPhase = true;
 };

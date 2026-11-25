@@ -7,6 +7,8 @@
 #include "Components/StaticMeshComponent.h"
 #include "Engine/StaticMesh.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Kismet/GameplayStatics.h"
+#include "Pursuit/PursuitDirectorSubsystem.h"
 #include "TimerManager.h"
 #include "UObject/ConstructorHelpers.h"
 
@@ -74,6 +76,29 @@ void ABlacklinePatrolCar::BeginPlay()
 	bUseControllerRotationYaw = false;
 
 	SetSirenActive(bSirenActive);
+
+	// Persecucion propia (sin NavMesh: el terreno es generado). El director decide el estado; la patrulla va hacia el jugador.
+	if (UWorld* World = GetWorld())
+	{
+		World->GetTimerManager().SetTimer(ChaseTimer, this, &ABlacklinePatrolCar::ChaseTick, 0.1f, true);
+	}
+}
+
+void ABlacklinePatrolCar::ChaseTick()
+{
+	const UPursuitDirectorSubsystem* Pursuit = UPursuitDirectorSubsystem::Get(this);
+	const APawn* Target = UGameplayStatics::GetPlayerPawn(this, 0);
+	if (!Pursuit || !Target || Pursuit->GetState() != EPursuitState::Hunting)
+	{
+		return;
+	}
+	FVector Dir = Target->GetActorLocation() - GetActorLocation();
+	Dir.Z = 0.f;
+	if (Dir.SizeSquared() < 400.f * 400.f)
+	{
+		return; // ya esta encima: no empujar
+	}
+	AddMovementInput(Dir.GetSafeNormal(), 1.f);
 }
 
 void ABlacklinePatrolCar::EndPlay(const EEndPlayReason::Type EndPlayReason)
@@ -81,6 +106,7 @@ void ABlacklinePatrolCar::EndPlay(const EEndPlayReason::Type EndPlayReason)
 	if (UWorld* World = GetWorld())
 	{
 		World->GetTimerManager().ClearTimer(SirenTimer);
+		World->GetTimerManager().ClearTimer(ChaseTimer);
 	}
 	Super::EndPlay(EndPlayReason);
 }

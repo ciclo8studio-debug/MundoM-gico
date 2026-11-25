@@ -786,6 +786,26 @@ void ABlacklineVanPawn::SampleSpeed()
 	SpeedHistoryKmh[SpeedHistoryHead] = GetSpeedKmh();
 	SpeedHistoryHead = (SpeedHistoryHead + 1) % SpeedHistoryKmh.Num();
 
+	// Volcado: si lleva FlipResetSeconds de lado o patas arriba y casi sin moverse, se avisa para recuperarlo.
+	if (GetActorUpVector().Z < FlipUpDotThreshold && GetSpeedKmh() < 15.f)
+	{
+		FlippedSeconds += SpeedSampleIntervalSec;
+		if (FlippedSeconds >= FlipResetSeconds)
+		{
+			FlippedSeconds = 0.f;
+			OnVanFlipped.Broadcast();
+		}
+		else
+		{
+			ShowHudMessage(FText::Format(NSLOCTEXT("Blackline", "Flipped", "VOLCASTE - recuperando en {0} s"),
+				FText::AsNumber(FMath::CeilToInt(FlipResetSeconds - FlippedSeconds))), 0.6f);
+		}
+	}
+	else
+	{
+		FlippedSeconds = 0.f;
+	}
+
 	// Consumo de combustible por distancia recorrida.
 	if (bEngineOn && Fuel01 > 0.f)
 	{

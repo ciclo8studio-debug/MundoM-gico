@@ -5,6 +5,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Core/BlacklineTypes.h"
 #include "Core/ChileRouteTypes.h"
 #include "ChileRouteActor.generated.h"
 
@@ -14,6 +15,7 @@ class UInstancedStaticMeshComponent;
 class UStaticMesh;
 class ARoadsidePOI;
 class ATrafficCar;
+class ACheckpointController;
 class UMaterialInterface;
 class UDataTable;
 
@@ -144,6 +146,17 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Chile|Extras", meta = (Units = "cm"))
 	float TrafficDespawnBehindCm = 40000.f;
 
+	/** Reten con guardia a lo largo de la ruta; el manifiesto se arma solo a partir del contrato. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Chile|Extras")
+	bool bSpawnCheckpoint = true;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Chile|Extras", meta = (ClampMin = "0", ClampMax = "1"))
+	float CheckpointAt01 = 0.55f;
+
+	/** Al volcar: true = vuelve al inicio de la ruta; false = al punto mas cercano de la calzada. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Chile|Extras")
+	bool bRespawnAtRouteStart = true;
+
 	/** Inicia solo el contrato de la zona al empezar (se puede forzar con -contract=C09). */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Chile|Extras")
 	bool bAutoStartContract = true;
@@ -230,6 +243,26 @@ private:
 	void RespawnCarAhead(ATrafficCar* Car);
 	void CreateMinimap();
 	void StartZoneContract();
+	void SpawnCheckpoint();
+	void PresentContractManifest();
+
+	UFUNCTION()
+	void HandleVanFlipped();
+
+	UFUNCTION()
+	void HandleCheckpointState(ECheckpointState OldState, ECheckpointState NewState);
+
+	UFUNCTION()
+	void HandleCheckpointVerdict(EInspectionVerdict Verdict, float Suspicion01);
+
+	UPROPERTY(Transient)
+	TObjectPtr<ACheckpointController> Checkpoint;
+
+	/** Objetos creados en tiempo de ejecucion (cargas declaradas del manifiesto) que deben seguir vivos. */
+	UPROPERTY(Transient)
+	TArray<TObjectPtr<UObject>> KeepAlive;
+
+	FTimerHandle ManifestTimer;
 
 	UFUNCTION()
 	void HandleDogWellbeingChanged(float Wellbeing01);

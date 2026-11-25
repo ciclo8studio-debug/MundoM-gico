@@ -22,6 +22,7 @@ struct FInputActionValue;
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnDashControlChanged, EDashControl, Control, bool, bOn);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnVehicleStuckWarning, ATerrainModifierVolume*, Volume, bool, bStuck);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnDriveModeChanged, EDriveMode, NewMode);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnVanFlipped);
 
 UCLASS()
 class BLACKLINE_API ABlacklineVanPawn : public AWheeledVehiclePawn
@@ -229,6 +230,18 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Blackline|HUD")
 	FText GetHudMessage() const;
 
+	/** El furgon lleva volcado FlipResetSeconds sin moverse (lo escucha la ruta para devolverlo a la carretera). */
+	UPROPERTY(BlueprintAssignable, Category = "Blackline|Events")
+	FOnVanFlipped OnVanFlipped;
+
+	/** Segundos volcado antes de recuperarlo. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Blackline|Flip", meta = (ClampMin = "0.5"))
+	float FlipResetSeconds = 3.f;
+
+	/** Se considera volcado si el eje Z del furgon apunta menos que esto hacia arriba (1 = derecho, 0 = de lado, -1 = patas arriba). */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Blackline|Flip", meta = (ClampMin = "-1", ClampMax = "1"))
+	float FlipUpDotThreshold = 0.25f;
+
 	/** Consumo: fraccion de tanque por km recorrido (1:100 => una zona de 7 km gasta ~55%). */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Blackline|Fuel", meta = (ClampMin = "0"))
 	float FuelPerKm = 0.08f;
@@ -314,6 +327,7 @@ private:
 
 	float DamageRatio01 = 0.f;
 	float Fuel01 = 0.8f;
+	float FlippedSeconds = 0.f;
 	bool bOutOfFuelWarned = false;
 	TWeakObjectPtr<ARoadsidePOI> ActivePOI;
 	FText HudMessage;

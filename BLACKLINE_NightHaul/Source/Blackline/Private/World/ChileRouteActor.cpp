@@ -7,7 +7,11 @@
 #include "Engine/StaticMesh.h"
 #include "UObject/ConstructorHelpers.h"
 #include "PhysicsEngine/BodySetup.h"
+#include "Cargo/CargoSimulationComponent.h"
+#include "Checkpoint/CheckpointController.h"
 #include "Contracts/BlacklineContractSubsystem.h"
+#include "Data/CargoItemDataAsset.h"
+#include "Data/ManifestDataAsset.h"
 #include "Contracts/DeliveryZone.h"
 #include "Engine/GameInstance.h"
 #include "Blueprint/UserWidget.h"
@@ -154,6 +158,14 @@ void AChileRouteActor::BeginPlay()
 		if (bCreateMinimap)
 		{
 			CreateMinimap();
+		}
+		if (bSpawnCheckpoint)
+		{
+			SpawnCheckpoint();
+		}
+		if (ABlacklineVanPawn* Van = Cast<ABlacklineVanPawn>(UGameplayStatics::GetPlayerPawn(this, 0)))
+		{
+			Van->OnVanFlipped.AddUniqueDynamic(this, &AChileRouteActor::HandleVanFlipped);
 		}
 		if (bAutoStartContract)
 		{
@@ -394,6 +406,136 @@ void AChileRouteActor::HandleContractFinished(FName ContractID)
 		Proof, FText::AsNumber(Earned), FText::AsNumber(FMath::RoundToInt(Dog * 100.f))), 12.f);
 }
 
+void AChileRouteActor::HandleVanFlipped()
+{
+	ABlacklineVanPawn* Van = Cast<ABlacklineVanPawn>(UGameplayStatics::GetPlayerPawn(this, 0));
+	if (!Van)
+	{
+		return;
+	}
+
+	FVector Pos;
+	FRotator Rot;
+	if (bRespawnAtRouteStart)
+	{
+		const FTransform Start = GetStartTransform();
+		Pos = Start.GetLocation();
+		Rot = Start.Rotator();
+	}
+	else
+	{
+		const float Key = Route->FindInputKeyClosestToWorldLocation(Van->GetActorLocation());
+		GetPointAtDistance(Route->GetDistanceAlongSplineAtSplineInputKey(Key), LaneWidthCm * 0.5f, Pos, Rot);
+		Pos.Z += 150.f;
+	}
+	Rot.Pitch = 0.f;
+	Rot.Roll = 0.f;
+
+	Van->SetActorLocationAndRotation(Pos, Rot, false, nullptr, ETeleportType::ResetPhysics);
+	if (UPrimitiveComponent* Body = Cast<UPrimitiveComponent>(Van->GetRootComponent()))
+	{
+		Body->SetPhysicsLinearVelocity(FVector::ZeroVector);
+		Body->SetPhysicsAngularVelocityInDegrees(FVector::ZeroVector);
+	}
+	Van->ShowHudMessage(bRespawnAtRouteStart
+		? NSLOCTEXT("Blackline", "FlipStart", "Volcaste. Vuelves al inicio de la ruta; el plazo sigue corriendo.")
+		: NSLOCTEXT("Blackline", "FlipHere", "Volcaste. Te devuelven a la carretera; el plazo sigue corriendo."), 6.f);
+	UE_LOG(LogBlackline, Log, TEXT("ChileRoute: furgon volcado, repuesto en %s"), *Pos.ToString());
+}
+
+void AChileRouteActor::SpawnCheckpoint()
+{
+	UWorld* World = GetWorld();
+	FVector Pos;
+	FRotator Rot;
+	GetPointAtDistance(RouteLengthCm * CheckpointAt01, 0.f, Pos, Rot);
+	FActorSpawnParameters Params;
+	Params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+	Checkpoint = World->SpawnActor<ACheckpointController>(ACheckpointController::StaticClass(), Pos + FVector(0, 0, 100.f), FRotator(0.f, Rot.Yaw, 0.f), Params);
+	if (Checkpoint)
+	{
+		Checkpoint->OnCheckpointStateChanged.AddUniqueDynamic(this, &AChileRouteActor::HandleCheckpointState);
+		Checkpoint->OnInspectionVerdict.AddUniqueDynamic(this, &AChileRouteActor::HandleCheckpointVerdict);
+		UE_LOG(LogBlackline, Log, TEXT("ChileRoute: reten en %.0f%% de la ruta."), CheckpointAt01 * 100.f);
+	}
+}
+
+void AChileRouteActor::HandleCheckpointState(ECheckpointState OldState, ECheckpointState NewState)
+{
+	if (NewState == ECheckpointState::Inspecting)
+	{
+		if (ABlacklineVanPawn* Van = Cast<ABlacklineVanPawn>(UGameplayStatics::GetPlayerPawn(this, 0)))
+		{
+			Van->ShowHudMessage(NSLOCTEXT("Blackline", "CheckpointStop", "RETEN: el guardia pide los papeles. Mantente quieto."), 4.f);
+		}
+		// El conductor entrega el manifiesto tras un momento de tension.
+		GetWorldTimerManager().SetTimer(ManifestTimer, this, &AChileRouteActor::PresentContractManifest, 1.5f, false);
+	}
+}
+
+void AChileRouteActor::PresentContractManifest()
+{
+	UGameInstance* GI = GetGameInstance();
+	const UBlacklineContractSubsystem* Contracts = GI ? GI->GetSubsystem<UBlacklineContractSubsystem>() : nullptr;
+	const ABlacklineVanPawn* Van = Cast<ABlacklineVanPawn>(UGameplayStatics::GetPlayerPawn(this, 0));
+	FBlacklineContractRow Row;
+	if (!Checkpoint || !Contracts || !Van || !Contracts->HasActiveContract() || !Contracts->GetContract(Contracts->GetActiveContractId(), Row))
+	{
+		return;
+	}
+
+	// Manifiesto falsificado: declara casi la masa real y oculta parte de la firma EM. Calidad segun el nivel exigido.
+	const float RealMass = Van->Cargo ? Van->Cargo->GetTotalCargoMassKg() : Row.CargoWeightKg;
+	UCargoItemDataAsset* Declared = NewObject<UCargoItemDataAsset>(GetTransientPackage());
+	Declared->ItemId = Row.ContractID;
+	Declared->DisplayName = Row.CargoDisplayName;
+	Declared->MassKg = RealMass * FMath::FRandRange(0.92f, 1.0f);
+	Declared->ContrabandSignature01 = Row.EMSignature * 0.5f;
+	KeepAlive.Add(Declared);
+
+	UManifestDataAsset* Manifest = NewObject<UManifestDataAsset>(GetTransientPackage());
+	Manifest->ManifestId = Row.ContractID;
+	Manifest->CompanyName = Row.BrokerName;
+	Manifest->Notes = Row.CoverStoryManifest;
+	Manifest->ForgeryQuality01 = FMath::Clamp(static_cast<float>(Row.RequiredManifestLevel) / 3.f + FMath::FRandRange(-0.2f, 0.15f), 0.15f, 1.f);
+	FManifestLine Line;
+	Line.Item = TSoftObjectPtr<UCargoItemDataAsset>(Declared);
+	Line.Quantity = 1;
+	Manifest->DeclaredCargo.Add(Line);
+	KeepAlive.Add(Manifest);
+
+	Checkpoint->PresentManifest(Manifest);
+}
+
+void AChileRouteActor::HandleCheckpointVerdict(EInspectionVerdict Verdict, float Suspicion01)
+{
+	ABlacklineVanPawn* Van = Cast<ABlacklineVanPawn>(UGameplayStatics::GetPlayerPawn(this, 0));
+	if (!Van)
+	{
+		return;
+	}
+	const FText Pct = FText::AsNumber(FMath::RoundToInt(Suspicion01 * 100.f));
+	switch (Verdict)
+	{
+	case EInspectionVerdict::CleanPass:
+		Van->ShowHudMessage(FText::Format(NSLOCTEXT("Blackline", "VerdictClean", "RETEN: papeles en regla. Puedes pasar. (sospecha {0}%)"), Pct), 6.f);
+		break;
+	case EInspectionVerdict::SecondaryInspection:
+		Van->ShowHudMessage(FText::Format(NSLOCTEXT("Blackline", "VerdictSecond", "RETEN: inspeccion secundaria. No te muevas. (sospecha {0}%)"), Pct), 6.f);
+		break;
+	case EInspectionVerdict::PursuitAlert:
+		Van->ShowHudMessage(FText::Format(NSLOCTEXT("Blackline", "VerdictPursuit", "¡TE DESCUBRIERON! Huye y apaga motor y luces para enfriar el rastro. Si te atrapan, Chuño paga. (sospecha {0}%)"), Pct), 9.f);
+		if (UGameInstance* GI = GetGameInstance())
+		{
+			if (UBlacklineContractSubsystem* Contracts = GI->GetSubsystem<UBlacklineContractSubsystem>())
+			{
+				Contracts->AddDogWellbeing(-0.10f);
+			}
+		}
+		break;
+	}
+}
+
 void AChileRouteActor::CreateMinimap()
 {
 	APlayerController* PC = UGameplayStatics::GetPlayerController(this, 0);
@@ -482,6 +624,11 @@ void AChileRouteActor::ClearZone()
 		}
 	}
 	TrafficCars.Reset();
+	if (Checkpoint)
+	{
+		Checkpoint->Destroy();
+		Checkpoint = nullptr;
+	}
 	for (ARoadsidePOI* P : POIs)
 	{
 		if (P)
