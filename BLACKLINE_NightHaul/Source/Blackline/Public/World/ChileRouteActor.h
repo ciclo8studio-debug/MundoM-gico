@@ -12,6 +12,8 @@ class USplineComponent;
 class UProceduralMeshComponent;
 class UInstancedStaticMeshComponent;
 class UStaticMesh;
+class ARoadsidePOI;
+class ATrafficCar;
 class UMaterialInterface;
 class UDataTable;
 
@@ -59,6 +61,25 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Chile")
 	float GetRouteLengthKm() const { return RouteLengthCm / 100000.f; }
 
+	/** Punto de la ruta a una distancia (cm) con desplazamiento lateral (+ = derecha). Espacio mundo. */
+	UFUNCTION(BlueprintCallable, Category = "Chile")
+	void GetPointAtDistance(float DistanceCm, float LateralCm, FVector& OutPos, FRotator& OutRot) const;
+
+	UFUNCTION(BlueprintPure, Category = "Chile")
+	float GetRouteLengthCm() const { return RouteLengthCm; }
+
+	/** Avance del jugador por la ruta [0,1]. */
+	UFUNCTION(BlueprintPure, Category = "Chile")
+	float GetProgress01(const FVector& WorldPos) const;
+
+	UFUNCTION(BlueprintPure, Category = "Chile")
+	FText GetZoneName() const;
+
+	/** Puntos de la ruta (cada ~32 m) para el minimapa. */
+	const TArray<FVector>& GetMapPoints() const { return MapPoints; }
+	const TArray<TObjectPtr<ARoadsidePOI>>& GetPOIs() const { return POIs; }
+	void GetTrafficLocations(TArray<FVector>& Out) const;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Chile")
 	TObjectPtr<USplineComponent> Route;
 
@@ -87,6 +108,45 @@ public:
 	/** Lleva al jugador al inicio de la ruta al terminar de generar. */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Chile|Data")
 	bool bTeleportPlayerToStart = false;
+
+	/** Bencinera y restaurante junto a la ruta. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Chile|Extras")
+	bool bSpawnRoadsidePlaces = true;
+
+	/** Posicion de la bencinera y del restaurante a lo largo de la ruta [0,1]. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Chile|Extras", meta = (ClampMin = "0", ClampMax = "1"))
+	float GasStationAt01 = 0.30f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Chile|Extras", meta = (ClampMin = "0", ClampMax = "1"))
+	float RestaurantAt01 = 0.65f;
+
+	/** Autos que vienen en sentido contrario. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Chile|Extras")
+	bool bSpawnOncomingTraffic = true;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Chile|Extras", meta = (ClampMin = "0", ClampMax = "30"))
+	int32 TrafficCount = 6;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Chile|Extras", meta = (Units = "km/h"))
+	float TrafficMinSpeedKmh = 55.f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Chile|Extras", meta = (Units = "km/h"))
+	float TrafficMaxSpeedKmh = 95.f;
+
+	/** Los autos reaparecen entre estas distancias por delante del jugador (cm). */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Chile|Extras", meta = (Units = "cm"))
+	float TrafficSpawnAheadMinCm = 60000.f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Chile|Extras", meta = (Units = "cm"))
+	float TrafficSpawnAheadMaxCm = 220000.f;
+
+	/** Un auto que quedo atras por mas de esto se recicla (cm). */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Chile|Extras", meta = (Units = "cm"))
+	float TrafficDespawnBehindCm = 40000.f;
+
+	/** Minimapa y datos de manejo en pantalla. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Chile|Extras")
+	bool bCreateMinimap = true;
 
 	/** Crea la zona de entrega al final de la ruta. */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Chile|Data")
@@ -149,6 +209,11 @@ private:
 	void BuildRoadMesh(const TArray<FRouteSample>& Samples);
 	void BuildTerrain(const TArray<FRouteSample>& Samples);
 	void TeleportPlayerToStart();
+	void SpawnRoadsidePlaces();
+	void SpawnTraffic();
+	void UpdateTraffic();
+	void RespawnCarAhead(ATrafficCar* Car);
+	void CreateMinimap();
 	void MovePlayerStartToStart();
 	bool bBuiltInInit = false;
 	float Fbm(float X, float Y) const;
@@ -167,6 +232,17 @@ private:
 	TObjectPtr<UStaticMesh> CollisionCube;
 
 	void BuildRoadCollisionSlabs(const TArray<FRouteSample>& Samples);
+
+	UPROPERTY(Transient)
+	TArray<TObjectPtr<ARoadsidePOI>> POIs;
+
+	UPROPERTY(Transient)
+	TArray<TObjectPtr<ATrafficCar>> TrafficCars;
+
+	TArray<FVector> MapPoints;
+	FTimerHandle TrafficTimer;
+	float VanDistanceCm = 0.f;
+	int32 TrafficTick = 0;
 
 	FTimerHandle TeleportTimer;
 	int32 TeleportTries = 0;

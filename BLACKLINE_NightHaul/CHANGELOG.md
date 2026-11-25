@@ -7,6 +7,8 @@
 - Furgon: simulacion de fisica forzada, curva de torque y caja por defecto, motor encendido, camara de tercera persona sin colision del brazo, carroceria y neumaticos visuales, telemetria en el log.
 - Input: IMC con modificadores correctos y mapeo de mando PS4 (R2/L2, stick, Cuadrado, Triangulo, Circulo, L1).
 - Fix: el furgon caia a traves del suelo por teletransportarlo despues de aparecer; ahora el `PlayerStart` se mueve al inicio de la ruta antes de que aparezca el jugador. Losas de colision de cubos bajo la calzada (1744 en la zona 2).
+- **Extras de la ruta:** bencinera y restaurante (`ARoadsidePOI`, E/Circulo), 6 autos en sentido contrario (`ATrafficCar`), minimapa con velocidad, combustible y mensajes (`UBlacklineMinimapWidget`), combustible en el furgon.
+- Velocidad: par 800 Nm, marcha final 3.5, cambio 0.2 s (llega a ~165 km/h). Faros sin sombras (sin manchas negras). Material del terreno con brillo minimo propio.
 - Scripts: `Rebuild_And_Package.ps1`, `Package_And_Probe.ps1`, `blackline_build_chile_map.py`, `blackline_chile_route.py`.
 
 ### 2026-11-22 (noche)

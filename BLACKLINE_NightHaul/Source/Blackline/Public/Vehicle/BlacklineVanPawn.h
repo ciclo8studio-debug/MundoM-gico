@@ -8,6 +8,7 @@
 
 class UCameraComponent;
 class UStaticMeshComponent;
+class ARoadsidePOI;
 class USpringArmComponent;
 class USpotLightComponent;
 class UCargoSimulationComponent;
@@ -204,6 +205,37 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Blackline|Suspicion")
 	float GetStealth01() const;
 
+	// ---- Combustible, lugares de la ruta y mensajes ----
+	UFUNCTION(BlueprintPure, Category = "Blackline|Fuel")
+	float GetFuel01() const { return Fuel01; }
+
+	UFUNCTION(BlueprintCallable, Category = "Blackline|Fuel")
+	void AddFuel(float Amount01);
+
+	UFUNCTION(BlueprintPure, Category = "Blackline|Suspicion")
+	float GetDamage01() const { return DamageRatio01; }
+
+	UFUNCTION(BlueprintCallable, Category = "Blackline|Suspicion")
+	void RepairDamage(float Amount01);
+
+	/** El lugar (bencinera/restaurante) cuya zona esta usando el jugador; E / Circulo interactua con el. */
+	UFUNCTION(BlueprintCallable, Category = "Blackline|Interact")
+	void SetActiveInteractable(ARoadsidePOI* POI);
+
+	UFUNCTION(BlueprintCallable, Category = "Blackline|HUD")
+	void ShowHudMessage(const FText& Text, float Seconds = 3.f);
+
+	/** Mensaje actual del HUD (vacio si ya expiro). */
+	UFUNCTION(BlueprintPure, Category = "Blackline|HUD")
+	FText GetHudMessage() const;
+
+	/** Consumo: fraccion de tanque por km recorrido (1:100 => una zona de 7 km gasta ~55%). */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Blackline|Fuel", meta = (ClampMin = "0"))
+	float FuelPerKm = 0.08f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Blackline|Fuel", meta = (ClampMin = "0", ClampMax = "1"))
+	float StartFuel01 = 0.8f;
+
 	UFUNCTION(BlueprintCallable, Category = "Blackline|Terrain")
 	void PushSurfaceModifier(ATerrainModifierVolume* Volume);
 
@@ -281,6 +313,11 @@ private:
 	bool bStuckWarningActive = false;
 
 	float DamageRatio01 = 0.f;
+	float Fuel01 = 0.8f;
+	bool bOutOfFuelWarned = false;
+	TWeakObjectPtr<ARoadsidePOI> ActivePOI;
+	FText HudMessage;
+	double HudMessageExpire = 0.0;
 	float CockpitLookYaw = 0.f;
 	float CockpitLookPitch = 0.f;
 

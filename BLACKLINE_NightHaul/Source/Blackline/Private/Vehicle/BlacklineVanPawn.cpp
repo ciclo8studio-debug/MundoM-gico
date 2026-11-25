@@ -2,6 +2,7 @@
 #include "Vehicle/BlacklineVanPawn.h"
 
 #include "Blackline.h"
+#include "World/RoadsidePOI.h"
 #include "PhysicsEngine/PhysicsAsset.h"
 #include "Components/StaticMeshComponent.h"
 #include "Cargo/CargoSimulationComponent.h"
@@ -53,7 +54,7 @@ ABlacklineVanPawn::ABlacklineVanPawn(const FObjectInitializer& ObjectInitializer
 	{
 		Move->Mass = 2200.f;
 
-		Move->EngineSetup.MaxTorque = 550.f;
+		Move->EngineSetup.MaxTorque = 800.f;
 		Move->EngineSetup.MaxRPM = 4800.f;
 		Move->EngineSetup.EngineIdleRPM = 800.f;
 		Move->EngineSetup.EngineBrakeEffect = 0.08f;
@@ -76,11 +77,11 @@ ABlacklineVanPawn::ABlacklineVanPawn(const FObjectInitializer& ObjectInitializer
 
 		Move->TransmissionSetup.bUseAutomaticGears = true;
 		Move->TransmissionSetup.bUseAutoReverse = true;
-		Move->TransmissionSetup.ChangeUpRPM = 3800;
+		Move->TransmissionSetup.ChangeUpRPM = 4200;
 		Move->TransmissionSetup.ChangeDownRPM = 1600;
-		Move->TransmissionSetup.GearChangeTime = 0.35f;
+		Move->TransmissionSetup.GearChangeTime = 0.2f;
 		Move->TransmissionSetup.TransmissionEfficiency = 0.9f;
-		Move->TransmissionSetup.FinalRatio = 4.1f;
+		Move->TransmissionSetup.FinalRatio = 3.5f;
 		Move->TransmissionSetup.ForwardGearRatios = { 3.6f, 2.2f, 1.45f, 1.0f, 0.78f };
 		Move->TransmissionSetup.ReverseGearRatios = { 3.2f };
 
@@ -134,6 +135,7 @@ ABlacklineVanPawn::ABlacklineVanPawn(const FObjectInitializer& ObjectInitializer
 	HeadlightLeft->SetRelativeLocation(FVector(230.f, -70.f, 70.f));
 	HeadlightLeft->OuterConeAngle = 40.f;
 	HeadlightLeft->Intensity = 8000.f;
+	HeadlightLeft->SetCastShadows(false); // las sombras del chasis daban manchas negras con borde de sierra
 	HeadlightLeft->AttenuationRadius = 3000.f;
 
 	HeadlightRight = CreateDefaultSubobject<USpotLightComponent>(TEXT("HeadlightRight"));
@@ -141,6 +143,7 @@ ABlacklineVanPawn::ABlacklineVanPawn(const FObjectInitializer& ObjectInitializer
 	HeadlightRight->SetRelativeLocation(FVector(230.f, 70.f, 70.f));
 	HeadlightRight->OuterConeAngle = 40.f;
 	HeadlightRight->Intensity = 8000.f;
+	HeadlightRight->SetCastShadows(false);
 	HeadlightRight->AttenuationRadius = 3000.f;
 }
 
@@ -159,6 +162,7 @@ void ABlacklineVanPawn::BeginPlay()
 	RegisterIMC();
 
 	bEngineOn = bStartEngineOn;
+	Fuel01 = StartFuel01;
 	bHeadlightsOn = bStartHeadlightsOn;
 	SetHeadlights(bHeadlightsOn);
 
@@ -310,7 +314,7 @@ void ABlacklineVanPawn::OnThrottle(const FInputActionValue& Value)
 	{
 		// Motor apagado: no hay traccion.
 		LastThrottleInput = Value.Get<float>();
-		Move->SetThrottleInput(bEngineOn ? FMath::Clamp(Value.Get<float>(), 0.f, 1.f) : 0.f);
+		Move->SetThrottleInput((bEngineOn && Fuel01 > 0.f) ? FMath::Clamp(Value.Get<float>(), 0.f, 1.f) : 0.f);
 		UE_LOG(LogBlackline, Verbose, TEXT("Input: Throttle=%.2f motor=%d"), Value.Get<float>(), bEngineOn ? 1 : 0);
 	}
 }
@@ -388,6 +392,13 @@ void ABlacklineVanPawn::OnDriveModeInput(const FInputActionValue&)
 
 void ABlacklineVanPawn::OnInteract(const FInputActionValue&)
 {
+	// Primero: si el jugador esta en la zona de una bencinera/restaurante, E / Circulo interactua con el lugar.
+	if (ARoadsidePOI* POI = ActivePOI.Get())
+	{
+		POI->TryInteract(this);
+		return;
+	}
+
 	UWorld* World = GetWorld();
 	if (!World || !CockpitCamera)
 	{
@@ -775,6 +786,18 @@ void ABlacklineVanPawn::SampleSpeed()
 	SpeedHistoryKmh[SpeedHistoryHead] = GetSpeedKmh();
 	SpeedHistoryHead = (SpeedHistoryHead + 1) % SpeedHistoryKmh.Num();
 
+	// Consumo de combustible por distancia recorrida.
+	if (bEngineOn && Fuel01 > 0.f)
+	{
+		const float KmDriven = SpeedHistoryKmh[(SpeedHistoryHead + SpeedHistoryKmh.Num() - 1) % SpeedHistoryKmh.Num()] * SpeedSampleIntervalSec / 3600.f;
+		Fuel01 = FMath::Max(0.f, Fuel01 - KmDriven * FuelPerKm);
+		if (Fuel01 <= 0.f && !bOutOfFuelWarned)
+		{
+			bOutOfFuelWarned = true;
+			ShowHudMessage(NSLOCTEXT("Blackline", "OutOfFuel", "SIN COMBUSTIBLE - busca una bencinera"), 6.f);
+		}
+	}
+
 	// Telemetria 1 vez por segundo (diagnostico de manejo; barata).
 	if (++TelemetryCounter >= FMath::Max(1, FMath::RoundToInt(1.f / FMath::Max(0.05f, SpeedSampleIntervalSec))))
 	{
@@ -856,4 +879,41 @@ void ABlacklineVanPawn::HandleCargoIntegrityChanged(float Integrity01, float Del
 	{
 		UE_LOG(LogBlackline, Verbose, TEXT("Integridad de carga %.2f (%.2f)"), Integrity01, Delta);
 	}
+}
+
+// ---------------------------------------------------------------- Combustible, lugares, mensajes
+
+void ABlacklineVanPawn::AddFuel(float Amount01)
+{
+	Fuel01 = FMath::Clamp(Fuel01 + Amount01, 0.f, 1.f);
+	if (Fuel01 > 0.f)
+	{
+		bOutOfFuelWarned = false;
+	}
+}
+
+void ABlacklineVanPawn::RepairDamage(float Amount01)
+{
+	DamageRatio01 = FMath::Clamp(DamageRatio01 - Amount01, 0.f, 1.f);
+}
+
+void ABlacklineVanPawn::SetActiveInteractable(ARoadsidePOI* POI)
+{
+	ActivePOI = POI;
+}
+
+void ABlacklineVanPawn::ShowHudMessage(const FText& Text, float Seconds)
+{
+	HudMessage = Text;
+	HudMessageExpire = GetWorld() ? GetWorld()->GetTimeSeconds() + Seconds : 0.0;
+}
+
+FText ABlacklineVanPawn::GetHudMessage() const
+{
+	const UWorld* World = GetWorld();
+	if (World && World->GetTimeSeconds() < HudMessageExpire)
+	{
+		return HudMessage;
+	}
+	return FText::GetEmpty();
 }

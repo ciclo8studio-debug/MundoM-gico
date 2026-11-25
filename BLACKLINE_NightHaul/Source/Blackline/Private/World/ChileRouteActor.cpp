@@ -8,6 +8,10 @@
 #include "UObject/ConstructorHelpers.h"
 #include "PhysicsEngine/BodySetup.h"
 #include "Contracts/DeliveryZone.h"
+#include "Blueprint/UserWidget.h"
+#include "UI/BlacklineMinimapWidget.h"
+#include "World/RoadsidePOI.h"
+#include "World/TrafficCar.h"
 #include "Engine/DataTable.h"
 #include "Engine/World.h"
 #include "EngineUtils.h"
@@ -129,6 +133,171 @@ void AChileRouteActor::BeginPlay()
 		FParse::Value(FCommandLine::Get(), TEXT("zone="), ZoneId);
 		BuildZone();
 	}
+	if (bBuilt && GetWorld() && GetWorld()->IsGameWorld())
+	{
+		if (bSpawnRoadsidePlaces)
+		{
+			SpawnRoadsidePlaces();
+		}
+		if (bSpawnOncomingTraffic)
+		{
+			SpawnTraffic();
+		}
+		if (bCreateMinimap)
+		{
+			CreateMinimap();
+		}
+	}
+}
+
+FText AChileRouteActor::GetZoneName() const
+{
+	switch (ZoneId)
+	{
+	case 1: return NSLOCTEXT("Blackline", "Zone1", "Norte: Arica - Copiapo");
+	case 2: return NSLOCTEXT("Blackline", "Zone2", "Centro: Vallenar - Rancagua");
+	case 3: return NSLOCTEXT("Blackline", "Zone3", "Sur: Talca - Puerto Montt");
+	case 4: return NSLOCTEXT("Blackline", "Zone4", "Cordillera: Santiago - Paso");
+	default: return FText::Format(NSLOCTEXT("Blackline", "ZoneN", "Zona {0}"), FText::AsNumber(ZoneId));
+	}
+}
+
+void AChileRouteActor::GetPointAtDistance(float DistanceCm, float LateralCm, FVector& OutPos, FRotator& OutRot) const
+{
+	const float D = FMath::Clamp(DistanceCm, 0.f, RouteLengthCm);
+	FVector Pos = Route->GetLocationAtDistanceAlongSpline(D, ESplineCoordinateSpace::World);
+	FVector Dir = Route->GetDirectionAtDistanceAlongSpline(D, ESplineCoordinateSpace::World);
+	Dir.Z = 0.f;
+	Dir = Dir.GetSafeNormal();
+	if (Dir.IsNearlyZero())
+	{
+		Dir = FVector::ForwardVector;
+	}
+	const FVector Right(-Dir.Y, Dir.X, 0.f);
+	OutPos = Pos + Right * LateralCm;
+	OutRot = Dir.Rotation();
+}
+
+float AChileRouteActor::GetProgress01(const FVector& WorldPos) const
+{
+	if (!Route || RouteLengthCm <= 1.f)
+	{
+		return 0.f;
+	}
+	const float Key = Route->FindInputKeyClosestToWorldLocation(WorldPos);
+	return FMath::Clamp(Route->GetDistanceAlongSplineAtSplineInputKey(Key) / RouteLengthCm, 0.f, 1.f);
+}
+
+void AChileRouteActor::GetTrafficLocations(TArray<FVector>& Out) const
+{
+	Out.Reset();
+	for (const ATrafficCar* Car : TrafficCars)
+	{
+		if (Car)
+		{
+			Out.Add(Car->GetActorLocation());
+		}
+	}
+}
+
+void AChileRouteActor::SpawnRoadsidePlaces()
+{
+	UWorld* World = GetWorld();
+	const float Lateral = 2000.f; // centro de la explanada: borde interior a 7 m del eje (pasada la berma)
+	const TArray<TPair<float, EPoiKind>> Places = {{GasStationAt01, EPoiKind::GasStation}, {RestaurantAt01, EPoiKind::Restaurant}};
+	for (const TPair<float, EPoiKind>& P : Places)
+	{
+		FVector Pos;
+		FRotator Rot;
+		GetPointAtDistance(RouteLengthCm * P.Key, Lateral, Pos, Rot);
+		FActorSpawnParameters Params;
+		Params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+		ARoadsidePOI* POI = World->SpawnActor<ARoadsidePOI>(ARoadsidePOI::StaticClass(), Pos - FVector(0, 0, RoadBedDropCm), FRotator(0.f, Rot.Yaw, 0.f), Params);
+		if (POI)
+		{
+			POI->BuildFor(P.Value);
+			POIs.Add(POI);
+		}
+	}
+	UE_LOG(LogBlackline, Log, TEXT("ChileRoute: %d lugares junto a la ruta."), POIs.Num());
+}
+
+void AChileRouteActor::SpawnTraffic()
+{
+	UWorld* World = GetWorld();
+	static const FLinearColor Colors[] = {
+		FLinearColor(0.7f, 0.05f, 0.05f), FLinearColor(0.1f, 0.2f, 0.6f), FLinearColor(0.75f, 0.75f, 0.78f),
+		FLinearColor(0.08f, 0.08f, 0.09f), FLinearColor(0.85f, 0.7f, 0.1f), FLinearColor(0.1f, 0.4f, 0.15f)};
+
+	for (int32 i = 0; i < TrafficCount; ++i)
+	{
+		FActorSpawnParameters Params;
+		Params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+		ATrafficCar* Car = World->SpawnActor<ATrafficCar>(ATrafficCar::StaticClass(), GetActorLocation(), FRotator::ZeroRotator, Params);
+		if (!Car)
+		{
+			continue;
+		}
+		Car->SetBodyColor(Colors[FMath::RandRange(0, UE_ARRAY_COUNT(Colors) - 1)]);
+		RespawnCarAhead(Car);
+		TrafficCars.Add(Car);
+	}
+	World->GetTimerManager().SetTimer(TrafficTimer, this, &AChileRouteActor::UpdateTraffic, 0.05f, true);
+	UE_LOG(LogBlackline, Log, TEXT("ChileRoute: %d autos en sentido contrario."), TrafficCars.Num());
+}
+
+void AChileRouteActor::RespawnCarAhead(ATrafficCar* Car)
+{
+	const float Max = FMath::Max(TrafficSpawnAheadMinCm + 1.f, TrafficSpawnAheadMaxCm);
+	float D = VanDistanceCm + FMath::FRandRange(TrafficSpawnAheadMinCm, Max);
+	D = FMath::Min(D, FMath::Max(0.f, RouteLengthCm - 1500.f));
+	Car->RouteDistanceCm = D;
+	Car->SpeedCmPerSec = FMath::FRandRange(TrafficMinSpeedKmh, FMath::Max(TrafficMinSpeedKmh, TrafficMaxSpeedKmh)) * 27.78f;
+}
+
+void AChileRouteActor::UpdateTraffic()
+{
+	const float Dt = 0.05f;
+	if (++TrafficTick % 5 == 0)
+	{
+		if (const APawn* Pawn = UGameplayStatics::GetPlayerPawn(this, 0))
+		{
+			const float Key = Route->FindInputKeyClosestToWorldLocation(Pawn->GetActorLocation());
+			VanDistanceCm = Route->GetDistanceAlongSplineAtSplineInputKey(Key);
+		}
+	}
+
+	for (ATrafficCar* Car : TrafficCars)
+	{
+		if (!Car)
+		{
+			continue;
+		}
+		Car->RouteDistanceCm -= Car->SpeedCmPerSec * Dt;
+		if (Car->RouteDistanceCm < 500.f || Car->RouteDistanceCm < VanDistanceCm - TrafficDespawnBehindCm)
+		{
+			RespawnCarAhead(Car);
+		}
+		FVector Pos;
+		FRotator Rot;
+		GetPointAtDistance(Car->RouteDistanceCm, -LaneWidthCm * 0.5f, Pos, Rot);
+		Rot.Yaw += 180.f; // viene hacia el jugador
+		Car->SetActorLocationAndRotation(Pos + FVector(0, 0, 60.f), Rot, false, nullptr, ETeleportType::None);
+	}
+}
+
+void AChileRouteActor::CreateMinimap()
+{
+	APlayerController* PC = UGameplayStatics::GetPlayerController(this, 0);
+	if (!PC)
+	{
+		return;
+	}
+	if (UBlacklineMinimapWidget* W = CreateWidget<UBlacklineMinimapWidget>(PC))
+	{
+		W->SetRoute(this);
+		W->AddToViewport(50);
+	}
 }
 
 void AChileRouteActor::MovePlayerStartToStart()
@@ -193,6 +362,27 @@ void AChileRouteActor::ClearZone()
 	{
 		Route->ClearSplinePoints(true);
 	}
+	if (UWorld* W = GetWorld())
+	{
+		W->GetTimerManager().ClearTimer(TrafficTimer);
+	}
+	for (ATrafficCar* Car : TrafficCars)
+	{
+		if (Car)
+		{
+			Car->Destroy();
+		}
+	}
+	TrafficCars.Reset();
+	for (ARoadsidePOI* P : POIs)
+	{
+		if (P)
+		{
+			P->Destroy();
+		}
+	}
+	POIs.Reset();
+	MapPoints.Reset();
 	if (RoadCollisionISM)
 	{
 		RoadCollisionISM->DestroyComponent();
@@ -297,6 +487,13 @@ void AChileRouteActor::BuildZone()
 		S.Ramp = FMath::Lerp(A.RampSlope, B.RampSlope, Alpha);
 		Samples.Add(S);
 	}
+
+	MapPoints.Reset();
+	for (int32 i = 0; i < Samples.Num(); i += 4)
+	{
+		MapPoints.Add(GetActorTransform().TransformPosition(Samples[i].Pos));
+	}
+	MapPoints.Add(GetActorTransform().TransformPosition(Samples.Last().Pos));
 
 	const FVector Right0(-Samples[0].Dir.Y, Samples[0].Dir.X, 0.f);
 	StartLocal = FTransform(Samples[0].Dir.Rotation(), Samples[0].Pos + Right0 * (LaneWidthCm * 0.5f) + FVector(0, 0, 150.f));

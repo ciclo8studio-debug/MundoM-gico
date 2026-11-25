@@ -39,22 +39,26 @@ def setp(obj, names, value):
 
 
 def ensure_material():
+    """M_VertexColor: color de vertice + un minimo emisivo (ambiente de noche: el suelo nunca queda negro del todo)."""
     path = DIR_MAT + "/M_VertexColor"
     if EAL.does_asset_exist(path):
-        log("reuso " + path)
-        return
+        EAL.delete_asset(path)  # se regenera para aplicar cambios del material
     if not EAL.does_directory_exist(DIR_MAT):
         EAL.make_directory(DIR_MAT)
     mat = AT.create_asset("M_VertexColor", DIR_MAT, unreal.Material, unreal.MaterialFactoryNew())
-    vc = MEL.create_material_expression(mat, unreal.MaterialExpressionVertexColor, -400, 0)
+    vc = MEL.create_material_expression(mat, unreal.MaterialExpressionVertexColor, -600, 0)
     MEL.connect_material_property(vc, "RGB", unreal.MaterialProperty.MP_BASE_COLOR)
-    rough = MEL.create_material_expression(mat, unreal.MaterialExpressionConstant, -400, 220)
+    emi = MEL.create_material_expression(mat, unreal.MaterialExpressionMultiply, -300, 200)
+    emi.set_editor_property("const_b", 0.10)
+    MEL.connect_material_expressions(vc, "RGB", emi, "A")
+    MEL.connect_material_property(emi, "", unreal.MaterialProperty.MP_EMISSIVE_COLOR)
+    rough = MEL.create_material_expression(mat, unreal.MaterialExpressionConstant, -600, 400)
     rough.set_editor_property("r", 0.92)
     MEL.connect_material_property(rough, "", unreal.MaterialProperty.MP_ROUGHNESS)
-    mat.set_editor_property("two_sided", True)  # sin depender del sentido de los triangulos
+    mat.set_editor_property("two_sided", True)
     MEL.recompile_material(mat)
     EAL.save_asset(path, only_if_is_dirty=False)
-    log("creado " + path)
+    log("material regenerado " + path)
 
 
 def import_waypoints():
