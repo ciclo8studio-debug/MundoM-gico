@@ -1,14 +1,9 @@
-# Página de itch.io — Demo (pública el 10-12-2026; testers privados alrededor del 26-11)
+# Página de itch.io — Demo v0.5.0 (pública el 10-12-2026; testers privados hacia el 26-11)
 
-> **12-11:** el CTO aplazó la publicación. Esta página se actualiza antes del 10-12 para la v0.5.0, con el Nivel 1 completo y la cámara en 1ª persona.
-
-**Responsable:** `@qa-publisher` · **Estado:** listo para copiar y pegar. El CTO publica.
-**Versión a subir:** **v0.3.40** si el CTO la valida el 12-11 con `checklist_v0.3.40.md` y `checklist_humo.md`. Si no, **v0.3.35** como respaldo.
-**Calendario (decisión del CTO, 11-11):**
-- **13-11:** página en modo **Restringido**, solo para 3–5 testers con clave de descarga.
-- **16-11:** página **pública**, con la v0.3.41 si los testers terminan sin cierres.
-
-> Corregido el 11-11. El borrador anterior prometía el Carrusel, la Casa de Alfredo, la huida y 20–30 min. Eso es de la demo completa (v0.4/v0.5), no de esta. También decía "primera persona", pero el juego es en **tercera persona**.
+**Responsable:** `@qa-publisher` · **Estado:** borrador al día (24-11) para copiar y pegar. El CTO publica.
+**Versión a subir:** la RC que pase el humo (hoy v0.3.134_dev); la pública será la v0.5.0.
+**Alcance real (Plan B, 23-11):** hospital → glitch y TV → pantalla **FIN DE LA DEMO**. El parque y la Casona **no** están en esta demo; no se prometen.
+**Por confirmar por el CTO:** (1) cámara: BOARD dice 1ª persona como modo principal (3ª opcional); (2) duración real, hoy estimada en 30–40 min; (3) teclas de agacharse.
 
 ---
 
@@ -16,29 +11,29 @@
 **Mundo Mágico: Turno Nocturno — Demo**
 
 ## Lema (1 línea)
-*Despiertas en el Pabellón 4. El parque de diversiones abandonado todavía te espera.*
+*Despiertas en el Pabellón 4. Algo en la oscuridad ya sabe que estás despierta.*
 
 ## Descripción corta (120 caracteres o menos)
-Terror en tercera persona: un hospital vacío, un parque abandonado y una linterna que se apaga.
+Terror psicológico: un hospital vacío, una linterna que delata y una sombra que te busca. Juega con audífonos.
 
 ## Descripción
-> Isidora despierta en una sala del Pabellón 4 sin recordar cómo llegó. Al final del pasillo de Urgencias, algo la arrastra hasta **Mundo Mágico**, el parque de diversiones que cerró hace años y que nadie volvió a abrir.
+> Isidora despierta en una sala del Pabellón 4 sin recordar cómo llegó. El hospital está vacío, las luces fallan y algo recorre los pasillos. Lee las páginas que dejaron atrás, cuida las pilas de tu linterna y, sobre todo, **no hagas ruido**.
 >
-> Explora con tu linterna y cuida las pilas. Devuélvele la luz a la entrada, recorre la avenida y lee lo que quedó escrito. Sobre todo, **no hagas ruido**.
+> Al final del recorrido, un televisor encendido espera.
 
-**En esta demo (Capítulo 1):**
-- 🏥 La sala del despertar y el pasillo de Urgencias.
-- ⚡ La entrada del parque: devuélvele la energía y descubre quién espera bajo el letrero.
-- 🎡 La avenida principal en penumbra, el teatro y la noria, y algo que te observa desde lejos.
-- ⏱️ Unos **15–25 minutos** de juego. *(El CTO confirma la duración real en el playtest del 12-11.)*
+**En esta demo (Nivel 1):**
+- 🏥 La sala del despertar, el pasillo de Urgencias y el Pabellón 4.
+- 🔦 Una linterna que ilumina… y también delata. Apuntarle a la Sombra puede hacerla huir.
+- 🍾 Botellas para distraer lo que te busca, con una barra que muestra cuánto ruido haces.
+- 📄 Páginas de la novela, subtítulos de los sustos y música que sube con la tensión.
+- ⏱️ Unos **30–40 minutos** de juego.
 
 **Características:**
 - Linterna con batería y pilas que se cambian a mano.
-- Botella para distraer a lo que te busca.
-- Sonido que viene de su lugar y un latido que te avisa cuando algo se acerca. Juega con audífonos.
-- Guardado automático al entrar a cada zona.
+- Sonido que viene de su lugar y un latido que avisa cuando algo se acerca.
+- Guardado automático cada 60 segundos y al entrar a cada zona.
 - Teclado y mouse, o mando completo con vibración (PlayStation o Xbox).
-- Textos en español.
+- Textos y subtítulos en español.
 
 ## Requisitos (mínimos probados)
 | | Mínimo | Recomendado |
@@ -48,29 +43,33 @@ Terror en tercera persona: un hospital vacío, un parque abandonado y una linter
 | RAM | 8 GB | 16 GB |
 | GPU | Intel Iris Plus (calidad **Baja**) | NVIDIA GTX 1660 / RTX 2060 o superior |
 | DirectX | 11 | 11/12 |
-| Disco | 7 GB libres (ZIP de 3,3 GB + juego descomprimido) | SSD |
+| Disco | 5 GB libres (ZIP de ~1,3 GB + juego descomprimido) | SSD |
 
-> Con tarjeta integrada, juega en **Calidad Baja**, que viene así por defecto en el primer arranque. El juego va a 30 fps.
+> Con tarjeta integrada, juega en **Calidad Baja**, que viene así por defecto. Meta: 25 fps o más (hospital ≈ 30 en la v0.3.84; se remide con la RC).
+
+## Controles
+Teclado: **WASD** moverse · mouse mirar · **F** linterna · **E** interactuar o recoger · **Y** pista · **T** lanzar botella · **Shift** correr · agacharse: `[CONFIRMAR]`.
+Mando: ✕ saltar · □ interactuar · R2 lanzar botella.
 
 ## Aviso de Windows (pegar al final de la descripción)
 > **Windows puede mostrar "Windows protegió su PC".** El juego no tiene firma digital porque somos un estudio independiente. Para jugar, haz clic en **Más información** y luego en **Ejecutar de todas formas**.
 
 ## Etiquetas
-`horror`, `survival-horror`, `third-person`, `atmospheric`, `psychological-horror`, `exploration`, `singleplayer`, `spanish`, `unreal-engine`, `demo`
+`horror`, `survival-horror`, `atmospheric`, `psychological-horror`, `exploration`, `singleplayer`, `spanish`, `unreal-engine`, `demo`
 
-## Capturas (5) — tómalas mientras juegas la versión que se sube
-Usa **Win + Alt + Impr Pant** (Barra de juegos de Windows). Se guardan en `Videos\Capturas`.
+## Capturas (5) — de la versión que se sube
+Usa **Win + Alt + Impr Pant** (se guardan en `Videos\Capturas`).
 1. La sala del despertar, con la linterna encendida.
-2. El pasillo de Urgencias justo cuando aparece la criatura.
-3. La entrada del parque con el letrero MUNDO MÁGICO y las luces encendidas.
-4. La silueta del sombrero bajo el letrero.
-5. La avenida en penumbra, con niebla y faroles.
+2. El pasillo de Urgencias en penumbra.
+3. La Sombra huyendo de la linterna.
+4. La portada del menú (mano y niebla).
+5. El televisor del final.
 
-Como portada de la página sirve `Fuentes/UI/T_PortadaCine.png`, con el arte de la novela (autorizado por IMAGINARIO). Como video, el teaser nocturno `Teaser/Teaser_MundoMagico.mp4`, subido a **YouTube como no listado**, porque itch.io pide un enlace y no acepta MP4. El de atardecer queda fuera mientras el cielo salga negro.
+Portada de la página: `Fuentes/UI/T_PortadaCine.png` (arte de la novela, autorizado por IMAGINARIO). Video: teaser en **YouTube como no listado** (itch.io pide enlace, no acepta MP4); revisar que el teaser no muestre el parque.
 
 ## Antes de publicar (checklist)
-- [ ] 12-11: el CTO juega la versión candidata de punta a punta, sin cierres.
-- [ ] ZIP generado con `herramientas/Empaquetar_Demo.ps1 -Version 0.3.40` (ya está en `Publicar\`).
-- [ ] 5 capturas y la portada.
-- [ ] 13-11: página en modo **Restringido**, con claves para los testers y el formulario `auditoria/formulario_testers.md`.
-- [ ] 16-11: si no hay cierres, cambiar a **Público**.
+- [ ] Humo de la RC jugado por el CTO ([`humo/sprintB_2026-11-24.md`](humo/sprintB_2026-11-24.md)), sin cierres.
+- [ ] ZIP con `herramientas/Empaquetar_ZIP.ps1` (1,21 GB en 165 s).
+- [ ] Subida con butler probada en canal privado `windows-rc1` ([`guia_publicar_itchio.md`](guia_publicar_itchio.md)).
+- [ ] 5 capturas y portada.
+- [ ] 26-11 testers (página restringida con clave) → 10-12 pasar a **Público**.

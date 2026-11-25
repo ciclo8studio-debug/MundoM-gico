@@ -48,6 +48,17 @@ El 6/10 del 18-11 era la opinión de cada super-agente. Aquí cada departamento 
 | Q4 | Builds y espacio ordenados (pocas builds guardadas, ZIP medido) | ✔ | 40 builds borradas con OK del CTO (73 GB); quedan 6: v0.3.108_dev, v0.3.107_dev, v0.3.87, v0.3.86, v0.3.85 y v0.3.1; ZIP de 1,21 GB |
 | Q5 | Log limpio: 0 cierres de GPU y 10 avisos de script o menos por sesión | ◐ | Casona v0.3.108: 6 avisos, 0 cierres; falta hospital y parque |
 
+## Reevaluación 24-11 (Sprint B construido, sin humo)
+Sube lo **construido** (◐), no lo verificado. G5 ✘→◐ (empuje 0.3.119 y autoguardado 0.3.117), U3 ✘→◐ (subtítulos 0.3.120), U4 ✘→◐ (música 0.3.118 y mezcla 0.3.133), Q3 ✘→◐ (página itch.io reescrita al Plan B el 24-11). T5 sigue ◐: los interruptores de agachado, botella, ruido y Casona ya existen (0.3.114), falta el `ReceiveTick`.
+| Departamento | Antes | Hoy | Para 10/10 faltan |
+|---|:-:|:-:|---|
+| @tech-lead | 6,0 | 6,0 | T1, T2 y T4 jugados/medidos por el CTO; T5 post-demo |
+| @gameplay-engineer | 4,0 | **5,0** | humo de G1–G5 (casos N2, N3, N5 y Sprint B) |
+| @world-builder | 6,0 | 6,0 | humo de W1–W3 y W5 |
+| @ux-toolsmith | 3,0 | **5,0** | humo de U1–U5 (N1, N6, H1 y B3/B4) |
+| @qa-publisher | 3,0 | **5,0** | Q1 (humo), Q2 (`[LINK]`, `[CLAVE]`, teclas), Q3 con capturas y butler, Q5 en hospital |
+**Hecho vs verificado:** pasar de 5 a 10 ya no se puede hacer escribiendo: cada ◐ → ✔ exige jugar la build. El humo del 0.3.134_dev (portada ✔, correr ✔) cubrió poco; con la checklist de Sprint B (≈30 min) más las de H y N, casi todo queda en ✔.
+
 ## Lo que más sube el puntaje (orden recomendado)
 1. **Una sola prueba de humo jugada (Q1)** convierte hasta 12 criterios ◐ en ✔: es lo que más mueve los 5 departamentos. 60 minutos del CTO.
 2. **G0 del parque (T1, W5)** y los FPS en Shipping (T2).

@@ -73,6 +73,7 @@
 | **UI_BarraRuido** | Muestra la barra de ruido en el HUD | ✅ | — |
 | **Agachar_Visual** | Al agacharte la malla se achica (truco de escala 0,72) | ✅ | — |
 | **Casona_Cielo** | Domo de estrellas y luna visibles en la Casona | ✅ | — |
+| **Negatoscopio_Activo** | La placa 0333 del Ala de Internación y la puerta cerrada que abre. Apagado: la placa desaparece y la puerta queda sin cerrojo | ✅ | — |
 | **Casona_Ventanas** | Cristales cálidos de las ventanas de la Casona | ✅ | — |
 | **Autoguardado_Activo** | Guarda la partida sola cada 60 s | ✅ | — |
 | **Director_Musica** | Una capa de música sube con la tensión del Director y baja sola | ✅ | — |

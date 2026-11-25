@@ -3,6 +3,17 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado `MAYOR.MENOR.PARCHE`.
 La versión del juego vive en `Config/DefaultGame.ini` → `ProjectVersion`.
 
+## [0.3.136] — 2026-11-24 · Sprint B (B2): negatoscopio 0333 y cuarto cerrado del Ala de Internación (sin build)
+- **Hallazgo:** `L_Hospital` no tenía negatoscopio ni puerta con código. El teclado del jugador (`AbrirCandado`/`ComprobarCodigo`) está fijo a los 2 candados del parque (317 y 842); no se reutilizó ni se tocó el BP del jugador.
+- **`BP_Negatoscopio`** (copia de `BP_LlaveFlag`, en `Mundo/`): al interactuar (E / □) muestra "En la placa, escrito a mano: 0333. Anotaste: Negatoscopio" y agrega el flag `Negatoscopio` a `BP_GI_MundoMagico`; no se destruye (se puede releer). En `BeginPlay` lee `DA_Tuning.Negatoscopio_Activo`: si está apagado, agrega el flag solo y se destruye (la puerta queda sin cerrojo). Sin Event Tick.
+- **Colocados en `L_Hospital`** (carpeta `Ala_Internacion/B2`), ambos con tag `Negatoscopio`:
+  - `NEGATOSCOPIO_Internacion` en (-886, -6550, 140): pared del fondo del 2.º cuarto del lado oeste, cubo plano de 5×100×70 cm con `MI_EmissiveLightBlock_Inst` (llave oculta).
+  - `PUERTA_Internacion_Cerrada` (`BP_DoorLocked`) en (197, -8660, 0): hueco del 4.º cuarto del lado este (hueco de 180 cm, `Door` escalada ×1,95 en X y marco oculto). Se abre con E una vez leída la placa; antes dice "Está cerrada. Algo tiene que abrirla."
+- **Opcional, no en el camino crítico:** el cuarto es lateral; no bloquea la salida ni el Acto 3. Por ahora **sin recompensa dentro** (queda pendiente decidir pilas o botiquín).
+- **Interruptor:** `Negatoscopio_Activo` (true) en `BP_AfinacionDatos` y `DA_Tuning`; en `GUIA_TUNING.md`.
+- **Decisión de diseño:** el 0333 es una pista que se descubre, no un teclado de 4 cifras.
+- **Probar:** leer la placa desde ~1,5 m; la puerta abre y gira hacia el pasillo sin atravesar la pared; escala de la puerta en el hueco (si queda corta o larga, ajustar la escala de `Door`); el cubo se ve como caja de luz. Riesgo: el tamaño real del hueco y la orientación del giro no se vieron en pantalla, solo por medidas.
+
 ## [0.3.135] — 2026-11-24 · Sprint B: arreglo del temblor de cámara y un solo corte en el glitch
 
 - **Humo de la v0.3.134_dev (CTO):** portada ✔; giro rápido y correr ✔; el susto de la niña no apareció (sin probar); pausa y pasos sin probar; **temblor de cámara constante** (adelante y atrás); **cierre al viajar al parque**; el glitch muestra dos cortes.
