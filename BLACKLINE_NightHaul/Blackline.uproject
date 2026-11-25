@@ -18,6 +18,7 @@
 		{ "Name": "CommonUI", "Enabled": true },
 		{ "Name": "GameplayTagsEditor", "Enabled": true },
 		{ "Name": "PythonScriptPlugin", "Enabled": true },
+		{ "Name": "ProceduralMeshComponent", "Enabled": true },
 		{ "Name": "EditorScriptingUtilities", "Enabled": true }
 	]
 }

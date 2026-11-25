@@ -119,6 +119,8 @@ ABlacklineVanPawn::ABlacklineVanPawn(const FObjectInitializer& ObjectInitializer
 	ChaseArm->bInheritPitch = true;
 	ChaseArm->bInheritYaw = true;
 	ChaseArm->bInheritRoll = false;
+	// El brazo chocaba con el propio chasis (perfil Vehicle) y se encogia a 0: la camara quedaba dentro del furgon.
+	ChaseArm->bDoCollisionTest = false;
 	ChaseArm->bEnableCameraLag = true;
 	ChaseArm->CameraLagSpeed = 6.f;
 

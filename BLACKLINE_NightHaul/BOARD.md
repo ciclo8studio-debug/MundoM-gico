@@ -13,7 +13,8 @@ Leyenda: ✅ hecho · 🔄 en curso · ⬜ pendiente · ⚠️ riesgo/bloqueo
 | Target de editor con el C++ nuevo | ✅ | Compila (22-11) |
 | Importar `DT_BlacklineContracts` en el editor | ✅ | 25 filas, 0 problemas |
 | Patrulla, zona de entrega, director de clima, tablet de encargos, tests (C++) | ✅ | Compilan; 3 tests de Automation pasan; mapa regenerado con NavMesh, entrega y clima |
-| Manejo del furgón probado | ⬜ | Carrocería placeholder (OffroadCar) |
+| Chile comprimido 1:100 (zona 2 jugable) | ✅ | Ruta y terreno se generan; furgón se sostiene. Zonas 1, 3 y 4 sin probar |
+| Manejo del furgón probado | 🔄 | Se sostiene sobre la ruta; falta confirmar avance, giro, mando y cámara |
 | Render nocturno y rendimiento | ⬜ | Snippet sin aplicar; iGPU limita |
 | Audio (MetaSounds) | ⬜ | Sin samples |
 | Assets propios (furgón, cabina, cargas) | ⬜ | Tareas para nube |

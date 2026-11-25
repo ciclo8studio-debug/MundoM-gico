@@ -1,6 +1,14 @@
 # Changelog — BLACKLINE: NIGHT HAUL
 
 ## 0.1.0-dev (en curso)
+### 2026-11-25
+- **Chile comprimido 1:100:** `FChileWaypointRow`, `DT_ChileWaypoints` (26 waypoints de ciudades reales en 4 zonas: Norte, Centro, Sur, Cordillera; ~29 km), `AChileRouteActor` (ruta en spline, calzada con lineas, terreno procedural por bioma) y mapa `L_ChileRoute` (mapa de inicio). Zona con `ZoneId` o `-zone=N`.
+- Perfil grafico liviano (DX11, sin Lumen/VSM/RT, sg.*=0, resolucion 50%) aplicado a Blackline.
+- Furgon: simulacion de fisica forzada, curva de torque y caja por defecto, motor encendido, camara de tercera persona sin colision del brazo, carroceria y neumaticos visuales, telemetria en el log.
+- Input: IMC con modificadores correctos y mapeo de mando PS4 (R2/L2, stick, Cuadrado, Triangulo, Circulo, L1).
+- Fix: el furgon caia a traves del suelo por teletransportarlo despues de aparecer; ahora el `PlayerStart` se mueve al inicio de la ruta antes de que aparezca el jugador. Losas de colision de cubos bajo la calzada (1744 en la zona 2).
+- Scripts: `Rebuild_And_Package.ps1`, `Package_And_Probe.ps1`, `blackline_build_chile_map.py`, `blackline_chile_route.py`.
+
 ### 2026-11-22 (noche)
 - `UBlacklineQualityGovernor` (subsistema de mundo, sin Tick, timer de 1 s): resolucion adaptativa por FPS medidos, ajusta `r.ScreenPercentage` 60-90 % en pasos de 5 con histeresis (baja al tiro, sube tras 5 mediciones con holgura). Interruptor y limites en Project Settings > Game > Blackline Quality. Compila (Development); sin probar en juego.
 ### 2026-11-22 (tarde)

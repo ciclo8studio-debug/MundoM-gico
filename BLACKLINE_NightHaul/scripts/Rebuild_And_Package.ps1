@@ -19,4 +19,9 @@ $log = Join-Path $proj 'Saved\build_map_run.log'
   "-ExecutePythonScript=$proj\Content\Python\blackline_build_map.py" -unattended -nullrhi -nosplash -culture=en -stdout -FullStdOutLogOutput *> $log
 if (-not (Select-String -Path $log -Pattern 'BLK: FIN OK' -Quiet)) { throw "El script del mapa fallo. Ver $log" }
 
+$log2 = Join-Path $proj 'Saved\build_chile_map_run.log'
+& "$EngineRoot\Engine\Binaries\Win64\UnrealEditor-Cmd.exe" "$proj\Blackline.uproject" /Engine/Maps/Entry `
+  "-ExecutePythonScript=$proj\Content\Python\blackline_build_chile_map.py" -unattended -nullrhi -nosplash -culture=en -stdout -FullStdOutLogOutput *> $log2
+if (-not (Select-String -Path $log2 -Pattern 'BLK: FIN OK CHILE' -Quiet)) { throw "El script del mapa de Chile fallo. Ver $log2" }
+
 & "$proj\scripts\Build.ps1" -Config Development -Version $Version
