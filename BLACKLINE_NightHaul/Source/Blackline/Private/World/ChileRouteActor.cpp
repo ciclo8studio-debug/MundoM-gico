@@ -16,6 +16,8 @@
 #include "Data/CargoItemDataAsset.h"
 #include "Data/ManifestDataAsset.h"
 #include "Contracts/DeliveryZone.h"
+#include "Contracts/WeatherDirector.h"
+#include "World/BlacklineGuardPost.h"
 #include "Engine/GameInstance.h"
 #include "Blueprint/UserWidget.h"
 #include "UI/BlacklineMinimapWidget.h"
@@ -24,7 +26,8 @@
 #include "Vehicle/BlacklineVanPawn.h"
 #include "Engine/DataTable.h"
 #include "Engine/World.h"
-#include "EngineUtils.h"
+#include "GameFramework/PlayerController.h"
+#include "InputCoreTypes.h"
 #include "GameFramework/PlayerStart.h"
 #include "Kismet/GameplayStatics.h"
 #include "Materials/MaterialInterface.h"
@@ -134,7 +137,29 @@ void AChileRouteActor::PostInitializeComponents()
 	UWorld* World = GetWorld();
 	if (bBuildOnBeginPlay && World && World->IsGameWorld())
 	{
-		FParse::Value(FCommandLine::Get(), TEXT("zone="), ZoneId);
+		// Zona: -zone=N la fuerza (pruebas); si no, la da el contrato actual de la campaña.
+		int32 CmdZone = 0;
+		FString CmdContract;
+		const bool bForcedZone = FParse::Value(FCommandLine::Get(), TEXT("zone="), CmdZone);
+		const bool bForcedContract = FParse::Value(FCommandLine::Get(), TEXT("contract="), CmdContract);
+		bCampaignMode = !bForcedZone && !bForcedContract;
+		if (bForcedZone)
+		{
+			ZoneId = CmdZone;
+		}
+		else if (UGameInstance* GI = GetGameInstance())
+		{
+			if (UBlacklineContractSubsystem* Contracts = GI->GetSubsystem<UBlacklineContractSubsystem>())
+			{
+				FBlacklineContractRow Row;
+				const FName Id = bForcedContract ? FName(*CmdContract) : Contracts->GetCampaignContract();
+				if (!Id.IsNone() && Contracts->GetContract(Id, Row))
+				{
+					ZoneId = UBlacklineContractSubsystem::ZoneForArc(Row.Arc);
+					RoadWetness01 = GetDefault<AWeatherDirector>()->GetPreset(Row.WeatherType).Wetness01;
+				}
+			}
+		}
 		BuildZone();
 		bBuiltInInit = bBuilt;
 	}
@@ -150,6 +175,27 @@ void AChileRouteActor::BeginPlay()
 	}
 	if (bBuilt && GetWorld() && GetWorld()->IsGameWorld())
 	{
+		static bool bNoticeShown = false;
+		if (!bNoticeShown && bCampaignMode)
+		{
+			bNoticeShown = true;
+			GetWorldTimerManager().SetTimer(NoticeTimer, this, &AChileRouteActor::ShowContentNotice, 13.f, false);
+		}
+		if (APlayerController* PC = UGameplayStatics::GetPlayerController(this, 0))
+		{
+			EnableInput(PC);
+			if (InputComponent)
+			{
+				InputComponent->BindKey(EKeys::H, IE_Pressed, this, &AChileRouteActor::ToggleHelp);
+				InputComponent->BindKey(EKeys::P, IE_Pressed, this, &AChileRouteActor::ChooseCallPolice);
+				InputComponent->BindKey(EKeys::Gamepad_FaceButton_Right, IE_Pressed, this, &AChileRouteActor::ChooseCallPolice);
+				if (bCampaignMode)
+				{
+					InputComponent->BindKey(EKeys::F5, IE_Pressed, this, &AChileRouteActor::SelectPrevContract);
+					InputComponent->BindKey(EKeys::F6, IE_Pressed, this, &AChileRouteActor::SelectNextContract);
+				}
+			}
+		}
 		if (bSpawnRoadsidePlaces)
 		{
 			SpawnRoadsidePlaces();
@@ -319,14 +365,18 @@ void AChileRouteActor::UpdateTraffic()
 
 void AChileRouteActor::StartZoneContract()
 {
+	UGameInstance* GI = GetGameInstance();
+	UBlacklineContractSubsystem* Contracts = GI ? GI->GetSubsystem<UBlacklineContractSubsystem>() : nullptr;
 	FName Id = ZoneContracts.FindRef(ZoneId);
 	FString Cmd;
 	if (FParse::Value(FCommandLine::Get(), TEXT("contract="), Cmd) && !Cmd.IsEmpty())
 	{
 		Id = FName(*Cmd);
 	}
-	UGameInstance* GI = GetGameInstance();
-	UBlacklineContractSubsystem* Contracts = GI ? GI->GetSubsystem<UBlacklineContractSubsystem>() : nullptr;
+	else if (bCampaignMode && Contracts && !Contracts->GetCampaignContract().IsNone())
+	{
+		Id = Contracts->GetCampaignContract(); // campaña: el contrato que toca
+	}
 	if (Id.IsNone() || !Contracts)
 	{
 		return;
@@ -366,6 +416,7 @@ void AChileRouteActor::HandleDogWellbeingChanged(float Wellbeing01)
 	{
 		bEndingShown = true;
 		Van->ShowHudMessage(NSLOCTEXT("Blackline", "EndBad", "FIN: La Cofradia perdio la paciencia y corto la comunicacion. Pancito ya no volvera a la cabina."), 20.f);
+			ScheduleNewRun();
 	}
 	else if (Wellbeing01 < 0.3f)
 	{
@@ -387,7 +438,11 @@ void AChileRouteActor::HandleContractFinished(FName ContractID)
 	const float Dog = Contracts->GetDogWellbeing01();
 	if (Earned <= 0)
 	{
-		Van->ShowHudMessage(NSLOCTEXT("Blackline", "ContractFailed", "ENCARGO FALLIDO: la carga se perdio. La Cofradia no perdona."), 10.f);
+		Van->ShowHudMessage(NSLOCTEXT("Blackline", "ContractFailed", "ENCARGO FALLIDO: la carga se perdio. La Cofradia no perdona. Reintento en 10 s."), 10.f);
+		if (bCampaignMode)
+		{
+			GetWorldTimerManager().SetTimer(TravelTimer, this, &AChileRouteActor::RetryContract, 10.f, false);
+		}
 		return;
 	}
 
@@ -399,18 +454,17 @@ void AChileRouteActor::HandleContractFinished(FName ContractID)
 	case 3: Proof = NSLOCTEXT("Blackline", "Proof3", "PRUEBA DE VIDA: Pancito duerme sobre una manta. Detras se oye viento de desierto: es una pista."); break;
 	case 4: Proof = NSLOCTEXT("Blackline", "Proof4", "PRUEBA DE VIDA: un aullido lejano y lluvia en un techo. El Capataz: \"Falta poco, Salinas\"."); break;
 	default:
-		if (Dog >= 0.5f)
-		{
-			bEndingShown = true;
-			Van->ShowHudMessage(NSLOCTEXT("Blackline", "EndGood", "RESCATE: el Arriero abre una puerta. Pancito corre a la cabina y se sube al asiento del copiloto. FIN."), 20.f);
-			return;
-		}
-		bEndingShown = true;
-		Van->ShowHudMessage(NSLOCTEXT("Blackline", "EndCost", "Llegas tarde: Pancito esta debil, pero vivo, y vuelve contigo. Final con costo. FIN."), 20.f);
+		BeginFinalDecision(Dog);
 		return;
 	}
 	Van->ShowHudMessage(FText::Format(NSLOCTEXT("Blackline", "DeliveredStory", "{0}  (+{1} viaticos, paciencia de La Cofradia {2}%)"),
 		Proof, FText::AsNumber(Earned), FText::AsNumber(FMath::RoundToInt(Dog * 100.f))), 12.f);
+
+	// Campaña: tras la prueba de vida, la banda manda el siguiente encargo (cambia de zona si hace falta).
+	if (bCampaignMode)
+	{
+		GetWorldTimerManager().SetTimer(TravelTimer, this, &AChileRouteActor::TravelToNextContract, 12.f, false);
+	}
 }
 
 void AChileRouteActor::HandleVanFlipped()
@@ -463,6 +517,7 @@ void AChileRouteActor::SpawnCheckpoint()
 	{
 		Checkpoint->OnCheckpointStateChanged.AddUniqueDynamic(this, &AChileRouteActor::HandleCheckpointState);
 		Checkpoint->OnInspectionVerdict.AddUniqueDynamic(this, &AChileRouteActor::HandleCheckpointVerdict);
+		GuardPost = World->SpawnActor<ABlacklineGuardPost>(ABlacklineGuardPost::StaticClass(), Pos, FRotator(0.f, Rot.Yaw, 0.f), Params);
 		UE_LOG(LogBlackline, Log, TEXT("ChileRoute: reten en %.0f%% de la ruta."), CheckpointAt01 * 100.f);
 	}
 }
@@ -522,6 +577,10 @@ void AChileRouteActor::HandleCheckpointVerdict(EInspectionVerdict Verdict, float
 		return;
 	}
 	const FText Pct = FText::AsNumber(FMath::RoundToInt(Suspicion01 * 100.f));
+	if (GuardPost)
+	{
+		GuardPost->SetBarrierOpen(Verdict == EInspectionVerdict::CleanPass);
+	}
 	switch (Verdict)
 	{
 	case EInspectionVerdict::CleanPass:
@@ -630,6 +689,135 @@ void AChileRouteActor::HandleArrest()
 	}
 }
 
+void AChileRouteActor::TravelToNextContract()
+{
+	UGameInstance* GI = GetGameInstance();
+	UBlacklineContractSubsystem* Contracts = GI ? GI->GetSubsystem<UBlacklineContractSubsystem>() : nullptr;
+	if (!Contracts || bEndingShown || !Contracts->AdvanceCampaign())
+	{
+		return;
+	}
+	FBlacklineContractRow Next;
+	if (Contracts->GetContract(Contracts->GetCampaignContract(), Next))
+	{
+		if (ABlacklineVanPawn* Van = Cast<ABlacklineVanPawn>(UGameplayStatics::GetPlayerPawn(this, 0)))
+		{
+			Van->ShowHudMessage(FText::Format(NSLOCTEXT("Blackline", "NextOrder", "NUEVO ENCARGO de {0}: {1}"), Next.BrokerName, Next.Title), 5.f);
+		}
+	}
+	UGameplayStatics::OpenLevel(this, FName(TEXT("/Game/Blackline/Maps/L_ChileRoute")));
+}
+
+void AChileRouteActor::BeginFinalDecision(float Patience01)
+{
+	ABlacklineVanPawn* Van = Cast<ABlacklineVanPawn>(UGameplayStatics::GetPlayerPawn(this, 0));
+	if (!Van || bAwaitingDecision)
+	{
+		return;
+	}
+	bAwaitingDecision = true;
+	DecisionPatience01 = Patience01;
+	Van->ShowHudMessage(NSLOCTEXT("Blackline", "FinalDecision",
+		"LLEGASTE. El Arriero espera con Pancito. DECIDE (15 s):  [P / Circulo] avisar a la policia   |   no hagas nada: entregar la carga a La Cofradia."), 15.f);
+	GetWorldTimerManager().SetTimer(DecisionTimer, this, &AChileRouteActor::ResolveDeliver, 15.f, false);
+}
+
+void AChileRouteActor::ChooseCallPolice()
+{
+	if (bAwaitingDecision)
+	{
+		ResolveFinal(true);
+	}
+}
+
+void AChileRouteActor::ResolveFinal(bool bCallPolice)
+{
+	if (!bAwaitingDecision)
+	{
+		return;
+	}
+	bAwaitingDecision = false;
+	bEndingShown = true;
+	GetWorldTimerManager().ClearTimer(DecisionTimer);
+	ABlacklineVanPawn* Van = Cast<ABlacklineVanPawn>(UGameplayStatics::GetPlayerPawn(this, 0));
+	if (!Van)
+	{
+		return;
+	}
+
+	FText Message;
+	if (bCallPolice)
+	{
+		Message = (DecisionPatience01 >= 0.3f)
+			? NSLOCTEXT("Blackline", "EndLawGood", "FINAL DE LA LEY: avisas a la policia. Llegan al escondite antes de que La Cofradia se mueva y Pancito sale a salvo. Tu declaras por el transporte y quedas con una causa abierta. FIN.")
+			: NSLOCTEXT("Blackline", "EndLawLate", "FINAL DE LA LEY: avisas tarde. La Cofradia ya se fue, pero la policia sigue el rastro y encuentra a Pancito sano en una parcela. Tu quedas detenido por el transporte. FIN.");
+	}
+	else
+	{
+		Message = (DecisionPatience01 >= 0.5f)
+			? NSLOCTEXT("Blackline", "EndGood", "RESCATE: el Arriero abre una puerta. Pancito corre a la cabina y se sube al asiento del copiloto. FIN.")
+			: NSLOCTEXT("Blackline", "EndCost", "Llegas tarde: Pancito esta debil, pero vivo, y vuelve contigo. Final con costo. FIN.");
+	}
+	Van->ShowHudMessage(Message, 20.f);
+	ScheduleNewRun();
+}
+
+void AChileRouteActor::ShowContentNotice()
+{
+	if (ABlacklineVanPawn* Van = Cast<ABlacklineVanPawn>(UGameplayStatics::GetPlayerPawn(this, 0)))
+	{
+		Van->ShowHudMessage(NSLOCTEXT("Blackline", "ContentNotice",
+			"Obra de ficcion: personajes, empresas y policia son inventados. Contiene crimen, extorsion, un animal en peligro (sin daño mostrado) y luces intermitentes."), 10.f);
+	}
+}
+
+void AChileRouteActor::ToggleHelp()
+{
+	UBlacklineMinimapWidget::bShowHelp = !UBlacklineMinimapWidget::bShowHelp;
+}
+
+void AChileRouteActor::ScheduleNewRun()
+{
+	if (bCampaignMode)
+	{
+		GetWorldTimerManager().SetTimer(TravelTimer, this, &AChileRouteActor::RestartCampaign, 25.f, false);
+	}
+}
+
+void AChileRouteActor::RestartCampaign()
+{
+	if (UGameInstance* GI = GetGameInstance())
+	{
+		if (UBlacklineContractSubsystem* Contracts = GI->GetSubsystem<UBlacklineContractSubsystem>())
+		{
+			Contracts->ResetCampaign();
+		}
+	}
+	UGameplayStatics::OpenLevel(this, FName(TEXT("/Game/Blackline/Maps/L_ChileRoute")));
+}
+
+void AChileRouteActor::RetryContract()
+{
+	if (!bEndingShown)
+	{
+		UGameplayStatics::OpenLevel(this, FName(TEXT("/Game/Blackline/Maps/L_ChileRoute")));
+	}
+}
+
+void AChileRouteActor::SelectPrevContract() { SelectContract(-1); }
+void AChileRouteActor::SelectNextContract() { SelectContract(+1); }
+
+void AChileRouteActor::SelectContract(int32 Delta)
+{
+	UGameInstance* GI = GetGameInstance();
+	UBlacklineContractSubsystem* Contracts = GI ? GI->GetSubsystem<UBlacklineContractSubsystem>() : nullptr;
+	if (!bCampaignMode || !Contracts || !Contracts->ShiftCampaign(Delta))
+	{
+		return;
+	}
+	UGameplayStatics::OpenLevel(this, FName(TEXT("/Game/Blackline/Maps/L_ChileRoute")));
+}
+
 void AChileRouteActor::CreateMinimap()
 {
 	APlayerController* PC = UGameplayStatics::GetPlayerController(this, 0);
@@ -722,6 +910,11 @@ void AChileRouteActor::ClearZone()
 	{
 		Checkpoint->Destroy();
 		Checkpoint = nullptr;
+		if (GuardPost)
+		{
+			GuardPost->Destroy();
+			GuardPost = nullptr;
+		}
 	}
 	for (ARoadsidePOI* P : POIs)
 	{
@@ -922,8 +1115,9 @@ void AChileRouteActor::BuildRoadMesh(const TArray<FRouteSample>& Samples)
 
 	const float L = LaneWidthCm;
 	const float S = LaneWidthCm + ShoulderWidthCm;
-	const FLinearColor Asphalt(0.025f, 0.025f, 0.03f, 1.f);
-	const FLinearColor Shoulder(0.16f, 0.14f, 0.11f, 1.f);
+	// Calzada mojada: mas oscura y fria; la berma tambien se oscurece.
+	const FLinearColor Asphalt = FMath::Lerp(FLinearColor(0.025f, 0.025f, 0.03f, 1.f), FLinearColor(0.007f, 0.009f, 0.017f, 1.f), RoadWetness01);
+	const FLinearColor Shoulder = FMath::Lerp(FLinearColor(0.16f, 0.14f, 0.11f, 1.f), FLinearColor(0.09f, 0.085f, 0.08f, 1.f), RoadWetness01);
 	const FLinearColor Yellow(0.9f, 0.65f, 0.0f, 1.f);
 	const FLinearColor White(0.85f, 0.85f, 0.85f, 1.f);
 	const TArray<FStrip> Strips = {

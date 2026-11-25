@@ -65,6 +65,34 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Contracts")
 	int32 GetCredits() const { return Credits; }
 
+	// ---- Campaña lineal del slice: un contrato por arco, en orden ----
+	/** Orden de los contratos de la campaña. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Contracts|Campaign")
+	TArray<FName> CampaignOrder;
+
+	/** Contrato actual de la campaña (NAME_None si ya termino). */
+	UFUNCTION(BlueprintPure, Category = "Contracts|Campaign")
+	FName GetCampaignContract() const;
+
+	UFUNCTION(BlueprintPure, Category = "Contracts|Campaign")
+	int32 GetCampaignIndex() const { return CampaignIndex; }
+
+	/** Pasa al contrato siguiente. Devuelve false si no queda ninguno. */
+	UFUNCTION(BlueprintCallable, Category = "Contracts|Campaign")
+	bool AdvanceCampaign();
+
+	/** Nueva partida: vuelve al primer contrato, sin viaticos y con la paciencia inicial. */
+	UFUNCTION(BlueprintCallable, Category = "Contracts|Campaign")
+	void ResetCampaign();
+
+	/** Mueve el contrato de la campaña (-1 anterior, +1 siguiente). Devuelve false si no hay a donde ir. */
+	UFUNCTION(BlueprintCallable, Category = "Contracts|Campaign")
+	bool ShiftCampaign(int32 Delta);
+
+	/** Zona del mapa de cada arco: 1 y 2 Centro, 3 Norte, 4 Sur, 5 Cordillera. */
+	UFUNCTION(BlueprintPure, Category = "Contracts|Campaign")
+	static int32 ZoneForArc(int32 Arc);
+
 	/** Suma o resta viaticos (no baja de 0). */
 	UFUNCTION(BlueprintCallable, Category = "Contracts")
 	void AddCredits(int32 Delta);
@@ -121,6 +149,7 @@ private:
 	void HandleDeadlineExpired();
 
 	float DogWellbeing01 = 0.8f;
+	int32 CampaignIndex = 0;
 	double DeadlineEndTime = 0.0;
 	bool bHasDeadline = false;
 	FTimerHandle DeadlineTimer;

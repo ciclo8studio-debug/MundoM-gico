@@ -21,6 +21,10 @@ void UBlacklineContractSubsystem::Initialize(FSubsystemCollectionBase& Collectio
 	Super::Initialize(Collection);
 	CachedTable = ResolveTable();
 	DogWellbeing01 = StartDogWellbeing01;
+	if (CampaignOrder.IsEmpty())
+	{
+		CampaignOrder = {FName(TEXT("C01")), FName(TEXT("C09")), FName(TEXT("C15")), FName(TEXT("C18")), FName(TEXT("C21"))};
+	}
 	UE_LOG(LogBlackline, Log, TEXT("ContractSubsystem: tabla %s (%d contratos)"),
 		CachedTable ? *CachedTable->GetName() : TEXT("NO ENCONTRADA"),
 		CachedTable ? CachedTable->GetRowMap().Num() : 0);
@@ -209,4 +213,50 @@ void UBlacklineContractSubsystem::HandleDeadlineExpired()
 void UBlacklineContractSubsystem::AddCredits(int32 Delta)
 {
 	Credits = FMath::Max(0, Credits + Delta);
+}
+
+FName UBlacklineContractSubsystem::GetCampaignContract() const
+{
+	return CampaignOrder.IsValidIndex(CampaignIndex) ? CampaignOrder[CampaignIndex] : NAME_None;
+}
+
+bool UBlacklineContractSubsystem::AdvanceCampaign()
+{
+	if (CampaignIndex + 1 < CampaignOrder.Num())
+	{
+		++CampaignIndex;
+		UE_LOG(LogBlackline, Log, TEXT("Campaña: siguiente contrato %s (%d de %d)"), *GetCampaignContract().ToString(), CampaignIndex + 1, CampaignOrder.Num());
+		return true;
+	}
+	return false;
+}
+
+void UBlacklineContractSubsystem::ResetCampaign()
+{
+	CampaignIndex = 0;
+	Credits = 0;
+	DogWellbeing01 = StartDogWellbeing01;
+}
+
+bool UBlacklineContractSubsystem::ShiftCampaign(int32 Delta)
+{
+	const int32 Target = CampaignIndex + Delta;
+	if (!CampaignOrder.IsValidIndex(Target))
+	{
+		return false;
+	}
+	CampaignIndex = Target;
+	UE_LOG(LogBlackline, Log, TEXT("Campaña: contrato elegido %s (%d de %d)"), *GetCampaignContract().ToString(), CampaignIndex + 1, CampaignOrder.Num());
+	return true;
+}
+
+int32 UBlacklineContractSubsystem::ZoneForArc(int32 Arc)
+{
+	switch (Arc)
+	{
+	case 3: return 1; // Patrimonio: desierto del Norte
+	case 4: return 3; // Industria y puertos: Sur
+	case 5: return 4; // Pasos: Cordillera
+	default: return 2; // Arcos 1 y 2: Centro
+	}
 }

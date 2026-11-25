@@ -181,12 +181,30 @@ int32 UBlacklineMinimapWidget::NativePaint(const FPaintArgs& Args, const FGeomet
 	}
 	++Layer;
 
-	// --- Controles (abajo a la izquierda)
+	// --- Campaña: los 5 contratos, el actual resaltado (F5/F6 para elegir)
+	if (const UGameInstance* CampGI = GetGameInstance())
+	{
+		if (const UBlacklineContractSubsystem* Camp = CampGI->GetSubsystem<UBlacklineContractSubsystem>())
+		{
+			FString Line = TEXT("CAMPAÑA:  ");
+			for (int32 i = 0; i < Camp->CampaignOrder.Num(); ++i)
+			{
+				const bool bNow = (i == Camp->GetCampaignIndex());
+				Line += FString::Printf(TEXT("%s%s%s%s"), bNow ? TEXT("[") : TEXT(""), *Camp->CampaignOrder[i].ToString(), bNow ? TEXT("]") : TEXT(""),
+					i + 1 < Camp->CampaignOrder.Num() ? TEXT("  >  ") : TEXT(""));
+			}
+			Text(Line, FVector2f(MarginPx, ScreenSize.Y - 118.f), 12, FLinearColor(0.85f, 0.7f, 0.25f, 0.95f));
+		}
+	}
+	++Layer;
+
+	// --- Controles (abajo a la izquierda); H los oculta
+	if (bShowHelp)
 	{
 		const FLinearColor Dim(0.85f, 0.85f, 0.9f, 0.85f);
 		const float Y0 = ScreenSize.Y - 96.f;
 		Text(TEXT("W/S acelerar-frenar   A/D girar   Espacio freno   V camara   F 4x4"), FVector2f(MarginPx, Y0), 11, Dim);
-		Text(TEXT("L luces   I motor   J inhibidor   E interactuar   R volver a la carretera"), FVector2f(MarginPx, Y0 + 16.f), 11, Dim);
+		Text(TEXT("L luces   I motor   J inhibidor   E interactuar   R volver a la carretera   F5/F6 contrato anterior/siguiente   H ocultar ayuda"), FVector2f(MarginPx, Y0 + 16.f), 11, Dim);
 		Text(TEXT("Mando: R2/L2 acelerar-frenar  stick girar  Cuadrado freno  Triangulo camara  L1 4x4  Cruceta: luces/motor/inhibidor"), FVector2f(MarginPx, Y0 + 32.f), 11, Dim);
 	}
 	++Layer;

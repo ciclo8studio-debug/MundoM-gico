@@ -3,6 +3,7 @@
 
 #include "Blackline.h"
 #include "Audio/BlacklineProceduralAudio.h"
+#include "Vehicle/BlacklineCabinFX.h"
 #include "World/RoadsidePOI.h"
 #include "PhysicsEngine/PhysicsAsset.h"
 #include "Components/StaticMeshComponent.h"
@@ -108,6 +109,8 @@ ABlacklineVanPawn::ABlacklineVanPawn(const FObjectInitializer& ObjectInitializer
 
 	Cargo = CreateDefaultSubobject<UCargoSimulationComponent>(TEXT("Cargo"));
 	ProceduralAudio = CreateDefaultSubobject<UBlacklineProceduralAudio>(TEXT("ProceduralAudio"));
+	CabinProps = CreateDefaultSubobject<UBlacklineCabinComponent>(TEXT("CabinProps"));
+	RainFX = CreateDefaultSubobject<UBlacklineRainComponent>(TEXT("RainFX"));
 
 	CockpitCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("CockpitCamera"));
 	CockpitCamera->SetupAttachment(VanMesh);

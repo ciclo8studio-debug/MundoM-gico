@@ -10,6 +10,8 @@ class UCameraComponent;
 class UStaticMeshComponent;
 class ARoadsidePOI;
 class UBlacklineProceduralAudio;
+class UBlacklineCabinComponent;
+class UBlacklineRainComponent;
 class USpringArmComponent;
 class USpotLightComponent;
 class UCargoSimulationComponent;
@@ -55,6 +57,14 @@ public:
 	/** Audio sintetizado de la cabina: motor segun RPM, lluvia, viento y sirena. */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Blackline|Components")
 	TObjectPtr<UBlacklineProceduralAudio> ProceduralAudio;
+
+	/** Cabina propia: tablero, volante, collar, pelota y foto de Pancito. */
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Blackline|Components")
+	TObjectPtr<UBlacklineCabinComponent> CabinProps;
+
+	/** Lluvia visible alrededor del furgon. */
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Blackline|Components")
+	TObjectPtr<UBlacklineRainComponent> RainFX;
 
 	/** Ultimo acelerador recibido [0,1] (para el audio). */
 	UFUNCTION(BlueprintPure, Category = "Blackline|Vehicle")

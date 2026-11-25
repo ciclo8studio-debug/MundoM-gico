@@ -14,12 +14,13 @@ Leyenda: ✅ hecho · 🔄 en curso · ⬜ pendiente · ⚠️ riesgo/bloqueo
 | Retén con manifiesto automático, veredictos, patrullas | 🔄 | En build v0.1.20; sin probar en pantalla |
 | Teclas de motor, luces, inhibidor y volver a la carretera | 🔄 | En build v0.1.20 |
 | Arresto (reglas del acta) | 🔄 | En build v0.1.22; sin probar en pantalla |
-| Decisión de avisar a la policía, finales alternativos | ⬜ | Después del slice |
-| Cabina propia con botones, guardia y barrera con modelo | ⬜ | Arte (nube) |
+| Decisión de avisar a la policía (P / Círculo) y final de la ley | 🔄 | v0.1.24, sin compilar |
+| Cabina propia, guardia y barrera con modelo | 🔄 | v0.1.24, formas básicas del motor; arte final después |
 | Audio mínimo sintetizado (motor, lluvia, viento, sirena) | 🔄 | En build v0.1.22; falta oírlo y afinar. Pruebas de vida con voz: pendientes |
-| Clima visible (lluvia, asfalto mojado) | ⬜ | |
-| Menú de contratos y cambio de zona | ⬜ | Hoy se elige con `-zone=N` / `-contract=Cxx` |
-| Release (Shipping, remapeo, localización) | ⬜ | |
+| Clima visible (lluvia, asfalto mojado) | 🔄 | v0.1.24, sin compilar |
+| Campaña lineal (C01, C09, C15, C18, C21) | ✅ | v0.1.23 compilada; sin probar jugando |
+| Menú de contratos mínimo (F5 / F6) | 🔄 | v0.1.24, sin compilar. `-zone=N` / `-contract=Cxx` siguen para pruebas |
+| Release: checklist, aviso de contenido, build Shipping | 🔄 | `docs/25_release.md`. Remapeo y localización: después del slice |
 
 ## Plan hasta el final
 Cada fase termina con una build compilada y probada. No se avanza de fase con criterios sin cumplir. Una sola sesión de editor a la vez.
@@ -49,7 +50,7 @@ Cada fase termina con una build compilada y probada. No se avanza de fase con cr
 - [ ] Alcance del slice (decidido 22-11): **5 contratos jugables, uno por arco**; los otros 20 quedan en datos.
   - C01 Operación Pudahuel (Arco 1): asfalto nocturno, tutorial del inhibidor GPS.
   - C09 Prototipo Cero (Arco 2): carga asimétrica en curvas.
-  - C12 Reliquias de Madera (Arco 3): barro profundo con 4x4.
+  - C15 Fósil del Desierto (Arco 3): peso alto y fragilidad muy alta (reemplaza a C12).
   - C18 Bajando la Cuesta (Arco 4): bajada bajo lluvia fuerte.
   - C21 Paso Fantasma (Arco 5): aduana con escáner y documento nivel 3.
 - **Listo cuando:** se pueden aceptar, jugar y cerrar los 5 contratos de punta a punta con pago.

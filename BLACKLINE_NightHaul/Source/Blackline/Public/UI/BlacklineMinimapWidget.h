@@ -16,6 +16,9 @@ class BLACKLINE_API UBlacklineMinimapWidget : public UUserWidget
 public:
 	void SetRoute(AChileRouteActor* InRoute) { Route = InRoute; }
 
+	/** Modo ayuda: muestra el recordatorio de controles. Tecla H lo apaga y enciende. */
+	static inline bool bShowHelp = true;
+
 	/** Lado del minimapa en pixeles. */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Minimap", meta = (ClampMin = "100"))
 	float MapSizePx = 240.f;

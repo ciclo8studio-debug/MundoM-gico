@@ -1,6 +1,18 @@
 # Changelog — BLACKLINE: NIGHT HAUL
 
 ## 0.1.0-dev (en curso)
+### 2026-11-25 — v0.1.23 y v0.1.24 (sin compilar)
+- **Campaña lineal** (v0.1.23, compilada): C01, C09, C15, C18, C21; tras la prueba de vida se viaja al siguiente contrato y su zona (`-zone` / `-contract` la desactivan).
+- **Menú de contratos mínimo** (v0.1.24): F5 / F6 elige el contrato anterior / siguiente y recarga la zona. `ShiftCampaign` en el subsistema.
+- **Nueva partida:** tras cualquier final (rescate, con costo o malo) y en campaña, a los 25 s se reinicia desde C01 (`ResetCampaign`). Un encargo fallido se repite a los 10 s.
+- **Lluvia visible** (`UBlacklineRainComponent`): rayas que acompañan al furgón, solo con clima de lluvia; timer, sin Tick. **Asfalto mojado:** la calzada y la berma se oscurecen según la humedad del clima del contrato.
+- **Cabina propia** (`UBlacklineCabinComponent`): tablero, volante, collar rojo colgado del espejo, pelota en el copiloto y foto de Pancito. Formas básicas; se ven con la cámara de cabina (V). Posiciones a ajustar tras verlas.
+- **Guardia y barrera con modelo** (`ABlacklineGuardPost`): caseta, guardia con chaleco y barrera roja y blanca; sube con el veredicto de paso limpio.
+- **Decisión final:** al llegar al último contrato, 15 s para avisar a la policía (P / Círculo) o entregar a La Cofradía. Nuevo **final de la ley** (dos variantes según la paciencia).
+- **Menú de contratos en el HUD:** línea CAMPAÑA con el contrato actual resaltado (F5 / F6).
+- **Release:** aviso de ficción y contenido, `docs/25_release.md`, versión del proyecto 0.1.24.
+- **Modo ayuda:** H oculta o muestra el recordatorio de controles (decisión 6 del acta).
+- El arco 3 usa **C15 Fósil del Desierto** (antes el BOARD decía C12).
 ### 2026-11-25 — v0.1.21 y v0.1.22
 - Barras en el panel: **FURGON** (daño) y **LA COFRADIA - paciencia** (antes la barra del perro). Pancito aparece solo en los mensajes.
 - **Audio procedural** (`UBlacklineProceduralAudio`, sin assets): motor segun RPM, lluvia segun el clima, viento segun la velocidad y sirena en persecucion.

@@ -269,6 +269,37 @@ private:
 	void CreateMinimap();
 	void StartZoneContract();
 	void ArrestTick();
+	void TravelToNextContract();
+	/** Menu de contratos minimo: F5 anterior, F6 siguiente (solo en campaña). Recarga el mapa en la zona del contrato. */
+	/** Tras un final (bueno, con costo o malo) y en campaña: nueva partida a los 25 s. */
+	/** Final del arco 5: 15 s para avisar a la policia (P) o entregar a La Cofradia. */
+	void BeginFinalDecision(float Patience01);
+	void ChooseCallPolice();
+	void ResolveFinal(bool bCallPolice);
+	void ResolveDeliver() { ResolveFinal(false); }
+	/** Aviso de ficcion y contenido, una vez por sesion (release). */
+	void ShowContentNotice();
+	FTimerHandle NoticeTimer;
+	void ToggleHelp();
+	void ScheduleNewRun();
+	void RestartCampaign();
+	/** Tras un encargo fallido: repite el mismo contrato a los 10 s. */
+	void RetryContract();
+	void SelectPrevContract();
+	void SelectNextContract();
+	void SelectContract(int32 Delta);
+
+	FTimerHandle TravelTimer;
+	FTimerHandle DecisionTimer;
+	bool bAwaitingDecision = false;
+	float DecisionPatience01 = 0.f;
+
+	/** Humedad de la calzada segun el clima del contrato (oscurece el asfalto). */
+	float RoadWetness01 = 0.f;
+
+	UPROPERTY(Transient)
+	TObjectPtr<class ABlacklineGuardPost> GuardPost;
+	bool bCampaignMode = true; // false si se forzo -zone o -contract (pruebas)
 	void HandleArrest();
 
 	FTimerHandle ArrestTimer;
