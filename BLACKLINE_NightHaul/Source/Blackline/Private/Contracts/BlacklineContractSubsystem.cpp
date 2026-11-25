@@ -133,7 +133,7 @@ void UBlacklineContractSubsystem::FinishContract(bool bSuccess)
 		Credits += ActivePayout;
 	}
 
-	// Lo que esta en juego: Chuño. A tiempo gana; atrasado no gana; fallido pierde.
+	// Lo que esta en juego: Pancito. A tiempo gana; atrasado no gana; fallido pierde.
 	const bool bLate = IsContractLate();
 	if (bSuccess)
 	{
@@ -168,7 +168,7 @@ void UBlacklineContractSubsystem::AddDogWellbeing(float Delta01)
 	DogWellbeing01 = FMath::Clamp(DogWellbeing01 + Delta01, 0.f, 1.f);
 	if (!FMath::IsNearlyEqual(Old, DogWellbeing01))
 	{
-		UE_LOG(LogBlackline, Log, TEXT("Chuño: bienestar %.0f%% -> %.0f%%"), Old * 100.f, DogWellbeing01 * 100.f);
+		UE_LOG(LogBlackline, Log, TEXT("Pancito: bienestar %.0f%% -> %.0f%%"), Old * 100.f, DogWellbeing01 * 100.f);
 		OnDogWellbeingChanged.Broadcast(DogWellbeing01);
 	}
 }

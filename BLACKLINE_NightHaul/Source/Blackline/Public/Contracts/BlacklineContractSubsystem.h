@@ -65,44 +65,44 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Contracts")
 	int32 GetCredits() const { return Credits; }
 
-	// ---- Chuño (el perro de Mateo): lo que esta en juego ----
-	/** Bienestar de Chuño [0,1]. Sube con entregas a tiempo; baja con atrasos y cargas perdidas. A 0 es el final malo. */
-	UFUNCTION(BlueprintPure, Category = "Contracts|Chuno")
+	// ---- Pancito (el perro de Enzo): lo que esta en juego ----
+	/** Bienestar de Pancito [0,1]. Sube con entregas a tiempo; baja con atrasos y cargas perdidas. A 0 es el final malo. */
+	UFUNCTION(BlueprintPure, Category = "Contracts|Cofradia")
 	float GetDogWellbeing01() const { return DogWellbeing01; }
 
-	UFUNCTION(BlueprintCallable, Category = "Contracts|Chuno")
+	UFUNCTION(BlueprintCallable, Category = "Contracts|Cofradia")
 	void AddDogWellbeing(float Delta01);
 
-	/** Plazo del encargo activo (segundos). Al vencer, Chuño pierde LatePenalty. */
-	UFUNCTION(BlueprintCallable, Category = "Contracts|Chuno")
+	/** Plazo del encargo activo (segundos). Al vencer, Pancito pierde LatePenalty. */
+	UFUNCTION(BlueprintCallable, Category = "Contracts|Cofradia")
 	void StartDeadline(float Seconds);
 
 	/** Segundos que quedan (negativo si va atrasado; 0 si no hay plazo). */
-	UFUNCTION(BlueprintPure, Category = "Contracts|Chuno")
+	UFUNCTION(BlueprintPure, Category = "Contracts|Cofradia")
 	float GetDeadlineRemainingSeconds() const;
 
-	UFUNCTION(BlueprintPure, Category = "Contracts|Chuno")
+	UFUNCTION(BlueprintPure, Category = "Contracts|Cofradia")
 	bool HasDeadline() const { return bHasDeadline; }
 
-	UFUNCTION(BlueprintPure, Category = "Contracts|Chuno")
+	UFUNCTION(BlueprintPure, Category = "Contracts|Cofradia")
 	bool IsContractLate() const { return bHasDeadline && GetDeadlineRemainingSeconds() < 0.f; }
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Contracts|Chuno", meta = (ClampMin = "0", ClampMax = "1"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Contracts|Cofradia", meta = (ClampMin = "0", ClampMax = "1"))
 	float StartDogWellbeing01 = 0.8f;
 
 	/** Bienestar que gana una entrega a tiempo. */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Contracts|Chuno", meta = (ClampMin = "0", ClampMax = "1"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Contracts|Cofradia", meta = (ClampMin = "0", ClampMax = "1"))
 	float OnTimeDeliveryBonus = 0.10f;
 
 	/** Bienestar que pierde un contrato fallido (carga destruida). */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Contracts|Chuno", meta = (ClampMin = "0", ClampMax = "1"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Contracts|Cofradia", meta = (ClampMin = "0", ClampMax = "1"))
 	float FailurePenalty = 0.25f;
 
 	/** Bienestar que se pierde al vencer el plazo. */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Contracts|Chuno", meta = (ClampMin = "0", ClampMax = "1"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Contracts|Cofradia", meta = (ClampMin = "0", ClampMax = "1"))
 	float LatePenalty = 0.15f;
 
-	UPROPERTY(BlueprintAssignable, Category = "Contracts|Chuno")
+	UPROPERTY(BlueprintAssignable, Category = "Contracts|Cofradia")
 	FOnDogWellbeingChanged OnDogWellbeingChanged;
 
 	UPROPERTY(BlueprintAssignable, Category = "Contracts")

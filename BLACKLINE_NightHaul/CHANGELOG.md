@@ -1,8 +1,11 @@
 # Changelog — BLACKLINE: NIGHT HAUL
 
 ## 0.1.0-dev (en curso)
+### 2026-11-25 — nombres
+- El protagonista pasa a llamarse **Enzo** (antes Mateo) y su perro **Pancito** (antes Chuño), por decision del CTO. Las entradas anteriores de este changelog usan los nombres nuevos por consistencia.
+
 ### 2026-11-25 (noche) — v0.1.15 a v0.1.20
-- Historia nueva (docs/24): Mateo Salinas, su perro Chuño y La Cofradia. Briefings de los 25 contratos, bienestar de Chuño (+10% a tiempo, -15% plazo vencido, -25% carga perdida, -10% al ser descubierto), plazo por encargo, pruebas de vida y finales.
+- Historia nueva (docs/24): Enzo Salinas, su perro Pancito y La Cofradia. Briefings de los 25 contratos, bienestar de Pancito (+10% a tiempo, -15% plazo vencido, -25% carga perdida, -10% al ser descubierto), plazo por encargo, pruebas de vida y finales.
 - Suelo: sin triangulos duplicados (manchas negras), desnivel terreno-calzada de 5 cm, faros sin sombras.
 - Furgon: curva de torque en RPM reales (Chaos no la normaliza), 800 Nm, llega a ~165 km/h; combustible; recuperacion al volcar (3 s, vuelve al inicio de la ruta; `bRespawnAtRouteStart`).
 - Ruta: bencinera y restaurante (E / Circulo), 6 autos en contra, minimapa, reten con manifiesto automatico y veredictos, contrato automatico por zona (`-contract=C09` para forzar uno).

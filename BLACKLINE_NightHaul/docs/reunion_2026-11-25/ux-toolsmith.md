@@ -2,16 +2,16 @@
 
 Solo Blackline. Base: `24_historia_secuestro.md`, `13_ux_cabina.md`, `D2_metasounds.md`, `INVENTARIO_FAB.md`.
 
-## 1. Cómo se SIENTE Chuño (sin mostrarlo herido)
-Regla: Chuño se siente por **ausencia, sonido y texto**. Nunca un icono de perro herido, nunca sangre ni gemido de dolor.
-- **Prueba de vida por radio:** al cerrar un arco la radio se corta, entra estática y una voz de La Cofradía habla. De fondo, respiración y un ladrido corto de quiltro. Va con subtítulo `[ladrido de Chuño]` y pista de lugar. Pantalla propia mínima (fondo negro, texto, 6 a 8 s, saltable con la tecla de interactuar).
+## 1. Cómo se SIENTE Pancito (sin mostrarlo herido)
+Regla: Pancito se siente por **ausencia, sonido y texto**. Nunca un icono de perro herido, nunca sangre ni gemido de dolor.
+- **Prueba de vida por radio:** al cerrar un arco la radio se corta, entra estática y una voz de La Cofradía habla. De fondo, respiración y un ladrido corto de quiltro. Va con subtítulo `[ladrido de Pancito]` y pista de lugar. Pantalla propia mínima (fondo negro, texto, 6 a 8 s, saltable con la tecla de interactuar).
 - **Asiento vacío:** el copiloto se ve vacío y bien iluminado, con la pelota bajo el asiento. Cuando el Bienestar baja de 40%, el asiento queda más en sombra (no es un cartel, es luz). Cuando sube, entra un poco de luz cálida.
 - **Collar en el espejo:** se balancea con las curvas (físico simple, sin Tick: timeline o animación en loop). Un tintineo de chapita suave que sube con el bache. Si Bienestar < 25%, el collar se queda quieto. Respuesta a la pregunta 4 del doc 24: **sí**, la cabina lleva asiento vacío y collar.
 - **Tablet de La Cofradía:** mensajes cortos, tono cortés y frío del Patrón. Llegan con vibración del mando y un tono de aviso, no con ventana emergente. Sin color rojo como único canal: lleva texto «PLAZO» o «ADVERTENCIA».
 - **Plazo que se siente:** entre 50% y 80% del plazo, la radio baja el volumen y el motor sube un poco en el mix. En el último 10% el collar golpea más y hay un latido grave sutil (sonido, sin parpadeo > 3 Hz).
 
-**HUD actual** (panel ENCARGO con barra de Chuño, plazo, minimapa): choca con el principio «sin HUD» de `13_ux_cabina`. Propuesta: mantener, pero marcar como **modo ayuda** (opción), y llevar la versión por defecto a la tablet y al espejo (Chuño como número en la tablet y como collar). Minimapa y panel quedan para la demo.
-- La barra de Chuño pasa a **segmentos con texto** («Chuño 80%»), nunca solo color.
+**HUD actual** (panel ENCARGO con barra de Pancito, plazo, minimapa): choca con el principio «sin HUD» de `13_ux_cabina`. Propuesta: mantener, pero marcar como **modo ayuda** (opción), y llevar la versión por defecto a la tablet y al espejo (Pancito como número en la tablet y como collar). Minimapa y panel quedan para la demo.
+- La barra de Pancito pasa a **segmentos con texto** («Pancito 80%»), nunca solo color.
 - Plazo: texto grande con `mm:ss`, sin parpadeo.
 
 **Controles**

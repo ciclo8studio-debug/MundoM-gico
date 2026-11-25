@@ -1,7 +1,7 @@
 # Reunión 25-11 · @tech-lead · Blackline: Night Haul (v0.1.20, UE 5.8.4, 8 GB + iGPU)
 
 ## 1. ¿La historia es viable para el slice de 5 contratos?
-**Sí, y casi toda está hecha.** Briefings, bienestar de Chuño, plazo, pruebas de vida y finales ya corren como texto en pantalla. Es solo texto y datos, así que no pesa nada en GPU ni RAM. Lo que falta es poco y barato. Ajustes:
+**Sí, y casi toda está hecha.** Briefings, bienestar de Pancito, plazo, pruebas de vida y finales ya corren como texto en pantalla. Es solo texto y datos, así que no pesa nada en GPU ni RAM. Lo que falta es poco y barato. Ajustes:
 - **Bienestar:** parte en 80% y suma +10% por entrega, así que con 5 entregas llega a 100% sin esfuerzo. Para el slice conviene partir en 60-70% o bajar el bono a +5%, para que fallar un plazo duela.
 - **Un contrato por arco:** la «prueba de vida al final del arco» pasa a ser «al cerrar cada contrato». Solo hay que moverla de lugar en el flujo.
 - **Riesgo real: las 4 zonas.** El slice usa C01 y C09 (centro), C12 (norte), C18 (sur) y C21 (cordillera). Solo la zona 2 está probada. Las zonas 1, 3 y 4 son el mayor riesgo técnico, mayor que la historia.
@@ -47,7 +47,7 @@ Regla general: **jamás agregar un pack entero al proyecto**. Se migran solo los
 ## Decisiones del CTO
 - **Render:** ¿se aprueba el slice sin Lumen (o Lumen en una sola zona)? Sin esto, los 58 FPS están en duda.
 - **Fab:** ¿tope de 1,5 GB y migrar solo lo listado? ¿Se puede borrar el FlashLight duplicado (768 MB)?
-- **Historia:** plazo en tiempo real (recomendado, ya implementado) o por «días»; decisión moral después del slice; collar de Chuño en el copiloto (recomendado: sí).
+- **Historia:** plazo en tiempo real (recomendado, ya implementado) o por «días»; decisión moral después del slice; collar de Pancito en el copiloto (recomendado: sí).
 - **Balance:** bienestar inicial 60-70% para el slice.
 - **Audio:** ¿grabación propia o banco con licencia para ladridos y voces?
 - **Fecha y plataforma** de publicación del slice (sigue abierto en el tablero).

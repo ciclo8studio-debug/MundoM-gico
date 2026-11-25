@@ -9,7 +9,7 @@ Leyenda: ✅ hecho · 🔄 en curso · ⬜ pendiente · ⚠️ riesgo/bloqueo
 | Módulo C++, 25 contratos, 3 tests de Automation | ✅ | Compila (juego y editor) |
 | Chile comprimido 1:100: ruta, terreno por bioma, 4 zonas | ✅ | Zona 2 probada; zonas 1, 3 y 4 sin probar |
 | Furgón: física, 165 km/h, mando PS4, combustible, volcado | ✅ | Carrocería de plantilla (placeholder) |
-| Historia (Chuño y La Cofradía): briefings, bienestar, plazo, pruebas de vida, finales | ✅ | Como mensajes en pantalla |
+| Historia (Pancito y La Cofradía): briefings, bienestar, plazo, pruebas de vida, finales | ✅ | Como mensajes en pantalla |
 | Bencinera, restaurante, tráfico en contra, minimapa, panel de encargo | ✅ | Probados en pantalla |
 | Retén con manifiesto automático, veredictos, patrullas | 🔄 | En build v0.1.20; sin probar en pantalla |
 | Teclas de motor, luces, inhibidor y volver a la carretera | 🔄 | En build v0.1.20 |
@@ -70,7 +70,7 @@ Cada fase termina con una build compilada y probada. No se avanza de fase con cr
 - **Listo cuando:** build limpia instalada y jugada de inicio a fin en un PC distinto.
 
 ## Decisiones pendientes del CTO
-0. **Historia nueva (22-11):** secuestro de Chuño; nombres y 4 preguntas abiertas en `docs/24_historia_secuestro.md`.
+0. **Historia nueva (22-11):** secuestro de Pancito; nombres y 4 preguntas abiertas en `docs/24_historia_secuestro.md`.
 1. ~~Alcance del slice~~ → decidido: 5 contratos, uno por arco (C01, C09, C12, C18, C21).
 2. ¿Una tabla de strings o tres? (`06_textos.md` vs `18_localizacion.md`).
 3. Nombres propios de narrativa y mundo (Veldmark, Mara Quiroga, Vantor, Faro): aprobar o cambiar.

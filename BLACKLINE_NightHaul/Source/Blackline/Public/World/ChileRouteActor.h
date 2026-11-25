@@ -161,7 +161,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Chile|Extras")
 	bool bAutoStartContract = true;
 
-	/** Plazo del encargo: la ruta recorrida a esta velocidad media (km/h) mas un margen. Vencido, Chuño pierde bienestar. */
+	/** Plazo del encargo: la ruta recorrida a esta velocidad media (km/h) mas un margen. Vencido, Pancito pierde bienestar. */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Chile|Extras", meta = (ClampMin = "10", Units = "km/h"))
 	float DeadlineAverageSpeedKmh = 55.f;
 

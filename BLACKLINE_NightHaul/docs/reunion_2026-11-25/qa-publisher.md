@@ -6,8 +6,8 @@ Alcance: solo Blackline. Lo legal es criterio de QA/publicación, no asesoría j
 
 | Tema | Riesgo | Medida |
 |---|---|---|
-| Crimen organizado y extorsión | Medio. Es el eje de la trama; en itch.io no hay clasificación formal por edad, se declara en la ficha. | Marcar «contenido maduro / temas de crimen» en la ficha y en la pantalla de aviso inicial. Sin glorificar: Mateo es obligado (ya está en el doc 24). |
-| Animal en peligro (Chuño) | Medio-bajo. Nunca se muestra herido; el miedo viene de audio y mensajes. | Mantener la regla como criterio de aceptación de QA: ningún asset, audio ni texto con maltrato explícito. Las «pruebas de vida» no llevan quejidos de dolor, solo ladridos y respiración. Aviso: «amenaza implícita a un animal; no se muestra daño». |
+| Crimen organizado y extorsión | Medio. Es el eje de la trama; en itch.io no hay clasificación formal por edad, se declara en la ficha. | Marcar «contenido maduro / temas de crimen» en la ficha y en la pantalla de aviso inicial. Sin glorificar: Enzo es obligado (ya está en el doc 24). |
+| Animal en peligro (Pancito) | Medio-bajo. Nunca se muestra herido; el miedo viene de audio y mensajes. | Mantener la regla como criterio de aceptación de QA: ningún asset, audio ni texto con maltrato explícito. Las «pruebas de vida» no llevan quejidos de dolor, solo ladridos y respiración. Aviso: «amenaza implícita a un animal; no se muestra daño». |
 | Lugares reales de Chile | Bajo. Geografía real es libre. | Mantener nombres de lugares como escenario, sin acusar a personas ni comunas reales de delitos. |
 | Instituciones reales | Medio. Carabineros, PDI y similares tienen marca y uniforme reales. | Usar **policía ficticia** (nombre, escudo y uniforme propios). Sin patentes reales ni logos de marcas de bencina, camiones, bancos, supermercados o fondas. Revisar carteles de bencinera y restaurante. |
 | La Cofradía / personajes | Bajo. Todo inventado. | Dejar el descargo «personajes, empresas y organizaciones son ficticios» en créditos y en la ficha. «La Cofradía» es nombre provisional: buscar coincidencias con empresas reales antes de fijarlo. |
@@ -38,16 +38,16 @@ Qué NO se redistribuye: archivos fuente de los packs, el contenido sin cocinar,
 
 ## 3. Plan de pruebas del próximo hito
 
-Idioma principal: español de Chile (voseo y modismos medidos: «bencinera», «fonda», «retén», «quiltro», «viáticos»). Plan es/en: todo texto de la tablet, HUD, briefings y aviso inicial en una tabla de cadenas (`StringTable`) desde ya; en el hito siguiente solo es-CL y la tabla lista; en/neutral al hito de la demo `[CONFIRMAR]`. Prueba de idioma: cadena sin traducir, texto cortado en HUD, tildes y «ñ» (Chuño, Cofradía) en la fuente.
+Idioma principal: español de Chile (voseo y modismos medidos: «bencinera», «fonda», «retén», «quiltro», «viáticos»). Plan es/en: todo texto de la tablet, HUD, briefings y aviso inicial en una tabla de cadenas (`StringTable`) desde ya; en el hito siguiente solo es-CL y la tabla lista; en/neutral al hito de la demo `[CONFIRMAR]`. Prueba de idioma: cadena sin traducir, texto cortado en HUD, tildes y «ñ» (Pancito, Cofradía) en la fuente.
 
 | Área | Casos clave (pasa/falla) | Sev. si falla |
 |---|---|---|
-| Volcado (3 s) | Volcar en asfalto y barro: la cuenta de 3 s corre y repone; no repone en movimiento ni dos veces; carga y plazo se conservan; Chuño no baja por volcar; sin repetir el volcado seguido (bucle). | S2 |
-| Retén y manifiesto | Pasar limpio, con faros apagados, con carga sin blindar y con manifiesto vacío; veredicto estable; manifiesto automático correcto en cada zona; arresto baja Chuño. | S2 |
+| Volcado (3 s) | Volcar en asfalto y barro: la cuenta de 3 s corre y repone; no repone en movimiento ni dos veces; carga y plazo se conservan; Pancito no baja por volcar; sin repetir el volcado seguido (bucle). | S2 |
+| Retén y manifiesto | Pasar limpio, con faros apagados, con carga sin blindar y con manifiesto vacío; veredicto estable; manifiesto automático correcto en cada zona; arresto baja Pancito. | S2 |
 | Persecución propia | Patrulla inicia, pierde y vuelve al ver; apagar motor y luces; dos patrullas sin duplicar timers; termina limpio al cambiar de mapa. | S2 |
-| Bencinera | Cargar combustible y pagar con viáticos; sin viáticos; salir con la manguera; restaurante: diálogo de Chuño una vez por local. | S3 |
+| Bencinera | Cargar combustible y pagar con viáticos; sin viáticos; salir con la manguera; restaurante: diálogo de Pancito una vez por local. | S3 |
 | Combustible | Se gasta en forma monótona; vacío detiene el camión con aviso; recarga llega a 100 %; valores coherentes en el HUD. | S2 |
-| Plazo y Chuño | El plazo cuenta, vence y resta 15 %; entrega a tiempo suma 10 %; carga perdida resta 25 %; bienestar llega a 0 % y dispara el final malo; bienestar nunca fuera de 0-100; sin acentos rotos en mensajes. | S1 si bloquea el avance, S2 si no |
+| Plazo y Pancito | El plazo cuenta, vence y resta 15 %; entrega a tiempo suma 10 %; carga perdida resta 25 %; bienestar llega a 0 % y dispara el final malo; bienestar nunca fuera de 0-100; sin acentos rotos en mensajes. | S1 si bloquea el avance, S2 si no |
 | Mando PS4 | Detectar mando, mapa de botones, zonas muertas, gatillos analógicos para acelerar/frenar, vibración opcional, menú navegable sin mouse, teclas del HUD con iconos del mando, desconectar y reconectar a mitad de juego. | S2 |
 | Humo y estabilidad | Build abre, ruta de 30 min, 5 persecuciones, sin crash; FPS en el PC de 8 GB (≥ 30 en Baja). | S1 |
 

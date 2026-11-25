@@ -43,16 +43,16 @@ C = [
     ("C25", "Último Envío", 5, "Núcleo energético inestable", "Reactor de investigación en traslado (Consorcio Núcleo Austral).", 25000, 1550, 0.85, 0.95, 3, "Storm", "MixedOffroad", 0.0, "Clímax: aduana nivel 3 y persecución en tormenta."),
 ]
 
-# Voz de cada lugarteniente de La Cofradia. Chuño (el perro de Mateo) es la presion, nunca se le muestra herido.
+# Voz de cada lugarteniente de La Cofradia. Pancito (el perro de Enzo) es la presion, nunca se le muestra herido.
 BRIEFINGS = {
-    "C01": "Contenedores a Pudahuel antes del amanecer. Inhibidor GPS encendido. Chuño come a su hora si tu llegas a la tuya.",
-    "C02": "Aleacion pesada y portico de peaje. Frena con tiempo. Yo mido todo, Salinas, incluido a Chuño.",
+    "C01": "Contenedores a Pudahuel antes del amanecer. Inhibidor GPS encendido. Pancito come a su hora si tu llegas a la tuya.",
+    "C02": "Aleacion pesada y portico de peaje. Frena con tiempo. Yo mido todo, Salinas, incluido a Pancito.",
     "C03": "Valija por calles chicas, sin porticos. Cero errores: yo mido cada error contra tu perro.",
-    "C04": "Hay operativo en la Ruta 68. Desviate por tierra, no por miedo. Chuño sigue esperando.",
+    "C04": "Hay operativo en la Ruta 68. Desviate por tierra, no por miedo. Pancito sigue esperando.",
     "C05": "Las balizas pulsan: escondete bajo un paso a nivel y apaga el motor. Si te ven, el que paga es el.",
-    "C06": "Relojes finos, reten fino. Sonrie, carino. Chuño tambien sabe esperar bonito.",
+    "C06": "Relojes finos, reten fino. Sonrie, carino. Pancito tambien sabe esperar bonito.",
     "C07": "Microprocesadores en cajas de manzanas, querido. Que los sellos aguanten la mirada del guardia.",
-    "C08": "Joyas en doble fondo y un guardia con linterna. Tu mejor cara, Mateo: la que le pondrias a Chuño.",
+    "C08": "Joyas en doble fondo y un guardia con linterna. Tu mejor cara, Enzo: la que le pondrias a Pancito.",
     "C09": "Un prototipo descuadrado: peso a un lado, curvas lentas. Si lo vuelcas, no hay segunda prueba.",
     "C10": "Cajas fuertes que suenan en cada bache. Mejor tierra suave que un escandalo, ¿no crees?",
     "C11": "Ceramica milenaria. Cada golpe es un pedazo de historia y de tu amigo. Despacio en los lomos de toro.",
@@ -65,11 +65,11 @@ BRIEFINGS = {
     "C18": "Baterias de litio por la cuesta mojada. No bloquees ruedas. Si no llegas, el espera mas.",
     "C19": "Bidones sin etiqueta. Si gotean, te siguen. Que no goteen.",
     "C20": "Generadores en el muelle. Luces apagadas y paciencia. Tienes una hora.",
-    "C21": "El paso, con escaner y ventanilla. Papeles sin faltas. Estas mas cerca de Chuño de lo que crees.",
-    "C22": "Telecom cifrada, hielo y altura. 4x4 con diferencial bloqueado. Ya casi, Mateo.",
-    "C23": "El tunel viejo, sin margen. Ni un roce. Chuño te oye desde algun lado.",
+    "C21": "El paso, con escaner y ventanilla. Papeles sin faltas. Estas mas cerca de Pancito de lo que crees.",
+    "C22": "Telecom cifrada, hielo y altura. 4x4 con diferencial bloqueado. Ya casi, Enzo.",
+    "C23": "El tunel viejo, sin margen. Ni un roce. Pancito te oye desde algun lado.",
     "C24": "Doble reten y muestras frias. Manten el aire y los nervios frios. Falta poco.",
-    "C25": "El ultimo envio: nucleo inestable, aduana nivel 3 y tormenta. Entregalo y Chuño vuelve a la cabina.",
+    "C25": "El ultimo envio: nucleo inestable, aduana nivel 3 y tormenta. Entregalo y Pancito vuelve a la cabina.",
 }
 
 BROKERS = {1: "El Ingeniero", 2: "La Anticuaria", 3: "El Curador", 4: "El Capataz", 5: "El Arriero"}

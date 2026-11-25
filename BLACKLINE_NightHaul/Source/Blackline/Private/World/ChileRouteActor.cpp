@@ -358,11 +358,11 @@ void AChileRouteActor::HandleDogWellbeingChanged(float Wellbeing01)
 	if (Wellbeing01 <= 0.f)
 	{
 		bEndingShown = true;
-		Van->ShowHudMessage(NSLOCTEXT("Blackline", "EndBad", "FIN: no llegaste a tiempo y La Cofradia corto la comunicacion. Chuño ya no volvera a la cabina."), 20.f);
+		Van->ShowHudMessage(NSLOCTEXT("Blackline", "EndBad", "FIN: La Cofradia perdio la paciencia y corto la comunicacion. Pancito ya no volvera a la cabina."), 20.f);
 	}
 	else if (Wellbeing01 < 0.3f)
 	{
-		Van->ShowHudMessage(NSLOCTEXT("Blackline", "DogLow", "Chuño esta mal. La Cofradia te lo hace saber. Entrega a tiempo."), 6.f);
+		Van->ShowHudMessage(NSLOCTEXT("Blackline", "DogLow", "La paciencia de La Cofradia se agota. Si no entregas a tiempo, Pancito paga."), 6.f);
 	}
 }
 
@@ -387,22 +387,22 @@ void AChileRouteActor::HandleContractFinished(FName ContractID)
 	FText Proof;
 	switch (ActiveArc)
 	{
-	case 1: Proof = NSLOCTEXT("Blackline", "Proof1", "PRUEBA DE VIDA: ladridos por la radio. Es Chuño. El Ingeniero corta la llamada."); break;
-	case 2: Proof = NSLOCTEXT("Blackline", "Proof2", "PRUEBA DE VIDA: una foto de Chuño, la oreja caida, mirando a camara. La Anticuaria sonrie en el mensaje."); break;
-	case 3: Proof = NSLOCTEXT("Blackline", "Proof3", "PRUEBA DE VIDA: Chuño duerme sobre una manta. Detras se oye viento de desierto: es una pista."); break;
+	case 1: Proof = NSLOCTEXT("Blackline", "Proof1", "PRUEBA DE VIDA: ladridos por la radio. Es Pancito. El Ingeniero corta la llamada."); break;
+	case 2: Proof = NSLOCTEXT("Blackline", "Proof2", "PRUEBA DE VIDA: una foto de Pancito, la oreja caida, mirando a camara. La Anticuaria sonrie en el mensaje."); break;
+	case 3: Proof = NSLOCTEXT("Blackline", "Proof3", "PRUEBA DE VIDA: Pancito duerme sobre una manta. Detras se oye viento de desierto: es una pista."); break;
 	case 4: Proof = NSLOCTEXT("Blackline", "Proof4", "PRUEBA DE VIDA: un aullido lejano y lluvia en un techo. El Capataz: \"Falta poco, Salinas\"."); break;
 	default:
 		if (Dog >= 0.5f)
 		{
 			bEndingShown = true;
-			Van->ShowHudMessage(NSLOCTEXT("Blackline", "EndGood", "RESCATE: el Arriero abre una puerta. Chuño corre a la cabina y se sube al asiento del copiloto. FIN."), 20.f);
+			Van->ShowHudMessage(NSLOCTEXT("Blackline", "EndGood", "RESCATE: el Arriero abre una puerta. Pancito corre a la cabina y se sube al asiento del copiloto. FIN."), 20.f);
 			return;
 		}
 		bEndingShown = true;
-		Van->ShowHudMessage(NSLOCTEXT("Blackline", "EndCost", "Llegas tarde: Chuño esta debil, pero vivo, y vuelve contigo. Final con costo. FIN."), 20.f);
+		Van->ShowHudMessage(NSLOCTEXT("Blackline", "EndCost", "Llegas tarde: Pancito esta debil, pero vivo, y vuelve contigo. Final con costo. FIN."), 20.f);
 		return;
 	}
-	Van->ShowHudMessage(FText::Format(NSLOCTEXT("Blackline", "DeliveredStory", "{0}  (+{1} viaticos, Chuño {2}%)"),
+	Van->ShowHudMessage(FText::Format(NSLOCTEXT("Blackline", "DeliveredStory", "{0}  (+{1} viaticos, paciencia de La Cofradia {2}%)"),
 		Proof, FText::AsNumber(Earned), FText::AsNumber(FMath::RoundToInt(Dog * 100.f))), 12.f);
 }
 
@@ -524,7 +524,7 @@ void AChileRouteActor::HandleCheckpointVerdict(EInspectionVerdict Verdict, float
 		Van->ShowHudMessage(FText::Format(NSLOCTEXT("Blackline", "VerdictSecond", "RETEN: inspeccion secundaria. No te muevas. (sospecha {0}%)"), Pct), 6.f);
 		break;
 	case EInspectionVerdict::PursuitAlert:
-		Van->ShowHudMessage(FText::Format(NSLOCTEXT("Blackline", "VerdictPursuit", "¡TE DESCUBRIERON! Huye y apaga motor y luces para enfriar el rastro. Si te atrapan, Chuño paga. (sospecha {0}%)"), Pct), 9.f);
+		Van->ShowHudMessage(FText::Format(NSLOCTEXT("Blackline", "VerdictPursuit", "¡TE DESCUBRIERON! Huye y apaga motor y luces para enfriar el rastro. Si te atrapan, Pancito paga. (sospecha {0}%)"), Pct), 9.f);
 		if (UGameInstance* GI = GetGameInstance())
 		{
 			if (UBlacklineContractSubsystem* Contracts = GI->GetSubsystem<UBlacklineContractSubsystem>())
