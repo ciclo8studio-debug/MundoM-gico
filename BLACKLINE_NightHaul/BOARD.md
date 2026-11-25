@@ -13,9 +13,11 @@ Leyenda: ✅ hecho · 🔄 en curso · ⬜ pendiente · ⚠️ riesgo/bloqueo
 | Bencinera, restaurante, tráfico en contra, minimapa, panel de encargo | ✅ | Probados en pantalla |
 | Retén con manifiesto automático, veredictos, patrullas | 🔄 | En build v0.1.20; sin probar en pantalla |
 | Teclas de motor, luces, inhibidor y volver a la carretera | 🔄 | En build v0.1.20 |
-| Arresto, decisión de avisar a la policía, finales alternativos | ⬜ | |
+| Arresto (reglas del acta) | 🔄 | En build v0.1.22; sin probar en pantalla |
+| Decisión de avisar a la policía, finales alternativos | ⬜ | Después del slice |
 | Cabina propia con botones, guardia y barrera con modelo | ⬜ | Arte (nube) |
-| Audio (motor, lluvia, sirenas, prueba de vida) y clima visible | ⬜ | Sin ningún sonido todavía |
+| Audio mínimo sintetizado (motor, lluvia, viento, sirena) | 🔄 | En build v0.1.22; falta oírlo y afinar. Pruebas de vida con voz: pendientes |
+| Clima visible (lluvia, asfalto mojado) | ⬜ | |
 | Menú de contratos y cambio de zona | ⬜ | Hoy se elige con `-zone=N` / `-contract=Cxx` |
 | Release (Shipping, remapeo, localización) | ⬜ | |
 

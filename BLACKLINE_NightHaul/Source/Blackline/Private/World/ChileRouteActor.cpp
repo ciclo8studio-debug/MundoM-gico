@@ -10,6 +10,9 @@
 #include "Cargo/CargoSimulationComponent.h"
 #include "Checkpoint/CheckpointController.h"
 #include "Contracts/BlacklineContractSubsystem.h"
+#include "EngineUtils.h"
+#include "Pursuit/BlacklinePatrolCar.h"
+#include "Pursuit/PursuitDirectorSubsystem.h"
 #include "Data/CargoItemDataAsset.h"
 #include "Data/ManifestDataAsset.h"
 #include "Contracts/DeliveryZone.h"
@@ -170,6 +173,10 @@ void AChileRouteActor::BeginPlay()
 		if (bAutoStartContract)
 		{
 			StartZoneContract();
+		}
+		if (bEnableArrest)
+		{
+			GetWorldTimerManager().SetTimer(ArrestTimer, this, &AChileRouteActor::ArrestTick, 0.5f, true);
 		}
 	}
 }
@@ -533,6 +540,93 @@ void AChileRouteActor::HandleCheckpointVerdict(EInspectionVerdict Verdict, float
 			}
 		}
 		break;
+	}
+}
+
+void AChileRouteActor::ArrestTick()
+{
+	const UPursuitDirectorSubsystem* Pursuit = UPursuitDirectorSubsystem::Get(this);
+	ABlacklineVanPawn* Van = Cast<ABlacklineVanPawn>(UGameplayStatics::GetPlayerPawn(this, 0));
+	if (!Pursuit || !Van || Pursuit->GetState() != EPursuitState::Hunting)
+	{
+		ArrestSeconds = 0.f;
+		return;
+	}
+
+	int32 Near = 0;
+	for (TActorIterator<ABlacklinePatrolCar> It(GetWorld()); It; ++It)
+	{
+		if (FVector::Dist(It->GetActorLocation(), Van->GetActorLocation()) < ArrestRadiusCm)
+		{
+			++Near;
+		}
+	}
+
+	if (Van->GetSpeedKmh() < ArrestSpeedKmh && Near >= ArrestMinPatrols)
+	{
+		ArrestSeconds += 0.5f;
+		if (ArrestSeconds >= ArrestHoldSeconds)
+		{
+			ArrestSeconds = 0.f;
+			HandleArrest();
+		}
+		else
+		{
+			Van->ShowHudMessage(FText::Format(NSLOCTEXT("Blackline", "Surrounded", "TE RODEAN - arresto en {0} s. ¡Acelera!"),
+				FText::AsNumber(FMath::Max(1, FMath::CeilToInt(ArrestHoldSeconds - ArrestSeconds)))), 0.8f);
+		}
+	}
+	else
+	{
+		ArrestSeconds = FMath::Max(0.f, ArrestSeconds - 0.5f);
+	}
+}
+
+void AChileRouteActor::HandleArrest()
+{
+	ABlacklineVanPawn* Van = Cast<ABlacklineVanPawn>(UGameplayStatics::GetPlayerPawn(this, 0));
+	UGameInstance* GI = GetGameInstance();
+	UBlacklineContractSubsystem* Contracts = GI ? GI->GetSubsystem<UBlacklineContractSubsystem>() : nullptr;
+	if (!Van || !Contracts)
+	{
+		return;
+	}
+	++ArrestCount;
+
+	if (UPursuitDirectorSubsystem* Pursuit = UPursuitDirectorSubsystem::Get(this))
+	{
+		Pursuit->StopPursuit();
+	}
+	if (Checkpoint)
+	{
+		Checkpoint->ResetCheckpoint();
+	}
+
+	// La policia confisca la carga (el contrato falla), se lleva parte de los viaticos y la banda pierde paciencia.
+	Contracts->FinishContract(false);
+	Contracts->AddCredits(-FMath::RoundToInt(static_cast<float>(Contracts->GetCredits()) * ArrestCreditsFraction));
+	if (ArrestCount >= MaxArrests)
+	{
+		Contracts->AddDogWellbeing(-1.f); // demasiados antecedentes: la banda corta la comunicacion
+	}
+
+	// De vuelta al inicio de la ruta, parado y derecho.
+	const FTransform Start = GetStartTransform();
+	Van->SetActorLocationAndRotation(Start.GetLocation(), Start.Rotator(), false, nullptr, ETeleportType::ResetPhysics);
+	if (UPrimitiveComponent* Body = Cast<UPrimitiveComponent>(Van->GetRootComponent()))
+	{
+		Body->SetPhysicsLinearVelocity(FVector::ZeroVector);
+		Body->SetPhysicsAngularVelocityInDegrees(FVector::ZeroVector);
+	}
+	Van->ShowHudMessage(FText::Format(NSLOCTEXT("Blackline", "Arrested", "ARRESTADO: la policia confisca la carga y parte de tus viaticos. La Cofradia no esta contenta. (antecedente {0} de {1})"),
+		FText::AsNumber(ArrestCount), FText::AsNumber(MaxArrests)), 10.f);
+	UE_LOG(LogBlackline, Log, TEXT("ChileRoute: arresto %d/%d"), ArrestCount, MaxArrests);
+
+	// Si aun hay paciencia, la banda te da otra carga y sigues.
+	if (ArrestCount < MaxArrests)
+	{
+		FTimerHandle Restart;
+		GetWorldTimerManager().SetTimer(Restart, this, &AChileRouteActor::StartZoneContract, 3.f, false);
 	}
 }
 

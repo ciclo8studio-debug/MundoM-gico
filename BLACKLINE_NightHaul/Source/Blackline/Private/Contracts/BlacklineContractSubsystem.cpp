@@ -205,3 +205,8 @@ void UBlacklineContractSubsystem::HandleDeadlineExpired()
 		AddDogWellbeing(-LatePenalty);
 	}
 }
+
+void UBlacklineContractSubsystem::AddCredits(int32 Delta)
+{
+	Credits = FMath::Max(0, Credits + Delta);
+}

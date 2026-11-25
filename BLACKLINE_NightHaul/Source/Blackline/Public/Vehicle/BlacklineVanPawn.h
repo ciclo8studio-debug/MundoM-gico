@@ -9,6 +9,7 @@
 class UCameraComponent;
 class UStaticMeshComponent;
 class ARoadsidePOI;
+class UBlacklineProceduralAudio;
 class USpringArmComponent;
 class USpotLightComponent;
 class UCargoSimulationComponent;
@@ -50,6 +51,14 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Blackline|Components")
 	TObjectPtr<USpotLightComponent> HeadlightRight;
+
+	/** Audio sintetizado de la cabina: motor segun RPM, lluvia, viento y sirena. */
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Blackline|Components")
+	TObjectPtr<UBlacklineProceduralAudio> ProceduralAudio;
+
+	/** Ultimo acelerador recibido [0,1] (para el audio). */
+	UFUNCTION(BlueprintPure, Category = "Blackline|Vehicle")
+	float GetThrottleInput01() const { return FMath::Clamp(LastThrottleInput, 0.f, 1.f); }
 
 	/** Carroceria visual (placeholder). La malla se asigna en el BP hijo. */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Blackline|Components")

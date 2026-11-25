@@ -65,6 +65,10 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Contracts")
 	int32 GetCredits() const { return Credits; }
 
+	/** Suma o resta viaticos (no baja de 0). */
+	UFUNCTION(BlueprintCallable, Category = "Contracts")
+	void AddCredits(int32 Delta);
+
 	// ---- Pancito (el perro de Enzo): lo que esta en juego ----
 	/** Bienestar de Pancito [0,1]. Sube con entregas a tiempo; baja con atrasos y cargas perdidas. A 0 es el final malo. */
 	UFUNCTION(BlueprintPure, Category = "Contracts|Cofradia")

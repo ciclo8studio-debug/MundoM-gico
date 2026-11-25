@@ -153,6 +153,31 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Chile|Extras", meta = (ClampMin = "0", ClampMax = "1"))
 	float CheckpointAt01 = 0.55f;
 
+	// ---- Arresto (reglas del acta del 25-11) ----
+	/** Si una patrulla te alcanza casi detenido durante ArrestHoldSeconds, te arrestan. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Chile|Arrest")
+	bool bEnableArrest = true;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Chile|Arrest", meta = (Units = "km/h"))
+	float ArrestSpeedKmh = 10.f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Chile|Arrest", meta = (Units = "cm"))
+	float ArrestRadiusCm = 2000.f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Chile|Arrest", meta = (ClampMin = "1"))
+	int32 ArrestMinPatrols = 2;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Chile|Arrest", meta = (ClampMin = "1", Units = "s"))
+	float ArrestHoldSeconds = 4.f;
+
+	/** Fraccion de los viaticos que se pierde al ser arrestado. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Chile|Arrest", meta = (ClampMin = "0", ClampMax = "1"))
+	float ArrestCreditsFraction = 0.25f;
+
+	/** A este numero de arrestos, la banda corta la comunicacion (final malo). */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Chile|Arrest", meta = (ClampMin = "1"))
+	int32 MaxArrests = 3;
+
 	/** Al volcar: true = vuelve al inicio de la ruta; false = al punto mas cercano de la calzada. */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Chile|Extras")
 	bool bRespawnAtRouteStart = true;
@@ -243,6 +268,12 @@ private:
 	void RespawnCarAhead(ATrafficCar* Car);
 	void CreateMinimap();
 	void StartZoneContract();
+	void ArrestTick();
+	void HandleArrest();
+
+	FTimerHandle ArrestTimer;
+	float ArrestSeconds = 0.f;
+	int32 ArrestCount = 0;
 	void SpawnCheckpoint();
 	void PresentContractManifest();
 

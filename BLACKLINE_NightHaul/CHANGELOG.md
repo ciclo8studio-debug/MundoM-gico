@@ -1,6 +1,12 @@
 # Changelog — BLACKLINE: NIGHT HAUL
 
 ## 0.1.0-dev (en curso)
+### 2026-11-25 — v0.1.21 y v0.1.22
+- Barras en el panel: **FURGON** (daño) y **LA COFRADIA - paciencia** (antes la barra del perro). Pancito aparece solo en los mensajes.
+- **Audio procedural** (`UBlacklineProceduralAudio`, sin assets): motor segun RPM, lluvia segun el clima, viento segun la velocidad y sirena en persecucion.
+- **Arresto:** < 10 km/h con 2+ patrullas a menos de 20 m durante 4 s: pierde la carga, 25% de los viaticos y paciencia; vuelve al inicio; al 3er antecedente, final malo.
+- Reunion de los 5 superagentes: `docs/reunion_2026-11-25/ACTA.md`.
+
 ### 2026-11-25 — nombres
 - El protagonista pasa a llamarse **Enzo** (antes Mateo) y su perro **Pancito** (antes Chuño), por decision del CTO. Las entradas anteriores de este changelog usan los nombres nuevos por consistencia.
 
