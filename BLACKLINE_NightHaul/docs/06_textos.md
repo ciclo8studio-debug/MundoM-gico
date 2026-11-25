@@ -1,5 +1,8 @@
 # 06 — Textos (BLACKLINE: NIGHT HAUL)
 
+> **SUPERADO el 2026-11-22 por `24_historia_secuestro.md`.** Se conserva como historial; no usar para nuevos textos.
+
+
 Todo texto es ficticio. Claves de string-table: tabla `ST_Blackline`, formato `BL_<AREA>_<ID>`.
 Variables con nombre: `{company}`, `{route}`, `{plate}`. Máx. 120 caracteres por línea.
 Valores de `ForgeryQuality01` y cantidades son ejemplos para iterar; diseño los define.

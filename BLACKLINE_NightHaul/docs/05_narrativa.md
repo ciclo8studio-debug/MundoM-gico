@@ -1,5 +1,8 @@
 # 05 — Narrativa: BLACKLINE: NIGHT HAUL
 
+> **SUPERADO el 2026-11-22 por `24_historia_secuestro.md`.** Se conserva como historial; no usar para nuevos textos.
+
+
 Todo ficticio: empresas, lugares, personas, cargas y regímenes inventados. Sin referencias a entidades reales.
 
 ## Premisa

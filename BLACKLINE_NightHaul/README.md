@@ -15,3 +15,5 @@ Producido por los 31 agentes del estudio. **Nada se compiló ni se probó**; tod
 | Blueprints/herramientas | `docs/12`, `docs/15`, `Content/Python/*` |
 
 Pendiente: `docs/21_prototipo_dia1.md` (el agente no dejó el archivo).
+
+**Historia vigente:** `docs/24_historia_secuestro.md` (el perro, la banda y la ruta de Chile). Los docs 05, 06 y 07 quedan como historial.

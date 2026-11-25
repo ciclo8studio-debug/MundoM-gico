@@ -70,6 +70,7 @@ Cada fase termina con una build compilada y probada. No se avanza de fase con cr
 - **Listo cuando:** build limpia instalada y jugada de inicio a fin en un PC distinto.
 
 ## Decisiones pendientes del CTO
+0. **Historia nueva (22-11):** secuestro de Chuño; nombres y 4 preguntas abiertas en `docs/24_historia_secuestro.md`.
 1. ~~Alcance del slice~~ → decidido: 5 contratos, uno por arco (C01, C09, C12, C18, C21).
 2. ¿Una tabla de strings o tres? (`06_textos.md` vs `18_localizacion.md`).
 3. Nombres propios de narrativa y mundo (Veldmark, Mara Quiroga, Vantor, Faro): aprobar o cambiar.

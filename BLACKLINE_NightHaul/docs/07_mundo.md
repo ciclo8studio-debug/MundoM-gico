@@ -1,5 +1,8 @@
 # 07 — Mundo: BLACKLINE: NIGHT HAUL
 
+> **SUPERADO el 2026-11-22 por `24_historia_secuestro.md`.** Se conserva como historial; no usar para nuevos textos.
+
+
 Canon: Provisional (a la espera de narrative-director). Visible al jugador: Discoverable salvo donde se indica.
 Fuente: `CONTRATO.md` (tipos, checkpoint, persecución, carga, terreno). Todo ficticio; sin marcas reales.
 Contradicciones: ninguna con CONTRATO.md (clases de carga, veredictos, superficies, Signal Jammer, 4x4).
