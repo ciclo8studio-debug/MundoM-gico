@@ -1,7 +1,12 @@
 # Changelog — BLACKLINE: NIGHT HAUL
 
 ## 0.1.0-dev (en curso)
-### 2026-11-25 — v0.1.23 y v0.1.24 (sin compilar)
+### 2026-11-25 — v0.1.25 (corrección del volcado)
+- **Causa del furgón atascado tras volcar (confirmada en el log):** el teletransporte del actor no movía el cuerpo físico simulado (z se quedaba en -79 mientras el log decía «repuesto en Z=3350»). Ahora `TeleportVan` mueve el cuerpo físico (`SetAllPhysicsPosition/Rotation`) y lo deja quieto. También lo usa el arresto. Prueba automática: `-teleporttest` manda el furgón al 30% de la ruta a los 8 s y el log muestra la posición final.
+- **Caída bajo el mundo:** cada 1 s se revisa si el furgón está 30 m bajo la ruta; si es así, se devuelve a la carretera.
+- **Lanzamiento a 300 km/h:** lo causaba el choque con los autos en contra (cajas físicas movidas a saltos por timer). Ahora esos autos no tienen colisión física; el choque lo detecta la ruta: frena el furgón al 25%, -5% de paciencia y mensaje CHOQUE.
+
+### 2026-11-25 — v0.1.23 y v0.1.24
 - **Campaña lineal** (v0.1.23, compilada): C01, C09, C15, C18, C21; tras la prueba de vida se viaja al siguiente contrato y su zona (`-zone` / `-contract` la desactivan).
 - **Menú de contratos mínimo** (v0.1.24): F5 / F6 elige el contrato anterior / siguiente y recarga la zona. `ShiftCampaign` en el subsistema.
 - **Nueva partida:** tras cualquier final (rescate, con costo o malo) y en campaña, a los 25 s se reinicia desde C01 (`ResetCampaign`). Un encargo fallido se repite a los 10 s.

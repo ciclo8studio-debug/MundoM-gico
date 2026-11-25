@@ -186,6 +186,19 @@ void AChileRouteActor::BeginPlay()
 			EnableInput(PC);
 			if (InputComponent)
 			{
+				GetWorldTimerManager().SetTimer(FallTimer, this, &AChileRouteActor::CheckFellOutOfWorld, 1.f, true, 3.f);
+				if (FParse::Param(FCommandLine::Get(), TEXT("teleporttest")))
+				{
+					// Prueba automatica: a los 8 s manda el furgon al 30% de la ruta y el log muestra si llego.
+					GetWorldTimerManager().SetTimer(TestTimer, FTimerDelegate::CreateLambda([this]()
+					{
+						FVector P;
+						FRotator R;
+						GetPointAtDistance(RouteLengthCm * 0.3f, LaneWidthCm * 0.5f, P, R);
+						P.Z += 150.f;
+						TeleportVan(Cast<ABlacklineVanPawn>(UGameplayStatics::GetPlayerPawn(this, 0)), P, R);
+					}), 8.f, false);
+				}
 				InputComponent->BindKey(EKeys::H, IE_Pressed, this, &AChileRouteActor::ToggleHelp);
 				InputComponent->BindKey(EKeys::P, IE_Pressed, this, &AChileRouteActor::ChooseCallPolice);
 				InputComponent->BindKey(EKeys::Gamepad_FaceButton_Right, IE_Pressed, this, &AChileRouteActor::ChooseCallPolice);
@@ -360,7 +373,33 @@ void AChileRouteActor::UpdateTraffic()
 		GetPointAtDistance(Car->RouteDistanceCm, -LaneWidthCm * 0.5f, Pos, Rot);
 		Rot.Yaw += 180.f; // viene hacia el jugador
 		Car->SetActorLocationAndRotation(Pos + FVector(0, 0, 60.f), Rot, false, nullptr, ETeleportType::None);
+
+		// Choque: cerca en planta y a la misma altura. Frena al furgon, dana la carga y la banda pierde paciencia.
+		if (TrafficHitCooldown <= 0.f)
+		{
+			ABlacklineVanPawn* HitVan = Cast<ABlacklineVanPawn>(UGameplayStatics::GetPlayerPawn(this, 0));
+			if (HitVan && FVector::DistXY(HitVan->GetActorLocation(), Car->GetActorLocation()) < 340.f
+				&& FMath::Abs(HitVan->GetActorLocation().Z - Car->GetActorLocation().Z) < 250.f)
+			{
+				TrafficHitCooldown = 2.5f;
+				if (UPrimitiveComponent* VanBody = Cast<UPrimitiveComponent>(HitVan->GetRootComponent()))
+				{
+					VanBody->SetPhysicsLinearVelocity(VanBody->GetPhysicsLinearVelocity() * 0.25f);
+					VanBody->SetPhysicsAngularVelocityInDegrees(FVector::ZeroVector);
+				}
+				if (UGameInstance* HitGI = GetGameInstance())
+				{
+					if (UBlacklineContractSubsystem* HitContracts = HitGI->GetSubsystem<UBlacklineContractSubsystem>())
+					{
+						HitContracts->AddDogWellbeing(-0.05f);
+					}
+				}
+				HitVan->ShowHudMessage(NSLOCTEXT("Blackline", "TrafficHit", "CHOQUE con un auto. Frenaste en seco y La Cofradia se enoja."), 4.f);
+				RespawnCarAhead(Car);
+			}
+		}
 	}
+	TrafficHitCooldown = FMath::Max(0.f, TrafficHitCooldown - Dt);
 }
 
 void AChileRouteActor::StartZoneContract()
@@ -467,6 +506,50 @@ void AChileRouteActor::HandleContractFinished(FName ContractID)
 	}
 }
 
+void AChileRouteActor::TeleportVan(ABlacklineVanPawn* Van, const FVector& Pos, const FRotator& Rot)
+{
+	if (!Van)
+	{
+		return;
+	}
+	UPrimitiveComponent* Body = Cast<UPrimitiveComponent>(Van->GetRootComponent());
+	if (Body)
+	{
+		Body->SetPhysicsLinearVelocity(FVector::ZeroVector);
+		Body->SetPhysicsAngularVelocityInDegrees(FVector::ZeroVector);
+	}
+	// Un cuerpo simulado ignora el teletransporte del actor: hay que mover tambien el cuerpo fisico.
+	Van->SetActorLocationAndRotation(Pos, Rot, false, nullptr, ETeleportType::TeleportPhysics);
+	if (Body)
+	{
+		Body->SetAllPhysicsPosition(Pos);
+		Body->SetAllPhysicsRotation(Rot);
+		Body->SetPhysicsLinearVelocity(FVector::ZeroVector);
+		Body->SetPhysicsAngularVelocityInDegrees(FVector::ZeroVector);
+		Body->WakeAllRigidBodies();
+	}
+	UE_LOG(LogBlackline, Log, TEXT("ChileRoute: furgon movido a %s (ahora en %s)"), *Pos.ToString(), *Van->GetActorLocation().ToString());
+}
+
+void AChileRouteActor::CheckFellOutOfWorld()
+{
+	ABlacklineVanPawn* Van = Cast<ABlacklineVanPawn>(UGameplayStatics::GetPlayerPawn(this, 0));
+	if (!Van || !Route)
+	{
+		return;
+	}
+	float MinZ = TNumericLimits<float>::Max();
+	for (int32 i = 0; i < Route->GetNumberOfSplinePoints(); ++i)
+	{
+		MinZ = FMath::Min(MinZ, static_cast<float>(Route->GetLocationAtSplinePoint(i, ESplineCoordinateSpace::World).Z));
+	}
+	if (Van->GetActorLocation().Z < MinZ - 3000.f)
+	{
+		UE_LOG(LogBlackline, Log, TEXT("ChileRoute: el furgon cayo bajo el mundo (z=%.0f, ruta desde z=%.0f)."), Van->GetActorLocation().Z, MinZ);
+		HandleVanFlipped();
+	}
+}
+
 void AChileRouteActor::HandleVanFlipped()
 {
 	ABlacklineVanPawn* Van = Cast<ABlacklineVanPawn>(UGameplayStatics::GetPlayerPawn(this, 0));
@@ -492,12 +575,7 @@ void AChileRouteActor::HandleVanFlipped()
 	Rot.Pitch = 0.f;
 	Rot.Roll = 0.f;
 
-	Van->SetActorLocationAndRotation(Pos, Rot, false, nullptr, ETeleportType::ResetPhysics);
-	if (UPrimitiveComponent* Body = Cast<UPrimitiveComponent>(Van->GetRootComponent()))
-	{
-		Body->SetPhysicsLinearVelocity(FVector::ZeroVector);
-		Body->SetPhysicsAngularVelocityInDegrees(FVector::ZeroVector);
-	}
+	TeleportVan(Van, Pos, Rot);
 	Van->ShowHudMessage(bRespawnAtRouteStart
 		? NSLOCTEXT("Blackline", "FlipStart", "Volcaste. Vuelves al inicio de la ruta; el plazo sigue corriendo.")
 		: NSLOCTEXT("Blackline", "FlipHere", "Volcaste. Te devuelven a la carretera; el plazo sigue corriendo."), 6.f);
@@ -671,12 +749,7 @@ void AChileRouteActor::HandleArrest()
 
 	// De vuelta al inicio de la ruta, parado y derecho.
 	const FTransform Start = GetStartTransform();
-	Van->SetActorLocationAndRotation(Start.GetLocation(), Start.Rotator(), false, nullptr, ETeleportType::ResetPhysics);
-	if (UPrimitiveComponent* Body = Cast<UPrimitiveComponent>(Van->GetRootComponent()))
-	{
-		Body->SetPhysicsLinearVelocity(FVector::ZeroVector);
-		Body->SetPhysicsAngularVelocityInDegrees(FVector::ZeroVector);
-	}
+	TeleportVan(Van, Start.GetLocation(), Start.Rotator());
 	Van->ShowHudMessage(FText::Format(NSLOCTEXT("Blackline", "Arrested", "ARRESTADO: la policia confisca la carga y parte de tus viaticos. La Cofradia no esta contenta. (antecedente {0} de {1})"),
 		FText::AsNumber(ArrestCount), FText::AsNumber(MaxArrests)), 10.f);
 	UE_LOG(LogBlackline, Log, TEXT("ChileRoute: arresto %d/%d"), ArrestCount, MaxArrests);

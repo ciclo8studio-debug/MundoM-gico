@@ -280,6 +280,13 @@ private:
 	/** Aviso de ficcion y contenido, una vez por sesion (release). */
 	void ShowContentNotice();
 	FTimerHandle NoticeTimer;
+	FTimerHandle FallTimer;
+	float TrafficHitCooldown = 0.f;
+	FTimerHandle TestTimer;
+	/** Mueve el furgon (cuerpo fisico incluido) y lo deja quieto. */
+	void TeleportVan(class ABlacklineVanPawn* Van, const FVector& Pos, const FRotator& Rot);
+	/** Si el furgon cae bajo el mundo (atraviesa el terreno), lo devuelve a la carretera. */
+	void CheckFellOutOfWorld();
 	void ToggleHelp();
 	void ScheduleNewRun();
 	void RestartCampaign();

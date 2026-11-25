@@ -15,7 +15,8 @@ ATrafficCar::ATrafficCar()
 	Body = CreateDefaultSubobject<UBoxComponent>(TEXT("Body"));
 	SetRootComponent(Body);
 	Body->SetBoxExtent(FVector(230.f, 95.f, 70.f));
-	Body->SetCollisionProfileName(TEXT("BlockAllDynamic"));
+	// Sin colision fisica: un cuerpo movido a saltos por timer lanzaba al furgon a 300 km/h. El choque lo detecta la ruta.
+	Body->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	Body->SetMobility(EComponentMobility::Movable);
 
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> CubeFinder(TEXT("/Engine/BasicShapes/Cube.Cube"));
