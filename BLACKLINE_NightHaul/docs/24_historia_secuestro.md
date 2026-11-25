@@ -1,7 +1,7 @@
 # 24 — Historia nueva: el perro, la banda y la ruta de Chile
 
-**Estado:** propuesta provisional (22-11-2026, decisión del CTO). Reemplaza a `05_narrativa.md`, `06_textos.md` (parte de la historia) y `07_mundo.md`.
-Los nombres propios son **provisionales** y se cambian con una sola búsqueda. Este proyecto es independiente de cualquier otro juego del estudio: no se comparten personajes, lugares ni historia.
+**Estado:** vigente. Nombres confirmados por el CTO el 25-11-2026 (Mateo Salinas, Chuño, La Cofradía, El Patrón). Reemplaza a `05_narrativa.md`, `06_textos.md` (parte de la historia) y `07_mundo.md`.
+Este proyecto es independiente de cualquier otro juego del estudio: no se comparten personajes, lugares ni historia.
 Todo es ficción: personas, empresas y la banda son inventadas; los lugares de Chile son reales y se usan como escenario.
 
 ## Premisa
@@ -73,7 +73,15 @@ Organización que controla el movimiento ilegal de carga por la Ruta 5 y sus ram
 **Queda sin efecto:** Mara Quiroga, Vantor Logística, «Faro», la Costa Ceniza y Veldmark (docs 05, 06 y 07 quedan como historial).
 
 ## Preguntas abiertas para el CTO
-1. ¿Nombres definitivos? (Mateo Salinas, Chuño, La Cofradía, El Patrón.)
+1. ~~Nombres~~ → confirmados.
 2. ¿Plazo en tiempo real o por «días» de la historia?
 3. ¿La decisión moral va en el acto 3 o 4?
 4. ¿La cabina propia incluye el asiento vacío del copiloto con el collar de Chuño?
+
+## Implementado en el juego (25-11-2026)
+- Briefings de los 25 contratos con la voz de cada lugarteniente (`Briefing` en el CSV).
+- Bienestar de Chuño (parte en 80%): +10% por entrega a tiempo, -15% al vencer el plazo, -25% si se pierde la carga; a 0% es el final malo.
+- Plazo por encargo (la ruta a 55 km/h con 25% de margen) con cuenta regresiva en pantalla.
+- Pruebas de vida por arco y finales (rescate, con costo, malo) como mensajes en pantalla.
+- Panel «ENCARGO» con Chuño, plazo y viáticos. Textos del restaurante con Chuño.
+**Pendiente:** decisión moral (avisar a la policía), pantalla propia de prueba de vida con audio, objetos de Chuño en la cabina.

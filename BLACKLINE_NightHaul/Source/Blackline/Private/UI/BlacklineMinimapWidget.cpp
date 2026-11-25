@@ -133,28 +133,44 @@ int32 UBlacklineMinimapWidget::NativePaint(const FPaintArgs& Args, const FGeomet
 	Text(FString::Printf(TEXT("%s  %.0f%%"), *R->GetZoneName().ToString(), R->GetProgress01(VanPos) * 100.f), FVector2f(MapPos.X, BelowY + 66.f), 12, FLinearColor(0.7f, 0.85f, 1.f, 1.f));
 	++Layer;
 
-	// --- Contrato activo (arriba a la izquierda)
+	// --- Encargo de La Cofradia y Chuño (arriba a la izquierda)
 	if (const UGameInstance* GI = GetGameInstance())
 	{
 		if (const UBlacklineContractSubsystem* Contracts = GI->GetSubsystem<UBlacklineContractSubsystem>())
 		{
 			const FVector2f P(MarginPx, MarginPx);
-			Box(P - FVector2f(8.f, 6.f), FVector2f(360.f, 92.f), FLinearColor(0.f, 0.f, 0.f, 0.55f));
+			Box(P - FVector2f(8.f, 6.f), FVector2f(380.f, 146.f), FLinearColor(0.f, 0.f, 0.f, 0.58f));
 			++Layer;
 			FBlacklineContractRow Row;
 			if (Contracts->HasActiveContract() && Contracts->GetContract(Contracts->GetActiveContractId(), Row))
 			{
-				Text(FString::Printf(TEXT("CONTRATO: %s"), *Row.Title.ToString()), P, 16, FLinearColor(1.f, 0.85f, 0.4f, 1.f));
+				Text(FString::Printf(TEXT("ENCARGO: %s"), *Row.Title.ToString()), P, 16, FLinearColor(1.f, 0.85f, 0.4f, 1.f));
 				Text(FString::Printf(TEXT("%s  -  %.0f kg"), *Row.CargoDisplayName.ToString(), Row.CargoWeightKg), P + FVector2f(0.f, 24.f), 12, FLinearColor::White);
 				const float Integrity = Van->Cargo ? Van->Cargo->GetCargoIntegrity01() : 1.f;
-				Text(FString::Printf(TEXT("Carga: %.0f%%   Pago: %d cr"), Integrity * 100.f, Row.Payout), P + FVector2f(0.f, 42.f), 12,
+				Text(FString::Printf(TEXT("Carga: %.0f%%"), Integrity * 100.f), P + FVector2f(0.f, 42.f), 12,
 					Integrity < 0.5f ? FLinearColor(1.f, 0.4f, 0.3f, 1.f) : FLinearColor(0.7f, 1.f, 0.7f, 1.f));
+
+				if (Contracts->HasDeadline())
+				{
+					const float Left = Contracts->GetDeadlineRemainingSeconds();
+					const int32 Abs = FMath::Abs(FMath::RoundToInt(Left));
+					const bool bLate = Left < 0.f;
+					Text(FString::Printf(TEXT("%s %02d:%02d"), bLate ? TEXT("ATRASADO") : TEXT("Plazo"), Abs / 60, Abs % 60), P + FVector2f(150.f, 42.f), 12,
+						(bLate || Left < 60.f) ? FLinearColor(1.f, 0.35f, 0.25f, 1.f) : FLinearColor(0.85f, 0.85f, 0.85f, 1.f));
+				}
 			}
 			else
 			{
-				Text(TEXT("Sin contrato activo"), P, 14, FLinearColor(0.8f, 0.8f, 0.8f, 1.f));
+				Text(TEXT("Sin encargo activo"), P, 14, FLinearColor(0.8f, 0.8f, 0.8f, 1.f));
 			}
-			Text(FString::Printf(TEXT("Creditos: %d cr"), Contracts->GetCredits()), P + FVector2f(0.f, 62.f), 13, FLinearColor(0.7f, 0.85f, 1.f, 1.f));
+
+			// Chuño: lo que esta en juego.
+			const float Dog = Contracts->GetDogWellbeing01();
+			const FLinearColor DogColor = Dog < 0.3f ? FLinearColor(1.f, 0.25f, 0.2f, 1.f) : (Dog < 0.6f ? FLinearColor(1.f, 0.7f, 0.2f, 1.f) : FLinearColor(0.45f, 0.95f, 0.5f, 1.f));
+			Text(FString::Printf(TEXT("CHUÑO  %.0f%%"), Dog * 100.f), P + FVector2f(0.f, 66.f), 14, DogColor);
+			Box(P + FVector2f(0.f, 90.f), FVector2f(360.f, 10.f), FLinearColor(0.f, 0.f, 0.f, 0.6f));
+			Box(P + FVector2f(0.f, 90.f), FVector2f(360.f * Dog, 10.f), DogColor);
+			Text(FString::Printf(TEXT("Viaticos: %d cr"), Contracts->GetCredits()), P + FVector2f(0.f, 108.f), 12, FLinearColor(0.7f, 0.85f, 1.f, 1.f));
 		}
 	}
 	++Layer;

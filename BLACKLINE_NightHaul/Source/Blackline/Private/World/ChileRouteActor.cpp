@@ -314,18 +314,43 @@ void AChileRouteActor::StartZoneContract()
 	}
 
 	CreditsAtContractStart = Contracts->GetCredits();
+	bEndingShown = false;
 	if (Contracts->StartContract(Id))
 	{
 		Contracts->OnContractFinished.AddUniqueDynamic(this, &AChileRouteActor::HandleContractFinished);
+		Contracts->OnDogWellbeingChanged.AddUniqueDynamic(this, &AChileRouteActor::HandleDogWellbeingChanged);
+
+		// Plazo: el largo de la ruta a velocidad media, con margen.
+		const float Seconds = (RouteLengthCm / 100.f) / (DeadlineAverageSpeedKmh / 3.6f) * DeadlineMargin;
+		Contracts->StartDeadline(Seconds);
+
 		FBlacklineContractRow Row;
 		if (Contracts->GetContract(Id, Row))
 		{
+			ActiveArc = Row.Arc;
 			if (ABlacklineVanPawn* Van = Cast<ABlacklineVanPawn>(UGameplayStatics::GetPlayerPawn(this, 0)))
 			{
-				Van->ShowHudMessage(FText::Format(NSLOCTEXT("Blackline", "ContractStarted", "CONTRATO: {0} - entrega al final de la ruta ({1} cr)"),
-					Row.Title, FText::AsNumber(Row.Payout)), 8.f);
+				Van->ShowHudMessage(FText::Format(NSLOCTEXT("Blackline", "ContractStarted", "{0}: {1}"), Row.BrokerName, Row.Briefing), 12.f);
 			}
 		}
+	}
+}
+
+void AChileRouteActor::HandleDogWellbeingChanged(float Wellbeing01)
+{
+	ABlacklineVanPawn* Van = Cast<ABlacklineVanPawn>(UGameplayStatics::GetPlayerPawn(this, 0));
+	if (!Van || bEndingShown)
+	{
+		return;
+	}
+	if (Wellbeing01 <= 0.f)
+	{
+		bEndingShown = true;
+		Van->ShowHudMessage(NSLOCTEXT("Blackline", "EndBad", "FIN: no llegaste a tiempo y La Cofradia corto la comunicacion. Chuño ya no volvera a la cabina."), 20.f);
+	}
+	else if (Wellbeing01 < 0.3f)
+	{
+		Van->ShowHudMessage(NSLOCTEXT("Blackline", "DogLow", "Chuño esta mal. La Cofradia te lo hace saber. Entrega a tiempo."), 6.f);
 	}
 }
 
@@ -334,20 +359,39 @@ void AChileRouteActor::HandleContractFinished(FName ContractID)
 	UGameInstance* GI = GetGameInstance();
 	const UBlacklineContractSubsystem* Contracts = GI ? GI->GetSubsystem<UBlacklineContractSubsystem>() : nullptr;
 	ABlacklineVanPawn* Van = Cast<ABlacklineVanPawn>(UGameplayStatics::GetPlayerPawn(this, 0));
-	if (!Contracts || !Van)
+	if (!Contracts || !Van || bEndingShown)
 	{
 		return;
 	}
+
 	const int32 Earned = Contracts->GetCredits() - CreditsAtContractStart;
-	if (Earned > 0)
+	const float Dog = Contracts->GetDogWellbeing01();
+	if (Earned <= 0)
 	{
-		Van->ShowHudMessage(FText::Format(NSLOCTEXT("Blackline", "Delivered", "ENTREGA COMPLETADA: +{0} cr (total {1})"),
-			FText::AsNumber(Earned), FText::AsNumber(Contracts->GetCredits())), 8.f);
+		Van->ShowHudMessage(NSLOCTEXT("Blackline", "ContractFailed", "ENCARGO FALLIDO: la carga se perdio. La Cofradia no perdona."), 10.f);
+		return;
 	}
-	else
+
+	FText Proof;
+	switch (ActiveArc)
 	{
-		Van->ShowHudMessage(NSLOCTEXT("Blackline", "ContractFailed", "CONTRATO FALLIDO: la carga se perdio"), 8.f);
+	case 1: Proof = NSLOCTEXT("Blackline", "Proof1", "PRUEBA DE VIDA: ladridos por la radio. Es Chuño. El Ingeniero corta la llamada."); break;
+	case 2: Proof = NSLOCTEXT("Blackline", "Proof2", "PRUEBA DE VIDA: una foto de Chuño, la oreja caida, mirando a camara. La Anticuaria sonrie en el mensaje."); break;
+	case 3: Proof = NSLOCTEXT("Blackline", "Proof3", "PRUEBA DE VIDA: Chuño duerme sobre una manta. Detras se oye viento de desierto: es una pista."); break;
+	case 4: Proof = NSLOCTEXT("Blackline", "Proof4", "PRUEBA DE VIDA: un aullido lejano y lluvia en un techo. El Capataz: \"Falta poco, Salinas\"."); break;
+	default:
+		if (Dog >= 0.5f)
+		{
+			bEndingShown = true;
+			Van->ShowHudMessage(NSLOCTEXT("Blackline", "EndGood", "RESCATE: el Arriero abre una puerta. Chuño corre a la cabina y se sube al asiento del copiloto. FIN."), 20.f);
+			return;
+		}
+		bEndingShown = true;
+		Van->ShowHudMessage(NSLOCTEXT("Blackline", "EndCost", "Llegas tarde: Chuño esta debil, pero vivo, y vuelve contigo. Final con costo. FIN."), 20.f);
+		return;
 	}
+	Van->ShowHudMessage(FText::Format(NSLOCTEXT("Blackline", "DeliveredStory", "{0}  (+{1} viaticos, Chuño {2}%)"),
+		Proof, FText::AsNumber(Earned), FText::AsNumber(FMath::RoundToInt(Dog * 100.f))), 12.f);
 }
 
 void AChileRouteActor::CreateMinimap()

@@ -43,6 +43,35 @@ C = [
     ("C25", "Último Envío", 5, "Núcleo energético inestable", "Reactor de investigación en traslado (Consorcio Núcleo Austral).", 25000, 1550, 0.85, 0.95, 3, "Storm", "MixedOffroad", 0.0, "Clímax: aduana nivel 3 y persecución en tormenta."),
 ]
 
+# Voz de cada lugarteniente de La Cofradia. Chuño (el perro de Mateo) es la presion, nunca se le muestra herido.
+BRIEFINGS = {
+    "C01": "Contenedores a Pudahuel antes del amanecer. Inhibidor GPS encendido. Chuño come a su hora si tu llegas a la tuya.",
+    "C02": "Aleacion pesada y portico de peaje. Frena con tiempo. Yo mido todo, Salinas, incluido a Chuño.",
+    "C03": "Valija por calles chicas, sin porticos. Cero errores: yo mido cada error contra tu perro.",
+    "C04": "Hay operativo en la Ruta 68. Desviate por tierra, no por miedo. Chuño sigue esperando.",
+    "C05": "Las balizas pulsan: escondete bajo un paso a nivel y apaga el motor. Si te ven, el que paga es el.",
+    "C06": "Relojes finos, reten fino. Sonrie, carino. Chuño tambien sabe esperar bonito.",
+    "C07": "Microprocesadores en cajas de manzanas, querido. Que los sellos aguanten la mirada del guardia.",
+    "C08": "Joyas en doble fondo y un guardia con linterna. Tu mejor cara, Mateo: la que le pondrias a Chuño.",
+    "C09": "Un prototipo descuadrado: peso a un lado, curvas lentas. Si lo vuelcas, no hay segunda prueba.",
+    "C10": "Cajas fuertes que suenan en cada bache. Mejor tierra suave que un escandalo, ¿no crees?",
+    "C11": "Ceramica milenaria. Cada golpe es un pedazo de historia y de tu amigo. Despacio en los lomos de toro.",
+    "C12": "Madera tallada bajo la lluvia. El barro no perdona y la talla tampoco. Suave con el 4x4.",
+    "C13": "Lienzos enrollados en niebla espesa. Un solo rasguño y lo lamentaras. El ladra por ti.",
+    "C14": "Plateria que brilla en los escaneres. Preparate para explicar lo que no se explica.",
+    "C15": "Un fosil pesadisimo en yeso. Pierde un trozo y pierdes mas que el pago.",
+    "C16": "Planchas de casi dos toneladas. Frenar toma distancia: usala. Tienes hasta el alba.",
+    "C17": "Valvulas por caminos agricolas. Evita las basculas. Plazo corto, Salinas.",
+    "C18": "Baterias de litio por la cuesta mojada. No bloquees ruedas. Si no llegas, el espera mas.",
+    "C19": "Bidones sin etiqueta. Si gotean, te siguen. Que no goteen.",
+    "C20": "Generadores en el muelle. Luces apagadas y paciencia. Tienes una hora.",
+    "C21": "El paso, con escaner y ventanilla. Papeles sin faltas. Estas mas cerca de Chuño de lo que crees.",
+    "C22": "Telecom cifrada, hielo y altura. 4x4 con diferencial bloqueado. Ya casi, Mateo.",
+    "C23": "El tunel viejo, sin margen. Ni un roce. Chuño te oye desde algun lado.",
+    "C24": "Doble reten y muestras frias. Manten el aire y los nervios frios. Falta poco.",
+    "C25": "El ultimo envio: nucleo inestable, aduana nivel 3 y tormenta. Entregalo y Chuño vuelve a la cabina.",
+}
+
 BROKERS = {1: "El Ingeniero", 2: "La Anticuaria", 3: "El Curador", 4: "El Capataz", 5: "El Arriero"}
 WEATHER = {"ClearNight", "ColdNight", "HumidNight", "LightRain", "ModerateRain", "HeavyRain", "Storm", "Windy",
            "UrbanFog", "CoastalFog", "PortFog", "DenseFog", "Freezing", "Blizzard"}
@@ -50,7 +79,7 @@ TERRAIN = {"Asphalt", "DirtBypass", "DirtRoad", "DeepMud", "Gravel", "WetSlope",
            "IceSnow", "OldTunnel", "MixedOffroad"}
 HEADER = ["---", "ContractID", "Title", "Arc", "BrokerName", "CargoDisplayName", "CoverStoryManifest", "Payout",
           "CargoWeightKg", "Fragility", "EMSignature", "RequiredManifestLevel", "WeatherType", "TerrainType",
-          "LateralBias", "DesignNote"]
+          "LateralBias", "Briefing", "DesignNote"]
 CSV_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "Data", "DT_BlacklineContracts.csv")
 
 
@@ -59,6 +88,9 @@ def validate():
     if len(C) != 25:
         errs.append("se esperaban 25 contratos, hay %d" % len(C))
     ids = [c[0] for c in C]
+    for cid in ids:
+        if not BRIEFINGS.get(cid):
+            errs.append('%s sin briefing' % cid)
     if len(set(ids)) != len(ids):
         errs.append("ContractID duplicado")
     for (cid, title, arc, cargo, cover, pay, kg, fr, em, lvl, wea, ter, bias, note) in C:
@@ -87,7 +119,7 @@ def write_csv(path=CSV_PATH):
         w.writerow(HEADER)
         for (cid, title, arc, cargo, cover, pay, kg, fr, em, lvl, wea, ter, bias, note) in C:
             w.writerow([cid, cid, title, arc, BROKERS[arc], cargo, cover, pay, kg, "%.2f" % fr, "%.2f" % em,
-                        lvl, wea, ter, "%.2f" % bias, note])
+                        lvl, wea, ter, "%.2f" % bias, BRIEFINGS[cid], note])
     return path
 
 

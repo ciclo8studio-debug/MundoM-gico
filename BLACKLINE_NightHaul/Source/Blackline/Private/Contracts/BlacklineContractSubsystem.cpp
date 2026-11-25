@@ -5,6 +5,7 @@
 #include "Engine/DataTable.h"
 #include "Engine/GameInstance.h"
 #include "Engine/World.h"
+#include "TimerManager.h"
 #include "EngineUtils.h"
 #include "Kismet/GameplayStatics.h"
 #include "Vehicle/BlacklineVanPawn.h"
@@ -19,6 +20,7 @@ void UBlacklineContractSubsystem::Initialize(FSubsystemCollectionBase& Collectio
 {
 	Super::Initialize(Collection);
 	CachedTable = ResolveTable();
+	DogWellbeing01 = StartDogWellbeing01;
 	UE_LOG(LogBlackline, Log, TEXT("ContractSubsystem: tabla %s (%d contratos)"),
 		CachedTable ? *CachedTable->GetName() : TEXT("NO ENCONTRADA"),
 		CachedTable ? CachedTable->GetRowMap().Num() : 0);
@@ -131,6 +133,22 @@ void UBlacklineContractSubsystem::FinishContract(bool bSuccess)
 		Credits += ActivePayout;
 	}
 
+	// Lo que esta en juego: Chuño. A tiempo gana; atrasado no gana; fallido pierde.
+	const bool bLate = IsContractLate();
+	if (bSuccess)
+	{
+		AddDogWellbeing(bLate ? 0.f : OnTimeDeliveryBonus);
+	}
+	else
+	{
+		AddDogWellbeing(-FailurePenalty);
+	}
+	if (UGameInstance* GI = GetGameInstance())
+	{
+		GI->GetTimerManager().ClearTimer(DeadlineTimer);
+	}
+	bHasDeadline = false;
+
 	const FName Finished = ActiveContractId;
 	ActiveContractId = NAME_None;
 	ActivePayout = 0;
@@ -142,4 +160,48 @@ void UBlacklineContractSubsystem::HandleCargoDestroyed()
 {
 	UE_LOG(LogBlackline, Log, TEXT("Contrato %s fallido: carga destruida."), *ActiveContractId.ToString());
 	FinishContract(false);
+}
+
+void UBlacklineContractSubsystem::AddDogWellbeing(float Delta01)
+{
+	const float Old = DogWellbeing01;
+	DogWellbeing01 = FMath::Clamp(DogWellbeing01 + Delta01, 0.f, 1.f);
+	if (!FMath::IsNearlyEqual(Old, DogWellbeing01))
+	{
+		UE_LOG(LogBlackline, Log, TEXT("Chuño: bienestar %.0f%% -> %.0f%%"), Old * 100.f, DogWellbeing01 * 100.f);
+		OnDogWellbeingChanged.Broadcast(DogWellbeing01);
+	}
+}
+
+void UBlacklineContractSubsystem::StartDeadline(float Seconds)
+{
+	UGameInstance* GI = GetGameInstance();
+	UWorld* World = GetWorld();
+	if (!GI || !World)
+	{
+		return;
+	}
+	GI->GetTimerManager().ClearTimer(DeadlineTimer);
+	bHasDeadline = true;
+	DeadlineEndTime = World->GetTimeSeconds() + FMath::Max(10.f, Seconds);
+	GI->GetTimerManager().SetTimer(DeadlineTimer, this, &UBlacklineContractSubsystem::HandleDeadlineExpired, FMath::Max(10.f, Seconds), false);
+}
+
+float UBlacklineContractSubsystem::GetDeadlineRemainingSeconds() const
+{
+	const UWorld* World = GetWorld();
+	if (!bHasDeadline || !World)
+	{
+		return 0.f;
+	}
+	return static_cast<float>(DeadlineEndTime - World->GetTimeSeconds());
+}
+
+void UBlacklineContractSubsystem::HandleDeadlineExpired()
+{
+	if (HasActiveContract())
+	{
+		UE_LOG(LogBlackline, Log, TEXT("Contrato %s: plazo vencido."), *ActiveContractId.ToString());
+		AddDogWellbeing(-LatePenalty);
+	}
 }

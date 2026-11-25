@@ -128,7 +128,7 @@ void ARoadsidePOI::TryInteract(ABlacklineVanPawn* Van)
 	}
 	else
 	{
-		Van->ShowHudMessage(LOCTEXT("Rested", "Buena comida y un cafe. El dueño dice que hay un reten mas adelante."), 5.f);
+		Van->ShowHudMessage(LOCTEXT("Rested", "Pides lo de siempre y guardas la mitad, por costumbre. El asiento del copiloto sigue vacio. El dueño dice que hay un reten mas adelante."), 5.f);
 	}
 	BP_OnInteracted(Van);
 }

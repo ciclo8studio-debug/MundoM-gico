@@ -26,6 +26,7 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnContractStarted, FName, ContractID);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnContractFinished, FName, ContractID);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnDogWellbeingChanged, float, Wellbeing01);
 
 UCLASS()
 class BLACKLINE_API UBlacklineContractSubsystem : public UGameInstanceSubsystem
@@ -64,6 +65,46 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Contracts")
 	int32 GetCredits() const { return Credits; }
 
+	// ---- Chuño (el perro de Mateo): lo que esta en juego ----
+	/** Bienestar de Chuño [0,1]. Sube con entregas a tiempo; baja con atrasos y cargas perdidas. A 0 es el final malo. */
+	UFUNCTION(BlueprintPure, Category = "Contracts|Chuno")
+	float GetDogWellbeing01() const { return DogWellbeing01; }
+
+	UFUNCTION(BlueprintCallable, Category = "Contracts|Chuno")
+	void AddDogWellbeing(float Delta01);
+
+	/** Plazo del encargo activo (segundos). Al vencer, Chuño pierde LatePenalty. */
+	UFUNCTION(BlueprintCallable, Category = "Contracts|Chuno")
+	void StartDeadline(float Seconds);
+
+	/** Segundos que quedan (negativo si va atrasado; 0 si no hay plazo). */
+	UFUNCTION(BlueprintPure, Category = "Contracts|Chuno")
+	float GetDeadlineRemainingSeconds() const;
+
+	UFUNCTION(BlueprintPure, Category = "Contracts|Chuno")
+	bool HasDeadline() const { return bHasDeadline; }
+
+	UFUNCTION(BlueprintPure, Category = "Contracts|Chuno")
+	bool IsContractLate() const { return bHasDeadline && GetDeadlineRemainingSeconds() < 0.f; }
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Contracts|Chuno", meta = (ClampMin = "0", ClampMax = "1"))
+	float StartDogWellbeing01 = 0.8f;
+
+	/** Bienestar que gana una entrega a tiempo. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Contracts|Chuno", meta = (ClampMin = "0", ClampMax = "1"))
+	float OnTimeDeliveryBonus = 0.10f;
+
+	/** Bienestar que pierde un contrato fallido (carga destruida). */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Contracts|Chuno", meta = (ClampMin = "0", ClampMax = "1"))
+	float FailurePenalty = 0.25f;
+
+	/** Bienestar que se pierde al vencer el plazo. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Contracts|Chuno", meta = (ClampMin = "0", ClampMax = "1"))
+	float LatePenalty = 0.15f;
+
+	UPROPERTY(BlueprintAssignable, Category = "Contracts|Chuno")
+	FOnDogWellbeingChanged OnDogWellbeingChanged;
+
 	UPROPERTY(BlueprintAssignable, Category = "Contracts")
 	FOnContractStarted OnContractStarted;
 
@@ -72,6 +113,13 @@ public:
 
 private:
 	UDataTable* ResolveTable() const;
+
+	void HandleDeadlineExpired();
+
+	float DogWellbeing01 = 0.8f;
+	double DeadlineEndTime = 0.0;
+	bool bHasDeadline = false;
+	FTimerHandle DeadlineTimer;
 
 	/** Handler: la carga se destruyo -> el contrato falla. */
 	UFUNCTION()

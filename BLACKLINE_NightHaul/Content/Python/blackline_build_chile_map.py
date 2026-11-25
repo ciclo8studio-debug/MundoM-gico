@@ -68,6 +68,11 @@ def import_waypoints():
     if errs:
         raise RuntimeError("waypoints invalidos: %s" % errs)
     c.import_datatable()
+    import blackline_contracts as k
+    errs = k.validate()
+    if errs:
+        raise RuntimeError("contratos invalidos: %s" % errs)
+    k.import_datatable()
 
 
 def build_map():

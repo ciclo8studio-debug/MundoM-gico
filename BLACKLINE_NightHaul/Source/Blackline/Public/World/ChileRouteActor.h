@@ -148,6 +148,13 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Chile|Extras")
 	bool bAutoStartContract = true;
 
+	/** Plazo del encargo: la ruta recorrida a esta velocidad media (km/h) mas un margen. Vencido, Chuño pierde bienestar. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Chile|Extras", meta = (ClampMin = "10", Units = "km/h"))
+	float DeadlineAverageSpeedKmh = 55.f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Chile|Extras", meta = (ClampMin = "1"))
+	float DeadlineMargin = 1.25f;
+
 	/** Contrato de cada zona: 1 Norte C15 (fosil), 2 Centro C01, 3 Sur C18 (cuesta con lluvia), 4 Cordillera C21 (paso). */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Chile|Extras")
 	TMap<int32, FName> ZoneContracts;
@@ -223,6 +230,12 @@ private:
 	void RespawnCarAhead(ATrafficCar* Car);
 	void CreateMinimap();
 	void StartZoneContract();
+
+	UFUNCTION()
+	void HandleDogWellbeingChanged(float Wellbeing01);
+
+	int32 ActiveArc = 1;
+	bool bEndingShown = false;
 
 	UFUNCTION()
 	void HandleContractFinished(FName ContractID);

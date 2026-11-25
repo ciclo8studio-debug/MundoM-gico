@@ -98,6 +98,10 @@ struct BLACKLINE_API FBlacklineContractRow : public FTableRowBase
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Contract", meta = (ClampMin = "-1", ClampMax = "1"))
 	float LateralBias = 0.f;
 
+	/** Orden del lugarteniente de La Cofradia (voz del broker) con la presion sobre Chuño. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Contract")
+	FText Briefing;
+
 	/** Mecanica destacada del encargo (nota de diseno / pista para el HUD de la tablet). */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Contract")
 	FText DesignNote;
