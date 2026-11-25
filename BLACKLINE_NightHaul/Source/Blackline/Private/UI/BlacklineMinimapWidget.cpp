@@ -6,6 +6,9 @@
 #include "Rendering/SlateRenderer.h"
 #include "Styling/CoreStyle.h"
 #include "Styling/SlateBrush.h"
+#include "Cargo/CargoSimulationComponent.h"
+#include "Contracts/BlacklineContractSubsystem.h"
+#include "Engine/GameInstance.h"
 #include "Vehicle/BlacklineVanPawn.h"
 #include "World/ChileRouteActor.h"
 #include "World/RoadsidePOI.h"
@@ -128,6 +131,32 @@ int32 UBlacklineMinimapWidget::NativePaint(const FPaintArgs& Args, const FGeomet
 	Box(FVector2f(MapPos.X, BelowY + 36.f), FVector2f(MapSizePx * Fuel, 10.f), FuelColor);
 	Text(TEXT("COMBUSTIBLE"), FVector2f(MapPos.X, BelowY + 48.f), 12, FLinearColor(0.85f, 0.85f, 0.85f, 1.f));
 	Text(FString::Printf(TEXT("%s  %.0f%%"), *R->GetZoneName().ToString(), R->GetProgress01(VanPos) * 100.f), FVector2f(MapPos.X, BelowY + 66.f), 12, FLinearColor(0.7f, 0.85f, 1.f, 1.f));
+	++Layer;
+
+	// --- Contrato activo (arriba a la izquierda)
+	if (const UGameInstance* GI = GetGameInstance())
+	{
+		if (const UBlacklineContractSubsystem* Contracts = GI->GetSubsystem<UBlacklineContractSubsystem>())
+		{
+			const FVector2f P(MarginPx, MarginPx);
+			Box(P - FVector2f(8.f, 6.f), FVector2f(360.f, 92.f), FLinearColor(0.f, 0.f, 0.f, 0.55f));
+			++Layer;
+			FBlacklineContractRow Row;
+			if (Contracts->HasActiveContract() && Contracts->GetContract(Contracts->GetActiveContractId(), Row))
+			{
+				Text(FString::Printf(TEXT("CONTRATO: %s"), *Row.Title.ToString()), P, 16, FLinearColor(1.f, 0.85f, 0.4f, 1.f));
+				Text(FString::Printf(TEXT("%s  -  %.0f kg"), *Row.CargoDisplayName.ToString(), Row.CargoWeightKg), P + FVector2f(0.f, 24.f), 12, FLinearColor::White);
+				const float Integrity = Van->Cargo ? Van->Cargo->GetCargoIntegrity01() : 1.f;
+				Text(FString::Printf(TEXT("Carga: %.0f%%   Pago: %d cr"), Integrity * 100.f, Row.Payout), P + FVector2f(0.f, 42.f), 12,
+					Integrity < 0.5f ? FLinearColor(1.f, 0.4f, 0.3f, 1.f) : FLinearColor(0.7f, 1.f, 0.7f, 1.f));
+			}
+			else
+			{
+				Text(TEXT("Sin contrato activo"), P, 14, FLinearColor(0.8f, 0.8f, 0.8f, 1.f));
+			}
+			Text(FString::Printf(TEXT("Creditos: %d cr"), Contracts->GetCredits()), P + FVector2f(0.f, 62.f), 13, FLinearColor(0.7f, 0.85f, 1.f, 1.f));
+		}
+	}
 	++Layer;
 
 	// --- Mensaje del juego (centrado abajo)

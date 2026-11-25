@@ -144,6 +144,14 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Chile|Extras", meta = (Units = "cm"))
 	float TrafficDespawnBehindCm = 40000.f;
 
+	/** Inicia solo el contrato de la zona al empezar (se puede forzar con -contract=C09). */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Chile|Extras")
+	bool bAutoStartContract = true;
+
+	/** Contrato de cada zona: 1 Norte C15 (fosil), 2 Centro C01, 3 Sur C18 (cuesta con lluvia), 4 Cordillera C21 (paso). */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Chile|Extras")
+	TMap<int32, FName> ZoneContracts;
+
 	/** Minimapa y datos de manejo en pantalla. */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Chile|Extras")
 	bool bCreateMinimap = true;
@@ -182,7 +190,7 @@ public:
 
 	/** Cuanto queda el terreno bajo la calzada (cm) para que no se solapen. */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Chile|Shape", meta = (ClampMin = "0", Units = "cm"))
-	float RoadBedDropCm = 20.f;
+	float RoadBedDropCm = 5.f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Chile|Shape")
 	int32 NoiseSeed = 1337;
@@ -214,6 +222,12 @@ private:
 	void UpdateTraffic();
 	void RespawnCarAhead(ATrafficCar* Car);
 	void CreateMinimap();
+	void StartZoneContract();
+
+	UFUNCTION()
+	void HandleContractFinished(FName ContractID);
+
+	int32 CreditsAtContractStart = 0;
 	void MovePlayerStartToStart();
 	bool bBuiltInInit = false;
 	float Fbm(float X, float Y) const;

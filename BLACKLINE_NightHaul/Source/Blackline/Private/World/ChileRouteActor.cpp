@@ -7,11 +7,14 @@
 #include "Engine/StaticMesh.h"
 #include "UObject/ConstructorHelpers.h"
 #include "PhysicsEngine/BodySetup.h"
+#include "Contracts/BlacklineContractSubsystem.h"
 #include "Contracts/DeliveryZone.h"
+#include "Engine/GameInstance.h"
 #include "Blueprint/UserWidget.h"
 #include "UI/BlacklineMinimapWidget.h"
 #include "World/RoadsidePOI.h"
 #include "World/TrafficCar.h"
+#include "Vehicle/BlacklineVanPawn.h"
 #include "Engine/DataTable.h"
 #include "Engine/World.h"
 #include "EngineUtils.h"
@@ -89,6 +92,11 @@ AChileRouteActor::AChileRouteActor()
 	ZoneCompression.Add(3, 100.f);
 	ZoneCompression.Add(4, 25.f);
 
+	ZoneContracts.Add(1, FName(TEXT("C15")));
+	ZoneContracts.Add(2, FName(TEXT("C01")));
+	ZoneContracts.Add(3, FName(TEXT("C18")));
+	ZoneContracts.Add(4, FName(TEXT("C21")));
+
 	DefaultBiomeStyles();
 }
 
@@ -146,6 +154,10 @@ void AChileRouteActor::BeginPlay()
 		if (bCreateMinimap)
 		{
 			CreateMinimap();
+		}
+		if (bAutoStartContract)
+		{
+			StartZoneContract();
 		}
 	}
 }
@@ -283,6 +295,58 @@ void AChileRouteActor::UpdateTraffic()
 		GetPointAtDistance(Car->RouteDistanceCm, -LaneWidthCm * 0.5f, Pos, Rot);
 		Rot.Yaw += 180.f; // viene hacia el jugador
 		Car->SetActorLocationAndRotation(Pos + FVector(0, 0, 60.f), Rot, false, nullptr, ETeleportType::None);
+	}
+}
+
+void AChileRouteActor::StartZoneContract()
+{
+	FName Id = ZoneContracts.FindRef(ZoneId);
+	FString Cmd;
+	if (FParse::Value(FCommandLine::Get(), TEXT("contract="), Cmd) && !Cmd.IsEmpty())
+	{
+		Id = FName(*Cmd);
+	}
+	UGameInstance* GI = GetGameInstance();
+	UBlacklineContractSubsystem* Contracts = GI ? GI->GetSubsystem<UBlacklineContractSubsystem>() : nullptr;
+	if (Id.IsNone() || !Contracts)
+	{
+		return;
+	}
+
+	CreditsAtContractStart = Contracts->GetCredits();
+	if (Contracts->StartContract(Id))
+	{
+		Contracts->OnContractFinished.AddUniqueDynamic(this, &AChileRouteActor::HandleContractFinished);
+		FBlacklineContractRow Row;
+		if (Contracts->GetContract(Id, Row))
+		{
+			if (ABlacklineVanPawn* Van = Cast<ABlacklineVanPawn>(UGameplayStatics::GetPlayerPawn(this, 0)))
+			{
+				Van->ShowHudMessage(FText::Format(NSLOCTEXT("Blackline", "ContractStarted", "CONTRATO: {0} - entrega al final de la ruta ({1} cr)"),
+					Row.Title, FText::AsNumber(Row.Payout)), 8.f);
+			}
+		}
+	}
+}
+
+void AChileRouteActor::HandleContractFinished(FName ContractID)
+{
+	UGameInstance* GI = GetGameInstance();
+	const UBlacklineContractSubsystem* Contracts = GI ? GI->GetSubsystem<UBlacklineContractSubsystem>() : nullptr;
+	ABlacklineVanPawn* Van = Cast<ABlacklineVanPawn>(UGameplayStatics::GetPlayerPawn(this, 0));
+	if (!Contracts || !Van)
+	{
+		return;
+	}
+	const int32 Earned = Contracts->GetCredits() - CreditsAtContractStart;
+	if (Earned > 0)
+	{
+		Van->ShowHudMessage(FText::Format(NSLOCTEXT("Blackline", "Delivered", "ENTREGA COMPLETADA: +{0} cr (total {1})"),
+			FText::AsNumber(Earned), FText::AsNumber(Contracts->GetCredits())), 8.f);
+	}
+	else
+	{
+		Van->ShowHudMessage(NSLOCTEXT("Blackline", "ContractFailed", "CONTRATO FALLIDO: la carga se perdio"), 8.f);
 	}
 }
 
@@ -614,8 +678,6 @@ void AChileRouteActor::BuildRoadMesh(const TArray<FRouteSample>& Samples)
 				C.Add(Strip.Color);
 			}
 			Tri.Append({Base, Base + 3, Base + 2, Base, Base + 2, Base + 1});
-			// Cara inversa: la colision fisica de la malla procedural puede ser de una sola cara.
-			Tri.Append({Base, Base + 2, Base + 3, Base, Base + 1, Base + 2});
 		}
 	}
 
@@ -812,7 +874,6 @@ void AChileRouteActor::BuildTerrain(const TArray<FRouteSample>& Samples)
 					const int32 Cc = A + WI;
 					const int32 D = Cc + 1;
 					Tri.Append({A, Cc, D, A, D, B});
-					Tri.Append({A, D, Cc, A, B, D}); // cara inversa (colision de doble cara)
 				}
 			}
 			if (Tri.Num() == 0)
