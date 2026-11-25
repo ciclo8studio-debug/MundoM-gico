@@ -53,7 +53,7 @@ ABlacklineVanPawn::ABlacklineVanPawn(const FObjectInitializer& ObjectInitializer
 	{
 		Move->Mass = 2200.f;
 
-		Move->EngineSetup.MaxTorque = 420.f;
+		Move->EngineSetup.MaxTorque = 550.f;
 		Move->EngineSetup.MaxRPM = 4800.f;
 		Move->EngineSetup.EngineIdleRPM = 800.f;
 		Move->EngineSetup.EngineBrakeEffect = 0.08f;
@@ -62,13 +62,14 @@ ABlacklineVanPawn::ABlacklineVanPawn(const FObjectInitializer& ObjectInitializer
 		if (FRichCurve* Curve = Move->EngineSetup.TorqueCurve.GetRichCurve())
 		{
 			Curve->Reset();
-			// X = RPM / MaxRPM, Y = Nm / MaxTorque (diesel turbo, par plano).
+			// X = RPM REALES (Chaos evalua la curva con RPM de 0 a MaxRPM, no normalizada), Y = fraccion del par maximo.
+			// Con X en 0..1 la curva quedaba en su ultimo valor (0.48) y el motor daba menos de la mitad del par.
 			static const float Points[][2] = {
 				{0.f, 0.43f}, {0.167f, 0.62f}, {0.25f, 0.81f}, {0.375f, 1.0f},
 				{0.52f, 1.0f}, {0.667f, 0.93f}, {0.833f, 0.74f}, {1.0f, 0.48f} };
 			for (const float(&P)[2] : Points)
 			{
-				const FKeyHandle H = Curve->AddKey(P[0], P[1]);
+				const FKeyHandle H = Curve->AddKey(P[0] * Move->EngineSetup.MaxRPM, P[1]);
 				Curve->SetKeyInterpMode(H, RCIM_Cubic);
 			}
 		}

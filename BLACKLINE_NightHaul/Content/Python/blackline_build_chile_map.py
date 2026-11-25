@@ -84,11 +84,21 @@ def build_map():
     ds.set_actor_label("Luna")
     ds.set_actor_rotation(unreal.Rotator(roll=0, pitch=-38, yaw=60), False)
     dc = ds.get_component_by_class(unreal.DirectionalLightComponent)
-    dc.set_editor_property("intensity", 0.6)
+    dc.set_editor_property("intensity", 2.0)
     dc.set_editor_property("light_color", unreal.Color(150, 175, 255, 255))
     dc.set_mobility(unreal.ComponentMobility.MOVABLE)
     setp(dc, ["atmosphere_sun_light"], False)
     setp(dc, ["cast_shadows"], False)
+    # Luz de relleno azul tenue (ambiente de noche sin recaptura del cielo): sin sombras, sin sol de atmosfera.
+    fill = actor_sub.spawn_actor_from_class(unreal.DirectionalLight, unreal.Vector(0, 0, 1100))
+    fill.set_actor_label("Relleno_Noche")
+    fill.set_actor_rotation(unreal.Rotator(roll=0, pitch=-25, yaw=240), False)
+    fc2 = fill.get_component_by_class(unreal.DirectionalLightComponent)
+    fc2.set_editor_property("intensity", 0.9)
+    fc2.set_editor_property("light_color", unreal.Color(120, 140, 215, 255))
+    fc2.set_mobility(unreal.ComponentMobility.MOVABLE)
+    setp(fc2, ["atmosphere_sun_light"], False)
+    setp(fc2, ["cast_shadows"], False)
     actor_sub.spawn_actor_from_class(unreal.SkyAtmosphere, unreal.Vector(0, 0, 0))
     sk = actor_sub.spawn_actor_from_class(unreal.SkyLight, unreal.Vector(0, 0, 500))
     skc = sk.get_component_by_class(unreal.SkyLightComponent)
@@ -99,6 +109,8 @@ def build_map():
     fc = fog.get_component_by_class(unreal.ExponentialHeightFogComponent)
     setp(fc, ["fog_density"], 0.02)
     setp(fc, ["enable_volumetric_fog", "volumetric_fog"], False)
+    # Niebla azulada: da ambiente a la distancia en vez de negro.
+    setp(fc, ["fog_inscattering_luminance", "fog_inscattering_color"], unreal.LinearColor(0.02, 0.03, 0.07, 1.0))
 
     try:
         ppv = actor_sub.spawn_actor_from_class(unreal.PostProcessVolume, unreal.Vector(0, 0, 0))
@@ -106,7 +118,7 @@ def build_map():
         ppv.set_editor_property("unbound", True)
         st = ppv.get_editor_property("settings")
         st.set_editor_property("override_auto_exposure_bias", True)
-        st.set_editor_property("auto_exposure_bias", -2.0)
+        st.set_editor_property("auto_exposure_bias", -1.0)
         ppv.set_editor_property("settings", st)
     except Exception as e:
         warn("post proceso fallo: %r" % (e,))
